@@ -166,9 +166,31 @@ module.exports = {
           marginBottom: theme("spacing.12"),
         },
 
-        // Add this new style for footer paragraphs
         "footer p": {
-          fontSize: theme("fontSize.lg"),
+          fontSize: theme("fontSize.base"),
+        },
+
+        footer: {
+          marginTop: theme("spacing.4"),
+          "@screen sm": {
+            marginTop: theme("spacing.6"),
+          },
+          "@screen md": {
+            marginTop: theme("spacing.8"),
+          },
+          "@screen lg": {
+            marginTop: theme("spacing.10"),
+          },
+        },
+        // Add styles for footer div and p tags
+        "footer > div": {
+          marginTop: theme("spacing.1"),
+          marginBottom: theme("spacing.1"),
+        },
+        "footer p": {
+          fontSize: theme("fontSize.base"),
+          marginTop: theme("spacing.1"),
+          marginBottom: theme("spacing.1"),
         },
       });
     },
