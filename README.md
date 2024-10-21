@@ -1,5 +1,17 @@
 # PWV
 
+[PWV](https://pwv.com) invests in early-stage technology companies.
+
+PWV is a team of three entrepreneurs and technologists: Tom Preston-Werner (GitHub cofounder), David S. Price, and David Thyresson.
+
+Beyond capital, we leverage our unparalleled network and expertise to provide ongoing support, helping startups achieve product-market fit faster and scale effectively with the right growth partners.
+
+## Our Values
+
+We are committed to a vision of a future where technological progress and human flourishing go hand in hand. And we invest to help make this future possible.
+
+> Made with ❤️ using Cursor, fal, Vite, Netlify, and GitHub
+
 ## Development
 
 Uses [pnpm](https://pnpm.io/), [Vite](https://vitejs.dev/),
