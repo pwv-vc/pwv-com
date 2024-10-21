@@ -22,7 +22,7 @@ export function renderAngelPortfolio(): HTMLUListElement {
 function renderPortfolioList(data: PortfolioItem[]): HTMLUListElement {
   const ul = document.createElement("ul");
   ul.className =
-    "font-mono list-disc list-inside text-base grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2";
+    "font-mono list-disc list-inside text-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2";
 
   data.forEach((item) => {
     const li = document.createElement("li");

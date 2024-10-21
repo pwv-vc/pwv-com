@@ -2,15 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" href="/images/favicon.svg" type="image/svg+xml" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PWV</title>
 
     <!-- Open Graph tags -->
-    <meta property="og:title" content="PWV - From PMF to Exit" />
+    <meta property="og:title" content="PWV Venture Capital" />
     <meta
       property="og:description"
-      content="Preston-Werner Ventures Venture Capital invests in early-stage technology companies with strong founding teams operating in high-growth markets."
+      content="Preston-Werner Ventures, PWV, Venture Capital invests in early-stage technology companies with strong founding teams operating in high-growth markets."
     />
     <meta property="og:image" content="https://pwv.vc/og-image.jpg" />
     <meta property="og:url" content="https://pwv.vc" />
@@ -25,306 +25,76 @@
   </head>
   <body>
     <div id="app">
-      <nav class="container mx-auto max-w-screen-lg mt-4">
-        <ul class="flex justify-center space-x-4">
-          <li><a href="#about">About</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#testimonials">Testimonials</a></li>
-          <li><a href="#team">Team</a></li>
-          <li><a href="#cta">Contact</a></li>
-        </ul>
-      </nav>
-      <main class="container mx-auto max-w-screen-lg space-y-8 my-12">
-        <a
-          target="_blank"
-          rel="noreferrer"
-          class="mb-4 bg-neutral-50 text-base interact-bounce border-neutral-200 px-4 py-2 rounded-xl flex items-center justify-between border"
-          href="https://x.com/evanjconrad/status/1836169634552447219"
-          >Announcing PWV Fund I<svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            aria-hidden="true"
-            data-slot="icon"
-            class="h-4 w-4"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-            ></path></svg
-        ></a>
-        <section id="about" class="space-y-2 text-center">
-          <h1 class="text-4xl font-serif">LOGO</h1>
+      <main class="mx-auto my-12">
+        <header id="about" class="flex flex-col items-center">
+          <img
+            src="/images/logo.svg"
+            alt="Preston-Werner Venturs Logo"
+            class="w-logo-small sm:w-logo-medium md:w-logo-large"
+          />
+        </header>
+        <section>
+          <h1 class="text-center">
+            PWV invests in early-stage technology companies.
+          </h1>
 
+          <p>
+            PWV is a team of three entrepreneurs and technologists: Tom
+            Preston-Werner (GitHub cofounder), David S. Price, and David
+            Thyresson. Beyond capital, we leverage our unparalleled network and
+            expertise to provide ongoing support, helping startups achieve
+            product-market fit faster and scale effectively with the right
+            growth partners.
+          </p>
+
+          <h2>Our Values</h2>
+          <p>
+            We are committed to a vision of a future where technological
+            progress and human flourishing go hand in hand. And we invest to
+            help make this future possible.
+          </p>
+          <h2>Our Investment Approach</h2>
+          <ul class="pl-6">
+            <li>
+              <strong class="font-grotesk">Strategic Investments</strong>: We
+              frequently make small, flexible investments.
+            </li>
+            <li>
+              <strong class="font-grotesk">Lead and Co-lead Rounds</strong>: We
+              occasionally make significant investments and take an active
+              advisory role.
+            </li>
+            <li>
+              <strong class="font-grotesk">Follow-on Funding</strong>: When
+              applicable, we support growth with additional capital.
+            </li>
+          </ul>
         </section>
-        <section class="space-y-2">
-          <p class="text-base font-sans">
-            <span class="font-serif text-lg">PWV</span>
-            invests in early-stage technology companies.
-          </p>
-          vision, values, beliefs
-          <p>We believe that people should  build delightful products that expand the boundaries of humans can do with technology and push humanity forward in a positive direction.</p>
-          <p>What kind of checks we write...</p>
-          <p>More of what we believe in normal speak ...</p>
-            </p>
-            <p class="text-base font-sans"></p>Our strategy is anchored
-            in leveraging our unparalleled network and reputation to access and
-            support support exceptional startups early.
-          </p>
-          <p class="text-base font-sans">
-            We offer ongoing guidance and resources to help more startups
-            achieve PMF faster and, when applicable, accelerate with the right
-            growth partner.
-          </p>
-          <section class="space-y-4">
-            -- move to other page more like a memo --
-            <h2 class="font-serif text-xl">We invest in three ways</h2>
-            <ul class="list-disc list-inside text-base font-sans">
-              <li>Strategic (small checks)</li>
-              <li>Lead/co-lead</li>
-              <li>Follow on</li>
-            </ul>
-          </section>
-  
-  
-        </section>
-        <section id="portfolio" class="space-y-4">
-          <h2 class="text-xl font-serif">Portfolio</h2>
-          <p>representative companies...</p>
-          <h3 class="text-lg font-serif">Rolling Fund (2023–current)</h3>
+
+        <section id="portfolio">
+          <h3>Representative Investments</h3>
           <div id="portfolio-rolling-fund-list-container"></div>
-          <h3 class="text-lg font-serif">Tom's Angel Investment (2012–2022)</h3>
+          <h3>Tom's Angel Investments (2012–2022)</h3>
           <div id="portfolio-angel-list-container"></div>
         </section>
-
-        <section class="space-y-4">
-          <h2 class="text-xl font-serif">We're fund raising</h2>
-          <p class="text-base font-sans">
-            We're launching
-            <span class="font-serif text-lg">PWV Fund I</span>
-            to power more early-stage tech startups.
-          </p>
-          <p class="text-base font-sans">
-            With the success of our current investment vehicle, the PWV Rolling
-            Fund, our proven team will back even more founders who solve real
-            problems and provide new investors with the opportunity to be part
-            of something that matters.
-          </p>
-          <div id="cta">
-            <p class="text-base font-sans">
-              If you are an accredited investor ...
-            </p>
-            <div class="flex flex-col space-y-4 mt-6">
-              <a
-                target="_blank"
-                rel="noreferrer"
-                class="mb-4 bg-neutral-50 text-base interact-bounce border-neutral-200 px-4 py-2 rounded-xl flex items-center justify-between border"
-                href="https://x.com/evanjconrad/status/1836169634552447219"
-                >Invest<svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                  data-slot="icon"
-                  class="h-4 w-4"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                  ></path>
-                </svg>
-              </a>
-              <a
-                target="_blank"
-                rel="noreferrer"
-                class="mb-4 bg-neutral-50 text-base interact-bounce border-neutral-200 px-4 py-2 rounded-xl flex items-center justify-between border"
-                href="https://x.com/evanjconrad/status/1836169634552447219"
-                >Get Funded<svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                  data-slot="icon"
-                  class="h-4 w-4"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-                  ></path>
-                </svg>
-              </a>
-            </div>
-          </div>
-        </section>
-        <section id="testimonials" class="space-y-4">
-          <h2 class="text-xl font-serif">Testimonials</h2>
+        <section id="testimonials">
+          <h2>What Founders Say About Us</h2>
 
           <div id="testimonial-list-container"></div>
         </section>
 
-        <section id="team" class="space-y-4">
-          <h2 class="text-xl font-serif">Team</h2>
-          <p class="text-base font-sans">
-            Our investment team consists of three technologists and
-            entrepreneurs with decades of complementary skills, including
-            startup and investment experience.
-          </p>
-          <h3 class="text-base font-serif flex items-center gap-x-4">
-            <img
-              id="tom-image"
-              alt="Tom Preston-Werner"
-              class="w-8 h-8 sm:w-16 sm:h-16 md:w-24 md:h-24 object-cover rounded-lg shadow-md"
-            />
-            Tom Preston-Werner, General Partner
-          </h3>
-          <p class="text-base font-sans">
-            <a
-              href="https://tom.preston-werner.com"
-              target="_blank"
-              class="font-link"
-              >Tom</a
-            >
-            is a startup investor and board member, inventor, entrepreneur, and
-            open-source contributor. He is a co-founder of
-            <a
-              href="https://128collective.org/"
-              target="_blank"
-              class="font-link"
-              >128 Collective</a
-            >
-            (climate philanthropy) and
-            <a href="https://redwoodjs.com/" target="_blank" class="font-link"
-              >RedwoodJS</a
-            >
-            (open-source app framework and community).
-          </p>
-          <ul class="list-disc list-inside text-base font-sans">
-            <li>Angel investor for ten years (2012–2022)</li>
-            <li>
-              <a href="https://github.com" target="_blank" class="font-link"
-                >GitHub</a
-              >
-              Cofounder (acquired by
-              <a
-                href="https://www.microsoft.com"
-                target="_blank"
-                class="font-link"
-                >Microsoft</a
-              >)
-            </li>
-            <li>
-              Board member at
-              <a href="https://www.gitpod.io" target="_blank" class="font-link"
-                >GitPod</a
-              >,
-              <a
-                href="https://www.netlify.com"
-                target="_blank"
-                class="font-link"
-                >Netlify</a
-              >, and
-              <a
-                href="https://hackclub.com/team"
-                target="_blank"
-                class="font-link"
-                >HackClub</a
-              >
-            </li>
-            <li>
-              Created
-              <a href="https://jekyllrb.com/" target="_blank" class="font-link"
-                >Jekyll</a
-              >,
-              <a href="https://semver.org/" target="_blank" class="font-link"
-                >SemVer</a
-              >,
-              <a
-                href="https://en.gravatar.com/"
-                target="_blank"
-                class="font-link"
-                >Gravatar</a
-              >, and
-              <a href="https://toml.io/" target="_blank" class="font-link"
-                >TOML</a
-              >
-            </li>
-          </ul>
-
-          <h3 class="text-base font-serif flex items-center gap-x-4">
-            <img
-              id="dp-image"
-              alt="David S. Price"
-              class="w-8 h-8 sm:w-16 sm:h-16 md:w-24 md:h-24 object-cover rounded-lg shadow-md"
-            />
-            David S. Price, General Partner
-          </h3>
-
-          <p class="text-base font-sans">
-            David is an investor, repeat founder, former investment bank CTO,
-            startup advisor, and open-source. He is a co-founder of
-            <a href="https://redwoodjs.com/" target="_blank" class="font-link"
-              >RedwoodJS</a
-            >.
-          </p>
-          <h3 class="text-base font-serif flex items-center gap-x-4">
-            <img
-              id="dt-image"
-              alt="DT"
-              class="w-8 h-8 sm:w-16 sm:h-16 md:w-24 md:h-24 object-cover rounded-lg shadow-md"
-            />
-            A. David Thyresson, General Partner
-          </h3>
-          <p class="text-base font-sans">
-            <a href="https://thyresson.io" target="_blank" class="font-link"
-              >David (DT)</a
-            >
-            is an investor, repeat founder/CTO, technology entrepreneur, startup
-            advisor, and open-source contributor. He is a Core Team Lead at
-            <a href="https://redwoodjs.com/" target="_blank" class="font-link"
-              >RedwoodJS</a
-            >.
-          </p>
-          
-        </section>
-
-        <section class="space-y-4">
-          <h3 class="text-md font-serif">
-            We're using our angel and portfolio companies to build this site.
-          </h3>
-          <div class="flex flex-wrap gap-x-2 gap-y-2 font-mono">
-            <a href="https://cursor.com/" target="_blank" class="font-link"
-              >Cursor</a
-            >
-            <a href="https://fal.ai/" target="_blank" class="font-link">fal</a>
-            <a href="https://vite.dev/" target="_blank" class="font-link"
-              >Vite</a
-            >
-            <a href="https://netlify.com/" target="_blank" class="font-link"
-              >Netlify</a
-            >
-            <a href="https://github.com/" target="_blank" class="font-link"
-              >GitHub</a
-            >
-          </div>
-        </section>
-
         <hr />
-
       </main>
       <footer class="container mx-auto max-w-screen-lg my-4">
-        <div class="flex justify-around space-x-4">
-          <p>&copy;&nbsp;Preston-Werner Ventures, Venture Capital 2024</p>
-          <p>Legal</p>
-          <p>Privacy</p>
+        <div
+          class="flex flex-col items-center space-y-2 md:flex-row md:justify-between md:space-y-0"
+        >
+          <p class="text-center md:text-left">
+            &copy;&nbsp;Preston-Werner Ventures 2024
+          </p>
+          <p class="text-center md:text-left">
+            Made with ❤️ using Cursor, fal, Vite, Netlify, and GitHub
+          </p>
         </div>
       </footer>
     </div>

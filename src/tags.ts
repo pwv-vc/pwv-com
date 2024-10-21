@@ -36,38 +36,31 @@ function getColorsForTag(tagName: string): [string, string, string] {
   switch (tagName.toLowerCase()) {
     case "ai":
       return ["bg-neutral-50", "text-neutral-700", "fill-sky-400"];
-    case "dev":
+    case "dev tools":
       return ["bg-neutral-50", "text-neutral-700", "fill-green-400"];
-    case "board":
+    case "board seat":
       return ["bg-neutral-50", "text-neutral-700", "fill-purple-400"];
-    case "db":
-      return ["bg-neutral-50", "text-neutral-700", "fill-emerald-400"];
     case "saas":
       return ["bg-neutral-50", "text-neutral-700", "fill-indigo-600"];
-    case "space":
+    case "aerospace":
       return ["bg-neutral-50", "text-neutral-700", "fill-blue-400"];
     case "energy":
       return ["bg-neutral-50", "text-neutral-700", "fill-yellow-400"];
     case "construction":
       return ["bg-neutral-50", "text-neutral-700", "fill-cyan-400"];
-    case "auth":
-      return ["bg-neutral-50", "text-neutral-700", "fill-teal-400"];
-    case "b2b":
-      return ["bg-neutral-50", "text-neutral-700", "fill-orange-400"];
-    case "defense":
-      return ["bg-neutral-50", "text-neutral-700", "fill-red-400"];
-    case "health":
-      return ["bg-neutral-50", "text-neutral-700", "fill-pink-400"];
-    case "finance":
-      return ["bg-neutral-50", "text-neutral-700", "fill-yellow-400"];
-    case "insurance":
-      return ["bg-neutral-50", "text-neutral-700", "fill-green-400"];
-    case "retail":
-      return ["bg-neutral-50", "text-neutral-700", "fill-blue-400"];
     case "cad":
-      return ["bg-neutral-50", "text-neutral-700", "fill-blue-400"];
-
+      return ["bg-neutral-50", "text-neutral-700", "fill-rose-400"];
+    case "hardware":
+      return ["bg-neutral-50", "text-neutral-700", "fill-orange-400"]; 
+    case "av":
+      return ["bg-neutral-50", "text-neutral-700", "fill-teal-400"];
+    case "acquired":
+      return ["bg-neutral-50", "text-neutral-900", "fill-pink-400"];
+    case "food":
+      return ["bg-neutral-50", "text-neutral-700", "fill-violet-400"];
+    case "biotech":
+      return ["bg-neutral-50", "text-neutral-700", "fill-amber-400"];
     default:
-      return ["bg-neutral-50", "text-neutral-700", "fill-neutral-400"]; // Default neutral color
+      return ["bg-neutral-50", "text-neutral-700", "fill-neutral-400"]; // Default neutral color            
   }
 }
