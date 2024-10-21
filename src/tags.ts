@@ -32,35 +32,34 @@ export function renderBadge(tagName: string): HTMLSpanElement {
 }
 
 function getColorsForTag(tagName: string): [string, string, string] {
-  // Define color schemes for different tags using Tailwind CSS classes
   switch (tagName.toLowerCase()) {
     case "ai":
-      return ["bg-neutral-50", "text-neutral-700", "fill-sky-400"];
+      return ["bg-blue-50", "text-blue-800", "fill-blue-600"];
     case "dev tools":
-      return ["bg-neutral-50", "text-neutral-700", "fill-green-400"];
+      return ["bg-green-50", "text-green-800", "fill-green-600"];
     case "board seat":
-      return ["bg-neutral-50", "text-neutral-700", "fill-purple-400"];
+      return ["bg-slate-50", "text-slate-800", "fill-slate-600"];
     case "saas":
-      return ["bg-neutral-50", "text-neutral-700", "fill-indigo-600"];
+      return ["bg-indigo-50", "text-indigo-800", "fill-indigo-600"];
     case "aerospace":
-      return ["bg-neutral-50", "text-neutral-700", "fill-blue-400"];
+      return ["bg-sky-50", "text-sky-800", "fill-sky-600"];
     case "energy":
-      return ["bg-neutral-50", "text-neutral-700", "fill-yellow-400"];
+      return ["bg-amber-50", "text-amber-800", "fill-amber-600"];
     case "construction":
-      return ["bg-neutral-50", "text-neutral-700", "fill-cyan-400"];
+      return ["bg-orange-50", "text-orange-800", "fill-orange-600"];
     case "cad":
-      return ["bg-neutral-50", "text-neutral-700", "fill-rose-400"];
+      return ["bg-red-50", "text-red-800", "fill-red-600"];
     case "hardware":
-      return ["bg-neutral-50", "text-neutral-700", "fill-orange-400"]; 
+      return ["bg-yellow-50", "text-yellow-800", "fill-yellow-600"];
     case "av":
-      return ["bg-neutral-50", "text-neutral-700", "fill-teal-400"];
+      return ["bg-teal-50", "text-teal-800", "fill-teal-600"];
     case "acquired":
-      return ["bg-neutral-50", "text-neutral-900", "fill-pink-400"];
+      return ["bg-pink-50", "text-pink-800", "fill-pink-600"];
     case "food":
-      return ["bg-neutral-50", "text-neutral-700", "fill-violet-400"];
+      return ["bg-violet-50", "text-violet-800", "fill-violet-600"];
     case "biotech":
-      return ["bg-neutral-50", "text-neutral-700", "fill-amber-400"];
+      return ["bg-cyan-50", "text-cyan-800", "fill-cyan-600"];
     default:
-      return ["bg-neutral-50", "text-neutral-700", "fill-neutral-400"]; // Default neutral color            
+      return ["bg-gray-50", "text-gray-800", "fill-gray-600"]; // Default neutral color
   }
 }
