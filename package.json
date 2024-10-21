@@ -1,0 +1,26 @@
+{
+  "name": "pwv",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "netlify:dev": "netlify dev --port 5137",
+    "images": "node scripts/generateTeamImages.js 4"
+  },
+  "devDependencies": {
+    "@fal-ai/serverless-client": "^0.14.3",
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/node": "^22.7.1",
+    "autoprefixer": "^10.4.20",
+    "dotenv": "^16.4.5",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1"
+  },
+  "packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c"
+}
