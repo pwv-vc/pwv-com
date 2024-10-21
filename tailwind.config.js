@@ -165,6 +165,11 @@ module.exports = {
           marginTop: theme("spacing.12"),
           marginBottom: theme("spacing.12"),
         },
+
+        // Add this new style for footer paragraphs
+        "footer p": {
+          fontSize: theme("fontSize.lg"),
+        },
       });
     },
   ],
