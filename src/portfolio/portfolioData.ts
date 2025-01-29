@@ -19,15 +19,28 @@ export const portfolioData: Portfolio = {
   rollingFund: {
     description: "Rolling Fund",
     portfolioItems: [
-      { name: "Astranis", url: "https://www.astranis.com/", tags: ["hardware", "aerospace"] },
-      { name: "Cursor", url: "https://www.cursor.com/", tags: ["ai", "dev tools"] },
+      {
+        name: "Astranis",
+        url: "https://www.astranis.com/",
+        tags: ["hardware", "aerospace"],
+      },
+      {
+        name: "Cursor",
+        url: "https://www.cursor.com/",
+        tags: ["ai", "dev tools"],
+      },
+      { name: "Atuin", url: "https://atuin.sh/", tags: ["dev tools"] },
       { name: "fal", url: "https://www.fal.ai/", tags: ["ai", "dev tools"] },
       { name: "Elicit", url: "https://elicit.com", tags: ["ai", "saas"] },
-      { name: "GitPod", url: "https://www.gitpod.io/", tags: ["dev tools", "board seat"] },
+      {
+        name: "Gitpod",
+        url: "https://www.gitpod.io/",
+        tags: ["dev tools", "board seat"],
+      },
       {
         name: "Aerodome",
         url: "https://www.aerodome.com",
-        tags: ["hardware", "av", "acquired" ],
+        tags: ["hardware", "av", "acquired"],
       },
       { name: "Liquid AI", url: "https://www.liquid.ai", tags: ["ai"] },
       { name: "Zoo", url: "https://zoo.dev", tags: ["ai", "cad"] },
@@ -47,7 +60,11 @@ export const portfolioData: Portfolio = {
         url: "https://www.inngest.com/",
         tags: ["dev tools"],
       },
-      { name: "Aalo Atomics", url: "https://www.aalo.com", tags: ["hardware", "energy"] },
+      {
+        name: "Aalo Atomics",
+        url: "https://www.aalo.com",
+        tags: ["hardware", "energy"],
+      },
       {
         name: "Cleanlab",
         url: "https://www.cleanlab.ai/",
@@ -71,14 +88,31 @@ export const portfolioData: Portfolio = {
       },
       { name: "Poolside", url: "https://www.poolside.ai/", tags: ["ai"] },
       { name: "Turso", url: "https://turso.tech", tags: ["dev tools"] },
-      { name: "Flux", url: "https://www.flux.ai/p", tags: ["hardware", "saas"] },
+      {
+        name: "Flux",
+        url: "https://www.flux.ai/p",
+        tags: ["hardware", "saas"],
+      },
+      {
+        name: "Commonwealth Fusions Systems",
+        url: "https://cfs.energy/",
+        tags: ["energy"],
+      },
     ],
   },
   angel: {
     description: "Angel",
     portfolioItems: [
-      { name: "Beta", url: "https://beta.team/", tags: ["hardware", "aerospace"] },
-      { name: "Upside Foods", url: "https://upsidefoods.com", tags: ["biotech", "food"] },
+      {
+        name: "Beta",
+        url: "https://beta.team/",
+        tags: ["hardware", "aerospace"],
+      },
+      {
+        name: "Upside Foods",
+        url: "https://upsidefoods.com",
+        tags: ["biotech", "food"],
+      },
       {
         name: "Impossible",
         url: "https://impossiblefoods.com Foods",
