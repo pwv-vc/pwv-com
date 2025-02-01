@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=NHaasGroteskDSPro-65Md:wght@700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Adobe+Garamond+Pro:ital,wght@0,400;0,700;1,400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap");
 
 @tailwind base;
 @tailwind components;

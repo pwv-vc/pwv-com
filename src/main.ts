@@ -31,10 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Rename this function
-  cycleTeamAvatars();
+  // cycleTeamAvatars();
 
   // Initial load of team images
-  loadAllTeamImages(5);
+  // loadAllTeamImages(5);
 });
 
 async function loadRandomTeamImage(name: string, maxNumber: number) {
