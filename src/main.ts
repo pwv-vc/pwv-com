@@ -63,13 +63,13 @@ export async function loadAllTeamImages(maxNumber: number) {
 }
 
 // Rename this function
-function cycleTeamAvatars() {
-  const cycleButton = document.getElementById("cycle-team-avatars");
-  if (cycleButton) {
-    cycleButton.addEventListener("click", () => {
-      loadAllTeamImages(5);
-    });
-  } else {
-    console.error("Cycle team avatars button not found");
-  }
-}
+// function cycleTeamAvatars() {
+//   const cycleButton = document.getElementById("cycle-team-avatars");
+//   if (cycleButton) {
+//     cycleButton.addEventListener("click", () => {
+//       loadAllTeamImages(5);
+//     });
+//   } else {
+//     console.error("Cycle team avatars button not found");
+//   }
+// }
