@@ -65,7 +65,7 @@ module.exports = {
         },
         h1: {
           fontFamily: theme("fontFamily.serif"),
-          fontSize: theme("fontSize.5xl"),
+          fontSize: theme("fontSize.4xl"),
           fontWeight: theme("fontWeight.bold"),
           lineHeight: theme("lineHeight.tight"),
           letterSpacing: theme("letterSpacing.tighter"),
