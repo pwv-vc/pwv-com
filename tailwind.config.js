@@ -6,8 +6,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['"EB Garamond"', ...defaultTheme.fontFamily.serif],
-        sans: ['"Space Grotesk"', ...defaultTheme.fontFamily.sans],
+        serif: ['"Libre Franklin"', ...defaultTheme.fontFamily.serif],
+        sans: ['"Roboto"', ...defaultTheme.fontFamily.sans],
         mono: ['"IBM Plex Mono"', ...defaultTheme.fontFamily.mono],
       },
       fontSize: {
