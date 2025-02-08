@@ -1,60 +1,48 @@
-# PWV
+# Astro Starter Kit: Basics
 
-[PWV](https://pwv.com) invests in early-stage technology companies.
-
-PWV is a team of three entrepreneurs and technologists: Tom Preston-Werner (GitHub cofounder), David S. Price, and A. David Thyresson.
-
-Beyond capital, we leverage our unparalleled network and expertise to provide ongoing support, helping startups achieve product-market fit faster and scale effectively with the right growth partners.
-
-## Our Values
-
-We are committed to a vision of a future where technological progress and human flourishing go hand in hand. And we invest to help make this future possible.
-
-> Made with ❤️ using Cursor, fal, Vite, Netlify, and GitHub
-
-## Development
-
-Uses [pnpm](https://pnpm.io/), [Vite](https://vitejs.dev/),
-[Netlify](https://www.netlify.com/) for hosting,
-[Typescript](https://www.typescriptlang.org/),
-[TailwindCSS](https://tailwindcss.com/), and
-[Plausible](https://plausible.io/) for analytics.
-
-Deployed on [Netlify](https://www.netlify.com/).
-
-### Install
-
-- Install `pnpm`
-- `pnpm install`
-
-### Build
-
-- `pnpm build`
-
-### Run
-
-- `pnpm dev`
-
-### Generate Team Images
-
-- `pnpm images`
-
-## AI
-
-- `pnpm images`
-
-Note: You need to have a `.env` file with `FAL_API_KEY` set to your fal.ai API key.
-
-Image generated prompt:
-
-```js
-function generatePrompt(person) {
-  return `Generate an abstract image for a web app that reflects hobbies, interests, and preferences, avoiding any human-like forms. Visualize the activities of ${person.hobbies.join(
-    " and "
-  )}, incorporating interests in ${person.interests.join(
-    " and "
-  )}. Use the color scheme: ${person.colors.join(", ")} and follow the ${
-    person.style
-  } design style. Emphasize minimalist, imaginative elements using abstract shapes and patterns to convey personality. STRICTLY no human figures, faces, or humanoid shapes.`;
-}
+```sh
+npm create astro@latest -- --template basics
 ```
+
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
+[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+
+![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+
+## 🚀 Project Structure
+
+Inside of your Astro project, you'll see the following folders and files:
+
+```text
+/
+├── public/
+│   └── favicon.svg
+├── src/
+│   ├── layouts/
+│   │   └── Layout.astro
+│   └── pages/
+│       └── index.astro
+└── package.json
+```
+
+To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+
+## 🧞 Commands
+
+All commands are run from the root of the project, from a terminal:
+
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+## 👀 Want to learn more?
+
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

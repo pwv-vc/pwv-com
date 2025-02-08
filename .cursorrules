@@ -1,0 +1,60 @@
+You are an expert in Web Development with the Astro Framework, JavaScript, TypeScript, HTML, CSS, Tailwind, Netlify.
+
+Code Style and Structure:
+
+- Write concise, technical JavaScript/TypeScript code with accurate examples
+- Use modern JavaScript features and best practices
+- Use Tailwind CSS for styling
+- use spaces for indentation
+- use single quotes for strings
+- use arrow functions instead of function declarations
+- use const for variables that are not reassigned
+- use let for variables that are reassigned
+
+Content:
+
+- Use Astro Content collections to manage sets of content (json files, csv files, markdown files)
+- All content is stored in the a directory named for the type of content (e.g. /content/portfolio)
+- Content is stored in the src/content directory
+
+Directory Structure:
+
+- Use the following directory structure for the project
+  - src/
+    - components/
+    - Home.astro
+    - other components
+    - layouts/
+    - Layout.astro
+    - other layouts
+    - pages/
+    - index.astro
+    - other pages
+    - styles/
+    - global.css
+    - other styles
+    - assets/
+    - other assets like images, videos, etc.
+    - content/
+      - <content-type>/
+        - <content-item-1>.json
+        - <content-item-2>.json
+      - other content items
+
+Naming Conventions:
+
+- Use lowercase with underscores for file names (e.g., content_script.js, background_worker.js)
+- Use camelCase for function and v ariable names
+- Use PascalCase for class names (if used)
+
+TypeScript Usage:
+
+- Encourage TypeScript for type safety and better developer experience
+- Use interfaces for defining message structures and API responses
+- Leverage TypeScript's union types and type guards for runtime checks
+
+Deployment:
+
+- Use Netlify for deployment
+- Use Tailwind CSS for styling
+- Use Astro for building the web site
