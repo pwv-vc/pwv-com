@@ -1,4 +1,3 @@
-
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/logo.svg';
@@ -10,6 +9,8 @@ import logo from '../assets/logo.svg';
     alt="PWV Logo"
     class="w-logo-small sm:w-logo-medium md:w-logo-large"
     width={300}
+    loading="eager"
+    priority
   />
 </header>
 <section class="space-y-4 text-lg font-sans">

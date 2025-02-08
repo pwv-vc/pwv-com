@@ -2,8 +2,8 @@
 import { getCollection } from 'astro:content';
 import PortfolioCompanyCard from './PortfolioCompanyCard.astro';
 
-const rollingFundPortfolio = await getCollection('rollingFundPortfolio');
-const sortedRollingFundPortfolio = rollingFundPortfolio.sort((a, b) =>
+const representativePortfolio = await getCollection('representativePortfolio');
+const sortedRepresentativePortfolio = representativePortfolio.sort((a, b) =>
   a.data.name.localeCompare(b.data.name)
 );
 
@@ -17,7 +17,7 @@ const sortedAngelPortfolio = angelPortfolio.sort((a, b) =>
   <h3 class="text-2xl font-bold my-8">Representative Investments</h3>
   <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
     {
-      sortedRollingFundPortfolio.map((company) => (
+      sortedRepresentativePortfolio.map((company) => (
         <PortfolioCompanyCard
           name={company.data.name}
           url={company.data.url}

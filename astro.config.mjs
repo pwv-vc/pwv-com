@@ -7,6 +7,10 @@ import netlify from '@astrojs/netlify';
 export default defineConfig({
   output: 'static',
   adapter: netlify(),
+  site:
+    import.meta.env.URL ||
+    import.meta.env.DEPLOY_URL ||
+    'http://localhost:4321',
   vite: {
     plugins: [tailwindcss()],
   },
