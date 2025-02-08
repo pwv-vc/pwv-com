@@ -11,7 +11,13 @@ importers:
       '@astrojs/netlify':
         specifier: ^6.1.0
         version: 6.1.0(astro@5.2.5(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.34.6)(typescript@5.7.3))(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.34.6)
+      '@fontsource-variable/eb-garamond':
+        specifier: ^5.1.2
+        version: 5.1.2
       '@fontsource-variable/space-grotesk':
+        specifier: ^5.1.1
+        version: 5.1.1
+      '@fontsource/ibm-plex-mono':
         specifier: ^5.1.1
         version: 5.1.1
       '@tailwindcss/vite':
@@ -234,8 +240,14 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@fontsource-variable/eb-garamond@5.1.2':
+    resolution: {integrity: sha512-KRDV6mLLC8znoCZOQFXuA8bUL0aQtMDyJv9KGdlvlZIcM1ocpeLKG+AwJTk2EKfCZBMq1pff7d4vlFelgWCkRA==}
+
   '@fontsource-variable/space-grotesk@5.1.1':
     resolution: {integrity: sha512-LTz+nIUdm7ZVY9ZlqRiTKqByi+tIcQUKaKONBVSxKRABPRgdnJOwiuqvHa+ac7Xs0ZorDBm7O0fmwHuOGT3HIw==}
+
+  '@fontsource/ibm-plex-mono@5.1.1':
+    resolution: {integrity: sha512-1aayqPe/ZkD3MlvqpmOHecfA3f2B8g+fAEkgvcCd3lkPP0pS1T0xG5Zmn2EsJQqr1JURtugPUH+5NqvKyfFZMQ==}
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -2163,7 +2175,11 @@ snapshots:
   '@esbuild/win32-x64@0.24.2':
     optional: true
 
+  '@fontsource-variable/eb-garamond@5.1.2': {}
+
   '@fontsource-variable/space-grotesk@5.1.1': {}
+
+  '@fontsource/ibm-plex-mono@5.1.1': {}
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:
