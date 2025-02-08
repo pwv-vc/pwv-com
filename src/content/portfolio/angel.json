@@ -100,5 +100,11 @@
     "url": "https://www.replicated.com/",
     "tags": ["dev tools"],
     "slug": "replicated"
+  },
+  {
+    "name": "StackBlitz",
+    "url": "https://stackblitz.com/",
+    "tags": ["dev tools", "ai"],
+    "slug": "stackblitz"
   }
 ]
