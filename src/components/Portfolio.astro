@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+
+const rollingFundPortfolio = await getCollection('rollingFundPortfolio');
+const sortedRollingFundPortfolio = rollingFundPortfolio.sort((a, b) =>
+  a.data.name.localeCompare(b.data.name)
+);
+
+const angelPortfolio = await getCollection('angelPortfolio');
+const sortedAngelPortfolio = angelPortfolio.sort((a, b) =>
+  a.data.name.localeCompare(b.data.name)
+);
+---
+
+<section id="portfolio">
+  <h3>Representative Investments</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {
+      sortedRollingFundPortfolio.map((company) => (
+        <div class="text-center p-2">
+          <p>{company.data.name}</p>
+        </div>
+      ))
+    }
+  </div>
+
+  <h3>Angel Investments (2012–2022)</h3>
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    {
+      sortedAngelPortfolio.map((company) => (
+        <div class="text-center p-2">
+          <p>{company.data.name}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>
