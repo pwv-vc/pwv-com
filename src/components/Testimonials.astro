@@ -9,16 +9,16 @@ const sortedTestimonials = testimonials.sort((a, b) =>
 ---
 
 <section id="testimonials">
-  <h2>What Founders Say About Us</h2>
+  <h2 class="text-3xl font-bold my-4">What Founders Say About Us</h2>
 
-  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 my-4">
     {
       sortedTestimonials.map((testimonial) => (
-        <div class="p-6 bg-gray-50 rounded-lg">
-          <blockquote class="mb-4 italic">
+        <div class="p-6 bg-gray-50 rounded-lg flex flex-col h-full shadow-md">
+          <blockquote class="mb-4 italic flex-grow">
             "{testimonial.data.quote}"
           </blockquote>
-          <div class="flex flex-col">
+          <div class="flex flex-col mt-auto">
             <cite class="font-semibold not-italic">
               {testimonial.data.name}
             </cite>

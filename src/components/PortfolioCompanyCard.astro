@@ -1,0 +1,38 @@
+---
+interface Props {
+  name: string;
+  url: string;
+  tags: string[];
+}
+
+const { name, url, tags } = Astro.props;
+
+// Helper function to get tag styles based on category
+const getTagStyle = (tag: string) => {
+  const styles = {
+    'hardware': 'bg-amber-50 text-amber-700',
+    'energy': 'bg-orange-50 text-orange-700',
+    'dev tools': 'bg-green-50 text-green-700',
+    'ai': 'bg-blue-50 text-blue-700',
+    'saas': 'bg-indigo-50 text-indigo-700',
+    'av': 'bg-teal-50 text-teal-700',
+    'construction': 'bg-red-50 text-red-700',
+    'board': 'bg-gray-50 text-gray-700'
+  }[tag.toLowerCase()] || 'bg-gray-50 text-gray-700';
+
+  return styles;
+};
+---
+
+<div class="flex items-center gap-2 py-1">
+  <a href={url} target="_blank" rel="noopener noreferrer" class="font-medium hover:underline">
+    {name}
+  </a>
+  <div class="flex gap-1.5">
+    {tags.map(tag => (
+      <span class={`text-sm px-2 py-0.5 rounded-full ${getTagStyle(tag)}`}>
+        {tag.toLowerCase()}
+      </span>
+    ))}
+  </div>
+</div>
