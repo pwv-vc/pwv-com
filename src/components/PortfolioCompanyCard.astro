@@ -1,0 +1,42 @@
+---
+import clsx from 'clsx';
+
+interface Props {
+  name: string;
+  url: string;
+  tags: string[];
+}
+
+const { name, url, tags } = Astro.props;
+
+// Helper function to get tag styles based on category
+const getTagStyle = (tag: string) => {
+  return clsx('text-xs px-2 py-0.5 rounded-full', {
+    'bg-amber-50 text-amber-700': tag.toLowerCase() === 'hardware',
+    'bg-orange-50 text-orange-700': tag.toLowerCase() === 'energy',
+    'bg-green-50 text-green-700': tag.toLowerCase() === 'dev tools',
+    'bg-fuchsia-50 text-fuchsia-700': tag.toLowerCase() === 'ai',
+    'bg-indigo-50 text-indigo-700': tag.toLowerCase() === 'saas',
+    'bg-teal-50 text-teal-700': tag.toLowerCase() === 'av',
+    'bg-red-50 text-red-700': tag.toLowerCase() === 'construction',
+    'bg-slate-50 text-slate-700': tag.toLowerCase() === 'board',
+    'bg-purple-50 text-purple-700': tag.toLowerCase() === 'biotech',
+    'bg-pink-50 text-pink-700': tag.toLowerCase() === 'food',
+    'bg-emerald-50 text-emerald-700': tag.toLowerCase() === 'cad',
+    'bg-gray-50 text-gray-700': true, // default fallback
+  });
+};
+---
+
+<div class="flex items-center gap-2 py-1">
+  <a href={url} target="_blank" rel="noopener noreferrer" class="font-mono font-medium hover:underline">
+    {name}
+  </a>
+  <div class="flex gap-1.5">
+    {tags.map(tag => (
+      <span class={getTagStyle(tag)}>
+        {tag.toLowerCase()}
+      </span>
+    ))}
+  </div>
+</div>

@@ -1,0 +1,32 @@
+---
+interface Props {
+  name: string;
+  title: string;
+  company: string;
+  quote: string;
+  url?: string;
+}
+
+const { name, title, company, quote, url } = Astro.props;
+---
+
+<div class="p-6 bg-slate-50 rounded-lg flex flex-col h-full shadow-md">
+  <blockquote class="mb-4 flex-grow border-l-4 border-slate-400 pl-4 text-lg text-slate-600">
+    "{quote}"
+  </blockquote>
+  <div class="flex flex-col mt-auto">
+    <cite class="font-semibold not-italic">
+      {name}
+    </cite>
+    <span class="text-sm text-gray-600">
+      {title},{' '}
+      {url ? (
+        <a href={url} class="text-gray-800 hover:underline">
+          {company}
+        </a>
+      ) : (
+        company
+      )}
+    </span>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+[
+  {
+    "name": "Beta",
+    "url": "https://beta.team/",
+    "tags": ["hardware", "aerospace"],
+    "slug": "beta"
+  },
+  {
+    "name": "Upside Foods",
+    "url": "https://upsidefoods.com",
+    "tags": ["biotech", "food"],
+    "slug": "upside-foods"
+  },
+  {
+    "name": "Impossible Foods",
+    "url": "https://impossiblefoods.com",
+    "tags": ["biotech", "food"],
+    "slug": "impossible-foods"
+  },
+  {
+    "name": "Stripe",
+    "url": "https://stripe.com/",
+    "tags": ["dev tools"],
+    "slug": "stripe"
+  },
+  {
+    "name": "Supabase",
+    "url": "https://supabase.com/",
+    "tags": ["dev tools"],
+    "slug": "supabase"
+  },
+  {
+    "name": "Weights & Biases",
+    "url": "https://www.wandb.ai/",
+    "tags": ["ai"],
+    "slug": "weights-and-biases"
+  },
+  {
+    "name": "Snyk",
+    "url": "https://snyk.io/",
+    "tags": ["dev tools"],
+    "slug": "snyk"
+  },
+  {
+    "name": "Prisma",
+    "url": "https://www.prisma.io/",
+    "tags": ["dev tools"],
+    "slug": "prisma"
+  },
+  {
+    "name": "Netlify",
+    "url": "https://www.netlify.com/",
+    "tags": ["dev tools", "board seat"],
+    "slug": "netlify"
+  },
+  {
+    "name": "PATH Water",
+    "url": "https://drinkpathwater.com",
+    "tags": ["food"],
+    "slug": "path-water"
+  },
+  {
+    "name": "Graphite",
+    "url": "https://www.graphite.dev/",
+    "tags": ["dev tools"],
+    "slug": "graphite"
+  },
+  {
+    "name": "Retool",
+    "url": "https://retool.com/",
+    "tags": ["dev tools"],
+    "slug": "retool"
+  },
+  {
+    "name": "Tito",
+    "url": "https://ti.to/",
+    "tags": ["saas"],
+    "slug": "tito"
+  },
+  {
+    "name": "Zed",
+    "url": "https://zed.dev/",
+    "tags": ["dev tools"],
+    "slug": "zed"
+  },
+  {
+    "name": "PlanetScale",
+    "url": "https://planetscale.com/",
+    "tags": ["dev tools"],
+    "slug": "planetscale"
+  },
+  {
+    "name": "Railway",
+    "url": "https://railway.app/",
+    "tags": ["dev tools"],
+    "slug": "railway"
+  },
+  {
+    "name": "Replicated",
+    "url": "https://www.replicated.com/",
+    "tags": ["dev tools"],
+    "slug": "replicated"
+  },
+  {
+    "name": "StackBlitz",
+    "url": "https://stackblitz.com/",
+    "tags": ["dev tools", "ai"],
+    "slug": "stackblitz"
+  }
+]

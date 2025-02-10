@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import PortfolioCompanyCard from './PortfolioCompanyCard.astro';
+
+const representativePortfolio = await getCollection('representativePortfolio');
+const sortedRepresentativePortfolio = representativePortfolio.sort((a, b) =>
+  a.data.name.localeCompare(b.data.name)
+);
+
+const angelPortfolio = await getCollection('angelPortfolio');
+const sortedAngelPortfolio = angelPortfolio.sort((a, b) =>
+  a.data.name.localeCompare(b.data.name)
+);
+---
+
+<section id="portfolio" class="my-4">
+  <h3 class="text-2xl font-bold my-8 text-[var(--pwv-blue)] font-serif">Representative Investments</h3>
+  <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {
+      sortedRepresentativePortfolio.map((company) => (
+        <PortfolioCompanyCard
+          name={company.data.name}
+          url={company.data.url}
+          tags={company.data.tags}
+        />
+      ))
+    }
+  </div>
+
+  <h3 class="text-2xl font-bold my-8 text-[var(--pwv-blue)] font-serif">Angel Investments (2012–2022)</h3>
+  <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {
+      sortedAngelPortfolio.map((company) => (
+        <PortfolioCompanyCard
+          name={company.data.name}
+          url={company.data.url}
+          tags={company.data.tags}
+        />
+      ))
+    }
+  </div>
+  <p class="text-sm text-gray-500 my-8">
+    These lists are non-exhaustive representations of PWV's complete
+    portfolio.
+  </p>
+</section>
