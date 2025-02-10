@@ -17,6 +17,12 @@ importers:
       '@fontsource/ibm-plex-mono':
         specifier: ^5.1.1
         version: 5.1.1
+      '@fontsource/ibm-plex-serif':
+        specifier: ^5.1.1
+        version: 5.1.1
+      '@fontsource/space-mono':
+        specifier: ^5.1.2
+        version: 5.1.2
       '@tailwindcss/vite':
         specifier: ^4.0.4
         version: 4.0.4(vite@6.1.0(jiti@2.4.2)(lightningcss@1.29.1))
@@ -248,6 +254,12 @@ packages:
 
   '@fontsource/ibm-plex-mono@5.1.1':
     resolution: {integrity: sha512-1aayqPe/ZkD3MlvqpmOHecfA3f2B8g+fAEkgvcCd3lkPP0pS1T0xG5Zmn2EsJQqr1JURtugPUH+5NqvKyfFZMQ==}
+
+  '@fontsource/ibm-plex-serif@5.1.1':
+    resolution: {integrity: sha512-5EVMKXP2kT5/sufDp2Hw96Zz5C7J6oBq13OWIGn2uhtGAsuE5E+e6hhUl0TJK0+EHYTfCS85ylcY5Vk2Q6ht/Q==}
+
+  '@fontsource/space-mono@5.1.2':
+    resolution: {integrity: sha512-4EtHA1IZQ8hI7Gyc0hP3gPEZUfet4oqUg722J8WD8TalHwxvsy5sNQw0i08TDMu5gZjkLOtp5wPVScx+l9iSiw==}
 
   '@img/sharp-darwin-arm64@0.33.5':
     resolution: {integrity: sha512-UT4p+iz/2H4twwAoLCqfA9UH5pI6DggwKEGuaPy7nCVQ8ZsiY5PIcrRvD1DzuY3qYL07NtIQcWnBSY/heikIFQ==}
@@ -2178,6 +2190,10 @@ snapshots:
   '@fontsource-variable/space-grotesk@5.1.1': {}
 
   '@fontsource/ibm-plex-mono@5.1.1': {}
+
+  '@fontsource/ibm-plex-serif@5.1.1': {}
+
+  '@fontsource/space-mono@5.1.2': {}
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:

@@ -11,17 +11,17 @@ const { name, title, company, quote, url } = Astro.props;
 ---
 
 <div class="p-6 bg-slate-50 rounded-lg flex flex-col h-full shadow-md">
-  <blockquote class="mb-4 flex-grow border-l-4 border-slate-400 pl-4 text-lg text-slate-600">
+  <blockquote class="mb-4 flex-grow border-l-4 border-[var(--pwv-blue)] pl-4 text-lg text-slate-600">
     "{quote}"
   </blockquote>
   <div class="flex flex-col mt-auto">
-    <cite class="font-semibold not-italic">
+    <cite class="font-semibold not-italic text-[var(--pwv-blue)]">
       {name}
     </cite>
     <span class="text-sm text-gray-600">
       {title},{' '}
       {url ? (
-        <a href={url} class="text-gray-800 hover:underline">
+        <a href={url} class="text-[var(--pwv-blue)] hover:underline">
           {company}
         </a>
       ) : (
