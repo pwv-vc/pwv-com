@@ -8,8 +8,9 @@ export default defineConfig({
   output: 'static',
   adapter: netlify(),
   site:
-    import.meta.env.URL ||
-    import.meta.env.DEPLOY_URL ||
+    process.env.URL ||
+    process.env.DEPLOY_URL ||
+    process.env.URL ||
     'http://localhost:4321',
   vite: {
     plugins: [tailwindcss()],
