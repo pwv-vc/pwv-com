@@ -14,9 +14,6 @@ importers:
       '@fontsource-variable/libre-franklin':
         specifier: ^5.1.2
         version: 5.1.2
-      '@fontsource-variable/space-grotesk':
-        specifier: ^5.1.1
-        version: 5.1.1
       '@fontsource/ibm-plex-mono':
         specifier: ^5.1.1
         version: 5.1.1
@@ -254,9 +251,6 @@ packages:
 
   '@fontsource-variable/libre-franklin@5.1.2':
     resolution: {integrity: sha512-gWb+JP/Xv6sjibTIwFFlCnGJ42mGQHh6cfLM0A31jpWqhcCFtVIkl6W3L9moQCDppgURN8LDBeZx8Sk/WBz+qw==}
-
-  '@fontsource-variable/space-grotesk@5.1.1':
-    resolution: {integrity: sha512-LTz+nIUdm7ZVY9ZlqRiTKqByi+tIcQUKaKONBVSxKRABPRgdnJOwiuqvHa+ac7Xs0ZorDBm7O0fmwHuOGT3HIw==}
 
   '@fontsource/ibm-plex-mono@5.1.1':
     resolution: {integrity: sha512-1aayqPe/ZkD3MlvqpmOHecfA3f2B8g+fAEkgvcCd3lkPP0pS1T0xG5Zmn2EsJQqr1JURtugPUH+5NqvKyfFZMQ==}
@@ -2198,8 +2192,6 @@ snapshots:
     optional: true
 
   '@fontsource-variable/libre-franklin@5.1.2': {}
-
-  '@fontsource-variable/space-grotesk@5.1.1': {}
 
   '@fontsource/ibm-plex-mono@5.1.1': {}
 
