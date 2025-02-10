@@ -4,7 +4,6 @@
 
 [[redirects]]
   from = "/fund-memo"
-  to = "https://pwv.notion.site/PWV-Fund-Memo-116b3e27e9b580cfb085e18e4281e407"
+  to = "https://fund.pwv.com/"
   status = 301
   force = true
-  
