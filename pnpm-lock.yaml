@@ -11,6 +11,9 @@ importers:
       '@astrojs/netlify':
         specifier: ^6.1.0
         version: 6.1.0(@types/node@22.13.1)(astro@5.2.5(@types/node@22.13.1)(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.34.6)(typescript@5.7.3))(jiti@2.4.2)(lightningcss@1.29.1)(rollup@4.34.6)
+      '@fontsource-variable/libre-franklin':
+        specifier: ^5.1.2
+        version: 5.1.2
       '@fontsource-variable/space-grotesk':
         specifier: ^5.1.1
         version: 5.1.1
@@ -248,6 +251,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@fontsource-variable/libre-franklin@5.1.2':
+    resolution: {integrity: sha512-gWb+JP/Xv6sjibTIwFFlCnGJ42mGQHh6cfLM0A31jpWqhcCFtVIkl6W3L9moQCDppgURN8LDBeZx8Sk/WBz+qw==}
 
   '@fontsource-variable/space-grotesk@5.1.1':
     resolution: {integrity: sha512-LTz+nIUdm7ZVY9ZlqRiTKqByi+tIcQUKaKONBVSxKRABPRgdnJOwiuqvHa+ac7Xs0ZorDBm7O0fmwHuOGT3HIw==}
@@ -2190,6 +2196,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.24.2':
     optional: true
+
+  '@fontsource-variable/libre-franklin@5.1.2': {}
 
   '@fontsource-variable/space-grotesk@5.1.1': {}
 
