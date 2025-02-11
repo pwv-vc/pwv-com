@@ -1,4 +1,5 @@
 ---
+import { getImage } from 'astro:assets';
 import '../styles/global.css';
 // Supports weights 100-900
 import '@fontsource-variable/libre-franklin';
@@ -10,9 +11,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const faviconURL = new URL('/favicon.png', Astro.site);
 const sitemapURL = new URL('/sitemap-index.xml', Astro.site);
 const rssURL = new URL('rss.xml', Astro.site);
-const siteImageURL = SITE_IMAGE ? new URL(SITE_IMAGE, Astro.site) : undefined;
 const title = SITE_TITLE;
 const description = SITE_DESCRIPTION;
+
+// Optimize image for OG tags if provided
+let optimizedImageURL;
+if (SITE_IMAGE) {
+  const optimizedImage = await getImage({
+    src: SITE_IMAGE,
+    width: 1200, // Recommended OG image width
+    height: 630, // Recommended OG image height
+    // format unspecified will use webp, avif, or original format
+  });
+  optimizedImageURL = new URL(optimizedImage.src, Astro.site);
+}
 ---
 
 <!doctype html>
@@ -38,13 +50,13 @@ const description = SITE_DESCRIPTION;
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    {siteImageURL && <meta property="og:image" content={siteImageURL} />}
+    {optimizedImageURL && <meta property="og:image" content={optimizedImageURL} />}
 
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    {siteImageURL && <meta property="twitter:image" content={siteImageURL} />}
+    {optimizedImageURL && <meta property="twitter:image" content={optimizedImageURL} />}
 
     <script defer data-domain="pwv.com" src="https://plausible.io/js/script.js"
     ></script>
