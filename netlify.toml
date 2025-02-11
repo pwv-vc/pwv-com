@@ -7,3 +7,9 @@
   to = "https://fund.pwv.com/"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/teaser-deck"
+  to = "https://pwv.docsend.com/v/mvzp8/pwv-teaser-deck"
+  status = 301
+  force = true
