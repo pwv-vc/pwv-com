@@ -19,3 +19,15 @@
   to = "https://pwv.docsend.com/v/mvzp8/pwv-teaser-deck"
   status = 301
   force = true
+  
+[[redirects]]
+  from = "/data-room"
+  to = "https://pwv.docsend.com/view/s/4iy3dfkzkgffqt4p"
+  status = 301
+  force = true
+  
+[[redirects]]
+  from = "/dataroom"
+  to = "https://pwv.docsend.com/view/s/4iy3dfkzkgffqt4p"
+  status = 301
+  force = true
