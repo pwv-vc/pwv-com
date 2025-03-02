@@ -227,5 +227,13 @@
     "tags": [
       "energy"
     ]
+  },
+  {
+    "name": "StackOne",
+    "slug": "stackone",
+    "url": "https://www.stackone.com/",
+    "tags": [
+      "saas"
+    ]
   }
 ]
