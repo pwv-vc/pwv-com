@@ -1,14 +1,11 @@
 ---
-import { Image } from 'astro:assets';
-import logo from '../assets/logo.svg';
+import Logo from '../assets/logo.svg';
 ---
 
 <header id="about" class="flex flex-col items-center">
-  <Image
-    src={logo}
-    alt="PWV Logo"
+  <Logo
     class="w-logo-small sm:w-logo-medium md:w-logo-large"
-    width={200}
+    width="300"
   />
 
 </header>
