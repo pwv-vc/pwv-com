@@ -15,7 +15,7 @@ const sortedAngelPortfolio = angelPortfolio.sort((a, b) =>
 
 <section id="portfolio" class="my-4">
   <h3 class="text-2xl font-bold my-8 text-[var(--pwv-blue)] font-serif">PWV Investments <span class="font-normal">(representative)</span></h3>
-  <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     {
       sortedRepresentativePortfolio.map((company) => (
         <PortfolioCompanyCard
@@ -28,7 +28,7 @@ const sortedAngelPortfolio = angelPortfolio.sort((a, b) =>
   </div>
 
   <h3 class="text-2xl font-bold my-8 text-[var(--pwv-blue)] font-serif">Tom's Angel Investments <span class="font-normal">(representative, 2012–2022)</span></h3>
-  <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     {
       sortedAngelPortfolio.map((company) => (
         <PortfolioCompanyCard
