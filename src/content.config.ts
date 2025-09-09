@@ -48,11 +48,12 @@ const library = defineCollection({
     z.object({
       title: z.string(),
       description: z.string(),
+      author: z.string().optional(),
       // if a url is provided, it will be used to link to a remote resource
       url: z.string().url().optional(),
       // Transform string to Date objects
-      pubDate: z.coerce.date(),
-      updatedDate: z.coerce.date().optional(),
+      pubDate: z.string().transform((str) => new Date(str)),
+      updatedDate: z.string().transform((str) => new Date(str)).optional(),
       // if a hero image is provided, it will be used to display an image in the library
       // if no hero image is provided, the library item will display a placeholder image
       heroImage: image().optional(),

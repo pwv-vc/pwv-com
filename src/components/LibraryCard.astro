@@ -1,0 +1,77 @@
+---
+import { Image } from '@unpic/astro';
+import FormattedDate from './FormattedDate.astro';
+import { getReadingTime } from '../lib/library';
+
+export interface Props {
+  post: {
+    id: string;
+    data: {
+      title: string;
+      description: string;
+      pubDate: Date;
+      heroImage?: any; // Astro image type
+      url?: string;
+      author?: string;
+      tags?: string[];
+      updatedDate?: Date;
+    };
+    body?: string;
+  };
+  size?: 'small' | 'large';
+}
+
+const { post, size = 'large' } = Astro.props;
+
+const isSmall = size === 'small';
+const imageHeight = isSmall ? 'h-32' : 'h-48';
+const padding = isSmall ? 'p-4' : 'p-6';
+const titleSize = isSmall ? 'text-sm' : 'text-lg';
+const descriptionSize = isSmall ? 'text-xs' : 'text-sm';
+const buttonSize = isSmall ? 'text-xs px-3 py-2' : 'text-sm px-4 py-2';
+const iconSize = isSmall ? 'w-3 h-3' : 'w-4 h-4';
+const dateSize = isSmall ? 'text-xs' : 'text-sm';
+const marginBottom = isSmall ? 'mb-4' : 'mb-5';
+---
+
+<article class={`${marginBottom} bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300`}>
+  <div class="flex flex-col">
+    {post.data.heroImage && (
+      <div class={`w-full ${imageHeight} overflow-hidden`}>
+        <Image
+          src={post.data.heroImage}
+          alt={post.data.title}
+          class="w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+    )}
+    <div class={`${padding} flex flex-col`}>
+      <div class={`flex items-center gap-2 ${dateSize} text-gray-500 ${isSmall ? 'mb-2' : 'mb-3'}`}>
+        <FormattedDate date={post.data.pubDate} />
+        <span>•</span>
+        <span>ARTICLE</span>
+      </div>
+      <h2 class={`${titleSize} font-bold text-gray-900 ${isSmall ? 'mb-2' : 'mb-3'} leading-tight`}>
+        {post.data.title}
+      </h2>
+      <p class={`${descriptionSize} text-gray-600 leading-relaxed ${isSmall ? 'mb-3' : 'mb-4'}`}>
+        {post.data.description}
+      </p>
+    </div>
+    <div class={`${padding} pt-0`}>
+      <a
+        href={post.data.url || `/library/${post.id}`}
+        class={`inline-flex items-center gap-2 bg-orange-500 text-white ${buttonSize} rounded-lg font-medium hover:bg-orange-600 transition-colors w-fit`}
+      >
+        <svg class={iconSize} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
+        </svg>
+        READ {getReadingTime(post.body)} MIN
+        <svg class={iconSize} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</article>

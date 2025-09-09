@@ -1,0 +1,41 @@
+---
+import { getRecentLibraryPosts } from '../lib/library';
+import LibraryCard from './LibraryCard.astro';
+
+const recentPosts = await getRecentLibraryPosts(6);
+---
+
+<div class="max-w-none">
+  <div class="mb-8">
+    <h2 class="text-3xl font-bold text-gray-900 mb-2">Recent Library Posts</h2>
+    <p class="text-gray-600">Latest insights and thoughts from PWV</p>
+  </div>
+
+  <!-- Masonry Layout with Varying Heights -->
+  <div class="-ml-4 flex mb-6">
+    <div class="pl-4 w-full md:w-1/2 lg:w-1/3">
+      {recentPosts.filter((_, index) => index % 3 === 0).map((post, index) => (
+        <LibraryCard post={post} size="small" />
+      ))}
+    </div>
+    <div class="pl-4 w-full md:w-1/2 lg:w-1/3">
+      {recentPosts.filter((_, index) => index % 3 === 1).map((post, index) => (
+        <LibraryCard post={post} size="small" />
+      ))}
+    </div>
+    <div class="pl-4 w-full md:w-1/2 lg:w-1/3">
+      {recentPosts.filter((_, index) => index % 3 === 2).map((post, index) => (
+        <LibraryCard post={post} size="small" />
+      ))}
+    </div>
+  </div>
+
+  <div class="text-center">
+    <a href="/library" class="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-medium transition-colors">
+      View all library posts
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      </svg>
+    </a>
+  </div>
+</div>

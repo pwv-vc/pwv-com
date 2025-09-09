@@ -15,6 +15,7 @@
     "@fontsource/ibm-plex-mono": "^5.2.5",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.0.9",
+    "@unpic/astro": "^1.0.1",
     "astro": "^5.13.6",
     "clsx": "^2.1.1",
     "dotenv": "^16.4.7",

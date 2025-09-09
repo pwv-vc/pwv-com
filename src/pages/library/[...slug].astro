@@ -1,15 +1,17 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
+import { type CollectionEntry } from 'astro:content';
 import { render } from 'astro:content';
-import { Image } from 'astro:assets';
+import { Image } from '@unpic/astro';
 import Layout from '../../layouts/Layout.astro';
 import PlaceholderImage from '../../components/PlaceholderImage.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { getAllLibraryPosts, getReadingTime } from '../../lib/library';
 
 // if Netlify output is server, then *must* be true
 // export const prerender = true;
 
 export async function getStaticPaths() {
-  const posts = await getCollection('library');
+  const posts = await getAllLibraryPosts();
   return posts.map((post) => ({
     params: { slug: post.id },
     props: post,
@@ -35,6 +37,28 @@ const { Content } = await render(post);
         class="w-full h-64 rounded-lg mb-8"
       />
     )}
+    <h2 class="text-2xl font-bold my-2">{post.data.title}</h2>
+    <h2 class="text-lg text-gray-500 my-2">
+      {post.data.description}
+    </h2>
+    <h3>{post.data.author}</h3>
+    <div class="flex justify-between items-center pt-4">
+      <div class="flex flex-wrap gap-2">
+        {
+          post.data.tags.map((tag) => (
+            <a
+              href={`/blog/tag/${encodeURIComponent(tag)}`}
+              class="p-1 bg-white hover:bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-500 hover:text-gray-900 hover:underline"
+            >
+              {tag}
+            </a>
+          ))
+        }
+      </div>
+      <p class="text-sm whitespace-nowrap ml-auto">
+        🗓️ <FormattedDate date={post.data.pubDate} />
+      </p>
+    </div>
 
     <Content />
   </div>
