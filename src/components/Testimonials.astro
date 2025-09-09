@@ -3,17 +3,25 @@ import { getCollection } from 'astro:content';
 import TestimonialCard from './TestimonialCard.astro';
 
 const testimonials = await getCollection('testimonials');
-const sortedTestimonials = testimonials.sort((a, b) =>
-  a.data.name.localeCompare(b.data.name)
-);
+const sortedTestimonials = testimonials.sort((a, b) => {
+  // Sort by quote length (shorter first) to get better top alignment
+  const lengthA = a.data.quote.length;
+  const lengthB = b.data.quote.length;
+  if (lengthA !== lengthB) {
+    return lengthA - lengthB;
+  }
+  // If same length, sort by name
+  return a.data.name.localeCompare(b.data.name);
+});
 ---
 
 <section id="testimonials" class="my-8">
   <h2 class="text-2xl lg:text-3xl font-bold my-4 text-[var(--pwv-blue)] font-serif">What Founders Say About Us</h2>
 
-  <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-2 my-4">
-    {
-      sortedTestimonials.map((testimonial) => (
+  <!-- Masonry Layout with CSS Columns -->
+  <div class="columns-1 md:columns-2 lg:columns-3 gap-6 my-4" style="column-rule: none; column-fill: auto;">
+    {sortedTestimonials.map((testimonial) => (
+      <div class="break-inside-avoid mb-6">
         <TestimonialCard
           name={testimonial.data.name}
           title={testimonial.data.title}
@@ -21,7 +29,7 @@ const sortedTestimonials = testimonials.sort((a, b) =>
           quote={testimonial.data.quote}
           url={testimonial.data.url}
         />
-      ))
-    }
+      </div>
+    ))}
   </div>
 </section>
