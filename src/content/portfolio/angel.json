@@ -44,7 +44,8 @@
     "name": "Weights & Biases",
     "url": "https://www.wandb.ai/",
     "tags": [
-      "ai"
+      "ai",
+      "acquired"
     ],
     "slug": "weights-and-biases"
   },
