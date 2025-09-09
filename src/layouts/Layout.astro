@@ -4,7 +4,8 @@ import '../styles/global.css';
 // Supports weights 100-900
 import '@fontsource-variable/libre-franklin';
 import '@fontsource/ibm-plex-mono';
-
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_IMAGE } from '../consts';
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -64,6 +65,10 @@ if (SITE_IMAGE) {
     <title>PWV</title>
 	</head>
 	<body>
+    <main class="mx-auto my-12 max-w-screen-lg px-4 sm:px-6 lg:px-8 min-h-dvh">
+      <Header />
 		<slot />
+  </main>
+  <Footer />
 	</body>
 </html>

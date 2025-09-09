@@ -1,7 +1,7 @@
 // 1. Import utilities from `astro:content`
 import { defineCollection, z } from 'astro:content';
 
-import { file } from 'astro/loaders';
+import { file, glob } from 'astro/loaders';
 
 const portfolioSchema = z.object({
   name: z.string(),
@@ -38,9 +38,32 @@ const testimonials = defineCollection({
   }),
 });
 
+
+
+const library = defineCollection({
+  // Load Markdown and MDX files in the `src/content/library/` directory.
+  loader: glob({ base: './src/content/library', pattern: '**/*.{md,mdx}' }),
+  // Type-check frontmatter using a schema
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      // if a url is provided, it will be used to link to a remote resource
+      url: z.string().url().optional(),
+      // Transform string to Date objects
+      pubDate: z.coerce.date(),
+      updatedDate: z.coerce.date().optional(),
+      // if a hero image is provided, it will be used to display an image in the library
+      // if no hero image is provided, the library item will display a placeholder image
+      heroImage: image().optional(),
+      tags: z.array(z.string()),
+    }),
+});
+
 export const collections = {
   representativePortfolio,
   rollingFundPortfolio,
   angelPortfolio,
   testimonials,
+  library,
 };

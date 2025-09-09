@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from "../../layouts/Layout.astro";
+import { Image } from 'astro:assets';
+import "../../styles/global.css";
+import PlaceholderImage from "../../components/PlaceholderImage.astro";
+const library = (await getCollection('library')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+---
+
+<Layout>
+  <div class="prose prose-lg max-w-none">
+    <h1>Library</h1>
+    {library.map(post => (
+      <div class="mb-8">
+    {post.data.heroImage ? (
+      <Image
+        src={post.data.heroImage}
+        alt={post.data.title}
+        class="w-full h-64 object-cover rounded-lg mb-8"
+        loading="eager"
+      />
+    ) : (
+      <PlaceholderImage
+        alt={`Hero image for ${post.data.title}`}
+        class="w-full h-64 rounded-lg mb-8"
+      />
+    )}
+        <h2>{post.data.title}</h2>
+        <p>{post.data.description}</p>
+        <a href={`/library/${post.id}`} class="text-blue-600 hover:text-blue-800 underline">Read more</a>
+      </div>
+    ))}
+  </div>
+</Layout>
