@@ -44,9 +44,9 @@
     ]
   },
   {
-    "name": "Gitpod",
-    "slug": "gitpod",
-    "url": "https://www.gitpod.io/",
+    "name": "Ona (formerly Gitpod)",
+    "slug": "ona",
+    "url": "https://www.ona.com/",
     "tags": [
       "dev tools",
       "board seat"
