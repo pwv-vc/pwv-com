@@ -4,8 +4,8 @@ description: "Like many developers, I’ve spent most of the past year vibe codi
 author: "Ayman Nadeem"
 pubDate: '2025-08-01'
 updatedDate: '2025-08-01'
-
+heroImage: '../../images/library/external-vibe-coding-to-chomksy-will-linguistics-pop-off-in-a-world-full-of-prompting/banner_16_9-1.png'
 url: "https://www.aymannadeem.com/artificial/intelligence,/programming/languages/2025/08/01/vibe-coding-to-chomsky.html?ref=pwv.com"
-tags: [ "aymannadeem", "external"]
+tags: [ "aymannadeem"]
 ---
 
