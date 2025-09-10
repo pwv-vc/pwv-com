@@ -1,6 +1,7 @@
 ---
 import clsx from 'clsx';
 import { Image as UnpicImage } from '@unpic/astro';
+import { resolveImageSrc } from '../lib/images';
 
 interface Props {
   name: string;
@@ -47,7 +48,7 @@ const getTagStyle = (tag: string) => {
 <div class="flex flex-col gap-2 py-1">
   <a href={url} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-sm text-[var(--pwv-blue)] font-mono font-bold hover:underline">
     <UnpicImage
-      src={`/src/images/logos/small/${slug}.png`}
+      src={resolveImageSrc(`logos/small/${slug}.png`)}
       alt={`${name} logo`}
       width={24}
       height={24}

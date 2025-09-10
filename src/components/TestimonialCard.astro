@@ -1,5 +1,6 @@
 ---
 import { Image as UnpicImage } from '@unpic/astro';
+import { resolveImageSrc } from '../lib/images';
 
 interface Props {
   name: string;
@@ -26,7 +27,7 @@ const { name, title, company, quote, url, companySlug } = Astro.props;
         <div class="w-4 h-4 bg-gray-300 rounded flex-shrink-0"></div>
       ) : (
         <UnpicImage
-          src={`/src/images/logos/small/${companySlug}.png`}
+          src={resolveImageSrc(`logos/small/${companySlug}.png`)}
           alt={`${company} logo`}
           width={16}
           height={16}
