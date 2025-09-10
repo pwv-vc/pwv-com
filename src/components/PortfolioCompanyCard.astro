@@ -31,7 +31,7 @@ const dotColors: TagColors = {
 
 // Helper function to get tag styles based on category
 const getTagStyle = (tag: string) => {
-  const baseStyle = ' text-xs inline-flex items-center mx-1 gap-1.5 px-3 py-1 rounded-full bg-gray-50/50 text-gray-600 text-sm border border-gray-100';
+  const baseStyle = ' text-xs inline-flex items-center mx-1 gap-1.5 px-3 py-1 rounded-full bg-white text-gray-600 text-sm border border-gray-100';
   return {
     container: baseStyle,
     dot: `w-1.5 h-1.5 rounded-full ${dotColors[tag.toLowerCase()] || 'bg-gray-400'}`
@@ -40,7 +40,7 @@ const getTagStyle = (tag: string) => {
 ---
 
 <div class="flex items-center gap-2 py-1">
-  <a href={url} target="_blank" rel="noopener noreferrer" class="text-sm font-mono font-medium hover:underline">
+  <a href={url} target="_blank" rel="noopener noreferrer" class="text-sm text-[var(--pwv-blue)] font-mono font-bold hover:underline">
     {name}
   </a>
   <div class="flex gap-0">
