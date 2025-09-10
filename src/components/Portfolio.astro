@@ -1,44 +1,24 @@
 ---
 import { getCollection } from 'astro:content';
-import PortfolioCompanyCard from './PortfolioCompanyCard.astro';
+import PortfolioSection from './PortfolioSection.astro';
 
 const representativePortfolio = await getCollection('representativePortfolio');
-const sortedRepresentativePortfolio = representativePortfolio.sort((a, b) =>
-  a.data.name.localeCompare(b.data.name)
-);
-
 const angelPortfolio = await getCollection('angelPortfolio');
-const sortedAngelPortfolio = angelPortfolio.sort((a, b) =>
-  a.data.name.localeCompare(b.data.name)
-);
 ---
 
 <section id="portfolio" class="my-4">
-  <h3 class="text-2xl font-bold my-8 text-[var(--pwv-blue)] font-serif">PWV Investments <span class="font-normal">(representative)</span></h3>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 bg-neutral-50 rounded-lg border border-gray-200">
-    {
-      sortedRepresentativePortfolio.map((company) => (
-        <PortfolioCompanyCard
-          name={company.data.name}
-          url={company.data.url}
-          tags={company.data.tags}
-        />
-      ))
-    }
-  </div>
+  <PortfolioSection
+    title="PWV Investments"
+    caption="(representative)"
+    portfolio={representativePortfolio}
+  />
 
-  <h3 class="text-2xl font-bold my-8 text-[var(--pwv-blue)] font-serif">Tom's Angel Investments <span class="font-normal">(representative, 2012–2022)</span></h3>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 bg-neutral-50 rounded-lg border border-gray-200">
-    {
-      sortedAngelPortfolio.map((company) => (
-        <PortfolioCompanyCard
-          name={company.data.name}
-          url={company.data.url}
-          tags={company.data.tags}
-        />
-      ))
-    }
-  </div>
+  <PortfolioSection
+    title="Tom's Angel Investments"
+    caption="(representative, 2012–2022)"
+    portfolio={angelPortfolio}
+  />
+
   <p class="text-sm text-gray-500 my-8">
     These lists are non-exhaustive representations of the complete, separate investment portfolios of Tom Preston-Werner and PWV.
   </p>

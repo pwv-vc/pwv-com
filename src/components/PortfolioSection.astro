@@ -1,0 +1,30 @@
+---
+import PortfolioCompanyCard from './PortfolioCompanyCard.astro';
+
+interface Props {
+  title: string;
+  caption?: string;
+  portfolio: any[];
+}
+
+const { title, caption, portfolio } = Astro.props;
+
+const sortedPortfolio = portfolio.sort((a, b) =>
+  a.data.name.localeCompare(b.data.name)
+);
+---
+
+<h3 class="text-2xl font-bold my-8 text-[var(--pwv-blue)] font-serif">
+  {title} {caption && <span class="font-normal text-md">{caption}</span>}
+</h3>
+<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-6 p-6 bg-neutral-50 rounded-lg border border-gray-200">
+  {
+    sortedPortfolio.map((company) => (
+      <PortfolioCompanyCard
+        name={company.data.name}
+        url={company.data.url}
+        tags={company.data.tags}
+      />
+    ))
+  }
+</div>

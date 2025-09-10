@@ -5,7 +5,8 @@ import SmartImage from '../../components/SmartImage.astro';
 import Layout from '../../layouts/Layout.astro';
 import PlaceholderImage from '../../components/PlaceholderImage.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
-import { getAllLibraryPosts, getReadingTime } from '../../lib/library';
+import PostNavigation from '../../components/PostNavigation.astro';
+import { getAllLibraryPosts, getReadingTime, getPostNavigation } from '../../lib/library';
 
 // if Netlify output is server, then *must* be true
 // export const prerender = true;
@@ -21,6 +22,7 @@ type Props = CollectionEntry<'library'>;
 
 const post = Astro.props;
 const { Content } = await render(post);
+const { nextPost, previousPost } = await getPostNavigation(post.id);
 ---
 <Layout>
   <div class="prose prose-lg max-w-screen-xl mx-auto">
@@ -42,8 +44,7 @@ const { Content } = await render(post);
         />
       )}
     </div>
-    <h2 class="text-2xl font-bold my-2">{post.data.title}</h2>
-    <h3 class="text-lg text-gray-500 my-2">
+    <h3 class="text-gray-500 my-2">
       {post.data.description}
     </h3>
     <h4>{post.data.author}</h4>
@@ -61,5 +62,12 @@ const { Content } = await render(post);
     </div>
     <hr />
     <Content />
+
+    <!-- Post Navigation -->
+    <PostNavigation
+      currentPost={post}
+      nextPost={nextPost}
+      previousPost={previousPost}
+    />
   </div>
 </Layout>

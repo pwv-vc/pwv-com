@@ -2,7 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import "../../styles/global.css";
 import { getAllLibraryPosts } from "../../lib/library";
-import LibraryCard from "../../components/LibraryCard.astro";
+import PostsGrid from "../../components/PostsGrid.astro";
 
 const library = await getAllLibraryPosts();
 ---
@@ -14,23 +14,6 @@ const library = await getAllLibraryPosts();
       <p class="text-lg text-gray-600">Insights, thoughts, and perspectives from PWV</p>
     </div>
 
-    <!-- Masonry Layout with Varying Heights -->
-    <div class="-ml-5 flex">
-      <div class="pl-5 w-full md:w-1/2 lg:w-1/3">
-        {library.filter((_, index) => index % 3 === 0).map((post, index) => (
-          <LibraryCard post={post} size="large" />
-        ))}
-      </div>
-      <div class="pl-5 w-full md:w-1/2 lg:w-1/3">
-        {library.filter((_, index) => index % 3 === 1).map((post, index) => (
-          <LibraryCard post={post} size="large" />
-        ))}
-      </div>
-      <div class="pl-5 w-full md:w-1/2 lg:w-1/3">
-        {library.filter((_, index) => index % 3 === 2).map((post, index) => (
-          <LibraryCard post={post} size="large" />
-        ))}
-      </div>
-    </div>
+    <PostsGrid posts={library} size="large" />
   </div>
 </Layout>

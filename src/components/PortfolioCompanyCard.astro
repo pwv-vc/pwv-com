@@ -39,11 +39,11 @@ const getTagStyle = (tag: string) => {
 };
 ---
 
-<div class="flex items-center gap-2 py-1">
-  <a href={url} target="_blank" rel="noopener noreferrer" class="text-sm text-[var(--pwv-blue)] font-mono font-bold hover:underline">
+<div class="flex flex-col gap-2 py-1">
+  <a href={url} target="_blank" rel="noopener noreferrer" class="text-sm text-[var(--pwv-blue)] font-mono font-bold hover:underline whitespace-nowrap">
     {name}
   </a>
-  <div class="flex gap-0">
+  <div class="flex flex-wrap gap-1">
     {tags.map(tag => {
       const styles = getTagStyle(tag);
       return (

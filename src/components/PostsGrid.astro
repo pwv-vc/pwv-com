@@ -1,0 +1,17 @@
+---
+import LibraryCard from './LibraryCard.astro';
+
+export interface Props {
+  posts: any[];
+  size?: 'large' | 'small';
+}
+
+const { posts, size = 'large' } = Astro.props;
+---
+
+<!-- Basic Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  {posts.map((post) => (
+    <LibraryCard post={post} size={size} />
+  ))}
+</div>

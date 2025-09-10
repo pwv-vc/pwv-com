@@ -38,3 +38,25 @@ export async function getLibraryPostBySlug(slug: string) {
   const allPosts = await getAllLibraryPosts();
   return allPosts.find(post => post.id === slug);
 }
+
+/**
+ * Get next and previous posts for navigation
+ * @param currentSlug - The slug of the current post
+ * @returns Object containing next and previous posts
+ * Note: Posts are sorted newest first, so:
+ * - previousPost = newer post (index - 1)
+ * - nextPost = older post (index + 1)
+ */
+export async function getPostNavigation(currentSlug: string) {
+  const allPosts = await getAllLibraryPosts();
+  const currentIndex = allPosts.findIndex(post => post.id === currentSlug);
+
+  if (currentIndex === -1) {
+    return { nextPost: undefined, previousPost: undefined };
+  }
+
+  return {
+    previousPost: currentIndex > 0 ? allPosts[currentIndex - 1] : undefined,
+    nextPost: currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : undefined
+  };
+}

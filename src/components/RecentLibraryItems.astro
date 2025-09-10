@@ -1,6 +1,6 @@
 ---
 import { getRecentLibraryPosts } from '../lib/library';
-import LibraryCard from './LibraryCard.astro';
+import PostsGrid from './PostsGrid.astro';
 
 const recentPosts = await getRecentLibraryPosts(6);
 ---
@@ -10,23 +10,8 @@ const recentPosts = await getRecentLibraryPosts(6);
     <h2 class="text-2xl lg:text-3xl font-bold my-4 text-[var(--pwv-blue)] font-serif">Latest insights and thoughts</h2>
   </div>
 
-  <!-- Masonry Layout with Varying Heights -->
-  <div class="-ml-4 flex mb-6">
-    <div class="pl-4 w-full md:w-1/2 lg:w-1/3">
-      {recentPosts.filter((_, index) => index % 3 === 0).map((post, index) => (
-        <LibraryCard post={post} size="small" />
-      ))}
-    </div>
-    <div class="pl-4 w-full md:w-1/2 lg:w-1/3">
-      {recentPosts.filter((_, index) => index % 3 === 1).map((post, index) => (
-        <LibraryCard post={post} size="small" />
-      ))}
-    </div>
-    <div class="pl-4 w-full md:w-1/2 lg:w-1/3">
-      {recentPosts.filter((_, index) => index % 3 === 2).map((post, index) => (
-        <LibraryCard post={post} size="small" />
-      ))}
-    </div>
+  <div class="mb-6">
+    <PostsGrid posts={recentPosts} size="large" />
   </div>
 
   <div class="text-center">
