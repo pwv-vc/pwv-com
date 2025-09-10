@@ -1,51 +1,56 @@
-# Favicon Download Script
+# Scripts
 
-This script downloads favicons for portfolio companies using Google's favicon service and saves them to the `src/images/logos/small/` directory.
+This directory contains utility scripts for the PWV website.
 
-## Usage
+## fetch-external-content.js
 
-### Using npm/pnpm script (recommended):
+A script to fetch content from external URLs and create library posts with proper metadata and images.
+
+### Usage
+
 ```bash
-# Download favicons for rolling fund companies
-pnpm run download-favicons rolling-fund.json
+# Using npm script
+pnpm run fetch-external "https://example.com/article"
 
-# Download favicons for representative companies
-pnpm run download-favicons representative.json
-
-# Download favicons for all companies
-pnpm run download-favicons all
+# Or directly with node
+node scripts/fetch-external-content.js "https://example.com/article"
 ```
 
-### Using Node.js directly:
+### What it does
+
+1. **Fetches HTML content** from the provided URL
+2. **Extracts metadata** including:
+   - Title (cleaned up, removes site names and separators)
+   - Description (cleaned up, removes "Read more" text)
+   - Author (from meta tags or content)
+   - Publication date (formatted as YYYY-MM-DD)
+   - Open Graph image URL
+3. **Downloads and saves images** locally in `src/images/library/external-{slug}/`
+4. **Generates a markdown file** in `src/content/library/` with:
+   - Proper frontmatter matching the content collection schema
+   - External URL with `?ref=pwv.com` parameter
+   - Tags including the site name and "external"
+   - Filename prefixed with "external-"
+
+### Example
+
 ```bash
-# Download favicons for rolling fund companies
-node scripts/download-favicons.js rolling-fund.json
-
-# Download favicons for representative companies
-node scripts/download-favicons.js representative.json
-
-# Download favicons for all companies
-node scripts/download-favicons.js all
+pnpm run fetch-external "https://www.aalo.com/post/aalo-closes-100m-series-b"
 ```
 
-## How it works
+This creates:
+- `src/content/library/external-aalo-closes-100m-series-b.md`
+- `src/images/library/external-aalo-closes-100m-series-b/banner_16_9-1.png` (if OG image exists)
 
-1. Parses the specified JSON file(s) from `src/content/portfolio/`
-2. Extracts the `url` and `slug` from each company entry
-3. Uses Google's favicon service to fetch favicons: `https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url={URL}&size=64`
-4. Saves each favicon as `{slug}.png` in `src/images/logos/small/`
+### Requirements
 
-## Features
+- Node.js with ES modules support
+- `jsdom` package (installed as dev dependency)
 
-- ✅ Downloads 64x64 PNG favicons
-- ✅ Uses company slug as filename
-- ✅ Handles errors gracefully
-- ✅ Shows progress and success/failure status
-- ✅ Adds small delays between requests to be respectful to the service
-- ✅ Creates output directory if it doesn't exist
-- ✅ Supports both individual files and batch processing
+### Features
 
-## Output
-
-Favicons are saved as PNG files in `src/images/logos/small/` with filenames matching the company slugs from the JSON files.
-
+- **Smart metadata extraction**: Tries multiple methods to find title, description, author, and date
+- **Image handling**: Downloads Open Graph images and saves them locally with proper naming
+- **Clean formatting**: Removes unnecessary text from titles and descriptions
+- **Error handling**: Graceful fallbacks for missing metadata
+- **URL tracking**: Adds `?ref=pwv.com` to track external links

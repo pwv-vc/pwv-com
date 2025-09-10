@@ -7,7 +7,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "download-favicons": "node scripts/download-favicons.js"
+    "download-favicons": "node scripts/download-favicons.js",
+    "fetch-external": "node scripts/fetch-external-content.js"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.5",
@@ -26,6 +27,7 @@
   "packageManager": "pnpm@9.10.0+sha512.73a29afa36a0d092ece5271de5177ecbf8318d454ecd701343131b8ebc0c1a91c487da46ab77c8e596d6acf1461e3594ced4becedf8921b074fbd8653ed7051c",
   "devDependencies": {
     "@types/node": "^22.13.8",
+    "jsdom": "^25.0.1",
     "prettier": "^3.5.2",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.11"
