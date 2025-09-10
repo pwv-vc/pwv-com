@@ -35,6 +35,7 @@ const testimonials = defineCollection({
     url: z.string().url().optional(),
     tags: z.array(z.string()),
     slug: z.string(),
+    'company-slug': z.string(),
   }),
 });
 

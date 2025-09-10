@@ -1,13 +1,16 @@
 ---
+import { Image as UnpicImage } from '@unpic/astro';
+
 interface Props {
   name: string;
   title: string;
   company: string;
   quote: string;
   url?: string;
+  companySlug: string;
 }
 
-const { name, title, company, quote, url } = Astro.props;
+const { name, title, company, quote, url, companySlug } = Astro.props;
 ---
 
 <div class="p-4 bg-white rounded-lg flex flex-col h-full border border-gray-200">
@@ -18,15 +21,28 @@ const { name, title, company, quote, url } = Astro.props;
     <cite class="font-semibold not-italic text-[var(--pwv-blue)]">
       {name}
     </cite>
-    <span class="text-sm text-gray-600">
-      {title},{' '}
-      {url ? (
-        <a href={url} class="text-gray-800 hover:underline">
-          {company}
-        </a>
+    <div class="flex items-center gap-2 text-sm text-gray-600">
+      {companySlug === 'anonymous' ? (
+        <div class="w-4 h-4 bg-gray-300 rounded flex-shrink-0"></div>
       ) : (
-        company
+        <UnpicImage
+          src={`/src/images/logos/small/${companySlug}.png`}
+          alt={`${company} logo`}
+          width={16}
+          height={16}
+          class="flex-shrink-0 border border-gray-100 bg-white"
+        />
       )}
-    </span>
+      <span>
+        {title},{' '}
+        {url ? (
+          <a href={url} class="text-gray-800 hover:underline">
+            {company}
+          </a>
+        ) : (
+          company
+        )}
+      </span>
+    </div>
   </div>
 </div>
