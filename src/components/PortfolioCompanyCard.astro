@@ -1,13 +1,18 @@
 ---
 import clsx from 'clsx';
+import { Image as UnpicImage } from '@unpic/astro';
 
 interface Props {
   name: string;
   url: string;
   tags: string[];
+  slug: string;
 }
 
-const { name, url, tags } = Astro.props;
+const { name, url, tags, slug } = Astro.props;
+
+// Companies that need black background for their logos
+const blackBackgroundSlugs = ['beta'];
 
 type TagColors = {
   [key: string]: string;
@@ -40,8 +45,15 @@ const getTagStyle = (tag: string) => {
 ---
 
 <div class="flex flex-col gap-2 py-1">
-  <a href={url} target="_blank" rel="noopener noreferrer" class="text-sm text-[var(--pwv-blue)] font-mono font-bold hover:underline whitespace-nowrap">
-    {name}
+  <a href={url} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-sm text-[var(--pwv-blue)] font-mono font-bold hover:underline">
+    <UnpicImage
+      src={`/src/images/logos/small/${slug}.png`}
+      alt={`${name} logo`}
+      width={24}
+      height={24}
+      class={`flex-shrink-0 border border-gray-100 ${blackBackgroundSlugs.includes(slug) ? 'bg-black' : 'bg-white'}`}
+    />
+    <span class="whitespace-nowrap">{name}</span>
   </a>
   <div class="flex flex-wrap gap-1">
     {tags.map(tag => {
