@@ -1,5 +1,5 @@
 ---
-import { Image } from '@unpic/astro';
+import SmartImage from './SmartImage.astro';
 import FormattedDate from './FormattedDate.astro';
 import { getReadingTime } from '../lib/library';
 
@@ -38,10 +38,13 @@ const marginBottom = isSmall ? 'mb-4' : 'mb-5';
   <div class="flex flex-col">
     {post.data.heroImage && (
       <div class={`w-full ${imageHeight} overflow-hidden border-b border-gray-200`}>
-        <Image
+        <SmartImage
           src={post.data.heroImage}
           alt={post.data.title}
-          class="w-full h-full object-cover"
+          size={isSmall ? 'sm' : 'md'}
+          rounded={false}
+          shadow={false}
+          class="h-full"
           loading="lazy"
         />
       </div>
