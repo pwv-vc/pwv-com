@@ -35,7 +35,7 @@ const marginBottom = isSmall ? 'mb-4' : 'mb-5';
 ---
 
 <article class={`${marginBottom} bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300`}>
-  <div class="flex flex-col">
+  <div class="flex flex-col h-full">
     {post.data.heroImage && (
       <div class={`w-full ${imageHeight} overflow-hidden border-b border-gray-200`}>
         <SmartImage
@@ -49,32 +49,30 @@ const marginBottom = isSmall ? 'mb-4' : 'mb-5';
         />
       </div>
     )}
-    <div class={`${padding} flex flex-col`}>
+    <div class={`${padding} flex flex-col flex-grow`}>
       <div class={`flex items-center gap-2 ${dateSize} text-gray-500 ${isSmall ? 'mb-2' : 'mb-3'}`}>
         <FormattedDate date={post.data.pubDate} />
-        <span>•</span>
-        <span>ARTICLE</span>
       </div>
-      <h2 class={`${titleSize} font-bold text-gray-900 ${isSmall ? 'mb-2' : 'mb-3'} leading-tight`}>
+      <h2 class={`${titleSize} font-bold text-[var(--pwv-blue)] ${isSmall ? 'mb-2' : 'mb-3'} leading-tight`}>
         {post.data.title}
       </h2>
-      <p class={`${descriptionSize} text-gray-600 leading-relaxed ${isSmall ? 'mb-3' : 'mb-4'}`}>
+      <p class={`${descriptionSize} text-gray-600 leading-relaxed ${isSmall ? 'mb-3' : 'mb-4'} flex-grow`}>
         {post.data.description}
       </p>
-    </div>
-    <div class={`${padding} pt-0`}>
-      <a
-        href={post.data.url || `/library/${post.id}`}
-        class={`inline-flex items-center gap-2 bg-orange-500 text-white ${buttonSize} rounded-lg font-medium hover:bg-orange-600 transition-colors w-fit`}
-      >
-        <svg class={iconSize} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path>
-        </svg>
-        READ {getReadingTime(post.body)} MIN
-        <svg class={iconSize} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-        </svg>
-      </a>
+      <div class="mt-auto text-center">
+        <a
+          href={post.data.url || `/library/${post.id}`}
+          class={`inline-flex items-center gap-2 bg-[var(--pwv-blue)] text-white ${buttonSize} rounded-lg font-medium hover:bg-[var(--pwv-blue)] transition-colors w-fit`}
+        >
+          <svg class={iconSize} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+          </svg>
+          Read ({getReadingTime(post.body)} Min)
+          <svg class={iconSize} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
 </article>

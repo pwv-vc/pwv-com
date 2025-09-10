@@ -7,8 +7,6 @@ heroImage: '../../images/library/post-startup-multiverse-5-year/post-startup-mul
 tags: ['Startups', 'Entrepreneurship', 'Time Travel', 'Tom Preston-Werner']
 ---
 
-# The Startup Multiverse: Why Five Years Reveals the Winning Branch
-
 In the five years I’ve worked with Tom Preston-Werner, I’ve learned many things. One of them is that he loves time-travel stories. The kind with branching timelines, alternate realities, and the tension of choosing which path becomes the “real” future.
 
 It turns out you can see startups the same way. Each idea creates a new branch in the founder’s multiverse. Some timelines fade. Some reinvent themselves. And sometimes—just sometimes—one emerges as the winning branch.

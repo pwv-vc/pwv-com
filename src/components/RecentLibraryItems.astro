@@ -1,8 +1,9 @@
 ---
-import { getRecentLibraryPosts } from '../lib/library';
+import { getRecentLibraryPosts, getAllLibraryPosts } from '../lib/library';
 import PostsGrid from './PostsGrid.astro';
 
 const recentPosts = await getRecentLibraryPosts(6);
+const allPosts = await getAllLibraryPosts();
 ---
 
 <div class="max-w-none">
@@ -15,8 +16,8 @@ const recentPosts = await getRecentLibraryPosts(6);
   </div>
 
   <div class="text-center">
-    <a href="/library" class="inline-flex items-center gap-2 text-orange-600 hover:text-orange-700 font-medium transition-colors">
-      View all
+    <a href="/library" class="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-700 font-medium transition-colors">
+      View all ({allPosts.length})
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
       </svg>
