@@ -8,18 +8,31 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_IMAGE } from '../consts';
 
+// Define props interface
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  keywords?: string;
+}
+
+const {
+  title = SITE_TITLE,
+  description = SITE_DESCRIPTION,
+  image = SITE_IMAGE,
+  keywords = "venture capital, VC, early-stage investing, startup investment, technology investment, AI investment, developer tools, hardware startups, seed funding, Series A, pre-seed investment, PWV"
+} = Astro.props;
+
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const faviconURL = new URL('/favicon.png', Astro.site);
 const sitemapURL = new URL('/sitemap-index.xml', Astro.site);
 const rssURL = new URL('rss.xml', Astro.site);
-const title = SITE_TITLE;
-const description = SITE_DESCRIPTION;
 
 // Optimize image for OG tags if provided
 let optimizedImageURL;
-if (SITE_IMAGE) {
+if (image) {
   const optimizedImage = await getImage({
-    src: SITE_IMAGE,
+    src: image,
     width: 1200, // Recommended OG image width
     height: 630, // Recommended OG image height
     // format unspecified will use webp, avif, or original format
@@ -45,7 +58,7 @@ if (SITE_IMAGE) {
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="keywords" content="venture capital, VC, early-stage investing, startup investment, technology investment, AI investment, developer tools, hardware startups, seed funding, Series A, pre-seed investment, PWV" />
+    <meta name="keywords" content={keywords} />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
@@ -62,7 +75,6 @@ if (SITE_IMAGE) {
     <script defer data-domain="pwv.com" src="https://plausible.io/js/script.js"
     ></script>
 
-    <title>PWV</title>
 	</head>
 	<body>
     <main class="mx-auto my-12 max-w-screen-xl px-4 sm:px-6 lg:px-8 min-h-dvh">

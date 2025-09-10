@@ -23,8 +23,14 @@ type Props = CollectionEntry<'library'>;
 const post = Astro.props;
 const { Content } = await render(post);
 const { nextPost, previousPost } = await getPostNavigation(post.id);
+
+// Generate meta data from post
+const title = post.data.title;
+const description = post.data.description;
+const image = post.data.heroImage ? post.data.heroImage.src : '/og-image.png';
+const keywords = post.data.tags.join(', ');
 ---
-<Layout>
+<Layout title={title} description={description} image={image} keywords={keywords}>
   <div class="prose prose-lg max-w-screen-xl mx-auto">
     <div class="w-full md:w-full lg:w-2/3 mx-auto">
       {post.data.heroImage ? (
