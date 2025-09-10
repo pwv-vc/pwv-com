@@ -70,6 +70,24 @@ const keywords = post.data.tags.join(', ');
     <hr />
     <Content />
 
+    <!-- External link for posts with URL -->
+    {post.data.url && (
+      <div class="mt-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
+        <p class="text-sm text-gray-600 mb-3">This is an external article from our library.</p>
+        <a
+          href={post.data.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-[var(--pwv-blue)] text-white rounded-lg hover:bg-[var(--pwv-blue)] transition-colors duration-200 font-medium"
+        >
+          Read full article on {new URL(post.data.url).hostname.replace('www.', '')}
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+          </svg>
+        </a>
+      </div>
+    )}
+
     <!-- Post Navigation -->
     <PostNavigation
       currentPost={post}
