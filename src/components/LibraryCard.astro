@@ -79,6 +79,15 @@ const getSiteName = (url: string) => {
       <h2 class={`${titleSize} font-bold text-[var(--pwv-blue)] ${isSmall ? 'mb-2' : 'mb-3'} leading-tight`}>
         {post.data.title}
       </h2>
+      {post.data.tags && post.data.tags.length > 0 && (
+        <div class={`flex flex-wrap gap-1 ${isSmall ? 'mb-2' : 'mb-3'}`}>
+          {post.data.tags.map((tag) => (
+            <span class="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-md">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
       {post.data.author && (
         <p class={`${descriptionSize} text-gray-500 ${isSmall ? 'mb-2' : 'mb-3'}`}>
           By {post.data.author}
