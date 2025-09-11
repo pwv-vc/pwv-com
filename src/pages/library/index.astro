@@ -9,6 +9,16 @@ import FeaturedPosts from "../../components/FeaturedPosts.astro";
 const library = await getAllLibraryPosts();
 const externalPosts = await getExternalLibraryPosts();
 const nonExternalPosts = await getNonExternalLibraryPosts();
+
+const filter = Astro.url.searchParams.get('filter') ?? 'all';
+const activeFilter = ['community', 'pwv'].includes(filter) ? filter : 'all';
+
+const posts =
+  activeFilter === 'community'
+    ? externalPosts
+    : activeFilter === 'pwv'
+      ? nonExternalPosts
+      : library;
 ---
 
 <Layout>
@@ -20,9 +30,13 @@ const nonExternalPosts = await getNonExternalLibraryPosts();
 
     <FeaturedPosts />
 
-    <LibraryToggle externalCount={externalPosts.length} nonExternalCount={nonExternalPosts.length} />
+    <LibraryToggle
+      externalCount={externalPosts.length}
+      nonExternalCount={nonExternalPosts.length}
+      activeFilter={activeFilter}
+    />
 
-    <PostsGrid posts={library} size="large" />
+    <PostsGrid posts={posts} size="large" />
     <div class="text-center">
       <a href="/" class="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-700 font-medium transition-colors">
         Back to Home
