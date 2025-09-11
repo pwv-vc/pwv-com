@@ -9,7 +9,7 @@ dotenv.config();
 // Configure FAL AI client
 if (process.env.FAL_KEY) {
   fal.config({
-    credentials: process.env.FAL_KEY
+    credentials: process.env.FAL_KEY,
   });
   console.log('FAL AI client configured with API key');
 } else {
@@ -27,7 +27,7 @@ async function testConnection() {
         prompt: 'A simple test image',
         aspect_ratio: '16:9',
         num_images: 1,
-        resolution: '1K'
+        resolution: '1K',
       },
       logs: true,
       onQueueUpdate: (update) => {

@@ -1,21 +1,27 @@
 ---
-import Home from "../components/Home.astro";
-import RecentLibraryItems from "../components/RecentLibraryItems.astro";
-import Layout from "../layouts/Layout.astro";
-import { SITE_TITLE, SITE_DESCRIPTION, SITE_IMAGE } from "../consts";
+import Home from '../components/Home.astro';
+import RecentLibraryItems from '../components/RecentLibraryItems.astro';
+import Layout from '../layouts/Layout.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_IMAGE } from '../consts';
 
-import "../styles/global.css";
+import '../styles/global.css';
 
 const title = SITE_TITLE;
 const description = SITE_DESCRIPTION;
 const image = SITE_IMAGE;
-const keywords = "venture capital, VC, early-stage investing, startup investment, technology investment, AI investment, developer tools, hardware startups, seed funding, Series A, pre-seed investment, PWV, Tom Preston-Werner, David Price, David Thyresson";
+const keywords =
+  'venture capital, VC, early-stage investing, startup investment, technology investment, AI investment, developer tools, hardware startups, seed funding, Series A, pre-seed investment, PWV, Tom Preston-Werner, David Price, David Thyresson';
 
 // if Netlify output is server, then *must* be true
 export const prerender = true;
 ---
 
-<Layout title={title} description={description} image={image} keywords={keywords}>
+<Layout
+  title={title}
+  description={description}
+  image={image}
+  keywords={keywords}
+>
   <Home />
   <RecentLibraryItems />
 </Layout>

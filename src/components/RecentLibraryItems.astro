@@ -8,19 +8,37 @@ const allPosts = await getAllLibraryPosts();
 
 <div class="max-w-none">
   <div class="mb-8">
-    <h2 class="text-2xl lg:text-3xl font-bold my-4 text-[var(--pwv-blue)] font-serif">Latest insights and thoughts</h2>
-    <p class="text-lg text-gray-600">Insights, thoughts, and perspectives from PWV, our founders and community.</p>
+    <h2
+      class="my-4 font-serif text-2xl font-bold text-[var(--pwv-blue)] lg:text-3xl"
+    >
+      Latest insights and thoughts
+    </h2>
+    <p class="text-lg text-gray-600">
+      Insights, thoughts, and perspectives from PWV, our founders and community.
+    </p>
   </div>
 
   <div class="mb-6">
     <PostsGrid posts={recentPosts} size="large" />
   </div>
 
-  <div class="text-center mt-8">
-    <a href="/library" class="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-700 font-medium transition-colors">
+  <div class="mt-8 text-center">
+    <a
+      href="/library"
+      class="inline-flex items-center gap-2 font-medium text-neutral-600 transition-colors hover:text-neutral-700"
+    >
       View all ({allPosts.length})
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+      <svg
+        class="h-4 w-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"></path>
       </svg>
     </a>
   </div>

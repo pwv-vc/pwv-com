@@ -15,7 +15,7 @@ dotenv.config();
 // Configure FAL AI client
 if (process.env.FAL_KEY) {
   fal.config({
-    credentials: process.env.FAL_KEY
+    credentials: process.env.FAL_KEY,
   });
 }
 
@@ -30,27 +30,29 @@ async function downloadImage(imageUrl, localPath) {
   return new Promise((resolve, reject) => {
     const protocol = imageUrl.startsWith('https:') ? https : http;
 
-    protocol.get(imageUrl, (response) => {
-      if (response.statusCode !== 200) {
-        reject(new Error(`Failed to download image: ${response.statusCode}`));
-        return;
-      }
+    protocol
+      .get(imageUrl, (response) => {
+        if (response.statusCode !== 200) {
+          reject(new Error(`Failed to download image: ${response.statusCode}`));
+          return;
+        }
 
-      const fileStream = createWriteStream(localPath);
-      response.pipe(fileStream);
+        const fileStream = createWriteStream(localPath);
+        response.pipe(fileStream);
 
-      fileStream.on('finish', () => {
-        fileStream.close();
-        resolve();
-      });
+        fileStream.on('finish', () => {
+          fileStream.close();
+          resolve();
+        });
 
-      fileStream.on('error', (error) => {
-        fs.unlink(localPath).catch(() => {}); // Delete the file on error
+        fileStream.on('error', (error) => {
+          fs.unlink(localPath).catch(() => {}); // Delete the file on error
+          reject(error);
+        });
+      })
+      .on('error', (error) => {
         reject(error);
       });
-    }).on('error', (error) => {
-      reject(error);
-    });
   });
 }
 
@@ -81,17 +83,19 @@ function parseFrontmatter(content) {
         let value = trimmedLine.substring(colonIndex + 1).trim();
 
         // Remove quotes if present
-        if ((value.startsWith('"') && value.endsWith('"')) ||
-            (value.startsWith("'") && value.endsWith("'"))) {
+        if (
+          (value.startsWith('"') && value.endsWith('"')) ||
+          (value.startsWith("'") && value.endsWith("'"))
+        ) {
           value = value.slice(1, -1);
         }
 
         // Handle array values
         if (value.startsWith('[') && value.endsWith(']')) {
           const arrayContent = value.slice(1, -1);
-          frontmatter[key] = arrayContent.split(',').map(item =>
-            item.trim().replace(/^['"]|['"]$/g, '')
-          );
+          frontmatter[key] = arrayContent
+            .split(',')
+            .map((item) => item.trim().replace(/^['"]|['"]$/g, ''));
         } else {
           frontmatter[key] = value;
         }
@@ -149,7 +153,9 @@ async function generateOGImage(title, description, localPath) {
   try {
     // Check if FAL AI API key is set
     if (!process.env.FAL_KEY) {
-      console.warn('FAL_KEY environment variable not set. Skipping image generation.');
+      console.warn(
+        'FAL_KEY environment variable not set. Skipping image generation.'
+      );
       console.warn('To enable image generation, set your FAL AI API key:');
       console.warn('export FAL_KEY=your_fal_api_key_here');
       console.warn('Or create a .env file in the project root with:');
@@ -170,7 +176,7 @@ ${description}`;
         prompt: prompt,
         aspect_ratio: '16:9',
         num_images: 1,
-        resolution: '1K'
+        resolution: '1K',
       },
       logs: true,
       onQueueUpdate: (update) => {
@@ -225,11 +231,20 @@ async function generatePostOGImage(markdownFilePath) {
     console.log(`Description: ${description}`);
 
     // Generate post slug from filename
-    const filename = path.basename(markdownFilePath, path.extname(markdownFilePath));
+    const filename = path.basename(
+      markdownFilePath,
+      path.extname(markdownFilePath)
+    );
     const postSlug = filename.replace(/^post-/, ''); // Remove 'post-' prefix if present
 
     // Create directory for images if it doesn't exist
-    const imageDir = path.join(projectRoot, 'src', 'images', 'library', postSlug);
+    const imageDir = path.join(
+      projectRoot,
+      'src',
+      'images',
+      'library',
+      postSlug
+    );
     await fs.mkdir(imageDir, { recursive: true });
 
     // Generate unique filename
@@ -253,7 +268,6 @@ async function generatePostOGImage(markdownFilePath) {
     } else {
       console.error('❌ Failed to generate OG image');
     }
-
   } catch (error) {
     console.error('Error processing markdown file:', error);
   }
@@ -265,7 +279,9 @@ async function main() {
 
   if (args.length === 0) {
     console.log('Usage: node generate-post-og-image.js <markdown-file-path>');
-    console.log('Example: node generate-post-og-image.js src/content/library/post-startup-multiverse-5-year.md');
+    console.log(
+      'Example: node generate-post-og-image.js src/content/library/post-startup-multiverse-5-year.md'
+    );
     process.exit(1);
   }
 

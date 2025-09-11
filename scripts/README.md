@@ -39,6 +39,7 @@ pnpm run fetch-external "https://www.aalo.com/post/aalo-closes-100m-series-b"
 ```
 
 This creates:
+
 - `src/content/library/external-aalo-closes-100m-series-b.md`
 - `src/images/library/external-aalo-closes-100m-series-b/banner_16_9-1.png` (if OG image exists)
 

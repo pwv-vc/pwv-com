@@ -39,8 +39,6 @@ const testimonials = defineCollection({
   }),
 });
 
-
-
 const library = defineCollection({
   // Load Markdown and MDX files in the `src/content/library/` directory.
   loader: glob({ base: './src/content/library', pattern: '**/*.{md,mdx}' }),
@@ -54,7 +52,10 @@ const library = defineCollection({
       url: z.string().url().optional(),
       // Transform string to Date objects
       pubDate: z.string().transform((str) => new Date(str)),
-      updatedDate: z.string().transform((str) => new Date(str)).optional(),
+      updatedDate: z
+        .string()
+        .transform((str) => new Date(str))
+        .optional(),
       // if a hero image is provided, it will be used to display an image in the library
       // if no hero image is provided, the library item will display a placeholder image
       heroImage: image().optional(),

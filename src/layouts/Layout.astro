@@ -20,7 +20,7 @@ const {
   title = SITE_TITLE,
   description = SITE_DESCRIPTION,
   image = SITE_IMAGE,
-  keywords = "venture capital, VC, early-stage investing, startup investment, technology investment, AI investment, developer tools, hardware startups, seed funding, Series A, pre-seed investment, PWV"
+  keywords = 'venture capital, VC, early-stage investing, startup investment, technology investment, AI investment, developer tools, hardware startups, seed funding, Series A, pre-seed investment, PWV',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -48,7 +48,7 @@ if (image) {
 
 <!doctype html>
 <html lang="en">
-	<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" type="image/png" href={faviconURL} />
@@ -56,7 +56,12 @@ if (image) {
     <link rel="icon" type="image/png" sizes="16x16" href={favicon16URL} />
     <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIconURL} />
     <link rel="manifest" href={manifestURL} />
-    <link rel="alternate" type="application/rss+xml" title="PWV Library RSS Feed" href="/rss.xml" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="PWV Library RSS Feed"
+      href="/rss.xml"
+    />
     <meta name="theme-color" content="#ffffff" />
     <meta name="generator" content={Astro.generator} />
 
@@ -75,23 +80,30 @@ if (image) {
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    {optimizedImageURL && <meta property="og:image" content={optimizedImageURL} />}
+    {
+      optimizedImageURL && (
+        <meta property="og:image" content={optimizedImageURL} />
+      )
+    }
 
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    {optimizedImageURL && <meta property="twitter:image" content={optimizedImageURL} />}
+    {
+      optimizedImageURL && (
+        <meta property="twitter:image" content={optimizedImageURL} />
+      )
+    }
 
     <script defer data-domain="pwv.com" src="https://plausible.io/js/script.js"
     ></script>
-
-	</head>
-	<body>
-    <main class="mx-auto my-12 max-w-screen-xl px-4 sm:px-6 lg:px-8 min-h-dvh">
+  </head>
+  <body>
+    <main class="mx-auto my-12 min-h-dvh max-w-screen-xl px-4 sm:px-6 lg:px-8">
       <Header />
-		<slot />
-  </main>
-  <Footer />
-	</body>
+      <slot />
+    </main>
+    <Footer />
+  </body>
 </html>

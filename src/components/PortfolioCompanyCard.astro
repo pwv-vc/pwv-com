@@ -22,33 +22,39 @@ type TagColors = {
 const dotColor = 'bg-gray-400';
 
 const dotColors: TagColors = {
-  'aerospace': dotColor,
-  'hardware': dotColor,
-  'energy': dotColor,
+  aerospace: dotColor,
+  hardware: dotColor,
+  energy: dotColor,
   'dev tools': dotColor,
-  'ai': dotColor,
-  'saas': dotColor,
-  'construction': dotColor,
+  ai: dotColor,
+  saas: dotColor,
+  construction: dotColor,
   'board seat': dotColor,
   'board seat (past)': dotColor,
-  'biotech': dotColor,
+  biotech: dotColor,
   'food tech': dotColor,
-  'cad': dotColor,
-  'acquired': dotColor
+  cad: dotColor,
+  acquired: dotColor,
 };
 
 // Helper function to get tag styles based on category
 const getTagStyle = (tag: string) => {
-  const baseStyle = ' text-xs inline-flex items-center mx-1 gap-1.5 px-3 py-1 rounded-full bg-white text-gray-600 text-sm border border-gray-100';
+  const baseStyle =
+    ' text-xs inline-flex items-center mx-1 gap-1.5 px-3 py-1 rounded-full bg-white text-gray-600 text-sm border border-gray-100';
   return {
     container: baseStyle,
-    dot: `w-1.5 h-1.5 rounded-full ${dotColors[tag.toLowerCase()] || 'bg-gray-400'}`
+    dot: `w-1.5 h-1.5 rounded-full ${dotColors[tag.toLowerCase()] || 'bg-gray-400'}`,
   };
 };
 ---
 
-<div class="flex flex-col gap-2 py-1 overflow-hidden">
-  <a href={url} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-sm text-[var(--pwv-blue)] font-mono font-bold hover:underline min-w-0">
+<div class="flex flex-col gap-2 overflow-hidden py-1">
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="flex min-w-0 items-center gap-3 font-mono text-sm font-bold text-[var(--pwv-blue)] hover:underline"
+  >
     <UnpicImage
       src={resolveImageSrc(`logos/small/${slug}.png`)}
       alt={`${name} logo`}
@@ -56,17 +62,20 @@ const getTagStyle = (tag: string) => {
       height={24}
       class={`flex-shrink-0 border border-gray-100 ${blackBackgroundSlugs.includes(slug) ? 'bg-black' : 'bg-white'}`}
     />
-    <span class="flex-1 whitespace-normal break-words leading-snug">{name}</span>
+    <span class="flex-1 leading-snug break-words whitespace-normal">{name}</span
+    >
   </a>
   <div class="flex flex-wrap gap-1">
-    {tags.map(tag => {
-      const styles = getTagStyle(tag);
-      return (
-        <span class={styles.container}>
-          <span class={styles.dot}></span>
-          {tag.toLowerCase()}
-        </span>
-      );
-    })}
+    {
+      tags.map((tag) => {
+        const styles = getTagStyle(tag);
+        return (
+          <span class={styles.container}>
+            <span class={styles.dot} />
+            {tag.toLowerCase()}
+          </span>
+        );
+      })
+    }
   </div>
 </div>

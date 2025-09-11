@@ -14,10 +14,13 @@ const sortedPortfolio = portfolio.sort((a, b) =>
 );
 ---
 
-<h3 class="text-2xl font-bold my-8 text-[var(--pwv-blue)] font-serif">
-  {title} {caption && <span class="font-normal text-md">{caption}</span>}
+<h3 class="my-8 font-serif text-2xl font-bold text-[var(--pwv-blue)]">
+  {title}
+  {caption && <span class="text-md font-normal">{caption}</span>}
 </h3>
-<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-3 shadow-lg gap-6 p-6 bg-neutral-50 rounded-lg border border-gray-200">
+<div
+  class="grid grid-cols-2 gap-6 rounded-lg border border-gray-200 bg-neutral-50 p-6 shadow-lg md:grid-cols-3 xl:grid-cols-3"
+>
   {
     sortedPortfolio.map((company) => (
       <PortfolioCompanyCard

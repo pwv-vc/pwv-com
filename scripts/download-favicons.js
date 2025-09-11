@@ -10,7 +10,8 @@ const __dirname = path.dirname(__filename);
 // Configuration
 const PORTFOLIO_DIR = path.join(__dirname, '../src/content/portfolio');
 const OUTPUT_DIR = path.join(__dirname, '../src/images/logos/small');
-const FAVICON_BASE_URL = 'https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=';
+const FAVICON_BASE_URL =
+  'https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=';
 const FAVICON_SIZE = 64;
 
 // Ensure output directory exists
@@ -80,11 +81,12 @@ async function processPortfolioFile(filename, force = false) {
       }
 
       // Add a small delay to be respectful to the favicon service
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
     }
 
-    console.log(`\nCompleted ${filename}: ${successCount}/${totalCount} favicons downloaded successfully`);
-
+    console.log(
+      `\nCompleted ${filename}: ${successCount}/${totalCount} favicons downloaded successfully`
+    );
   } catch (error) {
     console.error(`Error processing ${filename}:`, error.message);
   }
@@ -94,7 +96,9 @@ async function main() {
   const args = process.argv.slice(2);
 
   if (args.length === 0) {
-    console.log('Usage: node download-favicons.js [rolling-fund.json|representative.json|angel.json|all] [--force|-f]');
+    console.log(
+      'Usage: node download-favicons.js [rolling-fund.json|representative.json|angel.json|all] [--force|-f]'
+    );
     console.log('Examples:');
     console.log('  node download-favicons.js rolling-fund.json');
     console.log('  node download-favicons.js representative.json');
@@ -111,11 +115,17 @@ async function main() {
     await processPortfolioFile('rolling-fund.json', force);
     await processPortfolioFile('representative.json', force);
     await processPortfolioFile('angel.json', force);
-  } else if (target === 'rolling-fund.json' || target === 'representative.json' || target === 'angel.json') {
+  } else if (
+    target === 'rolling-fund.json' ||
+    target === 'representative.json' ||
+    target === 'angel.json'
+  ) {
     await processPortfolioFile(target, force);
   } else {
     console.error(`Invalid argument: ${target}`);
-    console.log('Valid options: rolling-fund.json, representative.json, angel.json, or all');
+    console.log(
+      'Valid options: rolling-fund.json, representative.json, angel.json, or all'
+    );
     process.exit(1);
   }
 
@@ -123,4 +133,3 @@ async function main() {
 }
 
 main().catch(console.error);
-

@@ -11,7 +11,9 @@
     "downscale-favicon": "node scripts/downscale-favicon.js",
     "generate-favicons": "node scripts/generate-favicons.js",
     "download-favicons": "node scripts/download-favicons.js",
-    "fetch-external": "node scripts/fetch-external-content.js"
+    "fetch-external": "node scripts/fetch-external-content.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.5",

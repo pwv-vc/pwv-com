@@ -16,7 +16,7 @@ dotenv.config();
 // Configure FAL AI client
 if (process.env.FAL_KEY) {
   fal.config({
-    credentials: process.env.FAL_KEY
+    credentials: process.env.FAL_KEY,
   });
 }
 
@@ -40,19 +40,21 @@ async function fetchHTML(url) {
   return new Promise((resolve, reject) => {
     const protocol = url.startsWith('https:') ? https : http;
 
-    protocol.get(url, (response) => {
-      let data = '';
+    protocol
+      .get(url, (response) => {
+        let data = '';
 
-      response.on('data', (chunk) => {
-        data += chunk;
-      });
+        response.on('data', (chunk) => {
+          data += chunk;
+        });
 
-      response.on('end', () => {
-        resolve(data);
+        response.on('end', () => {
+          resolve(data);
+        });
+      })
+      .on('error', (error) => {
+        reject(error);
       });
-    }).on('error', (error) => {
-      reject(error);
-    });
   });
 }
 
@@ -63,27 +65,29 @@ async function downloadImage(imageUrl, localPath) {
   return new Promise((resolve, reject) => {
     const protocol = imageUrl.startsWith('https:') ? https : http;
 
-    protocol.get(imageUrl, (response) => {
-      if (response.statusCode !== 200) {
-        reject(new Error(`Failed to download image: ${response.statusCode}`));
-        return;
-      }
+    protocol
+      .get(imageUrl, (response) => {
+        if (response.statusCode !== 200) {
+          reject(new Error(`Failed to download image: ${response.statusCode}`));
+          return;
+        }
 
-      const fileStream = createWriteStream(localPath);
-      response.pipe(fileStream);
+        const fileStream = createWriteStream(localPath);
+        response.pipe(fileStream);
 
-      fileStream.on('finish', () => {
-        fileStream.close();
-        resolve();
-      });
+        fileStream.on('finish', () => {
+          fileStream.close();
+          resolve();
+        });
 
-      fileStream.on('error', (error) => {
-        fs.unlink(localPath).catch(() => {}); // Delete the file on error
+        fileStream.on('error', (error) => {
+          fs.unlink(localPath).catch(() => {}); // Delete the file on error
+          reject(error);
+        });
+      })
+      .on('error', (error) => {
         reject(error);
       });
-    }).on('error', (error) => {
-      reject(error);
-    });
   });
 }
 
@@ -96,32 +100,40 @@ function extractMetadata(html, url) {
 
   // Helper function to get meta content
   const getMetaContent = (name, property) => {
-    const meta = document.querySelector(`meta[name="${name}"], meta[property="${property}"]`);
+    const meta = document.querySelector(
+      `meta[name="${name}"], meta[property="${property}"]`
+    );
     return meta ? meta.getAttribute('content') : null;
   };
 
   // Extract title and clean it up
-  let title = document.querySelector('title')?.textContent?.trim() ||
-              getMetaContent('og:title') ||
-              'Untitled';
+  let title =
+    document.querySelector('title')?.textContent?.trim() ||
+    getMetaContent('og:title') ||
+    'Untitled';
 
   // Clean up title - remove site name and separators
-  title = title.replace(/\s*\|\s*.*$/, '').replace(/\s*-\s*.*$/, '').trim();
+  title = title
+    .replace(/\s*\|\s*.*$/, '')
+    .replace(/\s*-\s*.*$/, '')
+    .trim();
 
   // Extract description
-  let description = getMetaContent('description') ||
-                   getMetaContent('og:description') ||
-                   getMetaContent('twitter:description') ||
-                   '';
+  let description =
+    getMetaContent('description') ||
+    getMetaContent('og:description') ||
+    getMetaContent('twitter:description') ||
+    '';
 
   // Clean up description
   description = description.replace(/\s*\.\s*Read more.*$/i, '').trim();
 
   // Extract author - try multiple methods
-  let author = getMetaContent('author') ||
-              getMetaContent('article:author') ||
-              getMetaContent('twitter:creator') ||
-              '';
+  let author =
+    getMetaContent('author') ||
+    getMetaContent('article:author') ||
+    getMetaContent('twitter:creator') ||
+    '';
 
   // Try to extract author from content if not in meta tags
   if (!author) {
@@ -131,25 +143,29 @@ function extractMetadata(html, url) {
       '.author',
       '.byline',
       '[rel="author"]',
-      'meta[name="twitter:creator"]'
+      'meta[name="twitter:creator"]',
     ];
 
     for (const selector of authorSelectors) {
       const element = document.querySelector(selector);
       if (element) {
-        author = element.textContent?.trim() || element.getAttribute('content') || element.getAttribute('data-author');
+        author =
+          element.textContent?.trim() ||
+          element.getAttribute('content') ||
+          element.getAttribute('data-author');
         if (author) break;
       }
     }
   }
 
   // Extract publication date
-  let pubDate = getMetaContent('article:published_time') ||
-               getMetaContent('article:modified_time') ||
-               getMetaContent('og:updated_time') ||
-               getMetaContent('datePublished') ||
-               getMetaContent('dateModified') ||
-               null;
+  let pubDate =
+    getMetaContent('article:published_time') ||
+    getMetaContent('article:modified_time') ||
+    getMetaContent('og:updated_time') ||
+    getMetaContent('datePublished') ||
+    getMetaContent('dateModified') ||
+    null;
 
   // If no date found in meta tags, try to extract from HTML comments
   if (!pubDate) {
@@ -175,7 +191,7 @@ function extractMetadata(html, url) {
       /<!--\s*Date:\s*([^>]+)-->/i,
       /<!--\s*Updated:\s*([^>]+)-->/i,
       /<time[^>]*datetime="([^"]+)"[^>]*>/i,
-      /<time[^>]*>([^<]+)<\/time>/i
+      /<time[^>]*>([^<]+)<\/time>/i,
     ];
 
     for (const pattern of datePatterns) {
@@ -211,10 +227,11 @@ function extractMetadata(html, url) {
   }
 
   // Extract Open Graph image - try multiple selectors
-  let ogImage = getMetaContent('og:image') ||
-                getMetaContent('twitter:image') ||
-                getMetaContent('twitter:image:src') ||
-                null;
+  let ogImage =
+    getMetaContent('og:image') ||
+    getMetaContent('twitter:image') ||
+    getMetaContent('twitter:image:src') ||
+    null;
 
   // If not found with getMetaContent, try direct selectors
   if (!ogImage) {
@@ -224,7 +241,7 @@ function extractMetadata(html, url) {
       'meta[property="twitter:image"]',
       'meta[name="twitter:image"]',
       'meta[property="twitter:image:src"]',
-      'meta[name="twitter:image:src"]'
+      'meta[name="twitter:image:src"]',
     ];
 
     for (const selector of imageSelectors) {
@@ -245,8 +262,8 @@ function extractMetadata(html, url) {
   // Clean up keywords - split by comma and clean each keyword
   const keywordArray = keywords
     .split(',')
-    .map(keyword => keyword.trim())
-    .filter(keyword => keyword.length > 0)
+    .map((keyword) => keyword.trim())
+    .filter((keyword) => keyword.length > 0)
     .slice(0, 5); // Limit to 5 keywords to avoid too many tags
 
   return {
@@ -256,7 +273,7 @@ function extractMetadata(html, url) {
     pubDate,
     ogImage,
     siteName,
-    keywords: keywordArray
+    keywords: keywordArray,
   };
 }
 
@@ -278,7 +295,8 @@ function generateSlug(title) {
 function generateUniqueFilename(title, slug) {
   // Create a timestamp in YYYYMMDD-HHMMSS format
   const now = new Date();
-  const timestamp = now.toISOString()
+  const timestamp = now
+    .toISOString()
     .replace(/[-:]/g, '')
     .replace(/\.\d{3}Z$/, '')
     .replace('T', '-');
@@ -318,7 +336,9 @@ async function generateOGImage(title, description, localPath) {
   try {
     // Check if FAL AI API key is set
     if (!process.env.FAL_KEY) {
-      console.warn('FAL_KEY environment variable not set. Skipping image generation.');
+      console.warn(
+        'FAL_KEY environment variable not set. Skipping image generation.'
+      );
       console.warn('To enable image generation, set your FAL AI API key:');
       console.warn('export FAL_KEY=your_fal_api_key_here');
       console.warn('Or create a .env file in the project root with:');
@@ -339,7 +359,7 @@ ${description}`;
         prompt: prompt,
         aspect_ratio: '16:9',
         num_images: 1,
-        resolution: '1K'
+        resolution: '1K',
       },
       logs: true,
       onQueueUpdate: (update) => {
@@ -403,7 +423,8 @@ async function createLibraryPost(url) {
         const imageExt = getFileExtension(imageUrl);
         // Generate timestamp for image filename uniqueness
         const now = new Date();
-        const timestamp = now.toISOString()
+        const timestamp = now
+          .toISOString()
           .replace(/[-:]/g, '')
           .replace(/\.\d{3}Z$/, '')
           .replace('T', '-');
@@ -424,14 +445,19 @@ async function createLibraryPost(url) {
       console.log('No OG image found, generating one with FAL AI...');
       // Generate timestamp for image filename uniqueness
       const now = new Date();
-      const timestamp = now.toISOString()
+      const timestamp = now
+        .toISOString()
         .replace(/[-:]/g, '')
         .replace(/\.\d{3}Z$/, '')
         .replace('T', '-');
       const imageFilename = `banner_16_9-1-${timestamp}.png`;
       const localImagePath = path.join(imageDir, imageFilename);
 
-      const generated = await generateOGImage(metadata.title, metadata.description, localImagePath);
+      const generated = await generateOGImage(
+        metadata.title,
+        metadata.description,
+        localImagePath
+      );
 
       if (generated) {
         // Set relative path for the markdown file
@@ -444,7 +470,9 @@ async function createLibraryPost(url) {
 
     // Generate markdown content
     const allTags = [metadata.siteName, ...metadata.keywords];
-    const tagsString = allTags.map(tag => `"${tag.replace(/"/g, '\\"')}"`).join(', ');
+    const tagsString = allTags
+      .map((tag) => `"${tag.replace(/"/g, '\\"')}"`)
+      .join(', ');
 
     const markdownContent = `---
 title: "${metadata.title.replace(/"/g, '\\"')}"
@@ -466,14 +494,13 @@ tags: [ ${tagsString}]
     return {
       success: true,
       filePath,
-      metadata
+      metadata,
     };
-
   } catch (error) {
     console.error(`Error creating library post: ${error.message}`);
     return {
       success: false,
-      error: error.message
+      error: error.message,
     };
   }
 }
@@ -484,9 +511,13 @@ async function main() {
 
   if (!url) {
     console.error('Usage: node fetch-external-content.js <URL>');
-    console.error('Example: node fetch-external-content.js https://www.aalo.com/post/aalo-closes-100m-series-b');
+    console.error(
+      'Example: node fetch-external-content.js https://www.aalo.com/post/aalo-closes-100m-series-b'
+    );
     console.error('');
-    console.error('Note: If no OG image is found, the script will attempt to generate one using FAL AI.');
+    console.error(
+      'Note: If no OG image is found, the script will attempt to generate one using FAL AI.'
+    );
     console.error('To enable image generation, set your FAL AI API key:');
     console.error('export FAL_KEY=your_fal_api_key_here');
     console.error('Or create a .env file in the project root with:');

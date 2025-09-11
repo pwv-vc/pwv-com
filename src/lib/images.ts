@@ -1,5 +1,8 @@
 // Import all images in src/images, eager so it's available at runtime
-const images = import.meta.glob('../images/**/*', { eager: true, import: 'default' }) as Record<string, any>;
+const images = import.meta.glob('../images/**/*', {
+  eager: true,
+  import: 'default',
+}) as Record<string, any>;
 
 /**
  * Resolves an image path to its actual src URL

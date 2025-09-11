@@ -23,9 +23,11 @@ export async function GET(context: any) {
       // Create canonical URL for hero image if it exists
       const heroImageData = post.data.heroImage
         ? (() => {
-            const rawSrc = typeof post.data.heroImage === 'object' && post.data.heroImage !== null
-              ? (post.data.heroImage as any).src ?? post.data.heroImage
-              : post.data.heroImage;
+            const rawSrc =
+              typeof post.data.heroImage === 'object' &&
+              post.data.heroImage !== null
+                ? ((post.data.heroImage as any).src ?? post.data.heroImage)
+                : post.data.heroImage;
 
             if (typeof rawSrc !== 'string') return undefined;
 
@@ -64,8 +66,10 @@ export async function GET(context: any) {
             : '',
           heroImageData
             ? `<enclosure url="${heroImageData.url}" type="${heroImageData.type}" />`
-            : ''
-        ].filter(Boolean).join(''),
+            : '',
+        ]
+          .filter(Boolean)
+          .join(''),
       };
     }),
     customData: `<language>en</language>`,

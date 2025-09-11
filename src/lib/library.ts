@@ -5,7 +5,9 @@ import { getCollection } from 'astro:content';
  */
 export async function getAllLibraryPosts() {
   const library = await getCollection('library');
-  return library.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+  return library.sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
 }
 
 /**
@@ -36,7 +38,7 @@ export function getReadingTime(content: string | undefined): number {
  */
 export async function getLibraryPostBySlug(slug: string) {
   const allPosts = await getAllLibraryPosts();
-  return allPosts.find(post => post.id === slug);
+  return allPosts.find((post) => post.id === slug);
 }
 
 /**
@@ -49,7 +51,7 @@ export async function getLibraryPostBySlug(slug: string) {
  */
 export async function getPostNavigation(currentSlug: string) {
   const allPosts = await getAllLibraryPosts();
-  const currentIndex = allPosts.findIndex(post => post.id === currentSlug);
+  const currentIndex = allPosts.findIndex((post) => post.id === currentSlug);
 
   if (currentIndex === -1) {
     return { nextPost: undefined, previousPost: undefined };
@@ -57,7 +59,10 @@ export async function getPostNavigation(currentSlug: string) {
 
   return {
     previousPost: currentIndex > 0 ? allPosts[currentIndex - 1] : undefined,
-    nextPost: currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : undefined
+    nextPost:
+      currentIndex < allPosts.length - 1
+        ? allPosts[currentIndex + 1]
+        : undefined,
   };
 }
 
@@ -67,7 +72,7 @@ export async function getPostNavigation(currentSlug: string) {
  */
 export async function getExternalLibraryPosts() {
   const allPosts = await getAllLibraryPosts();
-  return allPosts.filter(post => post.data.url);
+  return allPosts.filter((post) => post.data.url);
 }
 
 /**
@@ -76,7 +81,7 @@ export async function getExternalLibraryPosts() {
  */
 export async function getNonExternalLibraryPosts() {
   const allPosts = await getAllLibraryPosts();
-  return allPosts.filter(post => !post.data.url);
+  return allPosts.filter((post) => !post.data.url);
 }
 
 /**
@@ -85,5 +90,5 @@ export async function getNonExternalLibraryPosts() {
  */
 export async function getFeaturedLibraryPosts() {
   const allPosts = await getAllLibraryPosts();
-  return allPosts.filter(post => post.data.featured === true);
+  return allPosts.filter((post) => post.data.featured === true);
 }

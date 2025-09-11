@@ -14,35 +14,43 @@ interface Props {
 const { name, title, company, quote, url, companySlug } = Astro.props;
 ---
 
-<div class="p-4 bg-white rounded-lg flex flex-col h-full border border-gray-200">
-  <blockquote class="mb-4 flex-grow border-l-1 border-dotted border-[var(--pwv-blue)] pl-4 text-md text-slate-600">
+<div
+  class="flex h-full flex-col rounded-lg border border-gray-200 bg-white p-4"
+>
+  <blockquote
+    class="text-md mb-4 flex-grow border-l-1 border-dotted border-[var(--pwv-blue)] pl-4 text-slate-600"
+  >
     "{quote}"
   </blockquote>
-  <div class="flex flex-col mt-auto">
-    <cite class="font-semibold not-italic text-[var(--pwv-blue)]">
+  <div class="mt-auto flex flex-col">
+    <cite class="font-semibold text-[var(--pwv-blue)] not-italic">
       {name}
     </cite>
     <div class="flex items-center gap-2 text-sm text-gray-600">
-      {companySlug === 'anonymous' ? (
-        <div class="w-4 h-4 bg-gray-300 rounded flex-shrink-0"></div>
-      ) : (
-        <UnpicImage
-          src={resolveImageSrc(`logos/small/${companySlug}.png`)}
-          alt={`${company} logo`}
-          width={16}
-          height={16}
-          class="flex-shrink-0 border border-gray-100 bg-white"
-        />
-      )}
+      {
+        companySlug === 'anonymous' ? (
+          <div class="h-4 w-4 flex-shrink-0 rounded bg-gray-300" />
+        ) : (
+          <UnpicImage
+            src={resolveImageSrc(`logos/small/${companySlug}.png`)}
+            alt={`${company} logo`}
+            width={16}
+            height={16}
+            class="flex-shrink-0 border border-gray-100 bg-white"
+          />
+        )
+      }
       <span>
         {title},{' '}
-        {url ? (
-          <a href={url} class="text-gray-800 hover:underline">
-            {company}
-          </a>
-        ) : (
-          company
-        )}
+        {
+          url ? (
+            <a href={url} class="text-gray-800 hover:underline">
+              {company}
+            </a>
+          ) : (
+            company
+          )
+        }
       </span>
     </div>
   </div>

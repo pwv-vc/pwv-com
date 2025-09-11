@@ -45,55 +45,85 @@ const getSiteName = (url: string) => {
 };
 ---
 
-<article class={`${marginBottom} bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full`}>
-  <div class="flex flex-col h-full">
-    <div class={`w-full ${imageHeight} overflow-hidden border-b border-gray-200`}>
-      {post.data.heroImage ? (
-        <SmartImage
-          src={post.data.heroImage}
-          alt={post.data.title}
-          size={isSmall ? 'sm' : 'md'}
-          rounded={false}
-          shadow={false}
-          class="h-full"
-          loading="lazy"
-        />
-      ) : (
-        <div class="h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-          <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-          </svg>
-        </div>
-      )}
+<article
+  class={`${marginBottom} bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full`}
+>
+  <div class="flex h-full flex-col">
+    <div
+      class={`w-full ${imageHeight} overflow-hidden border-b border-gray-200`}
+    >
+      {
+        post.data.heroImage ? (
+          <SmartImage
+            src={post.data.heroImage}
+            alt={post.data.title}
+            size={isSmall ? 'sm' : 'md'}
+            rounded={false}
+            shadow={false}
+            class="h-full"
+            loading="lazy"
+          />
+        ) : (
+          <div class="flex h-full items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+            <svg
+              class="h-12 w-12 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+              />
+            </svg>
+          </div>
+        )
+      }
     </div>
     <div class={`${padding} flex flex-col flex-grow`}>
-      <div class={`flex items-center gap-2 ${dateSize} text-gray-500 ${isSmall ? 'mb-2' : 'mb-3'}`}>
+      <div
+        class={`flex items-center gap-2 ${dateSize} text-gray-500 ${isSmall ? 'mb-2' : 'mb-3'}`}
+      >
         <FormattedDate date={post.data.pubDate} />
-        {isRemote && post.data.url && (
-          <>
-            <span>•</span>
-            <span>{getSiteName(post.data.url)}</span>
-          </>
-        )}
+        {
+          isRemote && post.data.url && (
+            <>
+              <span>•</span>
+              <span>{getSiteName(post.data.url)}</span>
+            </>
+          )
+        }
       </div>
-      <h2 class={`${titleSize} font-bold text-[var(--pwv-blue)] ${isSmall ? 'mb-2' : 'mb-3'} leading-tight`}>
+      <h2
+        class={`${titleSize} font-bold text-[var(--pwv-blue)] ${isSmall ? 'mb-2' : 'mb-3'} leading-tight`}
+      >
         {post.data.title}
       </h2>
-      {post.data.tags && post.data.tags.length > 0 && (
-        <div class={`flex flex-wrap gap-1 ${isSmall ? 'mb-2' : 'mb-3'}`}>
-          {post.data.tags.map((tag) => (
-            <span class="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-md">
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
-      {post.data.author && (
-        <p class={`${descriptionSize} text-gray-500 ${isSmall ? 'mb-2' : 'mb-3'}`}>
-          By {post.data.author}
-        </p>
-      )}
-      <p class={`${descriptionSize} text-gray-600 leading-relaxed ${isSmall ? 'mb-3' : 'mb-4'} flex-grow`}>
+      {
+        post.data.tags && post.data.tags.length > 0 && (
+          <div class={`flex flex-wrap gap-1 ${isSmall ? 'mb-2' : 'mb-3'}`}>
+            {post.data.tags.map((tag) => (
+              <span class="inline-block rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )
+      }
+      {
+        post.data.author && (
+          <p
+            class={`${descriptionSize} text-gray-500 ${isSmall ? 'mb-2' : 'mb-3'}`}
+          >
+            By {post.data.author}
+          </p>
+        )
+      }
+      <p
+        class={`${descriptionSize} text-gray-600 leading-relaxed ${isSmall ? 'mb-3' : 'mb-4'} flex-grow`}
+      >
         {post.data.description}
       </p>
       <div class="mt-auto text-center">
@@ -103,27 +133,70 @@ const getSiteName = (url: string) => {
           rel={isRemote ? 'noopener noreferrer' : undefined}
           class={`inline-flex items-center gap-2 bg-[var(--pwv-blue)] text-white ${buttonSize} rounded-lg font-medium hover:bg-[var(--pwv-blue)] transition-colors w-fit`}
         >
-          {isRemote ? (
-            <>
-              <svg class={iconSize} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
-              </svg>
-              Read on {post.data.url ? getSiteName(post.data.url) : 'External Site'}
-              <svg class={iconSize} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-              </svg>
-            </>
-          ) : (
-            <>
-              <svg class={iconSize} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-              </svg>
-              Read ({getReadingTime(post.body)} Min)
-              <svg class={iconSize} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-              </svg>
-            </>
-          )}
+          {
+            isRemote ? (
+              <>
+                <svg
+                  class={iconSize}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  />
+                </svg>
+                Read on{' '}
+                {post.data.url ? getSiteName(post.data.url) : 'External Site'}
+                <svg
+                  class={iconSize}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </>
+            ) : (
+              <>
+                <svg
+                  class={iconSize}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                  />
+                </svg>
+                Read ({getReadingTime(post.body)} Min)
+                <svg
+                  class={iconSize}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </>
+            )
+          }
         </a>
       </div>
     </div>

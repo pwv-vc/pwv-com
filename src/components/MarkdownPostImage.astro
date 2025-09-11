@@ -43,17 +43,26 @@ const baseClasses = [
 
 let resolvedSrc: string;
 if (path) {
-  const images = import.meta.glob('../images/library/**/*', { eager: true, import: 'default' }) as Record<string, any>;
+  const images = import.meta.glob('../images/library/**/*', {
+    eager: true,
+    import: 'default',
+  }) as Record<string, any>;
   const key = `../images/library/${path}`;
   const found = images[key];
   resolvedSrc = typeof found === 'string' ? found : (found?.src ?? found);
 } else {
-  resolvedSrc = typeof src === 'object' && src !== null ? (src as any).src ?? (src as any) : (src as string);
+  resolvedSrc =
+    typeof src === 'object' && src !== null
+      ? ((src as any).src ?? (src as any))
+      : (src as string);
 }
 ---
 
-<div class="w-full md:w-full lg:w-2/3 mx-auto">
-  <UnpicImage src={resolvedSrc} alt={alt} class={baseClasses} loading={loading} />
+<div class="mx-auto w-full md:w-full lg:w-2/3">
+  <UnpicImage
+    src={resolvedSrc}
+    alt={alt}
+    class={baseClasses}
+    loading={loading}
+  />
 </div>
-
-

@@ -3,277 +3,198 @@
     "name": "Astranis",
     "slug": "astranis",
     "url": "https://www.astranis.com/",
-    "tags": [
-      "hardware",
-      "aerospace"
-    ]
+    "tags": ["hardware", "aerospace"]
   },
   {
     "name": "Cursor",
     "slug": "cursor",
     "url": "https://www.cursor.com/",
-    "tags": [
-      "ai",
-      "dev tools"
-    ]
+    "tags": ["ai", "dev tools"]
   },
   {
     "name": "Atuin",
     "slug": "atuin",
     "url": "https://atuin.sh/",
-    "tags": [
-      "dev tools"
-    ]
+    "tags": ["dev tools"]
   },
   {
     "name": "fal",
     "slug": "fal",
     "url": "https://www.fal.ai/",
-    "tags": [
-      "ai",
-      "dev tools"
-    ]
+    "tags": ["ai", "dev tools"]
   },
   {
     "name": "Elicit",
     "slug": "elicit",
     "url": "https://elicit.com",
-    "tags": [
-      "ai",
-      "saas"
-    ]
+    "tags": ["ai", "saas"]
   },
   {
     "name": "Ona (formerly Gitpod)",
     "slug": "ona",
     "url": "https://www.ona.com/",
-    "tags": [
-      "dev tools",
-      "board seat"
-    ]
+    "tags": ["dev tools", "board seat"]
   },
   {
     "name": "Aerodome",
     "slug": "aerodome",
     "url": "https://www.aerodome.com",
-    "tags": [
-      "hardware",
-      "ai",
-      "acquired"
-    ]
+    "tags": ["hardware", "ai", "acquired"]
   },
   {
     "name": "Liquid AI",
     "slug": "liquid-ai",
     "url": "https://www.liquid.ai",
-    "tags": [
-      "ai"
-    ]
+    "tags": ["ai"]
   },
   {
     "name": "Zoo",
     "slug": "zoo",
     "url": "https://zoo.dev",
-    "tags": [
-      "ai",
-      "cad"
-    ]
+    "tags": ["ai", "cad"]
   },
   {
     "name": "Val Town",
     "slug": "val-town",
     "url": "https://www.val.town/",
-    "tags": [
-      "dev tools"
-    ]
+    "tags": ["dev tools"]
   },
   {
     "name": "Unkey",
     "slug": "unkey",
     "url": "https://www.unkey.com/",
-    "tags": [
-      "dev tools"
-    ]
+    "tags": ["dev tools"]
   },
   {
     "name": "Langbase",
     "slug": "langbase",
     "url": "https://www.langbase.com/",
-    "tags": [
-      "ai",
-      "dev tools"
-    ]
+    "tags": ["ai", "dev tools"]
   },
   {
     "name": "Inngest",
     "slug": "inngest",
     "url": "https://www.inngest.com/",
-    "tags": [
-      "dev tools"
-    ]
+    "tags": ["dev tools"]
   },
   {
     "name": "Aalo Atomics",
     "slug": "aalo-atomics",
     "url": "https://www.aalo.com",
-    "tags": [
-      "hardware",
-      "energy"
-    ]
+    "tags": ["hardware", "energy"]
   },
   {
     "name": "Cleanlab",
     "slug": "cleanlab",
     "url": "https://www.cleanlab.ai/",
-    "tags": [
-      "ai",
-      "dev tools"
-    ]
+    "tags": ["ai", "dev tools"]
   },
   {
     "name": "Clerk",
     "slug": "clerk",
     "url": "https://clerk.com/",
-    "tags": [
-      "dev tools"
-    ]
+    "tags": ["dev tools"]
   },
   {
     "name": "GitButler",
     "slug": "gitbutler",
     "url": "https://www.gitbutler.com/",
-    "tags": [
-      "dev tools"
-    ]
+    "tags": ["dev tools"]
   },
   {
     "name": "QuantPi",
     "slug": "quantpi",
     "url": "https://www.quantpi.com/",
-    "tags": [
-      "ai"
-    ]
+    "tags": ["ai"]
   },
   {
     "name": "tldraw",
     "slug": "tldraw",
     "url": "https://www.tldraw.com/",
-    "tags": [
-      "dev tools"
-    ]
+    "tags": ["dev tools"]
   },
   {
     "name": "VoidZero",
     "slug": "voidzero",
     "url": "https://voidzero.dev/",
-    "tags": [
-      "dev tools"
-    ]
+    "tags": ["dev tools"]
   },
   {
     "name": "ReSim",
     "slug": "resim",
     "url": "https://www.resim.ai/",
-    "tags": [
-      "ai"
-    ]
+    "tags": ["ai"]
   },
   {
     "name": "Tuist",
     "slug": "tuist",
     "url": "https://tuist.io/",
-    "tags": [
-      "dev tools"
-    ]
+    "tags": ["dev tools"]
   },
   {
     "name": "BuildPass",
     "slug": "buildpass",
     "url": "https://www.buildpass.com.au/",
-    "tags": [
-      "saas",
-      "construction"
-    ]
+    "tags": ["saas", "construction"]
   },
   {
     "name": "Poolside",
     "slug": "poolside",
     "url": "https://www.poolside.ai/",
-    "tags": [
-      "ai"
-    ]
+    "tags": ["ai"]
   },
   {
     "name": "Turso",
     "slug": "turso",
     "url": "https://turso.tech",
-    "tags": [
-      "dev tools"
-    ]
+    "tags": ["dev tools"]
   },
   {
     "name": "Flux",
     "slug": "flux",
     "url": "https://www.flux.ai/p",
-    "tags": [
-      "hardware",
-      "saas"
-    ]
+    "tags": ["hardware", "saas"]
   },
   {
     "name": "CFS",
     "slug": "commonwealth-fusion-systems",
     "url": "https://cfs.energy/",
-    "tags": [
-      "energy"
-    ]
+    "tags": ["energy"]
   },
   {
     "name": "StackOne",
     "slug": "stackone",
     "url": "https://www.stackone.com/",
-    "tags": [
-      "saas"
-    ]
+    "tags": ["saas"]
   },
   {
     "name": "Commutator Studios",
     "slug": "commutator-studios",
     "url": "https://www.commutatorstudios.com/",
-    "tags": [
-      "quantum computing"
-    ]
+    "tags": ["quantum computing"]
   },
   {
     "name": "Power Planet",
     "slug": "power-planet",
     "url": "https://power-planet.com/",
-    "tags": [
-      "energy"
-    ]
+    "tags": ["energy"]
   },
   {
     "name": "Myriad AI",
     "slug": "myriad-ai",
     "url": "https://www.myriad.company/",
-    "tags": [
-      "ai", "compliance"
-    ]
+    "tags": ["ai", "compliance"]
   },
   {
     "name": "Not Diamond",
     "slug": "not-diamond",
     "url": "https://www.notdiamond.ai",
-    "tags": [
-      "ai"
-    ]
+    "tags": ["ai"]
   },
   {
     "name": "Nuanced",
     "slug": "nuanced",
     "url": "https://www.nuanced.dev",
-    "tags": [
-      "ai"
-    ]
+    "tags": ["ai"]
   }
 ]

@@ -1,15 +1,17 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
 @theme {
   --font-serif: 'Libre Franklin Variable', serif;
-  --font-sans: 'Libre Franklin Variable', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sans:
+    'Libre Franklin Variable', ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
-  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+  --font-mono:
+    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;
 
-  --pwv-blue: #1B2B5B;
+  --pwv-blue: #1b2b5b;
 }
 
 /* Custom prose heading font sizes */
@@ -30,4 +32,3 @@
   line-height: 1.5rem; /* 28px */
   color: var(--pwv-blue);
 }
-
