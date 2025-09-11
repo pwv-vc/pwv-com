@@ -19,6 +19,9 @@ const posts =
     : activeFilter === 'pwv'
       ? nonExternalPosts
       : library;
+
+// if Netlify output is server, then *must* be true
+export const prerender = true;
 ---
 
 <Layout>
