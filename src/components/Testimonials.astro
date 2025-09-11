@@ -15,11 +15,11 @@ const sortedTestimonials = testimonials.sort((a, b) => {
 });
 ---
 
-<section id="testimonials" class="my-8 p-4 bg-neutral-50 rounded-lg border border-gray-200">
+<section id="testimonials" class="my-8">
   <h2 class="text-2xl lg:text-3xl font-bold my-4 text-[var(--pwv-blue)] font-serif mb-8">What Founders Say About Us</h2>
 
   <!-- Responsive Grid Layout -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-4">
+  <div class="p-4 bg-neutral-50 rounded-lg  shadow-lg border border-gray-200 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-4">
     {sortedTestimonials.map((testimonial) => (
       <TestimonialCard
         name={testimonial.data.name}
