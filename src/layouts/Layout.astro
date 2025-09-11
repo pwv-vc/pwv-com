@@ -24,13 +24,14 @@ const {
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const faviconURL = new URL('/favicon.png', Astro.site);
-const favicon16URL = new URL('/favicon-16x16.png', Astro.site);
-const favicon32URL = new URL('/favicon-32x32.png', Astro.site);
-const appleTouchIconURL = new URL('/apple-touch-icon.png', Astro.site);
-const manifestURL = new URL('/site.webmanifest', Astro.site);
-const sitemapURL = new URL('/sitemap-index.xml', Astro.site);
-const rssURL = new URL('rss.xml', Astro.site);
+// Use relative paths for static assets so they work in deploy previews
+const faviconURL = '/favicon.png';
+const favicon16URL = '/favicon-16x16.png';
+const favicon32URL = '/favicon-32x32.png';
+const appleTouchIconURL = '/apple-touch-icon.png';
+const manifestURL = '/site.webmanifest';
+const sitemapURL = '/sitemap-index.xml';
+const rssURL = 'rss.xml';
 
 // Optimize image for OG tags if provided
 let optimizedImageURL;
@@ -41,7 +42,7 @@ if (image) {
     height: 630, // Recommended OG image height
     // format unspecified will use webp, avif, or original format
   });
-  optimizedImageURL = new URL(optimizedImage.src, Astro.site);
+  optimizedImageURL = new URL(optimizedImage.src, Astro.url);
 }
 ---
 
