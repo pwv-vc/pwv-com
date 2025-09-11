@@ -1,0 +1,15 @@
+---
+import { getFeaturedLibraryPosts } from '../lib/library';
+import PostsGrid from './PostsGrid.astro';
+
+const featuredPosts = await getFeaturedLibraryPosts();
+---
+
+{featuredPosts.length > 0 && (
+  <section class="mb-12">
+    <div class="mb-8 text-center">
+      <h2 class="text-xl md:text-2xl font-bold text-[var(--pwv-blue)] mb-2">Featured</h2>
+    </div>
+    <PostsGrid posts={featuredPosts} size="large" />
+  </section>
+)}

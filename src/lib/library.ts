@@ -78,3 +78,12 @@ export async function getNonExternalLibraryPosts() {
   const allPosts = await getAllLibraryPosts();
   return allPosts.filter(post => !post.data.url);
 }
+
+/**
+ * Get featured library posts (posts with featured: true)
+ * @returns Array of featured library posts sorted by publication date (newest first)
+ */
+export async function getFeaturedLibraryPosts() {
+  const allPosts = await getAllLibraryPosts();
+  return allPosts.filter(post => post.data.featured === true);
+}

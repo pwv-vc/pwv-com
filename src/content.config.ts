@@ -59,6 +59,8 @@ const library = defineCollection({
       // if no hero image is provided, the library item will display a placeholder image
       heroImage: image().optional(),
       tags: z.array(z.string()),
+      // featured post
+      featured: z.boolean().optional(),
     }),
 });
 
