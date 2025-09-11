@@ -18,7 +18,7 @@ export async function GET(context: any) {
       const postURL = post.data.url || `${context.site}/library/${post.id}`;
 
       // Create canonical URL for hero image if it exists
-      const heroImageURL = post.data.heroImage
+      const heroImageData = post.data.heroImage
         ? (() => {
             // Handle the image object - it might have .src property or be the URL directly
             const imageSrc = typeof post.data.heroImage === 'object' && post.data.heroImage !== null
@@ -26,20 +26,54 @@ export async function GET(context: any) {
               : post.data.heroImage;
 
             // Ensure we have a full canonical URL
+            let fullURL: string;
             if (typeof imageSrc === 'string') {
               // If it's already a full URL, use it as is
               if (imageSrc.startsWith('http')) {
-                return imageSrc;
+                fullURL = imageSrc;
               }
               // If it's a relative path, make it absolute with the site URL
-              if (imageSrc.startsWith('/')) {
-                return `${context.site}${imageSrc}`;
+              else if (imageSrc.startsWith('/')) {
+                // Ensure context.site doesn't end with slash to avoid double slashes
+                const siteUrl = String(context.site).replace(/\/$/, '');
+                fullURL = `${siteUrl}${imageSrc}`;
               }
               // If it's a relative path without leading slash, add it
-              return `${context.site}/${imageSrc}`;
+              else {
+                // Ensure context.site doesn't end with slash to avoid double slashes
+                const siteUrl = String(context.site).replace(/\/$/, '');
+                fullURL = `${siteUrl}/${imageSrc}`;
+              }
+            } else {
+              return undefined;
             }
 
-            return imageSrc;
+            // Determine the MIME type based on file extension
+            const getMimeType = (url: string): string => {
+              // Remove query parameters and get the file extension
+              const urlWithoutQuery = url.split('?')[0];
+              const extension = urlWithoutQuery.split('.').pop()?.toLowerCase();
+              switch (extension) {
+                case 'jpg':
+                case 'jpeg':
+                  return 'image/jpeg';
+                case 'png':
+                  return 'image/png';
+                case 'gif':
+                  return 'image/gif';
+                case 'webp':
+                  return 'image/webp';
+                case 'svg':
+                  return 'image/svg+xml';
+                default:
+                  return 'image/jpeg'; // fallback
+              }
+            };
+
+            return {
+              url: fullURL,
+              type: getMimeType(fullURL)
+            };
           })()
         : undefined;
 
@@ -54,8 +88,8 @@ export async function GET(context: any) {
           post.data.updatedDate
             ? `<lastBuildDate>${post.data.updatedDate.toUTCString()}</lastBuildDate>`
             : '',
-          heroImageURL
-            ? `<enclosure url="${heroImageURL}" type="image/jpeg" />`
+          heroImageData
+            ? `<enclosure url="${heroImageData.url}" type="${heroImageData.type}" />`
             : ''
         ].filter(Boolean).join(''),
       };
