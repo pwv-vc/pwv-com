@@ -9,7 +9,7 @@ import PostNavigation from '../../components/PostNavigation.astro';
 import { getAllLibraryPosts, getReadingTime, getPostNavigation } from '../../lib/library';
 
 // if Netlify output is server, then *must* be true
-// export const prerender = true;
+export const prerender = true;
 
 export async function getStaticPaths() {
   const posts = await getAllLibraryPosts();
