@@ -6,7 +6,7 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'static',
+  output: 'server',
   adapter: netlify(),
   site: process.env.URL || process.env.DEPLOY_URL || 'http://localhost:4321',
   integrations: [mdx()],
