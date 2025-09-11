@@ -14,20 +14,20 @@
 
 /* Custom prose heading font sizes */
 .prose h1 {
-  font-size: 2.25rem; /* 36px, standard for h1 */
-  line-height: 2.5rem; /* 40px */
+  font-size: 2rem; /* 36px, standard for h1 */
+  line-height: 2rem; /* 40px */
   color: var(--pwv-blue);
 }
 
 .prose h2 {
-  font-size: 1.5rem; /* 24px, standard for h2 */
-  line-height: 2rem; /* 32px */
+  font-size: 1.25rem; /* 24px, standard for h2 */
+  line-height: 1.75rem; /* 32px */
   color: var(--pwv-blue);
 }
 
 .prose h3 {
-  font-size: 1.25rem; /* 20px, standard for h3 */
-  line-height: 1.75rem; /* 28px */
+  font-size: 1rem; /* 20px, standard for h3 */
+  line-height: 1.5rem; /* 28px */
   color: var(--pwv-blue);
 }
 
