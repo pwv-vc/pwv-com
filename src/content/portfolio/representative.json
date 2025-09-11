@@ -251,5 +251,29 @@
     "tags": [
       "energy"
     ]
+  },
+  {
+    "name": "Myriad AI",
+    "slug": "myriad-ai",
+    "url": "https://www.myriad.company/",
+    "tags": [
+      "ai", "compliance"
+    ]
+  },
+  {
+    "name": "Not Diamond",
+    "slug": "not-diamond",
+    "url": "https://www.notdiamond.ai",
+    "tags": [
+      "ai"
+    ]
+  },
+  {
+    "name": "Nuanced",
+    "slug": "nuanced",
+    "url": "https://www.nuanced.dev",
+    "tags": [
+      "ai"
+    ]
   }
 ]

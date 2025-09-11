@@ -59,13 +59,24 @@ This creates:
 
 ### Usage
 
+Favicons are fetched for portfolio companies defined in `src/content/portfolio/*.json`.
+
 ```bash
 # Using npm script
-pnpm run download-favicons
+pnpm run download-favicons representative.json
 
-# Or directly with node
-node scripts/download-favicons.js
+# Or directly with node (choose one of the files or 'all')
+node scripts/download-favicons.js representative.json
+node scripts/download-favicons.js rolling-fund.json
+node scripts/download-favicons.js angel.json
+node scripts/download-favicons.js all
+
+# Force re-download even if files already exist
+node scripts/download-favicons.js all --force
+node scripts/download-favicons.js representative.json -f
 ```
+
+By default, existing files in `src/images/logos/small/<slug>.png` are skipped. Use `--force` (or `-f`) to always re-download.
 
 ---
 

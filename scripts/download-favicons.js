@@ -18,9 +18,16 @@ if (!fs.existsSync(OUTPUT_DIR)) {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 }
 
-async function downloadFavicon(url, filename) {
+async function downloadFavicon(url, filename, force = false) {
   try {
     const faviconUrl = `${FAVICON_BASE_URL}${encodeURIComponent(url)}&size=${FAVICON_SIZE}`;
+    const filePath = path.join(OUTPUT_DIR, `${filename}.png`);
+
+    if (!force && fs.existsSync(filePath)) {
+      console.log(`✓ Skipping existing favicon: ${filename}.png`);
+      return true;
+    }
+
     console.log(`Downloading favicon for ${url}...`);
 
     const response = await fetch(faviconUrl);
@@ -29,7 +36,6 @@ async function downloadFavicon(url, filename) {
     }
 
     const buffer = await response.arrayBuffer();
-    const filePath = path.join(OUTPUT_DIR, `${filename}.png`);
 
     fs.writeFileSync(filePath, Buffer.from(buffer));
     console.log(`✓ Saved favicon: ${filename}.png`);
@@ -41,7 +47,7 @@ async function downloadFavicon(url, filename) {
   }
 }
 
-async function processPortfolioFile(filename) {
+async function processPortfolioFile(filename, force = false) {
   const filePath = path.join(PORTFOLIO_DIR, filename);
 
   if (!fs.existsSync(filePath)) {
@@ -68,7 +74,7 @@ async function processPortfolioFile(filename) {
         continue;
       }
 
-      const success = await downloadFavicon(company.url, company.slug);
+      const success = await downloadFavicon(company.url, company.slug, force);
       if (success) {
         successCount++;
       }
@@ -88,23 +94,25 @@ async function main() {
   const args = process.argv.slice(2);
 
   if (args.length === 0) {
-    console.log('Usage: node download-favicons.js [rolling-fund.json|representative.json|angel.json|all]');
+    console.log('Usage: node download-favicons.js [rolling-fund.json|representative.json|angel.json|all] [--force|-f]');
     console.log('Examples:');
     console.log('  node download-favicons.js rolling-fund.json');
     console.log('  node download-favicons.js representative.json');
     console.log('  node download-favicons.js angel.json');
     console.log('  node download-favicons.js all');
+    console.log('  node download-favicons.js all --force');
     process.exit(1);
   }
 
   const target = args[0];
+  const force = args.includes('--force') || args.includes('-f');
 
   if (target === 'all') {
-    await processPortfolioFile('rolling-fund.json');
-    await processPortfolioFile('representative.json');
-    await processPortfolioFile('angel.json');
+    await processPortfolioFile('rolling-fund.json', force);
+    await processPortfolioFile('representative.json', force);
+    await processPortfolioFile('angel.json', force);
   } else if (target === 'rolling-fund.json' || target === 'representative.json' || target === 'angel.json') {
-    await processPortfolioFile(target);
+    await processPortfolioFile(target, force);
   } else {
     console.error(`Invalid argument: ${target}`);
     console.log('Valid options: rolling-fund.json, representative.json, angel.json, or all');
