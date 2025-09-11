@@ -3,13 +3,13 @@
     "name": "Astranis",
     "slug": "astranis",
     "url": "https://www.astranis.com/",
-    "tags": ["hardware", "aerospace"]
+    "tags": ["🦄", "hardware", "aerospace"]
   },
   {
     "name": "Cursor",
     "slug": "cursor",
     "url": "https://www.cursor.com/",
-    "tags": ["ai", "dev tools"]
+    "tags": ["🦄", "ai", "dev tools"]
   },
   {
     "name": "Atuin",
@@ -21,7 +21,7 @@
     "name": "fal",
     "slug": "fal",
     "url": "https://www.fal.ai/",
-    "tags": ["ai", "dev tools"]
+    "tags": ["🦄", "ai", "dev tools"]
   },
   {
     "name": "Elicit",
@@ -36,7 +36,7 @@
     "tags": ["dev tools", "board seat"]
   },
   {
-    "name": "Aerodome",
+    "name": "Aerodome (acquired by Flock Safety)",
     "slug": "aerodome",
     "url": "https://www.aerodome.com",
     "tags": ["hardware", "ai", "acquired"]
@@ -45,7 +45,7 @@
     "name": "Liquid AI",
     "slug": "liquid-ai",
     "url": "https://www.liquid.ai",
-    "tags": ["ai"]
+    "tags": ["🦄", "ai"]
   },
   {
     "name": "Zoo",
@@ -81,7 +81,7 @@
     "name": "Aalo Atomics",
     "slug": "aalo-atomics",
     "url": "https://www.aalo.com",
-    "tags": ["hardware", "energy"]
+    "tags": ["🦄", "hardware", "energy"]
   },
   {
     "name": "Cleanlab",
@@ -141,7 +141,7 @@
     "name": "Poolside",
     "slug": "poolside",
     "url": "https://www.poolside.ai/",
-    "tags": ["ai"]
+    "tags": ["🦄", "ai"]
   },
   {
     "name": "Turso",
@@ -156,10 +156,10 @@
     "tags": ["hardware", "saas"]
   },
   {
-    "name": "CFS",
+    "name": "Commonwealth Fusion Systems",
     "slug": "commonwealth-fusion-systems",
     "url": "https://cfs.energy/",
-    "tags": ["energy"]
+    "tags": ["🦄", "energy"]
   },
   {
     "name": "StackOne",

@@ -14,23 +14,23 @@
   {
     "name": "Impossible Foods",
     "url": "https://impossiblefoods.com",
-    "tags": ["food tech"],
+    "tags": ["🦄", "food tech"],
     "slug": "impossible-foods"
   },
   {
     "name": "Stripe",
     "url": "https://stripe.com/",
-    "tags": ["dev tools"],
+    "tags": ["🦄", "dev tools"],
     "slug": "stripe"
   },
   {
     "name": "Supabase",
     "url": "https://supabase.com/",
-    "tags": ["dev tools"],
+    "tags": ["🦄", "dev tools"],
     "slug": "supabase"
   },
   {
-    "name": "Weights & Biases",
+    "name": "Weights & Biases (acquired by CoreWeave)",
     "url": "https://www.wandb.ai/",
     "tags": ["ai", "acquired"],
     "slug": "weights-and-biases"
@@ -38,7 +38,7 @@
   {
     "name": "Snyk",
     "url": "https://snyk.io/",
-    "tags": ["dev tools"],
+    "tags": ["🦄", "dev tools"],
     "slug": "snyk"
   },
   {
@@ -50,7 +50,7 @@
   {
     "name": "Netlify",
     "url": "https://www.netlify.com/",
-    "tags": ["dev tools", "board seat (past)"],
+    "tags": ["🦄", "dev tools"],
     "slug": "netlify"
   },
   {
