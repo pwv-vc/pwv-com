@@ -28,13 +28,14 @@ const posts =
       <p class="text-lg text-gray-600">Insights, thoughts, and perspectives from PWV, our founders and community.</p>
     </div>
 
-    <FeaturedPosts />
 
     <LibraryToggle
       externalCount={externalPosts.length}
       nonExternalCount={nonExternalPosts.length}
       activeFilter={activeFilter}
     />
+
+    {activeFilter === 'all' && <FeaturedPosts />}
 
     <PostsGrid posts={posts} size="large" />
     <div class="text-center mt-8">
