@@ -11,7 +11,7 @@ const portfolioSchema = z.object({
 });
 
 const representativePortfolio = defineCollection({
-  loader: file('src/content/portfolio/rolling-fund.json'),
+  loader: file('src/content/portfolio/representative.json'),
   schema: portfolioSchema,
 });
 

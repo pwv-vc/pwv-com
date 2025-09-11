@@ -235,5 +235,21 @@
     "tags": [
       "saas"
     ]
+  },
+  {
+    "name": "Commutator Studios",
+    "slug": "commutator-studios",
+    "url": "https://www.commutatorstudios.com/",
+    "tags": [
+      "quantum computing"
+    ]
+  },
+  {
+    "name": "Power Planet",
+    "slug": "power-planet",
+    "url": "https://power-planet.com/",
+    "tags": [
+      "energy"
+    ]
   }
 ]

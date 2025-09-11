@@ -54,3 +54,23 @@ This creates:
 - **Clean formatting**: Removes unnecessary text from titles and descriptions
 - **Error handling**: Graceful fallbacks for missing metadata
 - **URL tracking**: Adds `?ref=pwv.com` to track external links
+
+- **Favicon download**: Downloads favicons for the portfolio companies
+
+### Usage
+
+```bash
+# Using npm script
+pnpm run download-favicons
+
+# Or directly with node
+node scripts/download-favicons.js
+```
+
+---
+
+If need to download and convert svg favicons to png, use the following command:
+
+```bash
+curl -L https://www.commutatorstudios.com/favicon.svg -o /tmp/commutator-studios.svg && convert -background none -resize 64x64 /tmp/commutator-studios.svg src/images/logos/small/commutator-studios.png
+```
