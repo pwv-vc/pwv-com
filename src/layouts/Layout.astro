@@ -25,6 +25,10 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const faviconURL = new URL('/favicon.png', Astro.site);
+const favicon16URL = new URL('/favicon-16x16.png', Astro.site);
+const favicon32URL = new URL('/favicon-32x32.png', Astro.site);
+const appleTouchIconURL = new URL('/apple-touch-icon.png', Astro.site);
+const manifestURL = new URL('/site.webmanifest', Astro.site);
 const sitemapURL = new URL('/sitemap-index.xml', Astro.site);
 const rssURL = new URL('rss.xml', Astro.site);
 
@@ -47,6 +51,11 @@ if (image) {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" type="image/png" href={faviconURL} />
+    <link rel="icon" type="image/png" sizes="32x32" href={favicon32URL} />
+    <link rel="icon" type="image/png" sizes="16x16" href={favicon16URL} />
+    <link rel="apple-touch-icon" sizes="180x180" href={appleTouchIconURL} />
+    <link rel="manifest" href={manifestURL} />
+    <meta name="theme-color" content="#ffffff" />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Font preloads -->

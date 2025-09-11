@@ -7,6 +7,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "export-favicon": "node scripts/export-favicon-png.js",
+    "downscale-favicon": "node scripts/downscale-favicon.js",
+    "generate-favicons": "node scripts/generate-favicons.js",
     "download-favicons": "node scripts/download-favicons.js",
     "fetch-external": "node scripts/fetch-external-content.js"
   },
