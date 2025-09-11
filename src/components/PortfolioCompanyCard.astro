@@ -47,8 +47,8 @@ const getTagStyle = (tag: string) => {
 };
 ---
 
-<div class="flex flex-col gap-2 py-1">
-  <a href={url} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-sm text-[var(--pwv-blue)] font-mono font-bold hover:underline">
+<div class="flex flex-col gap-2 py-1 overflow-hidden">
+  <a href={url} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-sm text-[var(--pwv-blue)] font-mono font-bold hover:underline min-w-0">
     <UnpicImage
       src={resolveImageSrc(`logos/small/${slug}.png`)}
       alt={`${name} logo`}
@@ -56,7 +56,7 @@ const getTagStyle = (tag: string) => {
       height={24}
       class={`flex-shrink-0 border border-gray-100 ${blackBackgroundSlugs.includes(slug) ? 'bg-black' : 'bg-white'}`}
     />
-    <span class="whitespace-nowrap">{name}</span>
+    <span class="flex-1 whitespace-normal break-words leading-snug">{name}</span>
   </a>
   <div class="flex flex-wrap gap-1">
     {tags.map(tag => {
