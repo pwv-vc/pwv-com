@@ -14,25 +14,26 @@ const { externalCount, nonExternalCount } = Astro.props;
       class="toggle-btn px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 active"
       data-filter="all"
     >
-      All Posts
+      All
       <span class="ml-1 text-xs opacity-75">({externalCount + nonExternalCount})</span>
+    </button>
+    <button
+    id="non-external-posts-btn"
+    class="toggle-btn px-4 py-2 rounded-md text-sm font-medium transition-all duration-200"
+    data-filter="non-external"
+    >
+      PWV
+    <span class="ml-1 text-xs opacity-75">({nonExternalCount})</span>
     </button>
     <button
       id="external-posts-btn"
       class="toggle-btn px-4 py-2 rounded-md text-sm font-medium transition-all duration-200"
       data-filter="external"
     >
-      External
+      Founders &amp; Community
       <span class="ml-1 text-xs opacity-75">({externalCount})</span>
     </button>
-    <button
-      id="non-external-posts-btn"
-      class="toggle-btn px-4 py-2 rounded-md text-sm font-medium transition-all duration-200"
-      data-filter="non-external"
-    >
-      PWV Posts
-      <span class="ml-1 text-xs opacity-75">({nonExternalCount})</span>
-    </button>
+
   </div>
 </div>
 
