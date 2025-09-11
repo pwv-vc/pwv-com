@@ -1,0 +1,99 @@
+---
+export interface Props {
+  externalCount: number;
+  nonExternalCount: number;
+}
+
+const { externalCount, nonExternalCount } = Astro.props;
+---
+
+<div class="flex items-center justify-center mb-8">
+  <div class="bg-gray-100 rounded-lg p-1 flex">
+    <button
+      id="all-posts-btn"
+      class="toggle-btn px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 active"
+      data-filter="all"
+    >
+      All Posts
+      <span class="ml-1 text-xs opacity-75">({externalCount + nonExternalCount})</span>
+    </button>
+    <button
+      id="external-posts-btn"
+      class="toggle-btn px-4 py-2 rounded-md text-sm font-medium transition-all duration-200"
+      data-filter="external"
+    >
+      External
+      <span class="ml-1 text-xs opacity-75">({externalCount})</span>
+    </button>
+    <button
+      id="non-external-posts-btn"
+      class="toggle-btn px-4 py-2 rounded-md text-sm font-medium transition-all duration-200"
+      data-filter="non-external"
+    >
+      PWV Posts
+      <span class="ml-1 text-xs opacity-75">({nonExternalCount})</span>
+    </button>
+  </div>
+</div>
+
+<style>
+  .toggle-btn {
+    color: #6b7280;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .toggle-btn:hover {
+    color: #374151;
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .toggle-btn.active {
+    color: #1f2937;
+    background: white;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  }
+</style>
+
+<script>
+  // Get all posts container and toggle buttons
+  const postsContainer = document.getElementById('posts-container');
+  const toggleButtons = document.querySelectorAll('.toggle-btn');
+
+  // Add click event listeners to toggle buttons
+  toggleButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Remove active class from all buttons
+      toggleButtons.forEach(btn => btn.classList.remove('active'));
+
+      // Add active class to clicked button
+      button.classList.add('active');
+
+      // Get the filter type
+      const filter = button.getAttribute('data-filter');
+
+      // Show/hide posts based on filter
+      const allPosts = postsContainer?.querySelectorAll('[data-post-type]');
+
+      if (allPosts) {
+        allPosts.forEach(post => {
+          const postType = post.getAttribute('data-post-type');
+          const postElement = post as HTMLElement;
+
+          switch (filter) {
+            case 'all':
+              postElement.style.display = 'block';
+              break;
+            case 'external':
+              postElement.style.display = postType === 'external' ? 'block' : 'none';
+              break;
+            case 'non-external':
+              postElement.style.display = postType === 'non-external' ? 'block' : 'none';
+              break;
+          }
+        });
+      }
+    });
+  });
+</script>

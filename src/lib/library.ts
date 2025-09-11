@@ -60,3 +60,21 @@ export async function getPostNavigation(currentSlug: string) {
     nextPost: currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : undefined
   };
 }
+
+/**
+ * Get external library posts (posts with a URL field)
+ * @returns Array of external library posts sorted by publication date (newest first)
+ */
+export async function getExternalLibraryPosts() {
+  const allPosts = await getAllLibraryPosts();
+  return allPosts.filter(post => post.data.url);
+}
+
+/**
+ * Get non-external library posts (posts without a URL field)
+ * @returns Array of non-external library posts sorted by publication date (newest first)
+ */
+export async function getNonExternalLibraryPosts() {
+  const allPosts = await getAllLibraryPosts();
+  return allPosts.filter(post => !post.data.url);
+}

@@ -10,8 +10,10 @@ const { posts, size = 'large' } = Astro.props;
 ---
 
 <!-- Basic Grid Layout -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div id="posts-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
   {posts.map((post) => (
-    <LibraryCard post={post} size={size} />
+    <div data-post-type={post.data.url ? 'external' : 'non-external'}>
+      <LibraryCard post={post} size={size} />
+    </div>
   ))}
 </div>
