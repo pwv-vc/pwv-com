@@ -17,14 +17,17 @@ export async function GET(context: any) {
       // Use the URL if it's an external post, otherwise use the internal library URL
       const postURL = post.data.url || `${context.site}/library/${post.id}`;
 
-      return {
-        title: post.data.title,
-        description: post.data.description,
-        pubDate: post.data.pubDate,
-        link: postURL,
-        author: post.data.author,
-        categories: post.data.tags,
-      };
+        return {
+          title: post.data.title,
+          description: post.data.description,
+          pubDate: post.data.pubDate,
+          link: postURL,
+          author: post.data.author,
+          categories: post.data.tags,
+          customData: post.data.updatedDate
+            ? `<lastBuildDate>${post.data.updatedDate.toUTCString()}</lastBuildDate>`
+            : '',
+        };
     }),
     customData: `<language>en</language>`,
   });
