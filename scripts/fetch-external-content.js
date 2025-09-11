@@ -273,6 +273,32 @@ function generateSlug(title) {
 }
 
 /**
+ * Generate a file-safe filename with timestamp for uniqueness
+ */
+function generateUniqueFilename(title, slug) {
+  // Create a timestamp in YYYYMMDD-HHMMSS format
+  const now = new Date();
+  const timestamp = now.toISOString()
+    .replace(/[-:]/g, '')
+    .replace(/\.\d{3}Z$/, '')
+    .replace('T', '-');
+
+  // Create a file-safe name from the title/slug
+  const fileSafeName = slug
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '') // Remove special characters except spaces and hyphens
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+    .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
+    .substring(0, 50); // Limit length to 50 characters
+
+  // If the file-safe name is empty or too short, use a fallback
+  const finalName = fileSafeName.length > 3 ? fileSafeName : 'external-post';
+
+  return `external-${finalName}-${timestamp}`;
+}
+
+/**
  * Get file extension from URL
  */
 function getFileExtension(url) {
@@ -361,7 +387,7 @@ async function createLibraryPost(url) {
     const filename = `external-${slug}.md`;
     const filePath = path.join(CONTENT_DIR, filename);
 
-    // Create images directory for this post
+    // Create images directory for this post (keep original slug for folder name)
     const imageDir = path.join(IMAGES_DIR, `external-${slug}`);
     await fs.mkdir(imageDir, { recursive: true });
 
@@ -375,7 +401,13 @@ async function createLibraryPost(url) {
           : new URL(metadata.ogImage, url).href;
 
         const imageExt = getFileExtension(imageUrl);
-        const imageFilename = `banner_16_9-1${imageExt}`;
+        // Generate timestamp for image filename uniqueness
+        const now = new Date();
+        const timestamp = now.toISOString()
+          .replace(/[-:]/g, '')
+          .replace(/\.\d{3}Z$/, '')
+          .replace('T', '-');
+        const imageFilename = `banner_16_9-1-${timestamp}${imageExt}`;
         const localImagePath = path.join(imageDir, imageFilename);
 
         console.log(`Downloading image: ${imageUrl}`);
@@ -390,7 +422,13 @@ async function createLibraryPost(url) {
     } else {
       // No OG image found, generate one using FAL AI
       console.log('No OG image found, generating one with FAL AI...');
-      const imageFilename = 'banner_16_9-1.png';
+      // Generate timestamp for image filename uniqueness
+      const now = new Date();
+      const timestamp = now.toISOString()
+        .replace(/[-:]/g, '')
+        .replace(/\.\d{3}Z$/, '')
+        .replace('T', '-');
+      const imageFilename = `banner_16_9-1-${timestamp}.png`;
       const localImagePath = path.join(imageDir, imageFilename);
 
       const generated = await generateOGImage(metadata.title, metadata.description, localImagePath);
