@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { fal } from '@fal-ai/client';
 import dotenv from 'dotenv';
 

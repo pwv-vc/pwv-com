@@ -9,6 +9,8 @@ import https from 'https';
 import http from 'http';
 import { fal } from '@fal-ai/client';
 import dotenv from 'dotenv';
+import inquirer from 'inquirer';
+
 
 // Load environment variables from .env file
 dotenv.config();
@@ -26,6 +28,19 @@ const __dirname = path.dirname(__filename);
 // Configuration
 const CONTENT_DIR = path.join(__dirname, '../src/content/library');
 const IMAGES_DIR = path.join(__dirname, '../src/images/library');
+
+// Available FAL AI Models
+const PROMPT_GENERATION_MODELS = [
+  { name: 'Claude 3.5 Sonnet (Recommended)', value: 'anthropic/claude-3.5-sonnet' },
+  { name: 'Claude 3.5 Haiku (Faster)', value: 'anthropic/claude-3.5-haiku' },
+  { name: 'Gemini 2.0 Flash', value: 'google/gemini-2.0-flash-001' },
+
+];
+
+const IMAGE_GENERATION_MODELS = [
+  { name: 'Imagen 3 Fast (Recommended)', value: 'fal-ai/imagen3/fast' },
+  { name: 'Flux Schnell (Fast)', value: 'fal-ai/flux/schnell' },
+];
 
 // FAL AI configuration
 // Make sure to set your FAL AI API key as an environment variable:
@@ -140,9 +155,44 @@ function extractTextContent(html) {
 }
 
 /**
+ * Interactive CLI to select models
+ */
+async function selectModels() {
+  console.log('🤖 FAL AI Model Selection');
+  console.log('=' .repeat(50));
+
+  const answers = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'promptModel',
+      message: 'Select a prompt generation model:',
+      choices: PROMPT_GENERATION_MODELS,
+      default: 0 // Default to first option (Claude 3.5 Sonnet)
+    },
+    {
+      type: 'list',
+      name: 'imageModel',
+      message: 'Select an image generation model:',
+      choices: IMAGE_GENERATION_MODELS,
+      default: 0 // Default to first option (Imagen 3 Fast)
+    }
+  ]);
+
+  console.log(`\n✅ Selected models:`);
+  console.log(`📝 Prompt Generation: ${answers.promptModel}`);
+  console.log(`🎨 Image Generation: ${answers.imageModel}`);
+  console.log('');
+
+  return {
+    promptModel: answers.promptModel,
+    imageModel: answers.imageModel
+  };
+}
+
+/**
  * Generate a better image prompt using FAL AI any-llm
  */
-async function generateImagePrompt(textContent, title, description) {
+async function generateImagePrompt(textContent, title, description, promptModel) {
   try {
     if (!process.env.FAL_KEY) {
       console.warn('FAL_KEY not set, using fallback prompt');
@@ -161,7 +211,7 @@ Blog post: ${title} ${description} ${textContent}`;
       input: {
         prompt: prompt,
         priority: "latency",
-        model: "anthropic/claude-3.5-sonnet"
+        model: promptModel
       }
     });
 
@@ -447,7 +497,7 @@ function getFileExtension(url) {
 /**
  * Generate an OG image using FAL AI
  */
-async function generateOGImage(title, description, textContent, localPath) {
+async function generateOGImage(title, description, textContent, localPath, promptModel, imageModel) {
   try {
     // Check if FAL AI API key is set
     if (!process.env.FAL_KEY) {
@@ -465,13 +515,13 @@ async function generateOGImage(title, description, textContent, localPath) {
     console.log('FAL AI client configured:', !!process.env.FAL_KEY);
 
     // Generate a better prompt using the extracted text content
-    const imagePrompt = await generateImagePrompt(textContent, title, description);
+    const imagePrompt = await generateImagePrompt(textContent, title, description, promptModel);
     console.log('🎨 Generated image prompt:');
     console.log('=' .repeat(80));
     console.log(imagePrompt);
     console.log('=' .repeat(80));
 
-    const result = await fal.subscribe('fal-ai/imagen3/fast', {
+    const result = await fal.subscribe(imageModel, {
       input: {
         prompt: imagePrompt,
         aspect_ratio: '16:9',
@@ -509,7 +559,7 @@ async function generateOGImage(title, description, textContent, localPath) {
 /**
  * Main function to fetch and create library post
  */
-async function createLibraryPost(url) {
+async function createLibraryPost(url, models) {
   try {
     console.log(`Fetching content from: ${url}`);
 
@@ -576,7 +626,9 @@ async function createLibraryPost(url) {
         metadata.title,
         metadata.description,
         textContent,
-        localImagePath
+        localImagePath,
+        models.promptModel,
+        models.imageModel
       );
 
       if (generated.success) {
@@ -633,13 +685,18 @@ tags: [ ${tagsString}]
 
 // Main execution
 async function main() {
-  const url = process.argv[2];
+  const args = process.argv.slice(2);
+  const skipInteractive = args.includes('--default-models');
+  const url = args.find(arg => !arg.startsWith('--'));
 
   if (!url) {
-    console.error('Usage: node fetch-external-content.js <URL>');
+    console.error('Usage: node fetch-external-content.js <URL> [--default-models]');
     console.error(
       'Example: node fetch-external-content.js https://www.aalo.com/post/aalo-closes-100m-series-b'
     );
+    console.error('');
+    console.error('Options:');
+    console.error('  --default-models    Use default models without interactive selection');
     console.error('');
     console.error(
       'Note: If no OG image is found, the script will attempt to generate one using FAL AI.'
@@ -654,7 +711,24 @@ async function main() {
   }
 
   try {
-    const result = await createLibraryPost(url);
+    let models;
+
+    if (skipInteractive) {
+      // Use default models
+      models = {
+        promptModel: 'anthropic/claude-3.5-sonnet',
+        imageModel: 'fal-ai/imagen3/fast'
+      };
+      console.log('🤖 Using default models:');
+      console.log(`📝 Prompt Generation: ${models.promptModel}`);
+      console.log(`🎨 Image Generation: ${models.imageModel}`);
+      console.log('');
+    } else {
+      // Interactive model selection
+      models = await selectModels();
+    }
+
+    const result = await createLibraryPost(url, models);
 
     if (result.success) {
       console.log('\n✅ Successfully created library post!');
@@ -662,6 +736,9 @@ async function main() {
       console.log(`📝 Title: ${result.metadata.title}`);
       console.log(`👤 Author: ${result.metadata.author}`);
       console.log(`📅 Date: ${result.metadata.pubDate}`);
+      console.log(`🤖 Models used:`);
+      console.log(`   📝 Prompt: ${models.promptModel}`);
+      console.log(`   🎨 Image: ${models.imageModel}`);
     } else {
       console.error('\n❌ Failed to create library post');
       console.error(`Error: ${result.error}`);
