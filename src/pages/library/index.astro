@@ -2,31 +2,31 @@
 import Layout from '../../layouts/Layout.astro';
 import '../../styles/global.css';
 import {
-  getAllLibraryPosts,
+  getPaginatedLibraryPosts,
   getExternalLibraryPosts,
   getNonExternalLibraryPosts,
 } from '../../lib/library';
 import PostsGrid from '../../components/PostsGrid.astro';
 import LibraryToggle from '../../components/LibraryToggle.astro';
 import FeaturedPosts from '../../components/FeaturedPosts.astro';
+import Pagination from '../../components/Pagination.astro';
 
-const library = await getAllLibraryPosts();
-const externalPosts = await getExternalLibraryPosts();
-const nonExternalPosts = await getNonExternalLibraryPosts();
-
+// Get filter and page from URL params
 const filter = Astro.url.searchParams.get('filter') ?? 'all';
+const page = parseInt(Astro.url.searchParams.get('page') ?? '1');
+
 const activeFilter: 'all' | 'community' | 'pwv' = ['community', 'pwv'].includes(
   filter
 )
   ? (filter as 'community' | 'pwv')
   : 'all';
 
-const posts =
-  activeFilter === 'community'
-    ? externalPosts
-    : activeFilter === 'pwv'
-      ? nonExternalPosts
-      : library;
+// Get paginated posts
+const { posts, pagination } = await getPaginatedLibraryPosts(page, 12, activeFilter);
+
+// Get counts for the toggle (we still need these for the toggle component)
+const externalPosts = await getExternalLibraryPosts();
+const nonExternalPosts = await getNonExternalLibraryPosts();
 ---
 
 <Layout>
@@ -57,6 +57,14 @@ const posts =
     {activeFilter === 'all' && <FeaturedPosts />}
 
     <PostsGrid posts={posts} size="large" />
+
+    <Pagination
+      currentPage={pagination.currentPage}
+      totalPages={pagination.totalPages}
+      baseUrl="/library"
+      filter={activeFilter}
+    />
+
     <div class="mt-8 text-center">
       <a
         href="/"

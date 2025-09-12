@@ -92,3 +92,49 @@ export async function getFeaturedLibraryPosts() {
   const allPosts = await getAllLibraryPosts();
   return allPosts.filter((post) => post.data.featured === true);
 }
+
+/**
+ * Get paginated library posts
+ * @param page - Page number (1-based)
+ * @param pageSize - Number of posts per page
+ * @param filter - Filter type: 'all', 'community', or 'pwv'
+ * @returns Object containing posts, pagination info, and total count
+ */
+export async function getPaginatedLibraryPosts(
+  page: number = 1,
+  pageSize: number = 12,
+  filter: 'all' | 'community' | 'pwv' = 'all'
+) {
+  let posts: any[];
+
+  switch (filter) {
+    case 'community':
+      posts = await getExternalLibraryPosts();
+      break;
+    case 'pwv':
+      posts = await getNonExternalLibraryPosts();
+      break;
+    default:
+      posts = await getAllLibraryPosts();
+  }
+
+  const totalPosts = posts.length;
+  const totalPages = Math.ceil(totalPosts / pageSize);
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedPosts = posts.slice(startIndex, endIndex);
+
+  return {
+    posts: paginatedPosts,
+    pagination: {
+      currentPage: page,
+      totalPages,
+      pageSize,
+      totalPosts,
+      hasNextPage: page < totalPages,
+      hasPreviousPage: page > 1,
+      nextPage: page < totalPages ? page + 1 : null,
+      previousPage: page > 1 ? page - 1 : null,
+    },
+  };
+}
