@@ -8,6 +8,7 @@ tags: ['AI', 'Philosophy', 'Creativity']
 author: David Thyresson
 aiGeneratedDescription: false
 aiGeneratedImage: true
+featured: true
 ---
 
 > In your stream, live in a dream. (Red Hot Chili Peppers, I like dirt)
