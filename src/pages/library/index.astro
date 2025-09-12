@@ -22,7 +22,7 @@ const activeFilter: 'all' | 'community' | 'pwv' = ['community', 'pwv'].includes(
   : 'all';
 
 // Get paginated posts
-const pageSize = 24;
+const pageSize = 12;
 const { posts, pagination } = await getPaginatedLibraryPosts(page, pageSize, activeFilter);
 
 // Get counts for the toggle (we still need these for the toggle component)
