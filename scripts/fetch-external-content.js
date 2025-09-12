@@ -92,6 +92,121 @@ async function downloadImage(imageUrl, localPath) {
 }
 
 /**
+ * Extract full text content from HTML
+ */
+function extractTextContent(html) {
+  const dom = new JSDOM(html);
+  const document = dom.window.document;
+
+  // Remove script and style elements
+  const scripts = document.querySelectorAll('script, style, nav, header, footer, aside');
+  scripts.forEach(el => el.remove());
+
+  // Get the main content - try different selectors
+  const contentSelectors = [
+    'article',
+    'main',
+    '[role="main"]',
+    '.content',
+    '.post-content',
+    '.entry-content',
+    '.article-content',
+    '.post-body',
+    '.entry-body'
+  ];
+
+  let contentElement = null;
+  for (const selector of contentSelectors) {
+    contentElement = document.querySelector(selector);
+    if (contentElement) break;
+  }
+
+  // If no specific content element found, use body
+  if (!contentElement) {
+    contentElement = document.body;
+  }
+
+  // Extract text content
+  let textContent = contentElement ? contentElement.textContent : document.body.textContent;
+
+  // Clean up the text
+  textContent = textContent
+    .replace(/\s+/g, ' ') // Replace multiple whitespace with single space
+    .replace(/\n\s*\n/g, '\n') // Remove empty lines
+    .trim();
+
+  // Limit to reasonable length (first 2000 characters should be enough for prompt generation)
+  return textContent.substring(0, 2000);
+}
+
+/**
+ * Generate a better image prompt using FAL AI any-llm
+ */
+async function generateImagePrompt(textContent, title, description) {
+  try {
+    if (!process.env.FAL_KEY) {
+      console.warn('FAL_KEY not set, using fallback prompt');
+      return `${title}\n\n${description}`;
+    }
+
+    const prompt = `Read this blog post and create a vivid, 2 sentence image-generation prompt that visually captures its core theme and mood. Focus on clear imagery, color, lighting, and style. Avoid text or logos.
+
+Blog post: ${title} ${description} ${textContent}`;
+
+    console.log('Generating image prompt with FAL AI any-llm...');
+    console.log('Prompt being sent to LLM:', prompt);
+
+    // Use non-streaming approach for simplicity
+    const result = await fal.subscribe("fal-ai/any-llm", {
+      input: {
+        prompt: prompt,
+        priority: "latency",
+        model: "anthropic/claude-3.5-sonnet"
+      }
+    });
+
+    console.log('LLM result:', result);
+
+    // Extract the generated prompt from the result
+    let generatedPrompt = '';
+    if (result.data && result.data.output) {
+      generatedPrompt = result.data.output;
+    } else if (result.data && result.data.content) {
+      generatedPrompt = result.data.content;
+    } else if (result.data && result.data.text) {
+      generatedPrompt = result.data.text;
+    } else if (result.data && result.data.response) {
+      generatedPrompt = result.data.response;
+    } else if (result.content) {
+      generatedPrompt = result.content;
+    } else if (result.text) {
+      generatedPrompt = result.text;
+    } else {
+      console.warn('Could not extract prompt from result:', result);
+      generatedPrompt = '';
+    }
+
+    // Clean up the generated prompt
+    generatedPrompt = generatedPrompt.trim();
+
+    console.log('Generated image prompt:', generatedPrompt);
+
+    // If the generated prompt is too short or seems incomplete, fall back to original
+    if (generatedPrompt.length < 10 || generatedPrompt.trim() === '') {
+      console.warn('Generated prompt too short or empty, using fallback');
+      console.warn('Generated prompt was:', JSON.stringify(generatedPrompt));
+      return `${title}\n\n${description}`;
+    }
+
+    console.log('Generated image prompt:', generatedPrompt);
+    return generatedPrompt;
+  } catch (error) {
+    console.warn(`Failed to generate image prompt with FAL AI: ${error.message}`);
+    return `${title}\n\n${description}`;
+  }
+}
+
+/**
  * Extract metadata from HTML content
  */
 function extractMetadata(html, url) {
@@ -332,7 +447,7 @@ function getFileExtension(url) {
 /**
  * Generate an OG image using FAL AI
  */
-async function generateOGImage(title, description, localPath) {
+async function generateOGImage(title, description, textContent, localPath) {
   try {
     // Check if FAL AI API key is set
     if (!process.env.FAL_KEY) {
@@ -343,20 +458,22 @@ async function generateOGImage(title, description, localPath) {
       console.warn('export FAL_KEY=your_fal_api_key_here');
       console.warn('Or create a .env file in the project root with:');
       console.warn('FAL_KEY=your_fal_api_key_here');
-      return false;
+      return { success: false, prompt: `${title}\n\n${description}` };
     }
 
     console.log('Generating OG image with FAL AI...');
     console.log('FAL AI client configured:', !!process.env.FAL_KEY);
 
-    // Create a comprehensive prompt from title and description
-    const prompt = `${title}
-
-${description}`;
+    // Generate a better prompt using the extracted text content
+    const imagePrompt = await generateImagePrompt(textContent, title, description);
+    console.log('🎨 Generated image prompt:');
+    console.log('=' .repeat(80));
+    console.log(imagePrompt);
+    console.log('=' .repeat(80));
 
     const result = await fal.subscribe('fal-ai/imagen3/fast', {
       input: {
-        prompt: prompt,
+        prompt: imagePrompt,
         aspect_ratio: '16:9',
         num_images: 1,
         resolution: '1K',
@@ -378,14 +495,14 @@ ${description}`;
       console.log(`Downloading generated image: ${imageUrl}`);
       await downloadImage(imageUrl, localPath);
       console.log(`Generated image saved to: ${localPath}`);
-      return true;
+      return { success: true, prompt: imagePrompt };
     } else {
       console.warn('No image generated by FAL AI');
-      return false;
+      return { success: false, prompt: imagePrompt };
     }
   } catch (error) {
     console.error(`Failed to generate image with FAL AI: ${error.message}`);
-    return false;
+    return { success: false, prompt: `${title}\n\n${description}` };
   }
 }
 
@@ -399,8 +516,10 @@ async function createLibraryPost(url) {
     // Fetch HTML content
     const html = await fetchHTML(url);
     const metadata = extractMetadata(html, url);
+    const textContent = extractTextContent(html);
 
     console.log('Extracted metadata:', metadata);
+    console.log('Extracted text content length:', textContent.length);
 
     // Generate filename and directory
     const slug = generateSlug(metadata.title);
@@ -456,13 +575,20 @@ async function createLibraryPost(url) {
       const generated = await generateOGImage(
         metadata.title,
         metadata.description,
+        textContent,
         localImagePath
       );
 
-      if (generated) {
+      if (generated.success) {
         // Set relative path for the markdown file
         heroImagePath = `../../images/library/external-${slug}/${imageFilename}`;
         console.log(`Generated image saved to: ${localImagePath}`);
+
+        // Save the prompt as a text file
+        const promptFilename = imageFilename.replace(/\.[^/.]+$/, '.txt');
+        const promptPath = path.join(imageDir, promptFilename);
+        await fs.writeFile(promptPath, generated.prompt, 'utf8');
+        console.log(`Generated prompt saved to: ${promptPath}`);
       } else {
         console.warn('Failed to generate image with FAL AI');
       }
@@ -518,6 +644,8 @@ async function main() {
     console.error(
       'Note: If no OG image is found, the script will attempt to generate one using FAL AI.'
     );
+    console.error('The script now extracts full text content and uses FAL AI any-llm to generate');
+    console.error('better image prompts based on the actual article content.');
     console.error('To enable image generation, set your FAL AI API key:');
     console.error('export FAL_KEY=your_fal_api_key_here');
     console.error('Or create a .env file in the project root with:');
