@@ -7,6 +7,8 @@ tags: [AI, Edge, 'Embodied Intelligence']
 title: 'Everywhere, Somewhere, Here: Intelligence in the Place'
 updatedDate: Aug 19 2025
 author: David Thyresson
+aiGeneratedDescription: false
+aiGeneratedImage: true
 ---
 
 Everybody's been talking about AI. It feels like it's everywhere ---

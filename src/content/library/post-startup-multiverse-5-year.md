@@ -6,6 +6,8 @@ updatedDate: 'Aug 25 2025'
 heroImage: '../../images/library/post-startup-multiverse-5-year/post-startup-multiverse-5-year-hero.png'
 tags: ['Startups', 'Entrepreneurship', 'Time Travel', 'Tom Preston-Werner']
 author: 'David Thyresson'
+aiGeneratedDescription: false
+aiGeneratedImage: true
 ---
 
 In the five years I’ve worked with Tom Preston-Werner, I’ve learned many things. One of them is that he loves time-travel stories. The kind with branching timelines, alternate realities, and the tension of choosing which path becomes the “real” future.

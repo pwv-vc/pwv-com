@@ -190,6 +190,71 @@ async function selectModels() {
 }
 
 /**
+ * Generate a description using FAL AI any-llm when no description is found
+ */
+async function generateDescription(textContent, title, promptModel) {
+  try {
+    if (!process.env.FAL_KEY) {
+      console.warn('FAL_KEY not set, cannot generate description');
+      return '';
+    }
+
+    const prompt = `Summarize in a two sentence blog description the following article: ${title}
+
+${textContent}`;
+
+    console.log('Generating description with FAL AI any-llm...');
+    console.log('Prompt being sent to LLM:', prompt);
+
+    // Use non-streaming approach for simplicity
+    const result = await fal.subscribe("fal-ai/any-llm", {
+      input: {
+        prompt: prompt,
+        priority: "latency",
+        model: promptModel
+      }
+    });
+
+    console.log('LLM result:', result);
+
+    // Extract the generated description from the result
+    let generatedDescription = '';
+    if (result.data && result.data.output) {
+      generatedDescription = result.data.output;
+    } else if (result.data && result.data.content) {
+      generatedDescription = result.data.content;
+    } else if (result.data && result.data.text) {
+      generatedDescription = result.data.text;
+    } else if (result.data && result.data.response) {
+      generatedDescription = result.data.response;
+    } else if (result.content) {
+      generatedDescription = result.content;
+    } else if (result.text) {
+      generatedDescription = result.text;
+    } else {
+      console.warn('Could not extract description from result:', result);
+      generatedDescription = '';
+    }
+
+    // Clean up the generated description
+    generatedDescription = generatedDescription.trim();
+
+    console.log('Generated description:', generatedDescription);
+
+    // If the generated description is too short or seems incomplete, return empty string
+    if (generatedDescription.length < 10 || generatedDescription.trim() === '') {
+      console.warn('Generated description too short or empty');
+      return '';
+    }
+
+    return generatedDescription;
+  } catch (error) {
+    console.warn(`Failed to generate description with FAL AI: ${error.message}`);
+    return '';
+  }
+}
+
+/**
  * Generate a better image prompt using FAL AI any-llm
  */
 async function generateImagePrompt(textContent, title, description, promptModel) {
@@ -571,6 +636,31 @@ async function createLibraryPost(url, models) {
     console.log('Extracted metadata:', metadata);
     console.log('Extracted text content length:', textContent.length);
 
+    // Track AI usage
+    let aiGeneratedDescription = false;
+    let aiGeneratedImage = false;
+
+    // Generate description if none found
+    if (!metadata.description || metadata.description.trim() === '') {
+      console.log('No description found, generating one with FAL AI...');
+      const generatedDescription = await generateDescription(textContent, metadata.title, models.promptModel);
+      if (generatedDescription) {
+        metadata.description = generatedDescription;
+        aiGeneratedDescription = true;
+        console.log('Generated description:', metadata.description);
+      } else {
+        console.warn('Failed to generate description, using empty string');
+        metadata.description = '';
+      }
+    }
+
+    // Use site name as author if no author found
+    if (!metadata.author || metadata.author.trim() === '') {
+      console.log('No author found, using site name as author...');
+      metadata.author = metadata.siteName || 'Unknown';
+      console.log('Using site name as author:', metadata.author);
+    }
+
     // Generate filename and directory
     const slug = generateSlug(metadata.title);
     const filename = `external-${slug}.md`;
@@ -612,6 +702,7 @@ async function createLibraryPost(url, models) {
     } else {
       // No OG image found, generate one using FAL AI
       console.log('No OG image found, generating one with FAL AI...');
+      aiGeneratedImage = true;
       // Generate timestamp for image filename uniqueness
       const now = new Date();
       const timestamp = now
@@ -643,6 +734,7 @@ async function createLibraryPost(url, models) {
         console.log(`Generated prompt saved to: ${promptPath}`);
       } else {
         console.warn('Failed to generate image with FAL AI');
+        aiGeneratedImage = false; // Reset if generation failed
       }
     }
 
@@ -661,6 +753,8 @@ updatedDate: '${metadata.pubDate}'
 ${heroImagePath ? `heroImage: '${heroImagePath}'` : ''}
 url: "${url}?ref=pwv.com"
 tags: [ ${tagsString}]
+${aiGeneratedDescription ? 'aiGeneratedDescription: true' : ''}
+${aiGeneratedImage ? 'aiGeneratedImage: true' : ''}
 ---
 
 `;
@@ -699,11 +793,12 @@ async function main() {
     console.error('  --default-models    Use default models without interactive selection');
     console.error('');
     console.error(
-      'Note: If no OG image is found, the script will attempt to generate one using FAL AI.'
+      'Note: If no description is found, the script will generate one using FAL AI.'
     );
-    console.error('The script now extracts full text content and uses FAL AI any-llm to generate');
-    console.error('better image prompts based on the actual article content.');
-    console.error('To enable image generation, set your FAL AI API key:');
+    console.error('If no OG image is found, the script will attempt to generate one using FAL AI.');
+    console.error('The script extracts full text content and uses FAL AI any-llm to generate');
+    console.error('better descriptions and image prompts based on the actual article content.');
+    console.error('To enable AI features, set your FAL AI API key:');
     console.error('export FAL_KEY=your_fal_api_key_here');
     console.error('Or create a .env file in the project root with:');
     console.error('FAL_KEY=your_fal_api_key_here');

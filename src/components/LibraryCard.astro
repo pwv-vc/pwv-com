@@ -15,6 +15,8 @@ export interface Props {
       author?: string;
       tags?: string[];
       updatedDate?: Date;
+      aiGeneratedImage?: boolean;
+      aiGeneratedDescription?: boolean;
     };
     body?: string;
   };
@@ -93,6 +95,48 @@ const getSiteName = (url: string) => {
               <span>•</span>
               <span>{getSiteName(post.data.url)}</span>
             </>
+          )
+        }
+        {
+          (post.data.aiGeneratedImage || post.data.aiGeneratedDescription) && (
+            <div class="flex items-center gap-1 ml-2">
+              {
+                post.data.aiGeneratedImage && (
+                  <div class="group relative">
+                    <svg
+                      class={`${iconSize} text-purple-500 opacity-60`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                      <circle cx="18" cy="6" r="2" fill="currentColor"/>
+                    </svg>
+                    <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10">
+                      AI Generated Image
+                    </div>
+                  </div>
+                )
+              }
+              {
+                post.data.aiGeneratedDescription && (
+                  <div class="group relative">
+                    <svg
+                      class={`${iconSize} text-blue-500 opacity-60`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                      <circle cx="18" cy="6" r="2" fill="currentColor"/>
+                    </svg>
+                    <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10">
+                      AI Generated Description
+                    </div>
+                  </div>
+                )
+              }
+            </div>
           )
         }
       </div>

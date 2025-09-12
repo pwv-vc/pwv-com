@@ -62,6 +62,8 @@ const library = defineCollection({
       tags: z.array(z.string()),
       // featured post
       featured: z.boolean().optional(),
+      aiGeneratedImage: z.boolean().optional().default(false),
+      aiGeneratedDescription: z.boolean().optional().default(false),
     }),
 });
 

@@ -7,4 +7,6 @@ updatedDate: '2025-07-23'
 heroImage: '../../images/library/external-no-cookies-no-consent-banners-not-quite/banner_16_9-1-20250911-022911.png'
 url: 'https://burnedchris.com/blog/post-cookie-consent-banners?ref=pwv.com'
 tags: ['burnedchris']
+aiGeneratedDescription: false
+aiGeneratedImage: true
 ---

@@ -6,6 +6,8 @@ updatedDate: 'Feb 03 2025'
 heroImage: '../../images/library/post-dreams-next-token-ai/post-dreams-next-token-ai.png'
 tags: ['AI', 'Philosophy', 'Creativity']
 author: David Thyresson
+aiGeneratedDescription: false
+aiGeneratedImage: true
 ---
 
 > In your stream, live in a dream. (Red Hot Chili Peppers, I like dirt)
