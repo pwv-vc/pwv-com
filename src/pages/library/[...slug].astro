@@ -40,6 +40,12 @@ const keywords = post.data.tags.join(', ');
   description={description}
   image={image}
   keywords={keywords}
+  author={post.data.author}
+  pubDate={post.data.pubDate}
+  updatedDate={post.data.updatedDate}
+  tags={post.data.tags}
+  imageAlt={post.data.title}
+  locale="en_US"
 >
   <div class="prose prose-lg mx-auto max-w-screen-xl">
     <div class="mx-auto w-full md:w-full lg:w-2/3">

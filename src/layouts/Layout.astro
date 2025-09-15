@@ -14,6 +14,13 @@ export interface Props {
   description?: string;
   image?: string;
   keywords?: string;
+  author?: string;
+  pubDate?: Date;
+  updatedDate?: Date;
+  tags?: string[];
+  imageAlt?: string;
+  twitterSite?: string; // e.g. @pwv
+  locale?: string; // e.g. en_US
 }
 
 const {
@@ -21,6 +28,13 @@ const {
   description = SITE_DESCRIPTION,
   image = SITE_IMAGE,
   keywords = 'venture capital, VC, early-stage investing, startup investment, technology investment, AI investment, developer tools, hardware startups, seed funding, Series A, pre-seed investment, PWV',
+  author,
+  pubDate,
+  updatedDate,
+  tags,
+  imageAlt,
+  twitterSite = '@PWVentures',
+  locale = 'en_US',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -31,7 +45,7 @@ const favicon32URL = '/favicon-32x32.png';
 const appleTouchIconURL = '/apple-touch-icon.png';
 const manifestURL = '/site.webmanifest';
 const sitemapURL = '/sitemap-index.xml';
-const rssURL = 'rss.xml';
+const rssURL = '/rss.xml';
 
 // Optimize image for OG tags if provided
 let optimizedImageURL;
@@ -44,6 +58,7 @@ if (image) {
   });
   optimizedImageURL = new URL(optimizedImage.src, Astro.url);
 }
+const isProduction = process.env.CONTEXT === 'production';
 ---
 
 <!doctype html>
@@ -59,8 +74,8 @@ if (image) {
     <link
       rel="alternate"
       type="application/rss+xml"
-      title="PWV Library RSS Feed"
-      href="/rss.xml"
+      title="PWV Feed"
+      href={rssURL}
     />
     <meta name="theme-color" content="#ffffff" />
     <meta name="generator" content={Astro.generator} />
@@ -75,29 +90,59 @@ if (image) {
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
+    {author && <meta name="author" content={author} />}
+    <meta name="robots" content={isProduction ? 'index,follow' : 'noindex,nofollow'} />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={SITE_TITLE} />
+    <meta property="og:locale" content={locale} />
+    {author && <meta property="article:author" content={author} />}
     {
       optimizedImageURL && (
         <meta property="og:image" content={optimizedImageURL} />
       )
     }
+    {
+      optimizedImageURL && (
+        <>
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+          <meta property="og:image:alt" content={imageAlt ?? title} />
+        </>
+      )
+    }
+    {pubDate && <meta property="article:published_time" content={pubDate.toISOString()} />}
+    {updatedDate && (
+      <meta property="article:modified_time" content={updatedDate.toISOString()} />
+    )}
+    {tags && tags.map((tag) => (
+      <meta property="article:tag" content={tag} />
+    ))}
 
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
+    {twitterSite && <meta name="twitter:site" content={twitterSite} />}
+    {author && <meta name="twitter:creator" content={author} />}
     {
       optimizedImageURL && (
         <meta property="twitter:image" content={optimizedImageURL} />
       )
     }
+    {
+      optimizedImageURL && (
+        <meta name="twitter:image:alt" content={imageAlt ?? title} />
+      )
+    }
 
+    {isProduction && (
     <script defer data-domain="pwv.com" src="https://plausible.io/js/script.js"
     ></script>
+    )}
   </head>
   <body>
     <main class="mx-auto my-12 min-h-dvh max-w-screen-xl px-4 sm:px-6 lg:px-8">
