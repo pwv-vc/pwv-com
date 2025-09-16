@@ -10,6 +10,8 @@ interface Props {
   shadow?: boolean;
   class?: string;
   loading?: 'eager' | 'lazy';
+  imageFilter?: 'monochrome' | 'tinted' | 'sepia' | 'primary' | 'none';
+  placeholder?: boolean;
 }
 
 const {
@@ -21,6 +23,8 @@ const {
   shadow = false,
   class: className = '',
   loading = 'lazy',
+  imageFilter = 'none',
+  placeholder = false,
 } = Astro.props as Props;
 
 const heightMap: Record<string, string> = {
@@ -30,12 +34,22 @@ const heightMap: Record<string, string> = {
   full: 'h-auto',
 };
 
+const filterClasses: Record<string, string> = {
+  monochrome: 'filter-grayscale',
+  tinted: 'filter-sepia filter-hue-rotate-180',
+  sepia: 'filter-sepia',
+  primary: 'filter-primary',
+  none: '',
+};
+
 const baseClasses = [
   'w-full',
   heightMap[size] ?? heightMap.md,
   'object-cover',
   rounded ? 'rounded-lg' : '',
   shadow ? 'shadow-lg' : '',
+  filterClasses[imageFilter] || '',
+  placeholder ? 'animate-pulse bg-gray-200' : '',
   className,
 ]
   .filter(Boolean)

@@ -158,4 +158,22 @@
   .fg-on-secondary {
     color: var(--color-secondary-foreground);
   }
+
+  /* Image filter utilities */
+  .filter-grayscale {
+    filter: grayscale(100%);
+  }
+  .filter-sepia {
+    filter: sepia(100%);
+  }
+  .filter-hue-rotate-180 {
+    filter: hue-rotate(180deg);
+  }
+  .filter-sepia.filter-hue-rotate-180 {
+    filter: sepia(100%) hue-rotate(180deg);
+  }
+  .filter-primary {
+    filter: grayscale(100%) sepia(100%) hue-rotate(240deg) saturate(1.5)
+      brightness(0.7) contrast(1.2);
+  }
 }
