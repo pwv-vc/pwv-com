@@ -2,7 +2,13 @@
 import { getFeaturedLibraryPosts } from '../lib/library';
 import PostsGrid from './PostsGrid.astro';
 
+export interface Props {
+  limit?: number;
+}
+
+const { limit = 3 } = Astro.props;
 const featuredPosts = await getFeaturedLibraryPosts();
+const postsToShow = limit ? featuredPosts.slice(0, limit) : featuredPosts;
 ---
 
 {
@@ -13,7 +19,7 @@ const featuredPosts = await getFeaturedLibraryPosts();
           Featured Insights
         </h2>
       </div>
-      <PostsGrid posts={featuredPosts.slice(0, 6)} size="large" />
+      <PostsGrid posts={postsToShow} size="large" />
     </section>
   )
 }

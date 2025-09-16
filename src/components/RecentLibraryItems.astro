@@ -17,7 +17,7 @@ const recentPosts = await getRecentLibraryPosts(6);
   </div>
 
   <div class="mb-6">
-    <FeaturedPosts />
+    <FeaturedPosts limit={3} />
     <PostsGrid posts={recentPosts} size="large" />
   </div>
 
