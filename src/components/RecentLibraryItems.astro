@@ -1,9 +1,9 @@
 ---
 import { getRecentLibraryPosts, getAllLibraryPosts } from '../lib/library';
 import PostsGrid from './PostsGrid.astro';
+import FeaturedPosts from './FeaturedPosts.astro';
 
 const recentPosts = await getRecentLibraryPosts(6);
-const allPosts = await getAllLibraryPosts();
 ---
 
 <div class="max-w-none">
@@ -17,6 +17,7 @@ const allPosts = await getAllLibraryPosts();
   </div>
 
   <div class="mb-6">
+    <FeaturedPosts />
     <PostsGrid posts={recentPosts} size="large" />
   </div>
 
