@@ -20,9 +20,15 @@ importers:
       '@fal-ai/client':
         specifier: ^1.6.2
         version: 1.6.2
+      '@fontsource-variable/dm-sans':
+        specifier: ^5.2.7
+        version: 5.2.7
       '@fontsource-variable/libre-franklin':
         specifier: ^5.2.5
         version: 5.2.5
+      '@fontsource/dm-mono':
+        specifier: ^5.2.6
+        version: 5.2.6
       '@fontsource/ibm-plex-mono':
         specifier: ^5.2.5
         version: 5.2.5
@@ -518,8 +524,14 @@ packages:
   '@fastify/busboy@3.1.1':
     resolution: {integrity: sha512-5DGmA8FTdB2XbDeEwc/5ZXBl6UbBAyBOOLlPuBnZ/N1SwdH9Ii+cOX3tBROlDgcTXxjOYnLMVoKk9+FXAw0CJw==}
 
+  '@fontsource-variable/dm-sans@5.2.7':
+    resolution: {integrity: sha512-UbBEnWAdHDatuu+pLk6iYEAv6nfv1tep+DtY5my7KjuU2/91uYlwpQ4zuQpsCs4DJJONt+x+7i/76Xrd/MkYhw==}
+
   '@fontsource-variable/libre-franklin@5.2.5':
     resolution: {integrity: sha512-6EZGp9ziKTYxE0dT8aGIEHlbd7aTkg7UB74UgQxxcfFFaTmP5sCugB1KqW+WjPML/k2yrmFXcWhuTfH7Bba0hg==}
+
+  '@fontsource/dm-mono@5.2.6':
+    resolution: {integrity: sha512-d38urf08wZ/UcAM13kmuPkhr9xGEo0S9undlZ/99nBb7dK5+w1uqriP6VVJ8T7pYiNtRtZq7NxV/2KI/6Obsog==}
 
   '@fontsource/ibm-plex-mono@5.2.5':
     resolution: {integrity: sha512-G09N3GfuT9qj3Ax2FDZvKqZttzM3v+cco2l8uXamhKyXLdmlaUDH5o88/C3vtTHj2oT7yRKsvxz9F+BXbWKMYA==}
@@ -4627,7 +4639,11 @@ snapshots:
 
   '@fastify/busboy@3.1.1': {}
 
+  '@fontsource-variable/dm-sans@5.2.7': {}
+
   '@fontsource-variable/libre-franklin@5.2.5': {}
+
+  '@fontsource/dm-mono@5.2.6': {}
 
   '@fontsource/ibm-plex-mono@5.2.5': {}
 
