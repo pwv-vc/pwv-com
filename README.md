@@ -150,6 +150,25 @@ Utilities to help manage content and assets:
 
 Additional helpers exist for favicon generation and downscaling.
 
+### Environment variables for scripts
+
+- `FAL_KEY` (optional, recommended): API key for FAL AI used by:
+
+  - `scripts/fetch-external-content.js` (LLM description generation and image generation when no OG image exists)
+  - `scripts/generate-post-og-image.js` (image generation)
+  - `scripts/test-fal-connection.js` (connectivity test)
+
+  Set via a `.env` file at the project root or your shell environment:
+
+  ```bash
+  # .env
+  FAL_KEY=your_fal_api_key_here
+  ```
+
+  Without `FAL_KEY`, the scripts will still run but skip AI-powered steps.
+
+No other scripts require API keys. Favicon-related scripts use local files and a public favicon service without auth.
+
 ## 📰 RSS feed and XML sitemap (`src/pages/`)
 
 - **RSS**: `src/pages/rss.xml.ts` → route: `/rss.xml`
