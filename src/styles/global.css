@@ -47,7 +47,7 @@
   /* Text */
   --color-text: #111827; /* gray-900 */
   --color-text-muted: #4b5563; /* gray-600 */
-  --color-text-subtle: #6b7280; /* gray-500 */
+  --color-text-subtle: #6b7280; /* gray-500 */ /* subtle */
 }
 
 /* Custom prose heading font sizes */

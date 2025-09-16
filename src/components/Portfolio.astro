@@ -3,24 +3,18 @@ import { getCollection } from 'astro:content';
 import PortfolioSection from './PortfolioSection.astro';
 
 const representativePortfolio = await getCollection('representativePortfolio');
-const angelPortfolio = await getCollection('angelPortfolio');
 ---
 
 <section id="portfolio" class="my-4">
   <PortfolioSection
-    title="Investments"
+    title="Portfolio"
     caption="(representative)"
     portfolio={representativePortfolio}
   />
 
-  <PortfolioSection
-    title="Tom's Angel Investments"
-    caption="(representative, 2012–2022)"
-    portfolio={angelPortfolio}
-  />
-
   <p class="text-subtle my-8 text-sm">
-    These lists are non-exhaustive representations of the complete, separate
-    investment portfolios of Tom Preston-Werner and PWV.
+    This list is a non-exhaustive representation of the complete, separate
+    investments from PWV Fund I, the PWV Rolling Fund, and earlier investments
+    by Tom Preston-Werner.
   </p>
 </section>
