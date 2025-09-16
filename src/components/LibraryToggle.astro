@@ -9,13 +9,13 @@ const { externalCount, nonExternalCount, activeFilter = 'all' } = Astro.props;
 ---
 
 <div class="mb-8 flex scroll-mt-20 items-center justify-center" id="view">
-  <div class="flex rounded-lg bg-gray-100 p-1">
+  <div class="bg-surface-muted flex rounded-lg p-1">
     <a
       href="/library?page=1"
-      class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-gray-700 hover:bg-white/50 ${
+      class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-body hover:bg-surface-hover ${
         activeFilter === 'all'
-          ? 'text-gray-800 bg-white shadow-sm'
-          : 'text-gray-500'
+          ? 'text-body bg-surface shadow-sm'
+          : 'text-subtle'
       }`}
     >
       All
@@ -25,10 +25,10 @@ const { externalCount, nonExternalCount, activeFilter = 'all' } = Astro.props;
     </a>
     <a
       href="/library?filter=pwv&page=1"
-      class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-gray-700 hover:bg-white/50 ${
+      class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-body hover:bg-surface-hover ${
         activeFilter === 'pwv'
-          ? 'text-gray-800 bg-white shadow-sm'
-          : 'text-gray-500'
+          ? 'text-body bg-surface shadow-sm'
+          : 'text-subtle'
       }`}
     >
       PWV
@@ -36,10 +36,10 @@ const { externalCount, nonExternalCount, activeFilter = 'all' } = Astro.props;
     </a>
     <a
       href="/library?filter=community&page=1"
-      class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-gray-700 hover:bg-white/50 ${
+      class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-body hover:bg-surface-hover ${
         activeFilter === 'community'
-          ? 'text-gray-800 bg-white shadow-sm'
-          : 'text-gray-500'
+          ? 'text-body bg-surface shadow-sm'
+          : 'text-subtle'
       }`}
     >
       Founders &amp; Community

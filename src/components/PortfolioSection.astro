@@ -14,12 +14,12 @@ const sortedPortfolio = portfolio.sort((a, b) =>
 );
 ---
 
-<h3 class="my-8 font-serif text-2xl font-bold text-[var(--pwv-blue)]">
+<h3 class="text-primary my-8 font-serif text-2xl font-bold">
   {title}
   {caption && <span class="text-md font-normal">{caption}</span>}
 </h3>
 <div
-  class="grid grid-cols-2 gap-6 rounded-lg border border-gray-200 bg-neutral-50 p-6 shadow-lg md:grid-cols-3 xl:grid-cols-3"
+  class="border-default bg-surface-muted grid grid-cols-2 gap-6 rounded-lg border p-6 shadow-lg md:grid-cols-3 xl:grid-cols-3"
 >
   {
     sortedPortfolio.map((company) => (

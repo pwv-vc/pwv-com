@@ -15,28 +15,28 @@ const { name, title, company, quote, url, companySlug } = Astro.props;
 ---
 
 <div
-  class="flex h-full flex-col rounded-lg border border-gray-200 bg-white p-4"
+  class="border-default bg-surface flex h-full flex-col rounded-lg border p-4"
 >
   <blockquote
-    class="text-md mb-4 flex-grow border-l-1 border-dotted border-[var(--pwv-blue)] pl-4 text-slate-600"
+    class="text-md border-primary text-muted mb-4 flex-grow border-l-1 border-dotted pl-4"
   >
     "{quote}"
   </blockquote>
   <div class="mt-auto flex flex-col">
-    <cite class="font-semibold text-[var(--pwv-blue)] not-italic">
+    <cite class="text-primary font-semibold not-italic">
       {name}
     </cite>
-    <div class="flex items-center gap-2 text-sm text-gray-600">
+    <div class="text-muted flex items-center gap-2 text-sm">
       {
         companySlug === 'anonymous' ? (
-          <div class="h-4 w-4 flex-shrink-0 rounded bg-gray-300" />
+          <div class="bg-surface-muted h-4 w-4 flex-shrink-0 rounded" />
         ) : (
           <UnpicImage
             src={resolveImageSrc(`logos/small/${companySlug}.png`)}
             alt={`${company} logo`}
             width={16}
             height={16}
-            class="flex-shrink-0 border border-gray-100 bg-white"
+            class="border-default bg-surface flex-shrink-0 border"
           />
         )
       }
@@ -44,7 +44,7 @@ const { name, title, company, quote, url, companySlug } = Astro.props;
         {title},{' '}
         {
           url ? (
-            <a href={url} class="text-gray-800 hover:underline">
+            <a href={url} class="text-body hover:underline">
               {company}
             </a>
           ) : (

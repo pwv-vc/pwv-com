@@ -8,12 +8,10 @@ const allPosts = await getAllLibraryPosts();
 
 <div class="max-w-none">
   <div class="mb-8">
-    <h2
-      class="my-4 font-serif text-2xl font-bold text-[var(--pwv-blue)] lg:text-3xl"
-    >
+    <h2 class="text-primary my-4 font-serif text-2xl font-bold lg:text-3xl">
       Latest insights and thoughts
     </h2>
-    <p class="text-lg text-gray-600">
+    <p class="text-muted text-lg">
       Perspectives and announcements from PWV, our founders and community.
     </p>
   </div>
@@ -25,7 +23,7 @@ const allPosts = await getAllLibraryPosts();
   <div class="mt-8 text-center">
     <a
       href="/library"
-      class="inline-flex items-center gap-2 font-medium text-white transition-colors hover:text-gray-100 bg-[var(--pwv-blue)] px-5 py-2 rounded-lg shadow-md"
+      class="fg-on-primary bg-primary hover:bg-primary-hover inline-flex items-center gap-2 rounded-lg px-5 py-2 font-medium shadow-md transition-colors"
     >
       View More
       <svg

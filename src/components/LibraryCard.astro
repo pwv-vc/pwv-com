@@ -48,7 +48,7 @@ const getSiteName = (url: string) => {
 ---
 
 <article
-  class={`${marginBottom} bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full`}
+  class={`${marginBottom} bg-surface rounded-xl shadow-sm border border-default overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full`}
 >
   <div class="flex h-full flex-col">
     <div class={`${padding} flex flex-col flex-grow`}>
@@ -67,9 +67,9 @@ const getSiteName = (url: string) => {
               loading="lazy"
             />
           ) : (
-            <div class="flex h-full items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+            <div class="from-surface-muted to-surface-muted flex h-full items-center justify-center bg-gradient-to-br">
               <svg
-                class="h-12 w-12 text-gray-400"
+                class="text-subtle h-12 w-12"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -86,7 +86,7 @@ const getSiteName = (url: string) => {
         }
       </div>
       <div
-        class={`flex items-center gap-2 ${dateSize} text-gray-500 ${isSmall ? 'mb-2' : 'mb-3'}`}
+        class={`flex items-center gap-2 ${dateSize} text-subtle ${isSmall ? 'mb-2' : 'mb-3'}`}
       >
         <FormattedDate date={post.data.pubDate} />
         {
@@ -99,49 +99,55 @@ const getSiteName = (url: string) => {
         }
         {
           (post.data.aiGeneratedImage || post.data.aiGeneratedDescription) && (
-            <div class="flex items-center gap-1 ml-2">
-              {
-                post.data.aiGeneratedImage && (
-                  <div class="group relative">
-                    <svg
-                      class={`${iconSize} text-purple-500 opacity-60`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                      <circle cx="18" cy="6" r="2" fill="currentColor"/>
-                    </svg>
-                    <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10">
-                      AI Generated Image
-                    </div>
+            <div class="ml-2 flex items-center gap-1">
+              {post.data.aiGeneratedImage && (
+                <div class="group relative">
+                  <svg
+                    class={`${iconSize} text-purple-500 opacity-60`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                    <circle cx="18" cy="6" r="2" fill="currentColor" />
+                  </svg>
+                  <div class="bg-primary-active pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 -translate-x-1/2 transform rounded px-2 py-1 text-xs whitespace-nowrap text-white opacity-0 transition-opacity group-hover:opacity-100">
+                    AI Generated Image
                   </div>
-                )
-              }
-              {
-                post.data.aiGeneratedDescription && (
-                  <div class="group relative">
-                    <svg
-                      class={`${iconSize} text-blue-500 opacity-60`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
-                      <circle cx="18" cy="6" r="2" fill="currentColor"/>
-                    </svg>
-                    <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10">
-                      AI Generated Description
-                    </div>
+                </div>
+              )}
+              {post.data.aiGeneratedDescription && (
+                <div class="group relative">
+                  <svg
+                    class={`${iconSize} text-primary opacity-60`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                    />
+                    <circle cx="18" cy="6" r="2" fill="currentColor" />
+                  </svg>
+                  <div class="bg-primary-active pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 -translate-x-1/2 transform rounded px-2 py-1 text-xs whitespace-nowrap text-white opacity-0 transition-opacity group-hover:opacity-100">
+                    AI Generated Description
                   </div>
-                )
-              }
+                </div>
+              )}
             </div>
           )
         }
       </div>
       <h2
-        class={`${titleSize} font-bold text-[var(--pwv-blue)] ${isSmall ? 'mb-2' : 'mb-3'} leading-tight`}
+        class={`${titleSize} font-bold text-primary ${isSmall ? 'mb-2' : 'mb-3'} leading-tight`}
       >
         {post.data.title}
       </h2>
@@ -149,7 +155,7 @@ const getSiteName = (url: string) => {
         post.data.tags && post.data.tags.length > 0 && (
           <div class={`flex flex-wrap gap-1 ${isSmall ? 'mb-2' : 'mb-3'}`}>
             {post.data.tags.map((tag) => (
-              <span class="inline-block rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700">
+              <span class="bg-surface-muted text-muted inline-block rounded-md px-2 py-1 text-xs font-medium">
                 {tag}
               </span>
             ))}
@@ -159,14 +165,14 @@ const getSiteName = (url: string) => {
       {
         post.data.author && (
           <p
-            class={`${descriptionSize} font-semibold text-gray-500 ${isSmall ? 'mb-2' : 'mb-3'}`}
+            class={`${descriptionSize} text-subtle font-semibold ${isSmall ? 'mb-2' : 'mb-3'}`}
           >
             By {post.data.author}
           </p>
         )
       }
       <p
-        class={`${descriptionSize} text-gray-600 leading-relaxed ${isSmall ? 'mb-3' : 'mb-4'} flex-grow`}
+        class={`${descriptionSize} text-muted leading-relaxed ${isSmall ? 'mb-3' : 'mb-4'} flex-grow`}
       >
         {post.data.description}
       </p>
@@ -175,7 +181,7 @@ const getSiteName = (url: string) => {
           href={post.data.url || `/library/${post.id}`}
           target={isRemote ? '_blank' : undefined}
           rel={isRemote ? 'noopener noreferrer' : undefined}
-          class={`inline-flex items-center gap-2 bg-[var(--pwv-blue)] text-white ${buttonSize} rounded-lg font-medium hover:bg-[var(--pwv-blue)] transition-colors w-fit`}
+          class={`inline-flex items-center gap-2 bg-primary fg-on-primary ${buttonSize} rounded-lg font-medium hover:bg-primary-hover transition-colors w-fit`}
         >
           {
             isRemote ? (
