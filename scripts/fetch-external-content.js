@@ -483,8 +483,8 @@ function extractMetadata(html, url) {
     }
   }
 
-  // Extract site name for tags
-  const siteName = new URL(url).hostname.replace('www.', '').split('.')[0];
+  // Extract full site hostname (without www) for tags and filenames
+  const siteName = new URL(url).hostname.replace(/^www\./, '');
 
   // Extract meta keywords
   let keywords = getMetaContent('keywords') || '';
@@ -661,13 +661,19 @@ async function createLibraryPost(url, models) {
       console.log('Using site name as author:', metadata.author);
     }
 
-    // Generate filename and directory
+    // Generate filename and directory (prefix normalized site name)
     const slug = generateSlug(metadata.title);
-    const filename = `external-${slug}.md`;
+    const normalizedSite = (metadata.siteName || '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    const sitePrefix = normalizedSite ? `${normalizedSite}-` : '';
+    const filename = `external-${sitePrefix}${slug}.md`;
     const filePath = path.join(CONTENT_DIR, filename);
 
-    // Create images directory for this post (keep original slug for folder name)
-    const imageDir = path.join(IMAGES_DIR, `external-${slug}`);
+    // Create images directory for this post (match filename prefix + slug)
+    const imageDir = path.join(IMAGES_DIR, `external-${sitePrefix}${slug}`);
     await fs.mkdir(imageDir, { recursive: true });
 
     let heroImagePath = null;
@@ -693,8 +699,8 @@ async function createLibraryPost(url, models) {
         console.log(`Downloading image: ${imageUrl}`);
         await downloadImage(imageUrl, localImagePath);
 
-        // Set relative path for the markdown file
-        heroImagePath = `../../images/library/external-${slug}/${imageFilename}`;
+        // Set relative path for the markdown file (match filename prefix + slug)
+        heroImagePath = `../../images/library/external-${sitePrefix}${slug}/${imageFilename}`;
         console.log(`Image saved to: ${localImagePath}`);
       } catch (error) {
         console.warn(`Failed to download image: ${error.message}`);
@@ -723,8 +729,8 @@ async function createLibraryPost(url, models) {
       );
 
       if (generated.success) {
-        // Set relative path for the markdown file
-        heroImagePath = `../../images/library/external-${slug}/${imageFilename}`;
+        // Set relative path for the markdown file (match filename prefix + slug)
+        heroImagePath = `../../images/library/external-${sitePrefix}${slug}/${imageFilename}`;
         console.log(`Generated image saved to: ${localImagePath}`);
 
         // Save the prompt as a text file
