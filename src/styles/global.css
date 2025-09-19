@@ -2,13 +2,15 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-serif: 'Libre Franklin Variable', serif;
+  --font-serif:
+    'DM Mono', ui-monospace, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   --font-sans:
-    'Libre Franklin Variable', ui-sans-serif, system-ui, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    'DM Mono', ui-monospace, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
   --font-mono:
-    'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'DM Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;
 
   /* Legacy brand color (kept for backwards compatibility) */
@@ -50,22 +52,31 @@
   --color-text-subtle: #6b7280; /* gray-500 */ /* subtle */
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: tight;
+}
+
 /* Custom prose heading font sizes */
 .prose h1 {
-  font-size: 2rem; /* 36px, standard for h1 */
-  line-height: 2rem; /* 40px */
+  font-size: 2rem;
   color: var(--color-primary);
 }
 
 .prose h2 {
-  font-size: 1.25rem; /* 24px, standard for h2 */
-  line-height: 1.75rem; /* 32px */
+  font-size: 1.75rem;
   color: var(--color-primary);
 }
 
 .prose h3 {
-  font-size: 1rem; /* 20px, standard for h3 */
-  line-height: 1.5rem; /* 28px */
+  font-size: 1.5rem;
+
   color: var(--color-primary);
 }
 

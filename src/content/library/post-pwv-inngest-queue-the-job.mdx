@@ -1,0 +1,94 @@
+---
+title: 'Queue the Job'
+description: 'Starting a new job feels a lot like queuing one in code: you push the work into the system, trust it will run, and wait for the result. For me, “queue the job” is both a personal milestone—my first deal at PWV—and a reflection on how developer experience is transforming jobs and queues. From the brittle complexity of Sidekiq and Heroku dynos to the elegance of Inngest’s one-line functions, this is about how infrastructure evolves, and why DX is leverage.'
+pubDate: '2025-09-17'
+updatedDate: '2025-09-17'
+heroImage: '../../images/library/post-pwv-inngest-queue-the-job/inngest-queue-the-job.jpg'
+tags: ['inngest']
+author: 'David Thyresson'
+aiGeneratedDescription: false
+aiGeneratedImage: false
+---
+
+import MarkdownPostImage from '../../components/MarkdownPostImage.astro';
+
+What does it mean to “queue the job”?
+
+Is it the moment you start your first day at a new role? Or the moment you type a single line of code that sets in motion a chain of background tasks, invisible but essential, humming quietly behind the scenes?
+
+For me, it’s both.
+
+This post is about beginnings—my first deal at PWV, and the kind of developer experience that makes “queuing the job” effortless. And it’s fitting to write this as **Inngest just announced their Series A** [fundraise](https://www.inngest.com/blog/announcing-inngest-series-a), proof that their job—building the next layer of developer infrastructure—is running successfully.
+
+## Jobs and Queues, Then and Now
+
+In the early days, **developer experience was complex and poor**. Rails developers ran queues with Sidekiq, or spun up job runners on Heroku dynos. It was _necessary_ infrastructure, but it was also costly, brittle, and time-consuming to maintain.
+
+And in the JAMStack era—promoted by **Netlify**—there was no reliable solution at all. You could hack together cron jobs or serverless functions, but they lacked the enterprise-grade features teams needed: retries, idempotency, observability, stateful workers. Even when Netlify or Vercel began to release cron or background job features, they didn’t go far enough to make them robust or trustworthy.
+
+**Inngest provided that.**
+
+It took the hard, costly parts of jobs and queues and collapsed them into a developer experience that was not just reliable, but elegant.
+
+## Developer Experience Is the Product
+
+We talk a lot about **DX**—developer experience. But it’s not just marketing jargon. DX is leverage.
+
+I spoke recently with Paul at Supabase about how developer experience _is_ the wedge. If you make it easier for developers to do the things they already want to do, you’re not just selling a tool—you’re rewiring the workflow.
+
+That’s what struck me about Inngest when I first saw their RedwoodJS adapter and plugin demo back in December 2022. Suddenly, async jobs, retries, and event-driven functions weren’t “infrastructure decisions.” They were just code.
+
+Complex became simple.
+Boilerplate became invisible.
+
+## From Weeks to Minutes
+
+The image below captures Inngest’s DX in one glance:
+
+<MarkdownPostImage
+  path="post-pwv-inngest-queue-the-job/inngest-queue-the-job.jpg"
+  alt="Inngest Queue the Job"
+  class="shadow-lg"
+/>
+
+- On the left: the “before” picture. Dead letter queues, idempotency checks, error handling, observability, stateful workers—all the scaffolding a developer once had to build and maintain.
+- On the right: the “after” picture. Your code, with Inngest handling everything else.
+
+That’s it. One function definition, and you’ve bought yourself queues, retries, error handling, and state management—all without leaving the editor.
+
+This is what great DX feels like:
+
+- **Clarity**: readable, minimal APIs.
+- **Focus**: business logic only, not plumbing.
+- **Leverage**: weeks of infra work collapsed into minutes of setup.
+
+## Deal flow is just another kind of workflow
+
+My first PWV Rolling Fund investment was in December 2022—the same month I saw my first Inngest demo. The metaphor wasn’t lost on me: queuing a job, queuing a deal.
+
+That investment was the start of a new chapter. Just like a background worker spinning up to handle a fresh event, I was beginning a new role: helping founders build the infrastructure that helps other developers build.
+
+> Deal flow is just another kind of workflow.
+
+Inngest orchestrates async tasks so they reliably complete. VC orchestrates deal flow so opportunities reliably surface, are evaluated, and—when the system works—result in successful outcomes. Both depend on trust in the process and confidence in the system.
+
+## Why This Matters
+
+Every generation of infrastructure companies abstracts away another layer of complexity:
+
+- **Heroku** made servers disappear.
+- **Netlify** made CI/CD invisible.
+- **Supabase** made databases approachable.
+- **[Resend](https://resend.com)** made email programmable again, with APIs that feel modern and DX-first.
+- **Inngest** makes jobs and queues frictionless.
+
+And all of them solve the same fundamental problem: letting developers focus on _logic_ instead of plumbing.
+
+## Conclusion: Start the Job
+
+So, “queue the job.”
+It’s a pun, but also a philosophy.
+
+Whether you’re launching a startup, writing your first background worker, or investing in your first deal—the act of queuing is about trust. You push the work into the system, you let it run, you believe it will complete.
+
+That’s why I’m thrilled to see Inngest’s **Series A** milestone: proof that not only do their jobs run successfully, but so does their job as a company. And for me, as an investor, it’s a reminder that this is what success looks like: queuing the right jobs, and watching them complete.

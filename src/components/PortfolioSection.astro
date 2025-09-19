@@ -18,9 +18,7 @@ const sortedPortfolio = portfolio.sort((a, b) =>
   {title}
   {caption && <span class="text-md font-normal">{caption}</span>}
 </h3>
-<div
-  class="border-default bg-surface-muted grid grid-cols-2 gap-6 rounded-lg border p-6 shadow-lg md:grid-cols-3 xl:grid-cols-3"
->
+<div class="grid grid-cols-2 gap-6 md:grid-cols-3 xl:grid-cols-3">
   {
     sortedPortfolio.map((company) => (
       <PortfolioCompanyCard

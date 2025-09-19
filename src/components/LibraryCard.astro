@@ -48,7 +48,7 @@ const getSiteName = (url: string) => {
 ---
 
 <article
-  class={`${marginBottom} bg-surface rounded-xl shadow-sm border border-default overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full`}
+  class={`${marginBottom} bg-surface rounded-xl shadow-sm border border-default overflow-hidden h-full`}
 >
   <div class="flex h-full flex-col">
     <div class={`${padding} flex flex-col flex-grow`}>
@@ -182,7 +182,7 @@ const getSiteName = (url: string) => {
           href={post.data.url || `/library/${post.id}`}
           target={isRemote ? '_blank' : undefined}
           rel={isRemote ? 'noopener noreferrer' : undefined}
-          class={`inline-flex items-center gap-2 bg-primary fg-on-primary ${buttonSize} rounded-lg font-medium hover:bg-primary-hover transition-colors w-fit`}
+          class={`inline-flex items-center gap-2 bg-secondary fg-on-secondary ${buttonSize} rounded-lg font-medium w-fit`}
         >
           {
             isRemote ? (

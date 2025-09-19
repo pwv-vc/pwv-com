@@ -69,10 +69,12 @@ const keywords = post.data.tags.join(', ');
       }
     </div>
     <h1>{title}</h1>
-    <h2>
+    <p>
       {post.data.description}
-    </h2>
-    <h3>Posted by {post.data.author} • {getReadingTime(post.body)} min read</h3>
+    </p>
+    <p class="text-subtle text-sm">
+      Posted by {post.data.author} • {getReadingTime(post.body)} min read
+    </p>
     <div class="flex items-center justify-between">
       <div class="flex flex-wrap gap-2">
         {

@@ -23,15 +23,9 @@ importers:
       '@fontsource-variable/dm-sans':
         specifier: ^5.2.7
         version: 5.2.7
-      '@fontsource-variable/libre-franklin':
-        specifier: ^5.2.5
-        version: 5.2.5
       '@fontsource/dm-mono':
         specifier: ^5.2.6
         version: 5.2.6
-      '@fontsource/ibm-plex-mono':
-        specifier: ^5.2.5
-        version: 5.2.5
       '@tailwindcss/typography':
         specifier: ^0.5.16
         version: 0.5.16(tailwindcss@4.0.9)
@@ -530,14 +524,8 @@ packages:
   '@fontsource-variable/dm-sans@5.2.7':
     resolution: {integrity: sha512-UbBEnWAdHDatuu+pLk6iYEAv6nfv1tep+DtY5my7KjuU2/91uYlwpQ4zuQpsCs4DJJONt+x+7i/76Xrd/MkYhw==}
 
-  '@fontsource-variable/libre-franklin@5.2.5':
-    resolution: {integrity: sha512-6EZGp9ziKTYxE0dT8aGIEHlbd7aTkg7UB74UgQxxcfFFaTmP5sCugB1KqW+WjPML/k2yrmFXcWhuTfH7Bba0hg==}
-
   '@fontsource/dm-mono@5.2.6':
     resolution: {integrity: sha512-d38urf08wZ/UcAM13kmuPkhr9xGEo0S9undlZ/99nBb7dK5+w1uqriP6VVJ8T7pYiNtRtZq7NxV/2KI/6Obsog==}
-
-  '@fontsource/ibm-plex-mono@5.2.5':
-    resolution: {integrity: sha512-G09N3GfuT9qj3Ax2FDZvKqZttzM3v+cco2l8uXamhKyXLdmlaUDH5o88/C3vtTHj2oT7yRKsvxz9F+BXbWKMYA==}
 
   '@humanwhocodes/momoa@2.0.4':
     resolution: {integrity: sha512-RE815I4arJFtt+FVeU1Tgp9/Xvecacji8w/V6XtXsWWH/wz/eNkNbhb+ny/+PlVZjV0rxQpRSQKNKE3lcktHEA==}
@@ -4647,11 +4635,7 @@ snapshots:
 
   '@fontsource-variable/dm-sans@5.2.7': {}
 
-  '@fontsource-variable/libre-franklin@5.2.5': {}
-
   '@fontsource/dm-mono@5.2.6': {}
-
-  '@fontsource/ibm-plex-mono@5.2.5': {}
 
   '@humanwhocodes/momoa@2.0.4': {}
 
