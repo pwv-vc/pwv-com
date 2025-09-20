@@ -17,13 +17,15 @@ export interface Props {
       updatedDate?: Date;
       aiGeneratedImage?: boolean;
       aiGeneratedDescription?: boolean;
+      isFeatured?: boolean;
     };
     body?: string;
   };
   size?: 'small' | 'large';
+  isFeatured?: boolean;
 }
 
-const { post, size = 'large' } = Astro.props;
+const { post, size = 'large', isFeatured = false } = Astro.props;
 
 const isSmall = size === 'small';
 const isRemote = !!post.data.url;
@@ -35,6 +37,12 @@ const buttonSize = isSmall ? 'text-xs px-3 py-2' : 'text-sm px-4 py-2';
 const iconSize = isSmall ? 'w-3 h-3' : 'w-4 h-4';
 const dateSize = isSmall ? 'text-xs' : 'text-sm';
 const marginBottom = isSmall ? 'mb-4' : 'mb-5';
+const borderColor = isFeatured
+  ? 'border-pwv-light-teal'
+  : 'border-pwv-light-green';
+const buttonColor = isFeatured
+  ? 'bg-pwv-teal text-pwv-light-teal'
+  : 'bg-pwv-green text-pwv-light-green';
 
 // Extract site name from URL for remote content
 const getSiteName = (url: string) => {
@@ -48,7 +56,7 @@ const getSiteName = (url: string) => {
 ---
 
 <article
-  class={`${marginBottom} overflow-hidden h-full border-pwv-light-green border-1 rounded-xl`}
+  class={`${marginBottom} overflow-hidden h-full border-pwv-light-green border-1 rounded-md ${borderColor}`}
 >
   <div class="flex h-full flex-col">
     <div class={`${padding} flex flex-col flex-grow text-pwv-black`}>
@@ -61,7 +69,7 @@ const getSiteName = (url: string) => {
               src={post.data.heroImage}
               alt={post.data.title}
               size={isSmall ? 'sm' : 'md'}
-              rounded={false}
+              rounded={true}
               shadow={false}
               class="h-full"
               loading="lazy"
@@ -182,7 +190,7 @@ const getSiteName = (url: string) => {
           href={post.data.url || `/library/${post.id}`}
           target={isRemote ? '_blank' : undefined}
           rel={isRemote ? 'noopener noreferrer' : undefined}
-          class={`inline-flex items-center gap-2 bg-pwv-green text-pwv-light-green ${buttonSize} rounded-lg font-medium w-fit`}
+          class={`inline-flex items-center gap-2 ${buttonSize} ${buttonColor} rounded-lg w-fit`}
         >
           {
             isRemote ? (

@@ -69,7 +69,7 @@ const buildUrl = (page: number) => {
       {currentPage > 1 ? (
         <a
           href={buildUrl(currentPage - 1)}
-          class="text-subtle bg-surface border-strong hover:bg-surface-hover hover:text-body rounded-md border px-3 py-2 text-sm font-medium transition-colors"
+          class="bg-pwv-gray text-pwv-black rounded-md border px-3 py-2 text-sm font-medium"
           aria-label="Previous page"
         >
           <svg
@@ -87,7 +87,7 @@ const buildUrl = (page: number) => {
           </svg>
         </a>
       ) : (
-        <span class="text-subtle bg-surface-muted border-default cursor-not-allowed rounded-md border px-3 py-2 text-sm font-medium">
+        <span class="bg-pwv-white text-pwv-white rounded-md border px-3 py-2 text-sm font-medium">
           <svg
             class="h-4 w-4"
             fill="none"
@@ -107,9 +107,7 @@ const buildUrl = (page: number) => {
       {/* Page numbers */}
       {pageNumbers.map((page) => {
         if (page === '...') {
-          return (
-            <span class="text-subtle px-3 py-2 text-sm font-medium">...</span>
-          );
+          return <span class="px-3 py-2 text-sm font-medium">...</span>;
         }
 
         const pageNum = page as number;
@@ -118,10 +116,10 @@ const buildUrl = (page: number) => {
         return (
           <a
             href={buildUrl(pageNum)}
-            class={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+            class={`text-pwv-black rounded-md px-3 py-2 text-sm font-medium ${
               isCurrentPage
-                ? 'fg-on-primary bg-primary border-primary border'
-                : 'text-body bg-surface border-strong hover:bg-surface-hover hover:text-body border'
+                ? 'text-pwv-light-green bg-pwv-green border-pwv-green border'
+                : 'text-body border-pwv-black border'
             }`}
             aria-label={`Page ${pageNum}`}
             aria-current={isCurrentPage ? 'page' : undefined}
@@ -135,7 +133,7 @@ const buildUrl = (page: number) => {
       {currentPage < totalPages ? (
         <a
           href={buildUrl(currentPage + 1)}
-          class="text-subtle pwv-black bg-surface border-strong hover:bg-surface-hover hover:text-body rounded-md border px-3 py-2 text-sm font-medium transition-colors"
+          class="bg-pwv-gray text-pwv-black rounded-md border px-3 py-2 text-sm font-medium"
           aria-label="Next page"
         >
           <svg
@@ -153,7 +151,7 @@ const buildUrl = (page: number) => {
           </svg>
         </a>
       ) : (
-        <span class="text-subtle pwv-black bg-surface-muted border-default cursor-not-allowed rounded-md border px-3 py-2 text-sm font-medium">
+        <span class="text-pwv-white bg-pwv-white rounded-md border px-3 py-2 text-sm font-medium">
           <svg
             class="h-4 w-4"
             fill="none"

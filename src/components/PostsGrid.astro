@@ -4,9 +4,10 @@ import LibraryCard from './LibraryCard.astro';
 export interface Props {
   posts: any[];
   size?: 'large' | 'small';
+  isFeatured?: boolean;
 }
 
-const { posts, size = 'large' } = Astro.props;
+const { posts, size = 'large', isFeatured = false } = Astro.props;
 ---
 
 <!-- Basic Grid Layout -->
@@ -20,7 +21,7 @@ const { posts, size = 'large' } = Astro.props;
         data-post-type={post.data.url ? 'external' : 'non-external'}
         class="flex"
       >
-        <LibraryCard post={post} size={size} />
+        <LibraryCard post={post} size={size} isFeatured={isFeatured} />
       </div>
     ))
   }
