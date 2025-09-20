@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import '../../styles/global.css';
+import Heading1 from '../../components/Heading1.astro';
+
 import {
   getPaginatedLibraryPosts,
   getExternalLibraryPosts,
@@ -38,20 +39,11 @@ const description =
 ---
 
 <Layout title={title} description={description}>
-  <div>
-    <h1
-      class="text-primary my-2 text-center font-serif text-3xl font-black md:text-4xl lg:py-8 lg:text-5xl"
-    >
-      PWV invests in early&#8209;stage technology companies.
-    </h1>
-    <div class="mb-12">
-      <h2 class="text-primary mb-4 text-2xl font-bold md:text-3xl lg:text-4xl">
-        Insights and thoughts
-      </h2>
-      <p class="text-muted text-lg">
-        Perspectives and announcements from PWV, our founders and community.
-      </p>
-    </div>
+  <section class="mx-auto px-4 sm:px-6 lg:px-8">
+    <Heading1>Insights and thoughts</Heading1>
+    <p class="mb-8 text-lg">
+      Perspectives and announcements from PWV, our founders and community.
+    </p>
 
     <LibraryToggle
       externalCount={externalPosts.length}
@@ -73,7 +65,7 @@ const description =
     <div class="mt-8 text-center">
       <a
         href="/"
-        class="fg-on-primary bg-primary hover:bg-primary-hover inline-flex items-center gap-2 rounded-lg px-5 py-2 font-medium shadow-md transition-colors"
+        class="bg-pwv-teal text-pwv-white hover:bg-primary-hover inline-flex items-center gap-2 rounded-lg px-5 py-2 font-medium shadow-md transition-colors"
       >
         Back Home
         <svg
@@ -90,5 +82,5 @@ const description =
         </svg>
       </a>
     </div>
-  </div>
+  </section>
 </Layout>

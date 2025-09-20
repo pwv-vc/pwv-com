@@ -19,7 +19,7 @@ type TagColors = {
   [key: string]: string;
 };
 
-const dotColor = 'bg-gray-300';
+const dotColor = 'bg-pwv-gray';
 
 const dotColors: TagColors = {
   '🦄': 'bg-fuchsia-600',
@@ -35,13 +35,13 @@ const dotColors: TagColors = {
   biotech: dotColor,
   'food tech': dotColor,
   cad: dotColor,
-  acquired: 'bg-green-600',
+  acquired: 'bg-pwv-green',
 };
 
 // Helper function to get tag styles based on category
 const getTagStyle = (tag: string) => {
   const baseStyle =
-    ' text-xs inline-flex items-center mx-1 gap-1.5 px-3 py-1 rounded-full bg-surface text-muted text-sm border border-default';
+    ' text-xs inline-flex items-center mx-1 gap-1.5 px-3 py-1 rounded-full bg-surface text-muted text-sm border border-pwv-gray';
   return {
     container: baseStyle,
     dot: `w-1.5 h-1.5 rounded-full ${dotColors[tag.toLowerCase()] || 'bg-gray-400'}`,
@@ -61,7 +61,7 @@ const getTagStyle = (tag: string) => {
       alt={`${name} logo`}
       width={24}
       height={24}
-      class={`flex-shrink-0 p-0.5 border border-default ${blackBackgroundSlugs.includes(slug) ? 'bg-black' : 'bg-surface'}`}
+      class={`flex-shrink-0 p-0.5 border border-pwv-gray ${blackBackgroundSlugs.includes(slug) ? 'bg-black' : 'bg-surface'}`}
     />
     <span class="flex-1 leading-snug break-words whitespace-normal">{name}</span
     >

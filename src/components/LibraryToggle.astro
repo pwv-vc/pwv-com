@@ -9,13 +9,13 @@ const { externalCount, nonExternalCount, activeFilter = 'all' } = Astro.props;
 ---
 
 <div class="mb-8 flex scroll-mt-20 items-center justify-center" id="view">
-  <div class="bg-surface-muted flex rounded-lg p-1">
+  <div class="bg-pwv-gray flex rounded-lg p-1">
     <a
       href="/library?page=1"
-      class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-body hover:bg-surface-hover ${
+      class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-body hover:bg-pwv-gray-hover ${
         activeFilter === 'all'
-          ? 'text-body bg-surface shadow-sm'
-          : 'text-subtle'
+          ? 'text-body bg-pwv-white shadow-sm'
+          : 'text-pwv-black'
       }`}
     >
       All
@@ -25,10 +25,10 @@ const { externalCount, nonExternalCount, activeFilter = 'all' } = Astro.props;
     </a>
     <a
       href="/library?filter=pwv&page=1"
-      class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-body hover:bg-surface-hover ${
+      class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-body hover:bg-pwv-gray-hover ${
         activeFilter === 'pwv'
-          ? 'text-body bg-surface shadow-sm'
-          : 'text-subtle'
+          ? 'text-body bg-pwv-white shadow-sm'
+          : 'text-pwv-black'
       }`}
     >
       PWV
@@ -36,10 +36,10 @@ const { externalCount, nonExternalCount, activeFilter = 'all' } = Astro.props;
     </a>
     <a
       href="/library?filter=community&page=1"
-      class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-body hover:bg-surface-hover ${
+      class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-body hover:bg-pwv-gray-hover ${
         activeFilter === 'community'
-          ? 'text-body bg-surface shadow-sm'
-          : 'text-subtle'
+          ? 'text-body bg-pwv-white shadow-sm'
+          : 'text-pwv-black'
       }`}
     >
       Founders &amp; Community

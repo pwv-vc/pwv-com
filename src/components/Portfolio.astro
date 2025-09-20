@@ -5,12 +5,8 @@ import PortfolioSection from './PortfolioSection.astro';
 const representativePortfolio = await getCollection('representativePortfolio');
 ---
 
-<section id="portfolio" class="my-4">
-  <PortfolioSection
-    title="Portfolio"
-    caption="(representative)"
-    portfolio={representativePortfolio}
-  />
+<section id="portfolio" class="mx-auto px-4 sm:px-6 lg:px-8">
+  <PortfolioSection title="Investments" portfolio={representativePortfolio} />
 
   <p class="text-subtle my-8 text-sm">
     This list is a non-exhaustive representation of the complete, separate

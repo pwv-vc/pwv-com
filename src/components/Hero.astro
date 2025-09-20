@@ -1,15 +1,17 @@
-<section class="space-y-4 font-sans text-lg">
-  <h1
-    class="text-primary my-2 text-center font-sans text-3xl font-black md:text-4xl lg:py-8 lg:text-5xl"
-  >
-    PWV invests in early&#8209;stage technology companies
-  </h1>
+---
+import Heading1 from './Heading1.astro';
+import Heading2 from './Heading2.astro';
+import Heading2NoUnderline from './Heading2NoUnderline.astro';
+---
 
-  <h2 class="text-primary my-8 text-2xl lg:text-2xl">
+<section class="mx-auto px-4 sm:px-6 lg:px-8">
+  <Heading1>PWV invests in early-stage technology companies</Heading1>
+
+  <Heading2NoUnderline>
     PWV is Tom Preston&#8209;Werner, David&nbsp;Price, and David Thyresson.
-  </h2>
+  </Heading2NoUnderline>
 
-  <p>
+  <p class="mb-4">
     We’re an early-stage investment team with deep technical fluency,
     founder-first values, and a track record of backing category-defining
     companies from zero to breakout.
@@ -19,21 +21,4 @@
     We’ve backed 80+ companies, including multiple early-stage bets that hit
     unicorn scale in under 24 months.
   </p>
-
-  <h2 class="text-primary my-8 text-2xl lg:text-2xl">How We Invest</h2>
-
-  <ul class="space-y-2">
-    <li>
-      <span class="text-primary font-medium">Early Stage</span> - From inception
-      through Series A
-    </li>
-    <li>
-      <span class="text-primary font-medium">Check Size</span> - $500k to $3m+
-    </li>
-    <li>
-      <span class="text-primary font-medium">Focus</span> - Platforms, tools, and
-      infrastructure that use code, models, and data to turn frontier science and
-      engineering into near‑term products
-    </li>
-  </ul>
 </section>

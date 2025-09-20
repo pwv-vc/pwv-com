@@ -2,9 +2,32 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
+  /* 🎨 Colors */
+  --color-pwv-black: #000000;
+  --color-pwv-white: #ffffff;
+  --color-pwv-gray: #e4e4e4;
+  --color-pwv-green: #00d22e;
+  --color-pwv-teal: #00d2c8;
+
+  --color-pwv-soft-green: #85ffa0;
+  --color-pwv-soft-teal: #88fff8;
+  --color-pwv-soft-yellow: #ffef9e;
+  --color-pwv-soft-coral: #ffc4c4;
+  --color-pwv-soft-lavender: #e3c6ff;
+  --color-pwv-soft-periwinkle: #bdd4ff;
+
+  --color-pwv-light-green: #c4ffd1;
+  --color-pwv-light-teal: #cdfffc;
+  --color-pwv-light-yellow: #fff9da;
+  --color-pwv-light-coral: #ffd8d8;
+  --color-pwv-light-lavender: #ebd5ff;
+  --color-pwv-light-periwinkle: #d5e4ff;
+
+  /* 🔤 Fonts */
   --font-serif:
     'DM Mono', ui-monospace, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
   --font-sans:
     'DM Mono', ui-monospace, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -12,179 +35,4 @@
   --font-mono:
     'DM Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;
-
-  /* Legacy brand color (kept for backwards compatibility) */
-  --pwv-blue: #1b2b5b;
-
-  /* Theme color tokens */
-  /* Brand / primary */
-  --color-primary: var(--pwv-blue);
-  --color-primary-foreground: #ffffff;
-  --color-primary-hover: #162348; /* ~primary-800 */
-  --color-primary-active: #0f1934; /* ~primary-900 */
-  --color-primary-ring: color-mix(in oklab, var(--color-primary) 30%, white);
-
-  /* Secondary (neutral accent) */
-  --color-secondary: #475569; /* slate-600 */
-  --color-secondary-foreground: #ffffff;
-  --color-secondary-hover: #334155; /* slate-700 */
-  --color-secondary-active: #1f2937; /* slate-800 */
-  --color-secondary-ring: color-mix(
-    in oklab,
-    var(--color-secondary) 30%,
-    white
-  );
-
-  /* Surface and background */
-  --color-bg: #ffffff;
-  --color-bg-muted: #f8fafc; /* slate-50 */
-  --color-surface: #ffffff; /* cards/panels */
-  --color-surface-muted: #f1f5f9; /* slate-100 */
-  --color-surface-hover: #f8fafc; /* subtle hover */
-
-  /* Borders */
-  --color-border: #e5e7eb; /* gray-200 */
-  --color-border-strong: #d1d5db; /* gray-300 */
-
-  /* Text */
-  --color-text: #111827; /* gray-900 */
-  --color-text-muted: #4b5563; /* gray-600 */
-  --color-text-subtle: #6b7280; /* gray-500 */ /* subtle */
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-mono);
-  font-weight: 500;
-  letter-spacing: tight;
-}
-
-/* Custom prose heading font sizes */
-.prose h1 {
-  font-size: 2rem;
-  color: var(--color-primary);
-}
-
-.prose h2 {
-  font-size: 1.75rem;
-  color: var(--color-primary);
-}
-
-.prose h3 {
-  font-size: 1.5rem;
-
-  color: var(--color-primary);
-}
-
-/* Semantic color utilities backed by CSS variables */
-@layer utilities {
-  /* Text */
-  .text-primary {
-    color: var(--color-primary);
-  }
-  .text-primary-foreground {
-    color: var(--color-primary-foreground);
-  }
-  .text-secondary {
-    color: var(--color-secondary);
-  }
-  .text-secondary-foreground {
-    color: var(--color-secondary-foreground);
-  }
-  .text-muted {
-    color: var(--color-text-muted);
-  }
-  .text-subtle {
-    color: var(--color-text-subtle);
-  }
-  .text-body {
-    color: var(--color-text);
-  }
-
-  /* Backgrounds */
-  .bg-primary {
-    background-color: var(--color-primary);
-  }
-  .bg-primary-hover {
-    background-color: var(--color-primary-hover);
-  }
-  .bg-primary-active {
-    background-color: var(--color-primary-active);
-  }
-  .bg-secondary {
-    background-color: var(--color-secondary);
-  }
-  .bg-secondary-hover {
-    background-color: var(--color-secondary-hover);
-  }
-  .bg-secondary-active {
-    background-color: var(--color-secondary-active);
-  }
-  .bg-surface {
-    background-color: var(--color-surface);
-  }
-  .bg-surface-muted {
-    background-color: var(--color-surface-muted);
-  }
-  .bg-muted {
-    background-color: var(--color-bg-muted);
-  }
-  .bg-body {
-    background-color: var(--color-bg);
-  }
-
-  /* Borders */
-  .border-primary {
-    border-color: var(--color-primary);
-  }
-  .border-secondary {
-    border-color: var(--color-secondary);
-  }
-  .border-default {
-    border-color: var(--color-border);
-  }
-  .border-strong {
-    border-color: var(--color-border-strong);
-  }
-
-  /* Rings (focus) */
-  .ring-primary {
-    --tw-ring-color: var(--color-primary);
-  }
-  .ring-secondary {
-    --tw-ring-color: var(--color-secondary);
-  }
-  .ring-muted {
-    --tw-ring-color: var(--color-border);
-  }
-
-  /* Foreground helpers for buttons on brand backgrounds */
-  .fg-on-primary {
-    color: var(--color-primary-foreground);
-  }
-  .fg-on-secondary {
-    color: var(--color-secondary-foreground);
-  }
-
-  /* Image filter utilities */
-  .filter-grayscale {
-    filter: grayscale(100%);
-  }
-  .filter-sepia {
-    filter: sepia(100%);
-  }
-  .filter-hue-rotate-180 {
-    filter: hue-rotate(180deg);
-  }
-  .filter-sepia.filter-hue-rotate-180 {
-    filter: sepia(100%) hue-rotate(180deg);
-  }
-  .filter-primary {
-    filter: grayscale(100%) sepia(100%) hue-rotate(240deg) saturate(1.5)
-      brightness(0.7) contrast(1.2);
-  }
 }

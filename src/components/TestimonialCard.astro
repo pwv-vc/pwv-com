@@ -14,29 +14,25 @@ interface Props {
 const { name, title, company, quote, url, companySlug } = Astro.props;
 ---
 
-<div
-  class="border-default bg-surface flex h-full flex-col rounded-lg border p-4"
->
-  <blockquote
-    class="text-md text-muted border-muted mb-4 flex-grow border-l-2 border-dotted pl-4"
-  >
+<div class="mb-8 flex h-full flex-col">
+  <blockquote class="text-md mb-4 flex-grow italic">
     "{quote}"
   </blockquote>
   <div class="mt-auto flex flex-col">
     <cite class="font-mono font-semibold not-italic">
       {name}
     </cite>
-    <div class="text-muted flex items-center gap-2 text-sm">
+    <div class="flex items-center gap-2 text-sm">
       {
         companySlug === 'anonymous' ? (
-          <div class="bg-surface-muted h-4 w-4 flex-shrink-0 rounded" />
+          <div class="h-4 w-4 flex-shrink-0 rounded" />
         ) : (
           <UnpicImage
             src={resolveImageSrc(`logos/small/${companySlug}.png`)}
             alt={`${company} logo`}
             width={16}
             height={16}
-            class="border-default bg-surface flex-shrink-0 border p-0.5"
+            class="flex-shrink-0 border p-0.5"
           />
         )
       }
@@ -44,7 +40,7 @@ const { name, title, company, quote, url, companySlug } = Astro.props;
         {title},{' '}
         {
           url ? (
-            <a href={url} class="text-body hover:underline">
+            <a href={url} class="hover:underline">
               {company}
             </a>
           ) : (

@@ -1,4 +1,5 @@
 ---
+import Heading2 from './Heading2.astro';
 import PortfolioCompanyCard from './PortfolioCompanyCard.astro';
 
 interface Props {
@@ -14,10 +15,10 @@ const sortedPortfolio = portfolio.sort((a, b) =>
 );
 ---
 
-<h3 class="text-primary my-8 font-serif text-2xl font-bold">
+<Heading2>
   {title}
   {caption && <span class="text-md font-normal">{caption}</span>}
-</h3>
+</Heading2>
 <div class="grid grid-cols-2 gap-6 md:grid-cols-3 xl:grid-cols-3">
   {
     sortedPortfolio.map((company) => (

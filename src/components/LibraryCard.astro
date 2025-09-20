@@ -48,12 +48,12 @@ const getSiteName = (url: string) => {
 ---
 
 <article
-  class={`${marginBottom} bg-surface rounded-xl shadow-sm border border-default overflow-hidden h-full`}
+  class={`${marginBottom} overflow-hidden h-full border-pwv-light-teal border-2 rounded-xl`}
 >
   <div class="flex h-full flex-col">
-    <div class={`${padding} flex flex-col flex-grow`}>
+    <div class={`${padding} flex flex-col flex-grow text-pwv-black`}>
       <div
-        class={`w-full ${imageHeight} overflow-hidden border-neutral-200 border rounded-lg mb-4`}
+        class={`w-full ${imageHeight} overflow-hidden border-white border rounded-lg mb-4`}
       >
         {
           post.data.heroImage ? (
@@ -87,7 +87,7 @@ const getSiteName = (url: string) => {
         }
       </div>
       <div
-        class={`flex items-center gap-2 ${dateSize} text-subtle ${isSmall ? 'mb-2' : 'mb-3'}`}
+        class={`flex items-center gap-2 ${dateSize} ${isSmall ? 'mb-2' : 'mb-3'}`}
       >
         <FormattedDate date={post.data.pubDate} />
         {
@@ -156,7 +156,7 @@ const getSiteName = (url: string) => {
         post.data.tags && post.data.tags.length > 0 && (
           <div class={`flex flex-wrap gap-1 ${isSmall ? 'mb-2' : 'mb-3'}`}>
             {post.data.tags.map((tag) => (
-              <span class="bg-surface-muted text-muted inline-block rounded-md px-2 py-1 text-xs font-medium">
+              <span class="border-pwv-gray inline-block rounded-md border px-2 py-1 text-xs font-medium">
                 {tag}
               </span>
             ))}
@@ -173,7 +173,7 @@ const getSiteName = (url: string) => {
         )
       }
       <p
-        class={`${descriptionSize} text-muted leading-relaxed ${isSmall ? 'mb-3' : 'mb-4'} flex-grow`}
+        class={`${descriptionSize}  leading-relaxed ${isSmall ? 'mb-3' : 'mb-4'} flex-grow`}
       >
         {post.data.description}
       </p>
@@ -182,7 +182,7 @@ const getSiteName = (url: string) => {
           href={post.data.url || `/library/${post.id}`}
           target={isRemote ? '_blank' : undefined}
           rel={isRemote ? 'noopener noreferrer' : undefined}
-          class={`inline-flex items-center gap-2 bg-secondary fg-on-secondary ${buttonSize} rounded-lg font-medium w-fit`}
+          class={`inline-flex items-center gap-2 bg-pwv-teal text-pwv-white ${buttonSize} rounded-lg font-medium w-fit`}
         >
           {
             isRemote ? (

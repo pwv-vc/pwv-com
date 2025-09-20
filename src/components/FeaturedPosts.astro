@@ -13,11 +13,9 @@ const postsToShow = limit ? featuredPosts.slice(0, limit) : featuredPosts;
 
 {
   featuredPosts.length > 0 && (
-    <section class="border-default mb-12 border-b pb-12">
-      <div class="mb-8 text-center">
-        <h2 class="text-primary mb-2 text-xl font-bold md:text-2xl">
-          Featured Insights
-        </h2>
+    <section class="border-pwv-gray mx-auto mb-12 pb-12">
+      <div class="mb-8">
+        <h2 class="mb-2 text-xl font-bold md:text-2xl">Featured Insights</h2>
       </div>
       <PostsGrid posts={postsToShow} size="large" />
     </section>

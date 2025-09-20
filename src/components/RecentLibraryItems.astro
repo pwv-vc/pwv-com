@@ -2,18 +2,20 @@
 import { getRecentLibraryPosts, getAllLibraryPosts } from '../lib/library';
 import PostsGrid from './PostsGrid.astro';
 import FeaturedPosts from './FeaturedPosts.astro';
+import UnderlineDecoration from './UnderlineDecoration.astro';
 
 const recentPosts = await getRecentLibraryPosts(6);
 ---
 
-<div class="max-w-none">
-  <div class="mb-8">
+<section class="mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="relative mb-8">
     <h2 class="text-primary my-4 font-serif text-2xl font-bold lg:text-3xl">
       Latest insights and thoughts
     </h2>
     <p class="text-muted text-lg">
       Perspectives and announcements from PWV, our founders and community.
     </p>
+    <UnderlineDecoration />
   </div>
 
   <div class="mb-6">
@@ -24,7 +26,7 @@ const recentPosts = await getRecentLibraryPosts(6);
   <div class="mt-8 text-center">
     <a
       href="/library"
-      class="fg-on-primary bg-primary hover:bg-primary-hover inline-flex items-center gap-2 rounded-lg px-5 py-2 font-medium shadow-md transition-colors"
+      class="bg-pwv-teal text-pwv-white inline-flex items-center gap-2 rounded-lg px-5 py-2 font-medium shadow-md transition-colors"
     >
       View More
       <svg
@@ -41,4 +43,4 @@ const recentPosts = await getRecentLibraryPosts(6);
       </svg>
     </a>
   </div>
-</div>
+</section>
