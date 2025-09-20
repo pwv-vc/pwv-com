@@ -5,7 +5,7 @@ interface Props {
   src?: any;
   path?: string; // relative to src/images, e.g. "startup-as-a-service/startup-as-a-service.001.jpeg"
   alt: string;
-  size?: 'sm' | 'md' | 'lg' | 'full';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'hero' | 'full';
   rounded?: boolean;
   shadow?: boolean;
   class?: string;
@@ -31,6 +31,8 @@ const heightMap: Record<string, string> = {
   sm: 'h-32',
   md: 'h-48',
   lg: 'h-64',
+  xl: 'h-80',
+  hero: 'h-auto',
   full: 'h-auto',
 };
 
@@ -46,7 +48,7 @@ const baseClasses = [
   'p-2',
   'w-full',
   heightMap[size] ?? heightMap.md,
-  'object-cover',
+  size === 'hero' || size === 'full' ? 'object-contain' : 'object-cover',
   rounded ? 'rounded-lg' : '',
   shadow ? 'shadow-lg' : '',
   filterClasses[imageFilter] || '',

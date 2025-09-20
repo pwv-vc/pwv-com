@@ -36,6 +36,7 @@
     'DM Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;
 }
+
 .prose {
   h1 {
     @apply text-2xl font-medium lg:text-3xl;
@@ -46,4 +47,21 @@
   h3 {
     @apply text-lg font-medium lg:text-xl;
   }
+}
+
+/* 🎨 Image Filters */
+.filter-grayscale {
+  filter: grayscale(100%);
+}
+
+.filter-sepia {
+  filter: sepia(100%);
+}
+
+.filter-hue-rotate-180 {
+  filter: hue-rotate(180deg);
+}
+
+.filter-primary {
+  filter: sepia(1) hue-rotate(120deg) saturate(1.2);
 }

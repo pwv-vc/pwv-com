@@ -49,18 +49,28 @@ const keywords = post.data.tags.join(', ');
   locale="en_US"
 >
   <div class="prose prose-lg mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-    <div class="mx-auto">
+    <Heading1>{title}</Heading1>
+
+    <p>
+      {post.data.description}
+    </p>
+    <p class="text-subtle text-sm">
+      Posted by {post.data.author} • {getReadingTime(post.body)} min read
+    </p>
+    <div class="mx-auto flex justify-center">
       {
         post.data.heroImage ? (
-          <SmartImage
-            src={post.data.heroImage}
-            alt={post.data.title}
-            size="full"
-            rounded={false}
-            shadow={false}
-            class="mb-4"
-            loading="eager"
-          />
+          <div class="mb-4 h-auto w-full overflow-hidden lg:w-1/2">
+            <SmartImage
+              src={post.data.heroImage}
+              alt={post.data.title}
+              size="full"
+              rounded={false}
+              shadow={false}
+              class="h-full w-full"
+              loading="eager"
+            />
+          </div>
         ) : (
           <PlaceholderImage
             alt={`Hero image for ${post.data.title}`}
@@ -69,13 +79,6 @@ const keywords = post.data.tags.join(', ');
         )
       }
     </div>
-    <Heading1>{title}</Heading1>
-    <p>
-      {post.data.description}
-    </p>
-    <p class="text-subtle text-sm">
-      Posted by {post.data.author} • {getReadingTime(post.body)} min read
-    </p>
     <div class="flex items-center justify-between">
       <div class="flex flex-wrap gap-2">
         {
