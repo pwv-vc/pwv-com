@@ -12,6 +12,7 @@ const targets = [
   { file: 'favicon-32x32.png', size: 32 },
   { file: 'favicon-48x48.png', size: 48 },
   { file: 'apple-touch-icon.png', size: 180 },
+  { file: 'apple-touch-icon-precomposed.png', size: 180 },
   { file: 'android-chrome-192x192.png', size: 192 },
   { file: 'android-chrome-512x512.png', size: 512 },
 ];
