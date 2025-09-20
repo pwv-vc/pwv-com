@@ -8,6 +8,7 @@ import https from 'https';
 import http from 'http';
 import { fal } from '@fal-ai/client';
 import dotenv from 'dotenv';
+import readline from 'readline';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -22,6 +23,95 @@ if (process.env.FAL_KEY) {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '..');
+
+/**
+ * Scans the library directory for markdown and MDX files
+ */
+async function scanLibraryFiles() {
+  const libraryDir = path.join(projectRoot, 'src', 'content', 'library');
+
+  try {
+    const files = await fs.readdir(libraryDir);
+    const markdownFiles = files
+      .filter((file) => file.endsWith('.md') || file.endsWith('.mdx'))
+      .sort();
+
+    return markdownFiles;
+  } catch (error) {
+    console.error('Error scanning library directory:', error);
+    return [];
+  }
+}
+
+/**
+ * Creates a readline interface for user input
+ */
+function createReadlineInterface() {
+  return readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+}
+
+/**
+ * Prompts user to select a file from the list
+ */
+async function selectFile(files) {
+  const rl = createReadlineInterface();
+
+  return new Promise((resolve, reject) => {
+    console.log('\n📚 Available library files:\n');
+
+    files.forEach((file, index) => {
+      const fileType = file.endsWith('.mdx') ? 'MDX' : 'MD';
+      console.log(`${index + 1}. ${file} (${fileType})`);
+    });
+
+    console.log('\n0. Exit\n');
+
+    const askForSelection = () => {
+      rl.question('Select a file by number (0 to exit): ', (answer) => {
+        const selection = parseInt(answer.trim());
+
+        if (isNaN(selection)) {
+          console.log('❌ Please enter a valid number.');
+          askForSelection();
+          return;
+        }
+
+        if (selection === 0) {
+          console.log('👋 Goodbye!');
+          rl.close();
+          resolve(null);
+          return;
+        }
+
+        if (selection < 1 || selection > files.length) {
+          console.log(
+            `❌ Please enter a number between 0 and ${files.length}.`
+          );
+          askForSelection();
+          return;
+        }
+
+        const selectedFile = files[selection - 1];
+        const fullPath = path.join(
+          projectRoot,
+          'src',
+          'content',
+          'library',
+          selectedFile
+        );
+
+        console.log(`✅ Selected: ${selectedFile}`);
+        rl.close();
+        resolve(fullPath);
+      });
+    };
+
+    askForSelection();
+  });
+}
 
 /**
  * Downloads an image from a URL to a local path
@@ -275,27 +365,37 @@ async function generatePostOGImage(markdownFilePath) {
 
 // Main execution
 async function main() {
-  const args = process.argv.slice(2);
+  console.log('🎨 PWV OG Image Generator');
+  console.log('========================\n');
 
-  if (args.length === 0) {
-    console.log('Usage: node generate-post-og-image.js <markdown-file-path>');
-    console.log(
-      'Example: node generate-post-og-image.js src/content/library/post-startup-multiverse-5-year.md'
-    );
+  // Scan for available files
+  const files = await scanLibraryFiles();
+
+  if (files.length === 0) {
+    console.log('❌ No markdown or MDX files found in src/content/library');
     process.exit(1);
   }
 
-  const markdownFilePath = args[0];
+  console.log(`Found ${files.length} files in the library directory.`);
 
-  // Check if file exists
+  // Let user select a file
+  const selectedFilePath = await selectFile(files);
+
+  if (!selectedFilePath) {
+    // User chose to exit
+    process.exit(0);
+  }
+
+  // Check if file exists (should always be true, but just in case)
   try {
-    await fs.access(markdownFilePath);
+    await fs.access(selectedFilePath);
   } catch (error) {
-    console.error(`File not found: ${markdownFilePath}`);
+    console.error(`❌ File not found: ${selectedFilePath}`);
     process.exit(1);
   }
 
-  await generatePostOGImage(markdownFilePath);
+  // Generate the OG image
+  await generatePostOGImage(selectedFilePath);
 }
 
 // Run the script
