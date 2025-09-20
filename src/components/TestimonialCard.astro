@@ -14,11 +14,11 @@ interface Props {
 const { name, title, company, quote, url, companySlug } = Astro.props;
 ---
 
-<div class="mb-8 flex h-full flex-col">
-  <blockquote class="text-md mb-4 flex-grow italic">
+<div class="mb-4 flex h-full flex-col">
+  <blockquote class="text-md my-4 flex-grow italic">
     "{quote}"
   </blockquote>
-  <div class="mt-auto flex flex-col">
+  <div class="flex flex-col">
     <cite class="font-mono font-semibold not-italic">
       {name}
     </cite>

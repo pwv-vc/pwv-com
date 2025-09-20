@@ -48,7 +48,7 @@ const getSiteName = (url: string) => {
 ---
 
 <article
-  class={`${marginBottom} overflow-hidden h-full border-pwv-light-teal border-2 rounded-xl`}
+  class={`${marginBottom} overflow-hidden h-full border-pwv-light-green border-1 rounded-xl`}
 >
   <div class="flex h-full flex-col">
     <div class={`${padding} flex flex-col flex-grow text-pwv-black`}>
@@ -68,9 +68,9 @@ const getSiteName = (url: string) => {
               imageFilter="none"
             />
           ) : (
-            <div class="from-surface-muted to-surface-muted flex h-full items-center justify-center bg-gradient-to-br">
+            <div class="flex h-full items-center justify-center">
               <svg
-                class="text-subtle h-12 w-12"
+                class="h-12 w-12"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -156,7 +156,7 @@ const getSiteName = (url: string) => {
         post.data.tags && post.data.tags.length > 0 && (
           <div class={`flex flex-wrap gap-1 ${isSmall ? 'mb-2' : 'mb-3'}`}>
             {post.data.tags.map((tag) => (
-              <span class="border-pwv-gray inline-block rounded-md border px-2 py-1 text-xs font-medium">
+              <span class="border-pwv-light-green inline-block rounded-md border px-2 py-1 text-xs font-medium">
                 {tag}
               </span>
             ))}
@@ -182,7 +182,7 @@ const getSiteName = (url: string) => {
           href={post.data.url || `/library/${post.id}`}
           target={isRemote ? '_blank' : undefined}
           rel={isRemote ? 'noopener noreferrer' : undefined}
-          class={`inline-flex items-center gap-2 bg-pwv-teal text-pwv-white ${buttonSize} rounded-lg font-medium w-fit`}
+          class={`inline-flex items-center gap-2 bg-pwv-green text-pwv-light-green ${buttonSize} rounded-lg font-medium w-fit`}
         >
           {
             isRemote ? (
