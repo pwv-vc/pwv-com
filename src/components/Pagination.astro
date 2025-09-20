@@ -69,7 +69,7 @@ const buildUrl = (page: number) => {
       {currentPage > 1 ? (
         <a
           href={buildUrl(currentPage - 1)}
-          class="bg-pwv-gray text-pwv-black rounded-md border px-3 py-2 text-sm font-medium"
+          class="text-pwv-green border-pwv-green hover:bg-pwv-green rounded-md border bg-white px-3 py-2 text-sm font-medium transition-colors hover:text-white"
           aria-label="Previous page"
         >
           <svg
@@ -87,7 +87,7 @@ const buildUrl = (page: number) => {
           </svg>
         </a>
       ) : (
-        <span class="bg-pwv-white text-pwv-white rounded-md border px-3 py-2 text-sm font-medium">
+        <span class="cursor-not-allowed rounded-md border border-gray-300 bg-gray-200 px-3 py-2 text-sm font-medium text-gray-400">
           <svg
             class="h-4 w-4"
             fill="none"
@@ -116,10 +116,10 @@ const buildUrl = (page: number) => {
         return (
           <a
             href={buildUrl(pageNum)}
-            class={`text-pwv-black rounded-md px-3 py-2 text-sm font-medium ${
+            class={`rounded-md border px-3 py-2 text-sm font-medium transition-colors ${
               isCurrentPage
-                ? 'text-pwv-light-green bg-pwv-green border-pwv-green border'
-                : 'text-body border-pwv-black border'
+                ? 'border-black bg-black text-white'
+                : 'border-black bg-white text-black hover:bg-gray-100'
             }`}
             aria-label={`Page ${pageNum}`}
             aria-current={isCurrentPage ? 'page' : undefined}
@@ -133,7 +133,7 @@ const buildUrl = (page: number) => {
       {currentPage < totalPages ? (
         <a
           href={buildUrl(currentPage + 1)}
-          class="bg-pwv-gray text-pwv-black rounded-md border px-3 py-2 text-sm font-medium"
+          class="text-pwv-green border-pwv-green hover:bg-pwv-green rounded-md border bg-white px-3 py-2 text-sm font-medium transition-colors hover:text-white"
           aria-label="Next page"
         >
           <svg
@@ -151,7 +151,7 @@ const buildUrl = (page: number) => {
           </svg>
         </a>
       ) : (
-        <span class="text-pwv-white bg-pwv-white rounded-md border px-3 py-2 text-sm font-medium">
+        <span class="cursor-not-allowed rounded-md border border-gray-300 bg-gray-200 px-3 py-2 text-sm font-medium text-gray-400">
           <svg
             class="h-4 w-4"
             fill="none"
