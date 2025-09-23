@@ -1,5 +1,5 @@
 ---
-import { getFeaturedLibraryPosts } from '../lib/library';
+import { getFeaturedPosts } from '../lib/news';
 import PostsGrid from './PostsGrid.astro';
 
 export interface Props {
@@ -7,7 +7,7 @@ export interface Props {
 }
 
 const { limit = 3 } = Astro.props;
-const featuredPosts = await getFeaturedLibraryPosts();
+const featuredPosts = await getFeaturedPosts();
 const postsToShow = limit ? featuredPosts.slice(0, limit) : featuredPosts;
 ---
 

@@ -346,7 +346,7 @@ async function generatePostOGImage(markdownFilePath) {
 
     if (success) {
       // Create relative path for frontmatter
-      const relativeImagePath = `../../images/library/${postSlug}/${imageFilename}`;
+      const relativeImagePath = `../../images/posts/${postSlug}/${imageFilename}`;
 
       // Update the markdown file with new heroImage
       const updatedContent = updateFrontmatter(content, relativeImagePath);

@@ -1,6 +1,5 @@
 // 1. Import utilities from `astro:content`
 import { defineCollection, z } from 'astro:content';
-import { parseISO } from 'date-fns';
 
 import { file, glob } from 'astro/loaders';
 
@@ -68,9 +67,9 @@ const testimonials = defineCollection({
   }),
 });
 
-const library = defineCollection({
+const posts = defineCollection({
   // Load Markdown and MDX files in the `src/content/library/` directory.
-  loader: glob({ base: './src/content/library', pattern: '**/*.{md,mdx}' }),
+  loader: glob({ base: './src/content/posts', pattern: '**/*.{md,mdx}' }),
   // Type-check frontmatter using a schema
   schema: ({ image }) =>
     z.object({
@@ -99,5 +98,5 @@ export const collections = {
   rollingFundPortfolio,
   angelPortfolio,
   testimonials,
-  library,
+  posts,
 };

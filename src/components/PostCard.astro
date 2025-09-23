@@ -1,0 +1,237 @@
+---
+import SmartImage from './SmartImage.astro';
+import FormattedDate from './FormattedDate.astro';
+import { getReadingTime } from '../lib/news';
+
+export interface Props {
+  post: {
+    id: string;
+    data: {
+      title: string;
+      description: string;
+      pubDate: Date;
+      heroImage?: any; // Astro image type
+      url?: string;
+      author?: string;
+      tags?: string[];
+      updatedDate?: Date;
+      aiGeneratedImage?: boolean;
+      aiGeneratedDescription?: boolean;
+      isFeatured?: boolean;
+    };
+    body?: string;
+  };
+  size?: 'small' | 'large';
+  isFeatured?: boolean;
+}
+
+const { post, size = 'large', isFeatured = false } = Astro.props;
+
+const isSmall = size === 'small';
+const isRemote = !!post.data.url;
+const imageHeight = isSmall ? 'h-32' : 'h-48';
+const padding = isSmall ? 'p-2' : 'p-4';
+const titleSize = isSmall ? 'text-sm' : 'text-lg';
+const descriptionSize = isSmall ? 'text-xs' : 'text-sm';
+const buttonSize = isSmall ? 'text-xs px-3 py-2' : 'text-sm px-4 py-2';
+const iconSize = isSmall ? 'w-3 h-3' : 'w-4 h-4';
+const dateSize = isSmall ? 'text-xs' : 'text-sm';
+const marginBottom = isSmall ? 'mb-4' : 'mb-5';
+const borderColor = isFeatured
+  ? 'border-pwv-light-teal'
+  : 'border-pwv-light-green';
+const buttonColor = isFeatured
+  ? 'bg-pwv-black text-pwv-white'
+  : 'bg-pwv-black text-pwv-white';
+
+// Extract site name from URL for remote content
+const getSiteName = (url: string) => {
+  try {
+    const urlObj = new URL(url);
+    return urlObj.hostname.replace('www.', '');
+  } catch {
+    return 'External Site';
+  }
+};
+---
+
+<article
+  class={`${marginBottom} overflow-hidden h-full border-pwv-light-green border-1 rounded-md ${borderColor}`}
+>
+  <div class="flex h-full flex-col">
+    <div class={`${padding} flex flex-col flex-grow text-pwv-black`}>
+      <div
+        class={`w-full ${imageHeight} overflow-hidden border-white border rounded-lg mb-4`}
+      >
+        {
+          post.data.heroImage ? (
+            <SmartImage
+              src={post.data.heroImage}
+              alt={post.data.title}
+              size={isSmall ? 'sm' : 'md'}
+              rounded={true}
+              shadow={false}
+              class="full"
+              loading="lazy"
+            />
+          ) : (
+            <div class="flex h-full items-center justify-center">
+              <svg
+                class="h-12 w-12"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                />
+              </svg>
+            </div>
+          )
+        }
+      </div>
+      <div
+        class={`flex items-center gap-2 ${dateSize} ${isSmall ? 'mb-2' : 'mb-3'}`}
+      >
+        <FormattedDate date={post.data.pubDate} />
+        {
+          isRemote && post.data.url && (
+            <>
+              <span>•</span>
+              <span>{getSiteName(post.data.url)}</span>
+            </>
+          )
+        }
+        {
+          (post.data.aiGeneratedImage || post.data.aiGeneratedDescription) && (
+            <div class="ml-2 flex items-center gap-1">
+              {post.data.aiGeneratedImage && (
+                <div class="group relative">
+                  <svg
+                    class={`${iconSize} text-purple-500 opacity-60`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                    <circle cx="18" cy="6" r="2" fill="currentColor" />
+                  </svg>
+                  <div class="bg-primary-active pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 -translate-x-1/2 transform rounded px-2 py-1 text-xs whitespace-nowrap text-white opacity-0 transition-opacity group-hover:opacity-100">
+                    AI Generated Image
+                  </div>
+                </div>
+              )}
+              {post.data.aiGeneratedDescription && (
+                <div class="group relative">
+                  <svg
+                    class={`${iconSize} text-primary opacity-60`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                    />
+                    <circle cx="18" cy="6" r="2" fill="currentColor" />
+                  </svg>
+                  <div class="bg-primary-active pointer-events-none absolute bottom-full left-1/2 z-10 mb-2 -translate-x-1/2 transform rounded px-2 py-1 text-xs whitespace-nowrap text-white opacity-0 transition-opacity group-hover:opacity-100">
+                    AI Generated Description
+                  </div>
+                </div>
+              )}
+            </div>
+          )
+        }
+      </div>
+      <h2
+        class={`${titleSize} font-bold text-primary ${isSmall ? 'mb-2' : 'mb-3'} leading-tight`}
+      >
+        {post.data.title}
+      </h2>
+
+      {
+        post.data.tags && post.data.tags.length > 0 && (
+          <div class={`flex flex-wrap gap-1 ${isSmall ? 'mb-2' : 'mb-3'}`}>
+            {post.data.tags.map((tag) => (
+              <span class="border-pwv-light-green inline-block rounded-md border px-2 py-1 text-xs font-medium">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )
+      }
+      {
+        post.data.author && (
+          <p
+            class={`${descriptionSize} text-subtle font-semibold ${isSmall ? 'mb-2' : 'mb-3'}`}
+          >
+            By {post.data.author}
+          </p>
+        )
+      }
+      <p
+        class={`${descriptionSize}  leading-relaxed ${isSmall ? 'mb-3' : 'mb-4'} flex-grow`}
+      >
+        {post.data.description}
+      </p>
+      <div class="mt-auto text-center">
+        <a
+          href={post.data.url || `/library/${post.id}`}
+          target={isRemote ? '_blank' : undefined}
+          rel={isRemote ? 'noopener noreferrer' : undefined}
+          class={`inline-flex items-center gap-2 ${buttonSize} ${buttonColor} font-mono rounded-lg w-fit`}
+        >
+          {
+            isRemote ? (
+              <>
+                Read on{' '}
+                {post.data.url ? getSiteName(post.data.url) : 'External Site'}
+                <svg
+                  class={iconSize}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </>
+            ) : (
+              <>
+                Read ({getReadingTime(post.body)} Min)
+                <svg
+                  class={iconSize}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </>
+            )
+          }
+        </a>
+      </div>
+    </div>
+  </div>
+</article>

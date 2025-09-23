@@ -1,5 +1,5 @@
 ---
-import LibraryCard from './LibraryCard.astro';
+import PostCard from './PostCard.astro';
 
 export interface Props {
   posts: any[];
@@ -21,7 +21,7 @@ const { posts, size = 'large', isFeatured = false } = Astro.props;
         data-post-type={post.data.url ? 'external' : 'non-external'}
         class="flex"
       >
-        <LibraryCard post={post} size={size} isFeatured={isFeatured} />
+        <PostCard post={post} size={size} isFeatured={isFeatured} />
       </div>
     ))
   }

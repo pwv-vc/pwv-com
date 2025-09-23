@@ -11,7 +11,6 @@ import { fal } from '@fal-ai/client';
 import dotenv from 'dotenv';
 import inquirer from 'inquirer';
 
-
 // Load environment variables from .env file
 dotenv.config();
 
@@ -31,10 +30,12 @@ const IMAGES_DIR = path.join(__dirname, '../src/images/library');
 
 // Available FAL AI Models
 const PROMPT_GENERATION_MODELS = [
-  { name: 'Claude 3.5 Sonnet (Recommended)', value: 'anthropic/claude-3.5-sonnet' },
+  {
+    name: 'Claude 3.5 Sonnet (Recommended)',
+    value: 'anthropic/claude-3.5-sonnet',
+  },
   { name: 'Claude 3.5 Haiku (Faster)', value: 'anthropic/claude-3.5-haiku' },
   { name: 'Gemini 2.0 Flash', value: 'google/gemini-2.0-flash-001' },
-
 ];
 
 const IMAGE_GENERATION_MODELS = [
@@ -114,8 +115,10 @@ function extractTextContent(html) {
   const document = dom.window.document;
 
   // Remove script and style elements
-  const scripts = document.querySelectorAll('script, style, nav, header, footer, aside');
-  scripts.forEach(el => el.remove());
+  const scripts = document.querySelectorAll(
+    'script, style, nav, header, footer, aside'
+  );
+  scripts.forEach((el) => el.remove());
 
   // Get the main content - try different selectors
   const contentSelectors = [
@@ -127,7 +130,7 @@ function extractTextContent(html) {
     '.entry-content',
     '.article-content',
     '.post-body',
-    '.entry-body'
+    '.entry-body',
   ];
 
   let contentElement = null;
@@ -142,7 +145,9 @@ function extractTextContent(html) {
   }
 
   // Extract text content
-  let textContent = contentElement ? contentElement.textContent : document.body.textContent;
+  let textContent = contentElement
+    ? contentElement.textContent
+    : document.body.textContent;
 
   // Clean up the text
   textContent = textContent
@@ -159,7 +164,7 @@ function extractTextContent(html) {
  */
 async function selectModels() {
   console.log('🤖 FAL AI Model Selection');
-  console.log('=' .repeat(50));
+  console.log('='.repeat(50));
 
   const answers = await inquirer.prompt([
     {
@@ -167,15 +172,15 @@ async function selectModels() {
       name: 'promptModel',
       message: 'Select a prompt generation model:',
       choices: PROMPT_GENERATION_MODELS,
-      default: 0 // Default to first option (Claude 3.5 Sonnet)
+      default: 0, // Default to first option (Claude 3.5 Sonnet)
     },
     {
       type: 'list',
       name: 'imageModel',
       message: 'Select an image generation model:',
       choices: IMAGE_GENERATION_MODELS,
-      default: 0 // Default to first option (Imagen 3 Fast)
-    }
+      default: 0, // Default to first option (Imagen 3 Fast)
+    },
   ]);
 
   console.log(`\n✅ Selected models:`);
@@ -185,7 +190,7 @@ async function selectModels() {
 
   return {
     promptModel: answers.promptModel,
-    imageModel: answers.imageModel
+    imageModel: answers.imageModel,
   };
 }
 
@@ -207,12 +212,12 @@ ${textContent}`;
     console.log('Prompt being sent to LLM:', prompt);
 
     // Use non-streaming approach for simplicity
-    const result = await fal.subscribe("fal-ai/any-llm", {
+    const result = await fal.subscribe('fal-ai/any-llm', {
       input: {
         prompt: prompt,
-        priority: "latency",
-        model: promptModel
-      }
+        priority: 'latency',
+        model: promptModel,
+      },
     });
 
     console.log('LLM result:', result);
@@ -242,14 +247,19 @@ ${textContent}`;
     console.log('Generated description:', generatedDescription);
 
     // If the generated description is too short or seems incomplete, return empty string
-    if (generatedDescription.length < 10 || generatedDescription.trim() === '') {
+    if (
+      generatedDescription.length < 10 ||
+      generatedDescription.trim() === ''
+    ) {
       console.warn('Generated description too short or empty');
       return '';
     }
 
     return generatedDescription;
   } catch (error) {
-    console.warn(`Failed to generate description with FAL AI: ${error.message}`);
+    console.warn(
+      `Failed to generate description with FAL AI: ${error.message}`
+    );
     return '';
   }
 }
@@ -257,7 +267,12 @@ ${textContent}`;
 /**
  * Generate a better image prompt using FAL AI any-llm
  */
-async function generateImagePrompt(textContent, title, description, promptModel) {
+async function generateImagePrompt(
+  textContent,
+  title,
+  description,
+  promptModel
+) {
   try {
     if (!process.env.FAL_KEY) {
       console.warn('FAL_KEY not set, using fallback prompt');
@@ -272,12 +287,12 @@ Blog post: ${title} ${description} ${textContent}`;
     console.log('Prompt being sent to LLM:', prompt);
 
     // Use non-streaming approach for simplicity
-    const result = await fal.subscribe("fal-ai/any-llm", {
+    const result = await fal.subscribe('fal-ai/any-llm', {
       input: {
         prompt: prompt,
-        priority: "latency",
-        model: promptModel
-      }
+        priority: 'latency',
+        model: promptModel,
+      },
     });
 
     console.log('LLM result:', result);
@@ -316,7 +331,9 @@ Blog post: ${title} ${description} ${textContent}`;
     console.log('Generated image prompt:', generatedPrompt);
     return generatedPrompt;
   } catch (error) {
-    console.warn(`Failed to generate image prompt with FAL AI: ${error.message}`);
+    console.warn(
+      `Failed to generate image prompt with FAL AI: ${error.message}`
+    );
     return `${title}\n\n${description}`;
   }
 }
@@ -562,7 +579,14 @@ function getFileExtension(url) {
 /**
  * Generate an OG image using FAL AI
  */
-async function generateOGImage(title, description, textContent, localPath, promptModel, imageModel) {
+async function generateOGImage(
+  title,
+  description,
+  textContent,
+  localPath,
+  promptModel,
+  imageModel
+) {
   try {
     // Check if FAL AI API key is set
     if (!process.env.FAL_KEY) {
@@ -580,11 +604,16 @@ async function generateOGImage(title, description, textContent, localPath, promp
     console.log('FAL AI client configured:', !!process.env.FAL_KEY);
 
     // Generate a better prompt using the extracted text content
-    const imagePrompt = await generateImagePrompt(textContent, title, description, promptModel);
+    const imagePrompt = await generateImagePrompt(
+      textContent,
+      title,
+      description,
+      promptModel
+    );
     console.log('🎨 Generated image prompt:');
-    console.log('=' .repeat(80));
+    console.log('='.repeat(80));
     console.log(imagePrompt);
-    console.log('=' .repeat(80));
+    console.log('='.repeat(80));
 
     const result = await fal.subscribe(imageModel, {
       input: {
@@ -643,7 +672,11 @@ async function createLibraryPost(url, models) {
     // Generate description if none found
     if (!metadata.description || metadata.description.trim() === '') {
       console.log('No description found, generating one with FAL AI...');
-      const generatedDescription = await generateDescription(textContent, metadata.title, models.promptModel);
+      const generatedDescription = await generateDescription(
+        textContent,
+        metadata.title,
+        models.promptModel
+      );
       if (generatedDescription) {
         metadata.description = generatedDescription;
         aiGeneratedDescription = true;
@@ -700,7 +733,7 @@ async function createLibraryPost(url, models) {
         await downloadImage(imageUrl, localImagePath);
 
         // Set relative path for the markdown file (match filename prefix + slug)
-        heroImagePath = `../../images/library/external-${sitePrefix}${slug}/${imageFilename}`;
+        heroImagePath = `../../images/posts/external-${sitePrefix}${slug}/${imageFilename}`;
         console.log(`Image saved to: ${localImagePath}`);
       } catch (error) {
         console.warn(`Failed to download image: ${error.message}`);
@@ -730,7 +763,7 @@ async function createLibraryPost(url, models) {
 
       if (generated.success) {
         // Set relative path for the markdown file (match filename prefix + slug)
-        heroImagePath = `../../images/library/external-${sitePrefix}${slug}/${imageFilename}`;
+        heroImagePath = `../../images/posts/external-${sitePrefix}${slug}/${imageFilename}`;
         console.log(`Generated image saved to: ${localImagePath}`);
 
         // Save the prompt as a text file
@@ -787,23 +820,33 @@ ${aiGeneratedImage ? 'aiGeneratedImage: true' : ''}
 async function main() {
   const args = process.argv.slice(2);
   const skipInteractive = args.includes('--default-models');
-  const url = args.find(arg => !arg.startsWith('--'));
+  const url = args.find((arg) => !arg.startsWith('--'));
 
   if (!url) {
-    console.error('Usage: node fetch-external-content.js <URL> [--default-models]');
+    console.error(
+      'Usage: node fetch-external-content.js <URL> [--default-models]'
+    );
     console.error(
       'Example: node fetch-external-content.js https://www.aalo.com/post/aalo-closes-100m-series-b'
     );
     console.error('');
     console.error('Options:');
-    console.error('  --default-models    Use default models without interactive selection');
+    console.error(
+      '  --default-models    Use default models without interactive selection'
+    );
     console.error('');
     console.error(
       'Note: If no description is found, the script will generate one using FAL AI.'
     );
-    console.error('If no OG image is found, the script will attempt to generate one using FAL AI.');
-    console.error('The script extracts full text content and uses FAL AI any-llm to generate');
-    console.error('better descriptions and image prompts based on the actual article content.');
+    console.error(
+      'If no OG image is found, the script will attempt to generate one using FAL AI.'
+    );
+    console.error(
+      'The script extracts full text content and uses FAL AI any-llm to generate'
+    );
+    console.error(
+      'better descriptions and image prompts based on the actual article content.'
+    );
     console.error('To enable AI features, set your FAL AI API key:');
     console.error('export FAL_KEY=your_fal_api_key_here');
     console.error('Or create a .env file in the project root with:');
@@ -818,7 +861,7 @@ async function main() {
       // Use default models
       models = {
         promptModel: 'anthropic/claude-3.5-sonnet',
-        imageModel: 'fal-ai/imagen3/fast'
+        imageModel: 'fal-ai/imagen3/fast',
       };
       console.log('🤖 Using default models:');
       console.log(`📝 Prompt Generation: ${models.promptModel}`);

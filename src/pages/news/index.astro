@@ -1,0 +1,87 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Heading1 from '../../components/Heading1.astro';
+
+import {
+  getPaginatedPosts,
+  getExternalPosts,
+  getNonExternalPosts,
+} from '../../lib/news';
+import PostsGrid from '../../components/PostsGrid.astro';
+import PostsToggle from '../../components/PostsToggle.astro';
+import FeaturedPosts from '../../components/FeaturedPosts.astro';
+import Pagination from '../../components/Pagination.astro';
+
+// Get filter and page from URL params
+const filter = Astro.url.searchParams.get('filter') ?? 'all';
+const page = parseInt(Astro.url.searchParams.get('page') ?? '1');
+
+const activeFilter: 'all' | 'community' | 'pwv' = ['community', 'pwv'].includes(
+  filter
+)
+  ? (filter as 'community' | 'pwv')
+  : 'all';
+
+// Get paginated posts
+const pageSize = 12;
+const { posts, pagination } = await getPaginatedPosts(
+  page,
+  pageSize,
+  activeFilter
+);
+
+// Get counts for the toggle (we still need these for the toggle component)
+const externalPosts = await getExternalPosts();
+const nonExternalPosts = await getNonExternalPosts();
+const title = 'Insights and thoughts from PWV';
+const description =
+  'Perspectives and announcements from PWV, our founders and community.';
+---
+
+<Layout title={title} description={description}>
+  <section class="mx-auto">
+    <Heading1>News</Heading1>
+    <p class="mb-8 text-lg">
+      Perspectives and announcements from PWV, our founders and community.
+    </p>
+
+    <PostsToggle
+      externalCount={externalPosts.length}
+      nonExternalCount={nonExternalPosts.length}
+      activeFilter={activeFilter}
+    />
+
+    {activeFilter === 'all' && <FeaturedPosts />}
+
+    <PostsGrid posts={posts} size="large" />
+
+    <Pagination
+      currentPage={pagination.currentPage}
+      totalPages={pagination.totalPages}
+      baseUrl="/news"
+      filter={activeFilter}
+    />
+
+    <div class="mt-8 text-center">
+      <a
+        href="/"
+        class="bg-pwv-black text-pwv-white inline-flex items-center gap-2 rounded-lg px-5 py-2 text-sm"
+      >
+        <svg
+          class="h-4 w-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"></path>
+        </svg>
+
+        Home
+      </a>
+    </div>
+  </section>
+</Layout>
