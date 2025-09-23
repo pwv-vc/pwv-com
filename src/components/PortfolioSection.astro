@@ -1,24 +1,39 @@
 ---
 import Heading2 from './Heading2.astro';
+import Heading3NoUnderline from './Heading3NoUnderline.astro';
 import PortfolioCompanyCard from './PortfolioCompanyCard.astro';
 
 interface Props {
   title: string;
   caption?: string;
   portfolio: any[];
+  showTitle?: boolean;
+  showCaption?: boolean;
 }
 
-const { title, caption, portfolio } = Astro.props;
+const {
+  title,
+  caption,
+  portfolio,
+  showTitle = false,
+  showCaption = false,
+} = Astro.props;
 
 const sortedPortfolio = portfolio.sort((a, b) =>
   a.data.name.localeCompare(b.data.name)
 );
 ---
 
-<Heading2>
-  {title}
-  {caption && <span class="text-md font-normal">{caption}</span>}
-</Heading2>
+{
+  showTitle && (
+    <Heading3NoUnderline>
+      {title}
+      {caption && <span class="text-md font-normal">{caption}</span>}
+    </Heading3NoUnderline>
+  )
+}
+{showCaption && <p class="text-sm">Backing founders from seed to scale.</p>}
+
 <div class="mt-12 grid grid-cols-2 gap-6 md:grid-cols-3 xl:grid-cols-3">
   {
     sortedPortfolio.map((company) => (
