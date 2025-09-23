@@ -8,9 +8,10 @@ interface Props {
   url: string;
   tags: string[];
   slug: string;
+  showTags?: boolean;
 }
 
-const { name, url, tags, slug } = Astro.props;
+const { name, url, tags, slug, showTags = false } = Astro.props;
 
 // Companies that need black background for their logos
 const blackBackgroundSlugs = ['beta'];
@@ -60,24 +61,26 @@ const getTagStyle = (tag: string) => {
     <UnpicImage
       src={resolveImageSrc(`logos/small/${slug}.png`)}
       alt={`${name} logo`}
-      width={24}
-      height={24}
+      width={36}
+      height={36}
       class={`flex-shrink-0 p-0.5 border border-pwv-gray ${blackBackgroundSlugs.includes(slug) ? 'bg-black' : 'bg-surface'}`}
     />
     <span class="flex-1 leading-snug break-words whitespace-normal">{name}</span
     >
   </a>
-  <div class="flex flex-wrap gap-1">
-    {
-      tags.map((tag) => {
-        const styles = getTagStyle(tag);
-        return (
-          <span class={styles.container}>
-            <span class={styles.dot} />
-            {tag.toLowerCase()}
-          </span>
-        );
-      })
-    }
-  </div>
+  {
+    showTags && (
+      <div class="flex flex-wrap gap-1">
+        {tags.map((tag) => {
+          const styles = getTagStyle(tag);
+          return (
+            <span class={styles.container}>
+              <span class={styles.dot} />
+              {tag.toLowerCase()}
+            </span>
+          );
+        })}
+      </div>
+    )
+  }
 </div>

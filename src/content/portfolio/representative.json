@@ -1,21 +1,9 @@
 [
   {
-    "name": "Astranis",
-    "slug": "astranis",
-    "url": "https://www.astranis.com/",
-    "tags": ["🦄", "hardware", "aerospace"]
-  },
-  {
     "name": "Cursor",
     "slug": "cursor",
     "url": "https://www.cursor.com/",
     "tags": ["🦄", "ai", "dev tools"]
-  },
-  {
-    "name": "Atuin",
-    "slug": "atuin",
-    "url": "https://atuin.sh/",
-    "tags": ["dev tools"]
   },
   {
     "name": "fal",
@@ -24,196 +12,10 @@
     "tags": ["🦄", "ai", "dev tools"]
   },
   {
-    "name": "Elicit",
-    "slug": "elicit",
-    "url": "https://elicit.com",
-    "tags": ["ai", "saas"]
-  },
-  {
-    "name": "Ona (formerly Gitpod)",
-    "slug": "ona",
-    "url": "https://www.ona.com/",
-    "tags": ["dev tools", "board seat"]
-  },
-  {
-    "name": "Aerodome (acquired by Flock Safety)",
-    "slug": "aerodome",
-    "url": "https://www.aerodome.com",
-    "tags": ["hardware", "ai", "acquired"]
-  },
-  {
     "name": "Liquid AI",
     "slug": "liquid-ai",
     "url": "https://www.liquid.ai",
     "tags": ["🦄", "ai"]
-  },
-  {
-    "name": "Zoo",
-    "slug": "zoo",
-    "url": "https://zoo.dev",
-    "tags": ["ai", "cad"]
-  },
-  {
-    "name": "Val Town",
-    "slug": "val-town",
-    "url": "https://www.val.town/",
-    "tags": ["dev tools"]
-  },
-  {
-    "name": "Unkey",
-    "slug": "unkey",
-    "url": "https://www.unkey.com/",
-    "tags": ["dev tools"]
-  },
-  {
-    "name": "Langbase",
-    "slug": "langbase",
-    "url": "https://www.langbase.com/",
-    "tags": ["ai", "dev tools"]
-  },
-  {
-    "name": "Inngest",
-    "slug": "inngest",
-    "url": "https://www.inngest.com/",
-    "tags": ["dev tools"]
-  },
-  {
-    "name": "Aalo Atomics",
-    "slug": "aalo-atomics",
-    "url": "https://www.aalo.com",
-    "tags": ["🦄", "hardware", "energy"]
-  },
-  {
-    "name": "Cleanlab",
-    "slug": "cleanlab",
-    "url": "https://www.cleanlab.ai/",
-    "tags": ["ai", "dev tools"]
-  },
-  {
-    "name": "Clerk",
-    "slug": "clerk",
-    "url": "https://clerk.com/",
-    "tags": ["dev tools"]
-  },
-  {
-    "name": "GitButler",
-    "slug": "gitbutler",
-    "url": "https://www.gitbutler.com/",
-    "tags": ["dev tools"]
-  },
-  {
-    "name": "QuantPi",
-    "slug": "quantpi",
-    "url": "https://www.quantpi.com/",
-    "tags": ["ai"]
-  },
-  {
-    "name": "tldraw",
-    "slug": "tldraw",
-    "url": "https://www.tldraw.dev/",
-    "tags": ["dev tools"]
-  },
-  {
-    "name": "VoidZero",
-    "slug": "voidzero",
-    "url": "https://voidzero.dev/",
-    "tags": ["dev tools"]
-  },
-  {
-    "name": "ReSim",
-    "slug": "resim",
-    "url": "https://www.resim.ai/",
-    "tags": ["ai"]
-  },
-  {
-    "name": "Tuist",
-    "slug": "tuist",
-    "url": "https://tuist.io/",
-    "tags": ["dev tools"]
-  },
-  {
-    "name": "BuildPass",
-    "slug": "buildpass",
-    "url": "https://www.buildpass.com.au/",
-    "tags": ["saas", "construction"]
-  },
-  {
-    "name": "Poolside",
-    "slug": "poolside",
-    "url": "https://www.poolside.ai/",
-    "tags": ["🦄", "ai"]
-  },
-  {
-    "name": "Turso",
-    "slug": "turso",
-    "url": "https://turso.tech",
-    "tags": ["dev tools"]
-  },
-  {
-    "name": "Flux",
-    "slug": "flux",
-    "url": "https://www.flux.ai/p",
-    "tags": ["hardware", "saas"]
-  },
-  {
-    "name": "Commonwealth Fusion Systems",
-    "slug": "commonwealth-fusion-systems",
-    "url": "https://cfs.energy/",
-    "tags": ["🦄", "energy"]
-  },
-  {
-    "name": "StackOne",
-    "slug": "stackone",
-    "url": "https://www.stackone.com/",
-    "tags": ["saas"]
-  },
-  {
-    "name": "Commutator Studios",
-    "slug": "commutator-studios",
-    "url": "https://www.commutatorstudios.com/",
-    "tags": ["quantum computing"]
-  },
-  {
-    "name": "Power Planet",
-    "slug": "power-planet",
-    "url": "https://power-planet.com/",
-    "tags": ["energy"]
-  },
-  {
-    "name": "Myriad AI",
-    "slug": "myriad-ai",
-    "url": "https://www.myriad.company/",
-    "tags": ["ai", "compliance"]
-  },
-  {
-    "name": "Not Diamond",
-    "slug": "not-diamond",
-    "url": "https://www.notdiamond.ai",
-    "tags": ["ai"]
-  },
-  {
-    "name": "Nuanced",
-    "slug": "nuanced",
-    "url": "https://www.nuanced.dev",
-    "tags": ["ai"]
-  },
-  {
-    "name": "Beta",
-    "url": "https://beta.team/",
-    "tags": ["hardware", "aerospace"],
-    "slug": "beta"
-  },
-  {
-    "name": "Upside Foods",
-    "url": "https://upsidefoods.com",
-    "tags": ["food tech"],
-    "slug": "upside-foods"
-  },
-  {
-    "name": "Impossible Foods",
-    "url": "https://impossiblefoods.com",
-    "tags": ["🦄", "food tech"],
-    "slug": "impossible-foods"
   },
   {
     "name": "Stripe",
@@ -228,7 +30,7 @@
     "slug": "supabase"
   },
   {
-    "name": "Weights & Biases (acquired by CoreWeave)",
+    "name": "Weights & Biases",
     "url": "https://www.wandb.ai/",
     "tags": ["ai", "acquired"],
     "slug": "weights-and-biases"
@@ -240,40 +42,16 @@
     "slug": "snyk"
   },
   {
-    "name": "Prisma",
-    "url": "https://www.prisma.io/",
-    "tags": ["dev tools"],
-    "slug": "prisma"
-  },
-  {
     "name": "Netlify",
     "url": "https://www.netlify.com/",
     "tags": ["🦄", "dev tools"],
     "slug": "netlify"
   },
   {
-    "name": "PATH Water",
-    "url": "https://drinkpathwater.com",
-    "tags": ["food tech"],
-    "slug": "path-water"
-  },
-  {
-    "name": "Graphite",
-    "url": "https://www.graphite.dev/",
-    "tags": ["dev tools"],
-    "slug": "graphite"
-  },
-  {
     "name": "Retool",
     "url": "https://retool.com/",
     "tags": ["🦄", "dev tools"],
     "slug": "retool"
-  },
-  {
-    "name": "Tito",
-    "url": "https://ti.to/",
-    "tags": ["saas"],
-    "slug": "tito"
   },
   {
     "name": "Zed",
@@ -286,18 +64,6 @@
     "url": "https://planetscale.com/",
     "tags": ["dev tools"],
     "slug": "planetscale"
-  },
-  {
-    "name": "Railway",
-    "url": "https://railway.app/",
-    "tags": ["dev tools"],
-    "slug": "railway"
-  },
-  {
-    "name": "Replicated",
-    "url": "https://www.replicated.com/",
-    "tags": ["dev tools"],
-    "slug": "replicated"
   },
   {
     "name": "StackBlitz",

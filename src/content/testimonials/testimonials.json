@@ -1,13 +1,33 @@
 [
   {
-    "name": "Paul Copplestone",
-    "title": "CEO and Cofounder",
-    "company": "Supabase",
-    "quote": "They trust us to get things done, giving us space to lead while keeping it honest and straightforward.",
-    "url": "https://www.supabase.com",
-    "tags": ["technology", "innovation"],
-    "slug": "testimonial-paul-copplestone",
-    "company-slug": "supabase"
+    "name": "Pedro Piñera Buendía",
+    "title": "Co-founder of Tuist",
+    "company": "Tuist",
+    "quote": "I found PWV to be one of the rare funds that took the time to deeply understand our market and strategy. Their team’s extensive experience in crafting exceptional products, fostering vibrant communities, and scaling successful businesses shines through in the unwavering passion they bring to supporting founders like me.",
+    "url": "https://www.tuist.dev/",
+    "tags": ["ai", "generative ai"],
+    "slug": "testimonial-pedro-pinera-buendia",
+    "company-slug": "tuist"
+  },
+  {
+    "name": "Matt Perrott",
+    "title": "CEO & Co-founder of BuildPass",
+    "company": "BuildPass",
+    "quote": "The PWV team has been super supportive on our journey. Always happy to help with advice, feedback, and intros, but never getting in the way and letting us run our race.",
+    "url": "https://www.buildpass.ai/",
+    "tags": ["ai", "generative ai"],
+    "slug": "testimonial-matt-perrott",
+    "company-slug": "buildpass"
+  },
+  {
+    "name": "Ralf Schonherr, PhD",
+    "title": "CEO & Co-founder",
+    "company": "Myriad",
+    "quote": "PWV is the fund you want on your cap table in the early days. They ask the right questions, help solve the hard challenges, and their support has been incredibly effective in setting us up for long-term success. The community they’ve built is a real unfair advantage—nothing I’ve found anywhere else.",
+    "url": "https://www.myriad.company/",
+    "tags": ["ai", "compliance"],
+    "slug": "testimonial-ralf-schonherr",
+    "company-slug": "myriad-ai"
   },
   {
     "name": "Dan Farrelly",
@@ -30,16 +50,6 @@
     "company-slug": "val-town"
   },
   {
-    "name": "Gorkem Yurtseven",
-    "title": "Cofounder",
-    "company": "fal",
-    "quote": "These guys are my favorites.",
-    "url": "https://www.fal.ai",
-    "tags": ["ai", "generative ai"],
-    "slug": "testimonial-gorkem-yurtseven",
-    "company-slug": "fal"
-  },
-  {
     "name": "Ahmad Awais",
     "title": "CEO and Founder",
     "company": "Langbase",
@@ -48,15 +58,5 @@
     "tags": ["ai", "generative ai"],
     "slug": "testimonial-ahmad-awais",
     "company-slug": "langbase"
-  },
-  {
-    "name": "Ralf Schonherr, PhD",
-    "title": "CEO & Co-founder",
-    "company": "Myriad",
-    "quote": "PWV is the fund you want on your cap table in the early days. They ask the right questions, help solve the hard challenges, and their support has been incredibly effective in setting us up for long-term success. The community they’ve built is a real unfair advantage—nothing I’ve found anywhere else.",
-    "url": "https://www.myriad.company/",
-    "tags": ["ai", "compliance"],
-    "slug": "testimonial-ralf-schonherr",
-    "company-slug": "myriad-ai"
   }
 ]

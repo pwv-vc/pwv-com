@@ -41,8 +41,8 @@ const borderColor = isFeatured
   ? 'border-pwv-light-teal'
   : 'border-pwv-light-green';
 const buttonColor = isFeatured
-  ? 'bg-pwv-teal text-pwv-light-teal'
-  : 'bg-pwv-green text-pwv-light-green';
+  ? 'bg-pwv-black text-pwv-white'
+  : 'bg-pwv-black text-pwv-white';
 
 // Extract site name from URL for remote content
 const getSiteName = (url: string) => {
@@ -73,7 +73,6 @@ const getSiteName = (url: string) => {
               shadow={false}
               class="full"
               loading="lazy"
-              imageFilter="monochrome"
             />
           ) : (
             <div class="flex h-full items-center justify-center">
@@ -160,6 +159,7 @@ const getSiteName = (url: string) => {
       >
         {post.data.title}
       </h2>
+
       {
         post.data.tags && post.data.tags.length > 0 && (
           <div class={`flex flex-wrap gap-1 ${isSmall ? 'mb-2' : 'mb-3'}`}>
@@ -190,7 +190,7 @@ const getSiteName = (url: string) => {
           href={post.data.url || `/library/${post.id}`}
           target={isRemote ? '_blank' : undefined}
           rel={isRemote ? 'noopener noreferrer' : undefined}
-          class={`inline-flex items-center gap-2 ${buttonSize} ${buttonColor} rounded-lg w-fit`}
+          class={`inline-flex items-center gap-2 ${buttonSize} ${buttonColor} font-mono rounded-lg w-fit`}
         >
           {
             isRemote ? (
