@@ -1,0 +1,26 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Heading1 from '../../components/Heading1.astro';
+import Heading2 from '../../components/Heading2.astro';
+import HowWeInvest from '../../components/HowWeInvest.astro';
+import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
+import Team from '../../components/Team.astro';
+import Heading1NoUnderline from '../../components/Heading1NoUnderline.astro';
+---
+
+<Layout title="About">
+  <section class="mx-auto">
+    <Heading1NoUnderline
+      >PWV is the fund we wanted as early-stage founders.</Heading1NoUnderline
+    >
+
+    <Heading2NoUnderline>
+      We believe in founder-first values, and have a track record of backing
+      category-defining companies from zero to breakout.
+    </Heading2NoUnderline>
+
+    <p class="text-lg">We’ve shipped, scaled, and exited ... on repeat.</p>
+  </section>
+  <HowWeInvest />
+  <Team />
+</Layout>

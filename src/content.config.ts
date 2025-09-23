@@ -67,6 +67,20 @@ const testimonials = defineCollection({
   }),
 });
 
+const team = defineCollection({
+  loader: glob({ base: './src/content/team', pattern: '**/*.json' }),
+  schema: z.object({
+    name: z.string(),
+    title: z.string(),
+    bio: z.string(),
+    hoverLine: z.string(),
+    isGeneralPartner: z.boolean().optional().default(false),
+    slug: z.string(),
+    position: z.number(),
+    section: z.string(),
+  }),
+});
+
 const posts = defineCollection({
   // Load Markdown and MDX files in the `src/content/library/` directory.
   loader: glob({ base: './src/content/posts', pattern: '**/*.{md,mdx}' }),
@@ -98,5 +112,6 @@ export const collections = {
   rollingFundPortfolio,
   angelPortfolio,
   testimonials,
+  team,
   posts,
 };

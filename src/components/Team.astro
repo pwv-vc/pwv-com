@@ -1,0 +1,71 @@
+---
+import Heading2 from './Heading2.astro';
+import Heading2NoUnderline from './Heading2NoUnderline.astro';
+import TeamMember from './TeamMember.astro';
+import { getCollection } from 'astro:content';
+
+const teamMembers = await getCollection('team' as any);
+
+interface TeamMemberData {
+  name: string;
+  title: string;
+  bio: string;
+  hoverLine: string;
+  isGeneralPartner?: boolean;
+  slug: string;
+  position: number;
+  section: string;
+}
+
+// Group team members by section
+const sections = (teamMembers as any[]).reduce(
+  (acc: Record<string, TeamMemberData[]>, member: any) => {
+    const section = member.data.section;
+    if (!acc[section]) {
+      acc[section] = [];
+    }
+    acc[section].push(member.data);
+    return acc;
+  },
+  {}
+);
+
+// Sort sections and members within sections
+const sortedSections = Object.entries(sections)
+  .map(([title, members]) => ({
+    title,
+    members: members.sort((a, b) => a.position - b.position),
+  }))
+  .sort((a, b) => {
+    // General Partners first, then Platform
+    const order = { 'General Partners': 0, Platform: 1 };
+    return (
+      (order[a.title as keyof typeof order] ?? 999) -
+      (order[b.title as keyof typeof order] ?? 999)
+    );
+  });
+---
+
+<Heading2>Team</Heading2>
+
+<div class="space-y-12">
+  {
+    sortedSections.map((section) => (
+      <section>
+        <Heading2NoUnderline>{section.title}</Heading2NoUnderline>
+        <div class="mt-6 space-y-8">
+          {section.members.map((member) => (
+            <TeamMember
+              name={member.name}
+              title={member.title}
+              bio={member.bio}
+              hoverLine={member.hoverLine}
+              isGeneralPartner={member.isGeneralPartner}
+              slug={member.slug}
+            />
+          ))}
+        </div>
+      </section>
+    ))
+  }
+</div>

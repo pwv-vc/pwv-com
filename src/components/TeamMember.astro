@@ -1,0 +1,46 @@
+---
+export interface Props {
+  name: string;
+  title: string;
+  bio: string;
+  hoverLine: string;
+  isGeneralPartner?: boolean;
+  slug: string;
+}
+
+const {
+  name,
+  title,
+  bio,
+  hoverLine,
+  isGeneralPartner = false,
+  slug,
+} = Astro.props;
+---
+
+<div class="group relative">
+  <div class="space-y-2">
+    <h3
+      class="group-hover:text-pwv-green text-lg font-semibold text-gray-900 transition-colors"
+    >
+      {name}
+    </h3>
+    <p class="text-sm font-medium text-gray-600">
+      {title}
+    </p>
+    <p class="leading-relaxed text-gray-700">
+      {bio}
+    </p>
+  </div>
+
+  <!-- Hover tooltip -->
+  <div
+    class="pointer-events-none absolute bottom-full left-0 z-10 mb-2 max-w-xs rounded-lg bg-gray-900 px-3 py-2 text-sm text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+  >
+    {hoverLine}
+    <div
+      class="absolute top-full left-4 h-0 w-0 border-t-4 border-r-4 border-l-4 border-transparent border-t-gray-900"
+    >
+    </div>
+  </div>
+</div>
