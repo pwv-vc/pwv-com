@@ -73,3 +73,8 @@ h6 {
 .filter-primary {
   filter: sepia(1) hue-rotate(120deg) saturate(1.2);
 }
+
+/* 🔗 PWV link utility class */
+.pwv-link {
+  @apply hover:decoration-pwv-green text-pwv-black hover:underline hover:decoration-3 hover:underline-offset-8;
+}

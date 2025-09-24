@@ -190,7 +190,7 @@ const getSiteName = (url: string) => {
           href={post.data.url || `/news/${post.id}`}
           target={isRemote ? '_blank' : undefined}
           rel={isRemote ? 'noopener noreferrer' : undefined}
-          class={`inline-flex items-center gap-2 ${buttonSize} ${buttonColor} font-mono rounded-lg w-fit`}
+          class={`btn inline-flex items-center gap-2 ${buttonSize} ${buttonColor} font-mono rounded-lg w-fit`}
         >
           {
             isRemote ? (
