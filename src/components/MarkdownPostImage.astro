@@ -43,11 +43,11 @@ const baseClasses = [
 
 let resolvedSrc: string;
 if (path) {
-  const images = import.meta.glob('../images/library/**/*', {
+  const images = import.meta.glob('../images/posts/**/*', {
     eager: true,
     import: 'default',
   }) as Record<string, any>;
-  const key = `../images/library/${path}`;
+  const key = `../images/posts/${path}`;
   const found = images[key];
   resolvedSrc = typeof found === 'string' ? found : (found?.src ?? found);
 } else {

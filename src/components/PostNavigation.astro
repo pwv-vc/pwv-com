@@ -2,9 +2,9 @@
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
-  currentPost: CollectionEntry<'library'>;
-  nextPost?: CollectionEntry<'library'>;
-  previousPost?: CollectionEntry<'library'>;
+  currentPost: CollectionEntry<'posts'>;
+  nextPost?: CollectionEntry<'posts'>;
+  previousPost?: CollectionEntry<'posts'>;
 }
 
 const { currentPost, nextPost, previousPost } = Astro.props;
@@ -16,7 +16,7 @@ const { currentPost, nextPost, previousPost } = Astro.props;
     {
       previousPost ? (
         <a
-          href={`/library/${previousPost.id}`}
+          href={`/news/${previousPost.id}`}
           class="group border-default hover:border-strong flex min-w-0 items-center rounded-lg border p-4 transition-all duration-200 hover:shadow-sm"
         >
           <div class="mr-3 flex-shrink-0">
@@ -72,9 +72,9 @@ const { currentPost, nextPost, previousPost } = Astro.props;
       )
     }
 
-    <!-- Back to Library -->
+    <!-- Back to News -->
     <a
-      href="/library"
+      href="/news"
       class="group border-default hover:border-strong flex flex-col items-center justify-center rounded-lg border p-4 transition-all duration-200 hover:shadow-sm"
     >
       <p class="text-subtle mb-1 text-xs tracking-wide uppercase">Back</p>
@@ -87,7 +87,7 @@ const { currentPost, nextPost, previousPost } = Astro.props;
     {
       nextPost ? (
         <a
-          href={`/library/${nextPost.id}`}
+          href={`/news/${nextPost.id}`}
           class="group border-default hover:border-strong flex min-w-0 items-center rounded-lg border p-4 transition-all duration-200 hover:shadow-sm"
         >
           <div class="min-w-0 flex-1 text-right">

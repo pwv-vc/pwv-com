@@ -187,7 +187,7 @@ const getSiteName = (url: string) => {
       </p>
       <div class="mt-auto text-center">
         <a
-          href={post.data.url || `/library/${post.id}`}
+          href={post.data.url || `/news/${post.id}`}
           target={isRemote ? '_blank' : undefined}
           rel={isRemote ? 'noopener noreferrer' : undefined}
           class={`inline-flex items-center gap-2 ${buttonSize} ${buttonColor} font-mono rounded-lg w-fit`}
