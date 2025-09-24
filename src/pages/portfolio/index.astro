@@ -2,6 +2,77 @@
 import Layout from '../../layouts/Layout.astro';
 import Heading1 from '../../components/Heading1.astro';
 import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
+import PortfolioCompanyCard from '../../components/PortfolioCompanyCard.astro';
+import { getCollection } from 'astro:content';
+
+// Load all three collections
+const [rolling, angel, fund1] = await Promise.all([
+  getCollection('rollingFundPortfolio'),
+  getCollection('angelPortfolio'),
+  getCollection('fundOnePortfolio'),
+]);
+
+// Merge and dedupe by slug
+const mergedMap = new Map<string, any>();
+for (const entry of [...rolling, ...angel, ...fund1]) {
+  mergedMap.set(entry.data.slug, entry);
+}
+const companies = Array.from(mergedMap.values()).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name)
+);
+
+// Collect available tags (lowercased for consistency)
+const allTags = Array.from(
+  new Set(
+    companies.flatMap((c) =>
+      (c.data.tags || []).map((t: string) => t.toLowerCase())
+    )
+  )
+).sort();
+
+// Ensure unicorn appears first in the pills order
+const orderedTags = allTags.includes('🦄')
+  ? ['🦄', ...allTags.filter((t) => t !== '🦄')]
+  : allTags;
+
+// Read selected tags from query (?tags=ai,dev%20tools)
+const url = new URL(Astro.request.url);
+const tagsParam = url.searchParams.get('tags') || '';
+const selectedTags = tagsParam
+  .split(',')
+  .map((t) => t.trim().toLowerCase())
+  .filter(Boolean);
+
+const hasSelected = selectedTags.length > 0;
+
+// Filter companies: show items that include all selected tags
+const filteredCompanies = hasSelected
+  ? companies.filter((c) => {
+      const companyTags = (c.data.tags || []).map((t: string) =>
+        t.toLowerCase()
+      );
+      // OR logic: include company if it has ANY of the selected tags
+      return selectedTags.some((t) => companyTags.includes(t));
+    })
+  : companies;
+
+// Helpers to build URLs with added/removed tags
+const buildUrlWithTags = (tags: string[]) => {
+  const u = new URL(url);
+  if (tags.length === 0) {
+    u.searchParams.delete('tags');
+  } else {
+    u.searchParams.set('tags', tags.join(','));
+  }
+  return u.pathname + (u.search ? u.search : '');
+};
+const isSelected = (tag: string) => selectedTags.includes(tag);
+const toggleTagHref = (tag: string) => {
+  const next = isSelected(tag)
+    ? selectedTags.filter((t) => t !== tag)
+    : [...selectedTags, tag];
+  return buildUrlWithTags(next);
+};
 ---
 
 <Layout title="Portfolio">
@@ -10,5 +81,51 @@ import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
     <Heading2NoUnderline
       >Backing founders from seed to scale.</Heading2NoUnderline
     >
+    {
+      allTags.length > 0 && (
+        <div class="mt-6 flex flex-wrap gap-2">
+          {orderedTags.map((tag) => (
+            <a
+              href={toggleTagHref(tag)}
+              class={`rounded-full border px-3 py-1 text-sm transition-colors ${
+                isSelected(tag)
+                  ? 'bg-pwv-white text-body border-pwv-black'
+                  : 'bg-surface text-pwv-black border-pwv-gray hover:bg-pwv-gray-hover'
+              }`}
+            >
+              {tag}
+            </a>
+          ))}
+          {hasSelected && (
+            <a
+              href={buildUrlWithTags([])}
+              class="bg-surface text-pwv-black border-pwv-gray hover:bg-pwv-gray-hover rounded-full border px-3 py-1 text-sm"
+            >
+              clear
+            </a>
+          )}
+        </div>
+      )
+    }
+
+    <div class="mt-8 grid grid-cols-2 gap-6 md:grid-cols-3 xl:grid-cols-3">
+      {
+        filteredCompanies.map((company) => (
+          <PortfolioCompanyCard
+            name={company.data.name}
+            url={company.data.url}
+            tags={company.data.tags}
+            slug={company.data.slug}
+            showTags={true}
+          />
+        ))
+      }
+    </div>
+
+    <p class="text-pwv-black my-8 text-sm">
+      The above list is a non-exhaustive representation of the complete,
+      separate investments from PWV Fund I, the PWV Rolling Fund, and earlier
+      investments by Tom Preston-Werner.
+    </p>
   </section>
 </Layout>

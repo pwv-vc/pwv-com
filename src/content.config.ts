@@ -47,6 +47,11 @@ const rollingFundPortfolio = defineCollection({
   schema: portfolioSchema,
 });
 
+const fundOnePortfolio = defineCollection({
+  loader: file('src/content/portfolio/fund-1.json'),
+  schema: portfolioSchema,
+});
+
 const angelPortfolio = defineCollection({
   loader: file('src/content/portfolio/angel.json'),
   schema: portfolioSchema,
@@ -110,6 +115,7 @@ const posts = defineCollection({
 export const collections = {
   representativePortfolio,
   rollingFundPortfolio,
+  fundOnePortfolio,
   angelPortfolio,
   testimonials,
   team,

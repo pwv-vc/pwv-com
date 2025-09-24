@@ -9,7 +9,7 @@
     "name": "Cursor",
     "slug": "cursor",
     "url": "https://www.cursor.com/",
-    "tags": ["ai", "dev tools"]
+    "tags": ["🦄", "ai", "dev tools"]
   },
   {
     "name": "Atuin",
@@ -21,7 +21,7 @@
     "name": "fal",
     "slug": "fal",
     "url": "https://www.fal.ai/",
-    "tags": ["ai", "dev tools"]
+    "tags": ["🦄", "ai", "dev tools"]
   },
   {
     "name": "Elicit",
@@ -45,7 +45,7 @@
     "name": "Liquid AI",
     "slug": "liquid-ai",
     "url": "https://www.liquid.ai",
-    "tags": ["ai"]
+    "tags": ["🦄", "ai"]
   },
   {
     "name": "Zoo",
@@ -81,7 +81,7 @@
     "name": "Aalo Atomics",
     "slug": "aalo-atomics",
     "url": "https://www.aalo.com",
-    "tags": ["hardware", "energy"]
+    "tags": ["🦄", "hardware", "energy"]
   },
   {
     "name": "Cleanlab",

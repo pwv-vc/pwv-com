@@ -78,3 +78,7 @@ h6 {
 .pwv-link {
   @apply hover:decoration-pwv-green text-pwv-black hover:underline hover:decoration-3 hover:underline-offset-8;
 }
+
+.pwv-link-underline {
+  @apply text-pwv-black decoration-pwv-green underline decoration-3 underline-offset-8;
+}
