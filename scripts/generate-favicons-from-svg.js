@@ -29,11 +29,11 @@ const run = async () => {
   try {
     console.log(`Generating favicons from: ${srcSvg}`);
 
-    // Read the SVG and add a white background rectangle
+    // Read the SVG and add a PWV green background rectangle
     const originalSvgContent = readFileSync(srcSvg, 'utf8');
     const svgWithBackground = originalSvgContent.replace(
       '<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">',
-      '<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="180" height="180" fill="white"/>'
+      '<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="180" height="180" fill="#00d22e"/>'
     );
 
     for (const t of targets) {
@@ -41,7 +41,7 @@ const run = async () => {
       await sharp(Buffer.from(svgWithBackground))
         .resize(t.size, t.size, {
           fit: 'contain',
-          background: { r: 255, g: 255, b: 255, alpha: 1 },
+          background: { r: 0, g: 210, b: 46, alpha: 1 }, // #00d22e
           kernel: sharp.kernel.lanczos3,
         })
         .png({ compressionLevel: 9 })
