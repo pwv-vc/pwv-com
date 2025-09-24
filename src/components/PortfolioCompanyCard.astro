@@ -74,10 +74,13 @@ const getTagStyle = (tag: string) => {
         {tags.map((tag) => {
           const styles = getTagStyle(tag);
           return (
-            <span class={styles.container}>
+            <a
+              href={`/portfolio?tags=${encodeURIComponent(tag.toLowerCase())}`}
+              class={styles.container}
+            >
               <span class={styles.dot} />
               {tag.toLowerCase()}
-            </span>
+            </a>
           );
         })}
       </div>
