@@ -7,6 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "netlify:dev": "pnpm exec netlify dev",
     "export-favicon": "node scripts/export-favicon-png.js",
     "downscale-favicon": "node scripts/downscale-favicon.js",
     "generate-favicons": "node scripts/generate-favicons.js",
@@ -40,6 +41,7 @@
   "devDependencies": {
     "@types/node": "^22.13.8",
     "jsdom": "^25.0.1",
+    "netlify-cli": "^23.7.2",
     "prettier": "^3.5.2",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.11"
