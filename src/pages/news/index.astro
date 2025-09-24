@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Heading1 from '../../components/Heading1.astro';
-
+import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
 import {
   getPaginatedPosts,
   getExternalPosts,
@@ -21,6 +21,14 @@ const activeFilter: 'all' | 'community' | 'pwv' = ['community', 'pwv'].includes(
 )
   ? (filter as 'community' | 'pwv')
   : 'all';
+
+// Derive heading based on active filter
+const postsHeading =
+  activeFilter === 'pwv'
+    ? 'PWV Posts'
+    : activeFilter === 'community'
+      ? 'Community Posts'
+      : 'All Posts';
 
 // Get paginated posts
 const pageSize = 12;
@@ -53,6 +61,7 @@ const description =
 
     {activeFilter === 'all' && <FeaturedPosts />}
 
+    <Heading2NoUnderline>{postsHeading}</Heading2NoUnderline>
     <PostsGrid posts={posts} size="large" />
 
     <Pagination
