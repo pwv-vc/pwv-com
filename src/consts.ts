@@ -1,3 +1,4 @@
+export const SITE_NAME = 'PWV';
 export const SITE_TITLE =
   'PWV is an early-stage investment team with deep technical fluency, founder-first values, and a track record of backing category-defining companies from zero to breakout';
 export const SITE_DESCRIPTION =

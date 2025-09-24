@@ -8,7 +8,7 @@ import '@fontsource/dm-mono/400.css';
 import '@fontsource/dm-mono/500.css';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, SITE_IMAGE } from '../consts';
+import { SITE_NAME, SITE_TITLE, SITE_DESCRIPTION, SITE_IMAGE } from '../consts';
 
 // Define props interface
 export interface Props {
@@ -88,7 +88,7 @@ const isProduction = process.env.CONTEXT === 'production';
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Primary Meta Tags -->
-    <title>{title}</title>
+    <title>{`${SITE_NAME} - ${title}`}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
