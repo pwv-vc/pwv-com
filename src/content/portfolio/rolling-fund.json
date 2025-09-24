@@ -3,7 +3,7 @@
     "name": "Astranis",
     "slug": "astranis",
     "url": "https://www.astranis.com/",
-    "tags": ["hardware", "aerospace"]
+    "tags": ["🦄", "hardware", "aerospace"]
   },
   {
     "name": "Cursor",
@@ -141,7 +141,7 @@
     "name": "Poolside",
     "slug": "poolside",
     "url": "https://www.poolside.ai/",
-    "tags": ["ai"]
+    "tags": ["🦄", "ai"]
   },
   {
     "name": "Turso",
@@ -159,7 +159,7 @@
     "name": "CFS",
     "slug": "commonwealth-fusion-systems",
     "url": "https://cfs.energy/",
-    "tags": ["energy"]
+    "tags": ["🦄", "energy"]
   },
   {
     "name": "StackOne",
