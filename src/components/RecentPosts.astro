@@ -1,17 +1,17 @@
 ---
 import { getRecentPosts } from '../lib/news';
 import PostsGrid from './PostsGrid.astro';
-import UnderlineDecoration from './UnderlineDecoration.astro';
 
 const recentPosts = await getRecentPosts(3);
 ---
 
 <section class="mx-auto">
-  <div class="relative mb-8">
-    <h2 class="text-primary my-4 font-serif text-2xl font-bold lg:text-3xl">
+  <div class="mb-8">
+    <h2
+      class="text-primary after:bg-pwv-green relative my-4 font-serif text-2xl font-bold after:absolute after:-bottom-4 after:left-0 after:h-1 after:w-[72px] after:content-[''] lg:text-3xl"
+    >
       News
     </h2>
-    <UnderlineDecoration />
   </div>
 
   <div class="mt-12 mb-6">

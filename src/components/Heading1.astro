@@ -1,8 +1,5 @@
----
-import UnderlineDecoration from './UnderlineDecoration.astro';
----
-
-<h1 class="relative mb-12 text-3xl font-medium lg:text-4xl">
+<h1
+  class="after:bg-pwv-green relative mb-12 text-3xl font-medium after:absolute after:-bottom-4 after:left-0 after:h-1 after:w-[100px] after:content-[''] lg:text-4xl"
+>
   <slot />
-  <UnderlineDecoration />
 </h1>

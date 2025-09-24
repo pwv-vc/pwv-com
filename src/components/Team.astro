@@ -1,6 +1,6 @@
 ---
 import Heading2 from './Heading2.astro';
-import Heading2NoUnderline from './Heading2NoUnderline.astro';
+import Heading3NoUnderline from './Heading3NoUnderline.astro';
 import TeamMember from './TeamMember.astro';
 import { getCollection } from 'astro:content';
 
@@ -47,12 +47,13 @@ const sortedSections = Object.entries(sections)
 ---
 
 <Heading2>Team</Heading2>
+<p class="mt-4 text-lg">We’ve shipped, scaled, and exited ... on repeat.</p>
 
 <div class="space-y-12">
   {
     sortedSections.map((section) => (
-      <section>
-        <Heading2NoUnderline>{section.title}</Heading2NoUnderline>
+      <section class="space-y-4">
+        <Heading3NoUnderline>{section.title}</Heading3NoUnderline>
         <div class="mt-6 space-y-8">
           {section.members.map((member) => (
             <TeamMember
@@ -62,6 +63,7 @@ const sortedSections = Object.entries(sections)
               hoverLine={member.hoverLine}
               isGeneralPartner={member.isGeneralPartner}
               slug={member.slug}
+              showHover={false}
             />
           ))}
         </div>
