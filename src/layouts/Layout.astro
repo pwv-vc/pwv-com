@@ -29,6 +29,7 @@ export interface Props {
   imageAlt?: string;
   twitterSite?: string; // e.g. @pwv
   locale?: string; // e.g. en_US
+  redirectAfter?: number; // seconds to redirect after, 0 or undefined = no redirect
 }
 
 const {
@@ -43,6 +44,7 @@ const {
   imageAlt,
   twitterSite = '@PWVentures',
   locale = 'en_US',
+  redirectAfter,
 } = Astro.props;
 
 const isProduction = process.env.CONTEXT === 'production';
@@ -93,6 +95,13 @@ if (image) {
     />
     <meta name="theme-color" content="#ffffff" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Auto redirect if specified -->
+    {
+      redirectAfter && redirectAfter > 0 && (
+        <meta http-equiv="refresh" content={`${redirectAfter}; url=/`} />
+      )
+    }
 
     <!-- Font preloads -->
 
