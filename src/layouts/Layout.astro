@@ -39,7 +39,13 @@ const {
   locale = 'en_US',
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const isProduction = process.env.CONTEXT === 'production';
+// Use Netlify deploy preview URL for canonical URL when not in production
+const baseURL = isProduction
+  ? Astro.site
+  : process.env.DEPLOY_PRIME_URL || Astro.site;
+const canonicalURL = new URL(Astro.url.pathname, baseURL);
+
 // Use relative paths for static assets so they work in deploy previews
 const faviconURL = '/favicon.png';
 const favicon16URL = '/favicon-16x16.png';
@@ -60,7 +66,6 @@ if (image) {
   });
   optimizedImageURL = new URL(optimizedImage.src, Astro.url);
 }
-const isProduction = process.env.CONTEXT === 'production';
 ---
 
 <!doctype html>
