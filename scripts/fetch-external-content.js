@@ -25,8 +25,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Configuration
-const CONTENT_DIR = path.join(__dirname, '../src/content/library');
-const IMAGES_DIR = path.join(__dirname, '../src/images/library');
+const CONTENT_DIR = path.join(__dirname, '../src/content/posts');
+const IMAGES_DIR = path.join(__dirname, '../src/images/posts');
 
 // Available FAL AI Models
 const PROMPT_GENERATION_MODELS = [
@@ -651,9 +651,9 @@ async function generateOGImage(
 }
 
 /**
- * Main function to fetch and create library post
+ * Main function to fetch and create post
  */
-async function createLibraryPost(url, models) {
+async function createPost(url, models) {
   try {
     console.log(`Fetching content from: ${url}`);
 
@@ -800,7 +800,7 @@ ${aiGeneratedImage ? 'aiGeneratedImage: true' : ''}
 
     // Write markdown file
     await fs.writeFile(filePath, markdownContent, 'utf8');
-    console.log(`Library post created: ${filePath}`);
+    console.log(`Post created: ${filePath}`);
 
     return {
       success: true,
@@ -808,7 +808,7 @@ ${aiGeneratedImage ? 'aiGeneratedImage: true' : ''}
       metadata,
     };
   } catch (error) {
-    console.error(`Error creating library post: ${error.message}`);
+    console.error(`Error creating post: ${error.message}`);
     return {
       success: false,
       error: error.message,
@@ -872,10 +872,10 @@ async function main() {
       models = await selectModels();
     }
 
-    const result = await createLibraryPost(url, models);
+    const result = await createPost(url, models);
 
     if (result.success) {
-      console.log('\n✅ Successfully created library post!');
+      console.log('\n✅ Successfully created post!');
       console.log(`📄 File: ${result.filePath}`);
       console.log(`📝 Title: ${result.metadata.title}`);
       console.log(`👤 Author: ${result.metadata.author}`);
@@ -884,7 +884,7 @@ async function main() {
       console.log(`   📝 Prompt: ${models.promptModel}`);
       console.log(`   🎨 Image: ${models.imageModel}`);
     } else {
-      console.error('\n❌ Failed to create library post');
+      console.error('\n❌ Failed to create post');
       console.error(`Error: ${result.error}`);
       process.exit(1);
     }
