@@ -71,7 +71,7 @@ if (image) {
     height: 630, // Recommended OG image height
     // format unspecified will use webp, avif, or original format
   });
-  optimizedImageURL = new URL(optimizedImage.src, Astro.url);
+  optimizedImageURL = new URL(optimizedImage.src, canonicalURL);
 }
 ---
 
