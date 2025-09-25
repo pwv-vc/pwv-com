@@ -48,7 +48,8 @@ const {
 const isDeployPreview = process.env.CONTEXT === 'deploy-preview';
 // Use Netlify deploy preview URL for canonical URL when not in production
 const baseURL = isDeployPreview
-  ? process.env.DEPLOY_PRIME_URL || Astro.site ? Astro.site;
+  ? process.env.DEPLOY_PRIME_URL || Astro.site
+  : Astro.site;
 const canonicalURL = new URL(Astro.url.pathname, baseURL);
 
 // Use relative paths for static assets so they work in deploy previews
