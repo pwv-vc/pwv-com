@@ -15,6 +15,7 @@ import {
   SITE_IMAGE,
   KEYWORDS,
 } from '../consts';
+import { generateContentUTM, generateSocialUTM, addUTMToURL } from '../lib/utm';
 
 // Define props interface
 export interface Props {
@@ -30,6 +31,9 @@ export interface Props {
   twitterSite?: string; // e.g. @pwv
   locale?: string; // e.g. en_US
   redirectAfter?: number; // seconds to redirect after, 0 or undefined = no redirect
+  enableUTMTracking?: boolean; // enable UTM tracking for social sharing
+  contentType?: 'post' | 'portfolio' | 'about' | 'apply'; // content type for UTM tracking
+  contentSlug?: string; // content slug for UTM tracking
 }
 
 const {
@@ -45,6 +49,9 @@ const {
   twitterSite = '@PWVentures',
   locale = 'en_US',
   redirectAfter,
+  enableUTMTracking = true,
+  contentType,
+  contentSlug,
 } = Astro.props;
 
 const isProduction = process.env.CONTEXT === 'production';
@@ -54,6 +61,32 @@ const baseURL = isDeployPreview
   ? process.env.DEPLOY_PRIME_URL || Astro.site
   : Astro.site;
 const canonicalURL = new URL(Astro.url.pathname, baseURL);
+
+// Generate UTM-tracked URLs for social sharing if enabled
+let socialSharingURL = canonicalURL.toString();
+let twitterSharingURL = canonicalURL.toString();
+let ogSharingURL = canonicalURL.toString();
+
+if (enableUTMTracking && contentType) {
+  // Generate platform-specific UTM parameters
+  const contentUTMParams = generateContentUTM(contentType, contentSlug);
+  const twitterUTMParams = generateSocialUTM(
+    'twitter',
+    contentSlug || 'twitter_share'
+  );
+  const generalUTMParams = generateSocialUTM(
+    'general',
+    contentSlug || 'general_share'
+  );
+
+  // Apply UTM parameters to URLs
+  socialSharingURL = addUTMToURL(canonicalURL.toString(), contentUTMParams);
+  twitterSharingURL = addUTMToURL(canonicalURL.toString(), twitterUTMParams);
+  ogSharingURL = addUTMToURL(canonicalURL.toString(), generalUTMParams);
+}
+
+// Make socialSharingURL available to child components via Astro.locals
+Astro.locals.socialSharingURL = socialSharingURL;
 
 // Use relative paths for static assets so they work in deploy previews
 const faviconURL = '/favicon.png';
@@ -120,7 +153,7 @@ if (image) {
     />
 
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:url" content={ogSharingURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:site_name" content={SITE_TITLE} />
@@ -159,7 +192,7 @@ if (image) {
     {tags && tags.map((tag) => <meta property="article:tag" content={tag} />)}
 
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:url" content={twitterSharingURL} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     {twitterSite && <meta name="twitter:site" content={twitterSite} />}
