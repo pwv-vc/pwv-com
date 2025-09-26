@@ -1,13 +1,25 @@
 import { getCollection } from 'astro:content';
+import { contentCache, cached } from './cache';
 
 /**
  * Get all posts sorted by publication date (newest first)
+ * Uses advanced caching to improve performance
  */
-export async function getAllPosts() {
-  const library = await getCollection('posts');
-  return library.sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-  );
+export const getAllPosts = cached(
+  async () => {
+    const library = await getCollection('posts');
+    return library.sort(
+      (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+    );
+  },
+  () => 'all-posts'
+);
+
+/**
+ * Clear the posts cache (useful for development or when content changes)
+ */
+export function clearPostsCache() {
+  contentCache.delete('all-posts');
 }
 
 /**
@@ -32,11 +44,11 @@ export function getReadingTime(content: string | undefined): number {
 }
 
 /**
- * Get a single library post by slug
+ * Get a single  post by slug
  * @param slug - The slug of the post to retrieve
- * @returns The library post or undefined if not found
+ * @returns The  post or undefined if not found
  */
-export async function getLPostBySlug(slug: string) {
+export async function getPostBySlug(slug: string) {
   const allPosts = await getAllPosts();
   return allPosts.find((post) => post.id === slug);
 }
@@ -70,28 +82,37 @@ export async function getPostNavigation(currentSlug: string) {
  * Get external library posts (posts with a URL field)
  * @returns Array of external library posts sorted by publication date (newest first)
  */
-export async function getExternalPosts() {
-  const allPosts = await getAllPosts();
-  return allPosts.filter((post) => post.data.url);
-}
+export const getExternalPosts = cached(
+  async () => {
+    const allPosts = await getAllPosts();
+    return allPosts.filter((post) => post.data.url);
+  },
+  () => 'external-posts'
+);
 
 /**
  * Get non-external library posts (posts without a URL field)
  * @returns Array of non-external library posts sorted by publication date (newest first)
  */
-export async function getNonExternalPosts() {
-  const allPosts = await getAllPosts();
-  return allPosts.filter((post) => !post.data.url);
-}
+export const getNonExternalPosts = cached(
+  async () => {
+    const allPosts = await getAllPosts();
+    return allPosts.filter((post) => !post.data.url);
+  },
+  () => 'non-external-posts'
+);
 
 /**
  * Get featured library posts (posts with featured: true)
  * @returns Array of featured library posts sorted by publication date (newest first)
  */
-export async function getFeaturedPosts() {
-  const allPosts = await getAllPosts();
-  return allPosts.filter((post) => post.data.featured === true);
-}
+export const getFeaturedPosts = cached(
+  async () => {
+    const allPosts = await getAllPosts();
+    return allPosts.filter((post) => post.data.featured === true);
+  },
+  () => 'featured-posts'
+);
 
 /**
  * Get paginated library posts
