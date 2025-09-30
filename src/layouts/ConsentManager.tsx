@@ -28,8 +28,6 @@ const c15tOptions: ConsentManagerOptions = {
   },
 };
 
-console.log('c15tOptions', c15tOptions);
-
 /**
  * PWV-branded theme for both CookieBanner and ConsentManagerDialog using DM Mono font and PWV colors
  */
