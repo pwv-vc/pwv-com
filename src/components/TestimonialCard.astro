@@ -1,6 +1,6 @@
 ---
 import { Image as UnpicImage } from '@unpic/astro';
-
+import { resolveImageSrc } from '../lib/images';
 export interface Props {
   name: string;
   title: string;
@@ -24,7 +24,7 @@ const { name, title, company, quote, url, avatarUrl, companySlug } =
       {
         avatarUrl ? (
           <UnpicImage
-            src={`/src/images/${avatarUrl}`}
+            src={`${resolveImageSrc(avatarUrl)}`}
             alt={name}
             width={64}
             height={64}
