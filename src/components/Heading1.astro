@@ -1,22 +1,5 @@
----
-// Define props interface for custom underline width
-export interface Props {
-  underlineWidth?: string; // e.g., "100px", "150px", "200px"
-}
-
-const { underlineWidth = '100px' } = Astro.props;
----
-
 <h1
-  class="after:bg-pwv-green relative mb-12 text-3xl font-medium after:absolute after:-bottom-4 after:left-0 after:h-1 after:content-[''] lg:text-4xl dark:after:bg-white"
-  style={`--underline-width: ${underlineWidth}`}
-  data-underline-width={underlineWidth}
+  class="after:bg-pwv-green relative mb-12 text-3xl font-medium after:absolute after:-bottom-4 after:left-0 after:h-1 after:w-[100px] after:content-[''] lg:text-4xl"
 >
   <slot />
 </h1>
-
-<style>
-  h1::after {
-    width: var(--underline-width, 100px);
-  }
-</style>
