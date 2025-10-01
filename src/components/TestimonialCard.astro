@@ -1,17 +1,18 @@
 ---
 import { Image as UnpicImage } from '@unpic/astro';
-import { resolveImageSrc } from '../lib/images';
 
-interface Props {
+export interface Props {
   name: string;
   title: string;
   company: string;
   quote: string;
   url?: string;
+  avatarUrl?: string;
   companySlug: string;
 }
 
-const { name, title, company, quote, url, companySlug } = Astro.props;
+const { name, title, company, quote, url, avatarUrl, companySlug } =
+  Astro.props;
 ---
 
 <div class="flex h-full flex-col pb-4 lg:mb-4">
@@ -19,35 +20,37 @@ const { name, title, company, quote, url, companySlug } = Astro.props;
     "{quote}"
   </blockquote>
   <div class="flex flex-col">
-    <cite class="font-mono font-semibold not-italic">
-      {name}
-    </cite>
-    <div class="flex items-center gap-2 text-sm">
+    <div class="flex items-center gap-3">
       {
-        companySlug === 'anonymous' ? (
-          <div class="h-4 w-4 flex-shrink-0 rounded" />
-        ) : (
+        avatarUrl ? (
           <UnpicImage
-            src={resolveImageSrc(`logos/small/${companySlug}.png`)}
-            alt={`${company} logo`}
-            width={16}
-            height={16}
-            class="flex-shrink-0 border p-0.5"
+            src={`/src/images/${avatarUrl}`}
+            alt={name}
+            width={64}
+            height={64}
+            class="border-pwv-gray border-pwv-green h-16 w-16 rounded-full border object-cover p-1"
           />
+        ) : (
+          <div class="border-pwv-gray bg-pwv-gray/10 h-16 w-16 rounded-full border" />
         )
       }
-      <span>
-        {title},{' '}
-        {
-          url ? (
-            <a href={url} class="hover:underline">
-              {company}
-            </a>
-          ) : (
-            company
-          )
-        }
-      </span>
+      <div class="flex flex-col">
+        <cite class="font-mono font-semibold not-italic">
+          {name}
+        </cite>
+        <span class="text-sm">
+          {title},{' '}
+          {
+            url ? (
+              <a href={url} class="hover:underline">
+                {company}
+              </a>
+            ) : (
+              company
+            )
+          }
+        </span>
+      </div>
     </div>
   </div>
 </div>

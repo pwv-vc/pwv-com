@@ -43,7 +43,7 @@ const dotColors: TagColors = {
 // Helper function to get tag styles based on category
 const getTagStyle = (tag: string) => {
   const baseStyle =
-    ' text-xs inline-flex items-center mx-1 gap-1.5 px-3 py-1 rounded-full  text-sm border border-pwv-gray';
+    'text-xs inline-flex items-center mx-1 gap-1.5 px-3 py-1 rounded-full  text-sm border border-pwv-gray';
   return {
     container: baseStyle,
     dot: `w-1.5 h-1.5 rounded-full ${dotColors[tag.toLowerCase()] || 'bg-pwv-soft-periwinkle'}`,
@@ -61,11 +61,12 @@ const getTagStyle = (tag: string) => {
     <UnpicImage
       src={resolveImageSrc(`logos/small/${slug}.png`)}
       alt={`${name} logo`}
-      width={36}
-      height={36}
+      width={48}
+      height={48}
       class={`flex-shrink-0 p-0.5 border border-pwv-gray ${blackBackgroundSlugs.includes(slug) ? 'bg-black' : 'bg-surface'}`}
     />
-    <span class="flex-1 leading-snug break-words whitespace-normal">{name}</span
+    <span class="flex-1 text-lg leading-snug break-words whitespace-normal"
+      >{name}</span
     >
   </a>
   {
