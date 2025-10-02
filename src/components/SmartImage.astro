@@ -1,0 +1,79 @@
+---
+import { Image as UnpicImage } from '@unpic/astro';
+
+interface Props {
+  src?: any;
+  path?: string; // relative to src/images, e.g. "startup-as-a-service/startup-as-a-service.001.jpeg"
+  alt: string;
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'hero' | 'full';
+  rounded?: boolean;
+  shadow?: boolean;
+  class?: string;
+  loading?: 'eager' | 'lazy';
+  imageFilter?: 'monochrome' | 'tinted' | 'sepia' | 'primary' | 'none';
+  placeholder?: boolean;
+}
+
+const {
+  src,
+  path,
+  alt,
+  size = 'full',
+  rounded = true,
+  shadow = false,
+  class: className = '',
+  loading = 'lazy',
+  imageFilter = 'none',
+  placeholder = false,
+} = Astro.props as Props;
+
+const heightMap: Record<string, string> = {
+  sm: 'h-32',
+  md: 'h-48',
+  lg: 'h-64',
+  xl: 'h-80',
+  hero: 'h-auto',
+  full: 'h-auto',
+};
+
+const filterClasses: Record<string, string> = {
+  monochrome: 'filter-grayscale',
+  tinted: 'filter-sepia filter-hue-rotate-180',
+  sepia: 'filter-sepia',
+  primary: 'filter-primary',
+  none: '',
+};
+
+const baseClasses = [
+  'p-2',
+  'w-full',
+  heightMap[size] ?? heightMap.md,
+  size === 'hero' || size === 'full' ? 'object-contain' : 'object-cover',
+  rounded ? 'rounded-lg' : '',
+  shadow ? 'shadow-lg' : '',
+  filterClasses[imageFilter] || '',
+  placeholder ? 'animate-pulse bg-gray-200' : '',
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+
+let resolvedSrc: string;
+if (path) {
+  // Map of all images in src/images, eager so it's available at runtime
+  const images = import.meta.glob('../images/**/*', {
+    eager: true,
+    import: 'default',
+  }) as Record<string, any>;
+  const key = `../images/${path}`;
+  const found = images[key];
+  resolvedSrc = typeof found === 'string' ? found : (found?.src ?? found);
+} else {
+  resolvedSrc =
+    typeof src === 'object' && src !== null
+      ? ((src as any).src ?? (src as any))
+      : (src as string);
+}
+---
+
+<UnpicImage src={resolvedSrc} alt={alt} class={baseClasses} loading={loading} />

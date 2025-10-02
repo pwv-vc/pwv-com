@@ -1,12 +1,85 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
 
 @theme {
-  --font-serif: 'Libre Franklin Variable', serif;
-  --font-sans: 'Libre Franklin Variable', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+  /* 🎨 Colors */
+  --color-pwv-black: #000000;
+  --color-pwv-white: #ffffff;
+  --color-pwv-gray: #e4e4e4;
+  --color-pwv-green: #00d22e;
+  --color-pwv-teal: #00d2c8;
+
+  --color-pwv-soft-green: #85ffa0;
+  --color-pwv-soft-teal: #88fff8;
+  --color-pwv-soft-yellow: #ffef9e;
+  --color-pwv-soft-coral: #ffc4c4;
+  --color-pwv-soft-lavender: #e3c6ff;
+  --color-pwv-soft-periwinkle: #bdd4ff;
+
+  --color-pwv-light-green: #c4ffd1;
+  --color-pwv-light-teal: #cdfffc;
+  --color-pwv-light-yellow: #fff9da;
+  --color-pwv-light-coral: #ffd8d8;
+  --color-pwv-light-lavender: #ebd5ff;
+  --color-pwv-light-periwinkle: #d5e4ff;
+
+  /* 🔤 Fonts */
+  --font-serif:
+    'DM Mono', ui-monospace, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
-  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    'Liberation Mono', 'Courier New', monospace;
+  --font-sans:
+    'DM Sans', system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
 
-  --pwv-blue: #1B2B5B;
+  --font-mono:
+    'DM Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-serif;
+}
+.prose {
+  h1 {
+    @apply font-serif text-2xl font-medium lg:text-3xl;
+  }
+  h2 {
+    @apply text-xl font-medium lg:text-2xl;
+  }
+  h3 {
+    @apply text-lg font-medium lg:text-xl;
+  }
+}
+
+/* 🎨 Image Filters */
+.filter-grayscale {
+  filter: grayscale(100%);
+}
+
+.filter-sepia {
+  filter: sepia(100%);
+}
+
+.filter-hue-rotate-180 {
+  filter: hue-rotate(180deg);
+}
+
+.filter-primary {
+  filter: sepia(1) hue-rotate(120deg) saturate(1.2);
+}
+
+/* 🔗 PWV link utility class */
+.pwv-link {
+  @apply hover:decoration-pwv-green text-pwv-black hover:underline hover:decoration-3 hover:underline-offset-8;
+}
+
+.pwv-link-underline {
+  @apply text-pwv-black decoration-pwv-green underline decoration-3 underline-offset-8;
+}
+

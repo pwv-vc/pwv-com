@@ -1,0 +1,5 @@
+Here's a 2-sentence visual prompt capturing the core theme of LLM routing:
+
+"A surreal digital forest where crystalline binary trees branch into glowing neural pathways, their trunks made of flowing data streams in electric blue and white. At a mystical crossroads within this forest, streams of text-like particles split and flow towards two distinct portals that pulse with different AI signatures, all rendered in a clean, high-tech aesthetic with soft ambient lighting."
+
+This prompt captures both the "random forest" algorithm concept and the routing/decision-making aspect while maintaining a tech-focused yet organic aesthetic.

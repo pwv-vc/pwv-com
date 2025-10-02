@@ -1,0 +1,59 @@
+---
+title: 'Queue the Job'
+description: 'Investing in Inngest was my first opportunity at PWV, and it highlighted how far developer experience for jobs and queues has come—from brittle Sidekiq runners and missing JAMstack features to elegant, one-line functions. Just as Inngest orchestrates async tasks, venture capital orchestrates deal flow: success depends on queuing the right work, trusting the system, and watching it complete.'
+pubDate: '2025-09-17'
+updatedDate: '2025-09-17'
+heroImage: '../../images/posts/pwv-inngest-queue-the-job/pwv-inngest-queue-the-job-hero.png'
+tags: ['inngest']
+author: 'David Thyresson'
+aiGeneratedDescription: false
+aiGeneratedImage: false
+featured: true
+---
+
+import MarkdownPostImage from '../../components/MarkdownPostImage.astro';
+
+Starting a new opportunity — whether a new job, deal, or investment — can feel a lot like writing the line of code that kicks off a background job — an invisible chain of work set in motion, running quietly but critically behind the scenes.
+
+My first deal at PWV was Inngest. A tweet in December 2022 caught my eye because it spoke directly to a frustration I'd felt for years: the lack of reliable scheduling and background jobs in the JAMstack. Many apps depend on them, yet in serverless they were complicated to build and nearly impossible to run reliably at scale.
+
+That led me to conversations with Tony, Dan, and Jack, and by early February 2023 we had completed our first PWV Rolling Fund investment. Reflecting on that milestone now, as Inngest announces their Series A [fundraise](https://www.inngest.com/blog/announcing-inngest-series-a), underscores how far they've come — proof that jobs, and the developer experience behind them, can run with both reliability and elegance.
+
+## Jobs and Queues, Then and Now
+
+In the early days, the developer experience for setting up scheduled and background jobs was clunky. Job runners were complex, costly, but also critical for many important features. Rails developers used Sidekiq or job runners on Heroku dynos. It worked, but it was brittle and time-consuming to maintain.
+
+When the JAMstack era arrived - ushered in by Netlify — background jobs for serverless didn't exist.
+
+Developers hacked together cron jobs or serverless functions, but they lacked enterprise-grade features: retries, idempotency, observability, stateful workers. Even when Netlify or Vercel added cron or job support, they didn't go far enough.
+
+**Inngest fixed that.**
+
+They collapsed the messy scaffolding of queues into a developer experience that was not only reliable, but elegant.
+
+## From Weeks to Minutes
+
+<MarkdownPostImage
+  path="post-pwv-inngest-queue-the-job/inngest-queue-the-job.jpg"
+  alt="Inngest Queue the Job"
+  class="shadow-lg"
+/>
+
+- Before: Dead letter queues, idempotency checks, observability, stateful workers — all infrastructure you had to build and maintain.
+- After: One function definition. Inngest handles the rest.
+
+Great DX feels like this:
+
+- Clarity: APIs that read cleanly.
+- Focus: Only your business logic.
+- Leverage: Weeks of infra setup reduced to minutes.
+
+## Deal Flow is Just Another Kind of Workflow
+
+Inngest orchestrates async tasks so they reliably complete. VC orchestrates deal flow so opportunities reliably surface, are evaluated, and — when the system works — result in successful outcomes. Both depend on trust in the process and confidence in the system.
+
+So, queue the job.
+
+It's a pun, but also a philosophy. You push the work into the system, trust it to run, and believe it will succeed.
+
+Reflecting on my first PWV investment in Inngest alongside their Series A milestone is a reminder that every new opportunity — whether a job, deal, or company — is about queuing the right work, trusting the system, and taking satisfaction in seeing it complete.

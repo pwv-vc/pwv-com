@@ -1,0 +1,28 @@
+---
+import PostCard from './PostCard.astro';
+
+export interface Props {
+  posts: any[];
+  size?: 'large' | 'small';
+  isFeatured?: boolean;
+}
+
+const { posts, size = 'large', isFeatured = false } = Astro.props;
+---
+
+<!-- Basic Grid Layout -->
+<div
+  id="posts-container"
+  class="mx-auto grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 lg:grid-cols-3"
+>
+  {
+    posts.map((post) => (
+      <div
+        data-post-type={post.data.url ? 'external' : 'non-external'}
+        class="flex"
+      >
+        <PostCard post={post} size={size} isFeatured={isFeatured} />
+      </div>
+    ))
+  }
+</div>

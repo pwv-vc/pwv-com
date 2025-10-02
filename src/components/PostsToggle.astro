@@ -1,0 +1,49 @@
+---
+export interface Props {
+  externalCount: number;
+  nonExternalCount: number;
+  activeFilter?: 'all' | 'community' | 'pwv';
+}
+
+const { externalCount, nonExternalCount, activeFilter = 'all' } = Astro.props;
+---
+
+<div class="mb-8 flex scroll-mt-20 items-center justify-center" id="view">
+  <div class="bg-pwv-gray flex rounded-lg p-1">
+    <a
+      href="/news?page=1"
+      class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-body hover:bg-pwv-gray-hover ${
+        activeFilter === 'all'
+          ? 'text-body bg-pwv-white shadow-sm'
+          : 'text-pwv-black'
+      }`}
+    >
+      All
+      <span class="ml-1 text-xs opacity-75"
+        >({externalCount + nonExternalCount})</span
+      >
+    </a>
+    <a
+      href="/news?filter=pwv&page=1"
+      class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-body hover:bg-pwv-gray-hover ${
+        activeFilter === 'pwv'
+          ? 'text-body bg-pwv-white shadow-sm'
+          : 'text-pwv-black'
+      }`}
+    >
+      PWV
+      <span class="ml-1 text-xs opacity-75">({nonExternalCount})</span>
+    </a>
+    <a
+      href="/news?filter=community&page=1"
+      class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-body hover:bg-pwv-gray-hover ${
+        activeFilter === 'community'
+          ? 'text-body bg-pwv-white shadow-sm'
+          : 'text-pwv-black'
+      }`}
+    >
+      Founders &amp; Community
+      <span class="ml-1 text-xs opacity-75">({externalCount})</span>
+    </a>
+  </div>
+</div>

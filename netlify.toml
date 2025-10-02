@@ -1,6 +1,59 @@
 [build]
-  command = "npm run build"
+  command = "pnpm run build"
   publish = "dist"
+
+# Cache control headers for better performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Cache static assets for 1 year
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache images for 1 month
+[[headers]]
+  for = "*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "*.jpeg"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "*.webp"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+# Cache HTML pages for 1 hour (since content can change)
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, s-maxage=3600"
+
+# Cache news pages for 5 minutes (SSR with filtering)
+[[headers]]
+  for = "/news*"
+  [headers.values]
+    Cache-Control = "public, max-age=300, s-maxage=300"
 
 [[redirects]]
   from = "/fund-memo"
@@ -19,13 +72,13 @@
   to = "https://pwv.docsend.com/v/mvzp8/pwv-teaser-deck"
   status = 301
   force = true
-  
+
 [[redirects]]
   from = "/data-room"
   to = "https://pwv.docsend.com/view/s/4iy3dfkzkgffqt4p"
   status = 301
   force = true
-  
+
 [[redirects]]
   from = "/dataroom"
   to = "https://pwv.docsend.com/view/s/4iy3dfkzkgffqt4p"

@@ -1,12 +1,39 @@
 [
   {
-    "name": "Paul Copplestone",
-    "title": "CEO and Cofounder",
-    "company": "Supabase",
-    "quote": "They trust us to get things done, giving us space to lead while keeping it honest and straightforward.",
-    "url": "https://www.supabase.com",
-    "tags": ["technology", "innovation"],
-    "slug": "testimonial-paul-copplestone"
+    "name": "Pedro Piñera Buendía",
+    "title": "Co-founder",
+    "company": "Tuist",
+    "quote": "I found PWV to be one of the rare funds that took the time to deeply understand our market and strategy. Their team’s extensive experience in crafting exceptional products, fostering vibrant communities, and scaling successful businesses shines through in the unwavering passion they bring to supporting founders like me.",
+    "url": "https://www.tuist.dev/",
+    "avatarUrl": "people/pedro-pinera-buendía.jpeg",
+    "tags": ["ai", "generative ai"],
+    "slug": "testimonial-pedro-pinera-buendia",
+    "company-slug": "tuist",
+    "position": 2
+  },
+  {
+    "name": "Matt Perrott",
+    "title": "CEO & Co-founder",
+    "company": "BuildPass",
+    "quote": "The PWV team has been super supportive on our journey. Always happy to help with advice, feedback, and intros, but never getting in the way and letting us run our race.",
+    "url": "https://www.buildpass.ai/",
+    "avatarUrl": "people/matt-perrott.jpeg",
+    "tags": ["ai", "generative ai"],
+    "slug": "testimonial-matt-perrott",
+    "company-slug": "buildpass",
+    "position": 3
+  },
+  {
+    "name": "Ralf Schonherr",
+    "title": "CEO & Co-founder",
+    "company": "Myriad",
+    "quote": "PWV is the fund you want on your cap table in the early days. They ask the right questions, help solve the hard challenges, and their support has been incredibly effective in setting us up for long-term success. The community they’ve built is a real unfair advantage—nothing I’ve found anywhere else.",
+    "url": "https://www.myriad.company/",
+    "avatarUrl": "people/ralf-schonherr.jpeg",
+    "tags": ["ai", "compliance"],
+    "slug": "testimonial-ralf-schonherr",
+    "company-slug": "myriad-ai",
+    "position": 1
   },
   {
     "name": "Dan Farrelly",
@@ -14,26 +41,11 @@
     "company": "Inngest",
     "quote": "The PWV team just understands developer tools and the entire space. They're technical and strategic. They're ready to jump in to support, but also give us space to cook.",
     "url": "https://www.inngest.com",
+    "avatarUrl": "people/dan-farrelly.jpeg",
     "tags": ["technology", "innovation"],
-    "slug": "testimonial-dan-farrelly"
-  },
-  {
-    "name": "Steve Krouse",
-    "title": "CEO and Cofounder",
-    "company": "Val.town",
-    "quote": "I didn't believe you guys would be 10% this helpful when you invested. I mostly took the investment because I'm a fan of TPW, but you guys have gone way beyond that!",
-    "url": "https://www.val.town",
-    "tags": ["technology", "innovation"],
-    "slug": "testimonial-steve-krouse"
-  },
-  {
-    "name": "Gorkem Yurtseven",
-    "title": "Cofounder",
-    "company": "fal",
-    "quote": "These guys are my favorites.",
-    "url": "https://www.fal.ai",
-    "tags": ["ai", "generative ai"],
-    "slug": "testimonial-gorkem-yurtseven"
+    "slug": "testimonial-dan-farrelly",
+    "company-slug": "inngest",
+    "position": 4
   },
   {
     "name": "Ahmad Awais",
@@ -41,15 +53,22 @@
     "company": "Langbase",
     "quote": "Tom, DT, and DP are all super helpful. Tom helped us navigate messaging, and DT jumped knee-deep in code and became a customer and friend I could depend on. In my book, that's extremely rare. That's why I recommend them.",
     "url": "https://langbase.com/",
+    "avatarUrl": "people/ahmad-awais.jpeg",
     "tags": ["ai", "generative ai"],
-    "slug": "testimonial-ahmad-awais"
+    "slug": "testimonial-ahmad-awais",
+    "company-slug": "langbase",
+    "position": 6
   },
   {
-    "name": "J.J.",
-    "title": "CTO and Cofounder",
-    "company": "Anonymous",
-    "quote": "You're the best VC I know! Your expertise from the trenches and your empathy for the hacker sets you apart from 99% of the sh*tbirds we talk to. Always great connecting!",
-    "tags": ["ai", "generative ai"],
-    "slug": "testimonial-j-j"
+    "name": "Jessie Frazelle",
+    "title": "CEO and Founder",
+    "company": "Zoo",
+    "quote": "We love working with them because they're former founders who have built in the dev tools space and are super technical, which makes explaining complex technical concepts so much easier. Their expertise and partnership have made a huge difference.",
+    "url": "https://www.zoo.dev/",
+    "avatarUrl": "people/jessie-frazellle.jpeg",
+    "tags": ["dev tools"],
+    "slug": "testimonial-jessie-frazelle",
+    "company-slug": "zoo",
+    "position": 5
   }
 ]

@@ -1,0 +1,36 @@
+---
+export interface Props {
+  caption: string;
+  link: string;
+  variant?: 'primary' | 'secondary';
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const { caption, link, variant = 'primary', size = 'md' } = Astro.props;
+
+const baseClasses =
+  'inline-flex items-center gap-2 rounded-lg font-medium transition-colors';
+const variantClasses = {
+  primary: 'bg-pwv-black text-pwv-white hover:bg-pwv-black/90',
+  secondary:
+    'bg-pwv-white text-pwv-black border border-pwv-black hover:bg-pwv-black hover:text-pwv-white',
+};
+const sizeClasses = {
+  sm: 'px-3 py-1.5 text-xs',
+  md: 'px-5 py-2 text-sm',
+  lg: 'px-6 py-3 text-base',
+};
+
+const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]}`;
+---
+
+<a href={link} class={classes}>
+  {caption}
+  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M9 5l7 7-7 7"></path>
+  </svg>
+</a>

@@ -1,0 +1,144 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  currentPost: CollectionEntry<'posts'>;
+  nextPost?: CollectionEntry<'posts'>;
+  previousPost?: CollectionEntry<'posts'>;
+}
+
+const { currentPost, nextPost, previousPost } = Astro.props;
+---
+
+<div class="border-default mx-auto mt-12 max-w-screen-xl border-t pt-8">
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+    <!-- Previous Post -->
+    {
+      previousPost ? (
+        <a
+          href={`/news/${previousPost.id}`}
+          class="group border-default hover:border-strong flex min-w-0 items-center rounded-lg border p-4 transition-all duration-200 hover:shadow-sm"
+        >
+          <div class="mr-3 flex-shrink-0">
+            <svg
+              class="text-subtle group-hover:text-body h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-subtle mb-1 text-xs tracking-wide uppercase">
+              Previous
+            </p>
+            <p class="text-body group-hover:text-body truncate text-sm font-medium">
+              {previousPost.data.title}
+            </p>
+          </div>
+        </a>
+      ) : (
+        <div class="border-default bg-surface-muted rounded-lg border p-4">
+          <div class="flex items-center">
+            <div class="mr-3 flex-shrink-0">
+              <svg
+                class="text-subtle h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-subtle mb-1 text-xs tracking-wide uppercase">
+                Previous
+              </p>
+              <p class="text-subtle text-sm font-medium">No previous post</p>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    <!-- Back to News -->
+    <a
+      href="/news"
+      class="group border-default hover:border-strong flex flex-col items-center justify-center rounded-lg border p-4 transition-all duration-200 hover:shadow-sm"
+    >
+      <p class="text-subtle mb-1 text-xs tracking-wide uppercase">Back</p>
+      <p class="text-body group-hover:text-body text-sm font-medium">
+        All Posts
+      </p>
+    </a>
+
+    <!-- Next Post -->
+    {
+      nextPost ? (
+        <a
+          href={`/news/${nextPost.id}`}
+          class="group border-default hover:border-strong flex min-w-0 items-center rounded-lg border p-4 transition-all duration-200 hover:shadow-sm"
+        >
+          <div class="min-w-0 flex-1 text-right">
+            <p class="text-subtle mb-1 text-xs tracking-wide uppercase">Next</p>
+            <p class="text-body group-hover:text-body truncate text-sm font-medium">
+              {nextPost.data.title}
+            </p>
+          </div>
+          <div class="ml-3 flex-shrink-0">
+            <svg
+              class="text-subtle group-hover:text-body h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </div>
+        </a>
+      ) : (
+        <div class="border-default bg-surface-muted rounded-lg border p-4">
+          <div class="flex items-center">
+            <div class="min-w-0 flex-1 text-right">
+              <p class="text-subtle mb-1 text-xs tracking-wide uppercase">
+                Next
+              </p>
+              <p class="text-subtle text-sm font-medium">No next post</p>
+            </div>
+            <div class="ml-3 flex-shrink-0">
+              <svg
+                class="text-subtle h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  </div>
+</div>

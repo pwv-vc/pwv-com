@@ -1,0 +1,177 @@
+---
+export interface Props {
+  currentPage: number;
+  totalPages: number;
+  baseUrl: string;
+  filter?: string;
+}
+
+const { currentPage, totalPages, baseUrl, filter } = Astro.props;
+
+// Generate page numbers to show
+const getPageNumbers = () => {
+  const pages: (number | string)[] = [];
+  const maxVisiblePages = 5;
+
+  if (totalPages <= maxVisiblePages) {
+    // Show all pages if total is small
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push(i);
+    }
+  } else {
+    // Show first page
+    pages.push(1);
+
+    if (currentPage > 3) {
+      pages.push('...');
+    }
+
+    // Show pages around current page
+    const start = Math.max(2, currentPage - 1);
+    const end = Math.min(totalPages - 1, currentPage + 1);
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    if (currentPage < totalPages - 2) {
+      pages.push('...');
+    }
+
+    // Show last page
+    if (totalPages > 1) {
+      pages.push(totalPages);
+    }
+  }
+
+  return pages;
+};
+
+const pageNumbers = getPageNumbers();
+
+const buildUrl = (page: number) => {
+  const params = new URLSearchParams();
+  params.set('page', page.toString());
+  if (filter && filter !== 'all') {
+    params.set('filter', filter);
+  }
+  return `${baseUrl}?${params.toString()}`;
+};
+---
+
+{
+  totalPages > 1 && (
+    <nav
+      class="mt-8 flex items-center justify-center space-x-2"
+      aria-label="Pagination"
+    >
+      {/* Previous button */}
+      {currentPage > 1 ? (
+        <a
+          href={buildUrl(currentPage - 1)}
+          class="text-pwv-green border-pwv-green hover:bg-pwv-green rounded-md border bg-white px-3 py-2 text-sm font-medium transition-colors hover:text-white"
+          aria-label="Previous page"
+        >
+          <svg
+            class="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </a>
+      ) : (
+        <span class="cursor-not-allowed rounded-md border border-gray-300 bg-gray-200 px-3 py-2 text-sm font-medium text-gray-400">
+          <svg
+            class="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </span>
+      )}
+
+      {/* Page numbers */}
+      {pageNumbers.map((page) => {
+        if (page === '...') {
+          return <span class="px-3 py-2 text-sm font-medium">...</span>;
+        }
+
+        const pageNum = page as number;
+        const isCurrentPage = pageNum === currentPage;
+
+        return (
+          <a
+            href={buildUrl(pageNum)}
+            class={`rounded-md border px-3 py-2 text-sm font-medium transition-colors ${
+              isCurrentPage
+                ? 'border-black bg-black text-white'
+                : 'border-black bg-white text-black hover:bg-gray-100'
+            }`}
+            aria-label={`Page ${pageNum}`}
+            aria-current={isCurrentPage ? 'page' : undefined}
+          >
+            {pageNum}
+          </a>
+        );
+      })}
+
+      {/* Next button */}
+      {currentPage < totalPages ? (
+        <a
+          href={buildUrl(currentPage + 1)}
+          class="text-pwv-green border-pwv-green hover:bg-pwv-green rounded-md border bg-white px-3 py-2 text-sm font-medium transition-colors hover:text-white"
+          aria-label="Next page"
+        >
+          <svg
+            class="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </a>
+      ) : (
+        <span class="cursor-not-allowed rounded-md border border-gray-300 bg-gray-200 px-3 py-2 text-sm font-medium text-gray-400">
+          <svg
+            class="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </span>
+      )}
+    </nav>
+  )
+}
+
+<!-- Page info -->
+<div class="text-muted mt-4 text-center text-sm">
+  Page {currentPage} of {totalPages}
+</div>

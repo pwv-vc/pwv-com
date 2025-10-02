@@ -1,57 +1,90 @@
 ---
 import clsx from 'clsx';
+import { Image as UnpicImage } from '@unpic/astro';
+import { resolveImageSrc } from '../lib/images';
 
 interface Props {
   name: string;
   url: string;
   tags: string[];
+  slug: string;
+  showTags?: boolean;
 }
 
-const { name, url, tags } = Astro.props;
+const { name, url, tags, slug, showTags = false } = Astro.props;
+
+// Companies that need black background for their logos
+const blackBackgroundSlugs = ['beta'];
 
 type TagColors = {
   [key: string]: string;
 };
 
+const dotColor = 'bg-pwv-soft-periwinkle';
+
 const dotColors: TagColors = {
-  'aerospace': 'bg-sky-400',
-  'hardware': 'bg-orange-400',
-  'energy': 'bg-amber-400',
-  'dev tools': 'bg-emerald-400',
-  'ai': 'bg-purple-400',
-  'saas': 'bg-indigo-400',
-  'construction': 'bg-cyan-400',
-  'board seat': 'bg-teal-400',
-  'board seat (past)': 'bg-slate-400',
-  'biotech': 'bg-violet-400',
-  'food tech': 'bg-lime-400',
-  'cad': 'bg-lime-400',
-  'acquired': 'bg-neutral-400'
+  '🦄': 'bg-fuchsia-600',
+  aerospace: dotColor,
+  hardware: dotColor,
+  energy: dotColor,
+  'dev tools': dotColor,
+  ai: dotColor,
+  saas: dotColor,
+  construction: dotColor,
+  'board seat': dotColor,
+  'board seat (past)': dotColor,
+  biotech: dotColor,
+  'food tech': dotColor,
+  cad: dotColor,
+  'quantum computing': dotColor,
+  acquired: 'bg-pwv-green',
 };
 
 // Helper function to get tag styles based on category
 const getTagStyle = (tag: string) => {
-  const baseStyle = ' text-xs inline-flex items-center mx-1 gap-1.5 px-3 py-1 rounded-full bg-gray-50/50 text-gray-600 text-sm border border-gray-100';
+  const baseStyle =
+    'text-xs inline-flex items-center mx-1 gap-1.5 px-3 py-1 rounded-full text-sm border border-pwv-gray';
   return {
     container: baseStyle,
-    dot: `w-1.5 h-1.5 rounded-full ${dotColors[tag.toLowerCase()] || 'bg-gray-400'}`
+    dot: `w-1.5 h-1.5 rounded-full ${dotColors[tag.toLowerCase()] || 'bg-pwv-soft-periwinkle'}`,
   };
 };
 ---
 
-<div class="flex items-center gap-2 py-1">
-  <a href={url} target="_blank" rel="noopener noreferrer" class="text-sm font-mono font-medium hover:underline">
-    {name}
+<div class="flex flex-col gap-2 overflow-hidden py-1">
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="flex min-w-0 items-center gap-3 font-serif font-medium hover:underline"
+  >
+    <UnpicImage
+      src={resolveImageSrc(`logos/small/${slug}.png`)}
+      alt={`${name} logo`}
+      width={32}
+      height={32}
+      class={`flex-shrink-0 p-0.5 border border-pwv-gray ${blackBackgroundSlugs.includes(slug) ? 'bg-black' : 'bg-surface'}`}
+    />
+    <span class="text-md flex-1 leading-snug break-words whitespace-normal"
+      >{name}</span
+    >
   </a>
-  <div class="flex gap-0">
-    {tags.map(tag => {
-      const styles = getTagStyle(tag);
-      return (
-        <span class={styles.container}>
-          <span class={styles.dot}></span>
-          {tag.toLowerCase()}
-        </span>
-      );
-    })}
-  </div>
+  {
+    showTags && (
+      <div class="flex flex-wrap gap-1">
+        {tags.map((tag) => {
+          const styles = getTagStyle(tag);
+          return (
+            <a
+              href={`/portfolio?tags=${encodeURIComponent(tag.toLowerCase())}`}
+              class={styles.container}
+            >
+              <span class={styles.dot} />
+              {tag.toLowerCase()}
+            </a>
+          );
+        })}
+      </div>
+    )
+  }
 </div>

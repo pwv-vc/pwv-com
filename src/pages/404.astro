@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE_NAME } from '../consts';
+import Heading1 from '../components/Heading1.astro';
+import Heading2 from '../components/Heading2.astro';
+import Button from '../components/Button.astro';
+---
+
+<Layout
+  title="Page Not Found"
+  description="The page you're looking for doesn't exist. Return to PWV's homepage to explore our portfolio and insights."
+>
+  <section class="">
+    <div class="mb-8">
+      <Heading1>404</Heading1>
+      <p class="mt-4 text-lg">
+        The page you're looking for doesn't exist. It might have been moved,
+        deleted, or you entered the wrong URL.
+      </p>
+    </div>
+    <div class="mt-8 text-center">
+      <Button caption="Home" link="/" />
+    </div>
+  </section>
+</Layout>
