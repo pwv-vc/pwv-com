@@ -101,17 +101,6 @@ const keywords = post.data.tags.join(', ');
     <hr />
     <Content />
 
-    <!-- Social Sharing -->
-    <div class="mt-8 flex items-center justify-between border-t pt-6">
-      <SocialShare
-        url={Astro.locals.socialSharingURL || Astro.url.href}
-        title={title}
-        description={description}
-        showLabel={true}
-        size="medium"
-      />
-    </div>
-
     <!-- External link for posts with URL -->
     {
       post.data.url && (
