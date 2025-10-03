@@ -1,16 +1,16 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
-import { SITE_TITLE } from '../consts';
+import { SITE_NAME, SITE_TITLE } from '../consts';
 
 export async function GET(context: any) {
-  const allPosts = (await getCollection('library')).sort((a, b) => {
+  const allPosts = (await getCollection('posts')).sort((a, b) => {
     const dateA = new Date(a.data.pubDate).getTime();
     const dateB = new Date(b.data.pubDate).getTime();
     return dateB - dateA;
   });
 
   return rss({
-    title: `${SITE_TITLE}`,
+    title: `${SITE_NAME} - ${SITE_TITLE}`,
     description: `Latest insights and thoughts`,
     site: context.site,
     items: allPosts.map((post) => {
