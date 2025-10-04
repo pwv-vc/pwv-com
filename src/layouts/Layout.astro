@@ -90,10 +90,12 @@ if (enableUTMTracking && contentType) {
 Astro.locals.socialSharingURL = socialSharingURL;
 
 // Use relative paths for static assets so they work in deploy previews
-const faviconURL = '/favicon.png';
-const favicon16URL = '/favicon-16x16.png';
-const favicon32URL = '/favicon-32x32.png';
-const appleTouchIconURL = '/apple-touch-icon.png';
+// and add a version query parameter to bust caches using Netlify's deploy history.
+const version = import.meta.env.COMMIT_REF || Date.now();
+const faviconURL = `/favicon.png?v=${version}`;
+const favicon16URL = `/favicon-16x16.png?v=${version}`;
+const favicon32URL = `/favicon-32x32.png?v=${version}`;
+const appleTouchIconURL = `/apple-touch-icon.png?v=${version}`;
 const manifestURL = '/site.webmanifest';
 const sitemapURL = '/sitemap.xml';
 const rssURL = '/rss.xml';
