@@ -190,5 +190,17 @@
     "slug": "moneyhash",
     "url": "https://moneyhash.io/",
     "tags": ["payments"]
+  },
+  {
+    "name": "Consent",
+    "slug": "consent.io",
+    "url": "https://consent.io/",
+    "tags": ["compliance"]
+  },
+  {
+    "name": "Milestone",
+    "slug": "milestone",
+    "url": "https://mstone.ai/",
+    "tags": ["ai"]
   }
 ]
