@@ -166,5 +166,23 @@
     "slug": "stackone",
     "url": "https://www.stackone.com/",
     "tags": ["saas"]
+  },
+  {
+    "name": "Not Diamond",
+    "slug": "not-diamond",
+    "url": "https://www.notdiamond.ai",
+    "tags": ["ai"]
+  },
+  {
+    "name": "Thunder Compute",
+    "slug": "thunder-compute",
+    "url": "https://www.thundercompute.com",
+    "tags": ["ai", "infrastructure"]
+  },
+  {
+    "name": "LM Studio",
+    "slug": "lm-studio",
+    "url": "https://lmstudio.ai",
+    "tags": ["ai"]
   }
 ]
