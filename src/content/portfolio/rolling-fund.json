@@ -184,5 +184,11 @@
     "slug": "lm-studio",
     "url": "https://lmstudio.ai",
     "tags": ["ai"]
+  },
+  {
+    "name": "MoneyHash",
+    "slug": "moneyhash",
+    "url": "https://moneyhash.io/",
+    "tags": ["payments"]
   }
 ]
