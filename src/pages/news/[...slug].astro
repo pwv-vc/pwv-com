@@ -1,15 +1,13 @@
 ---
 import Heading1 from '../../components/Heading1.astro';
-import { type CollectionEntry } from 'astro:content';
 import { render } from 'astro:content';
 import SmartImage from '../../components/SmartImage.astro';
 import Layout from '../../layouts/Layout.astro';
 import PlaceholderImage from '../../components/PlaceholderImage.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import PostNavigation from '../../components/PostNavigation.astro';
-import SocialShare from '../../components/SocialShare.astro';
+
 import {
-  getAllPosts,
   getReadingTime,
   getPostNavigation,
   getPostBySlug,
@@ -33,13 +31,14 @@ const { nextPost, previousPost } = await getPostNavigation(post.id);
 
 // Generate meta data from post
 const title = post.data.title;
+const layoutTitle = 'News | ' + post.data.title + ' by ' + post.data.author;
 const description = post.data.description;
 const image = post.data.heroImage ? post.data.heroImage.src : '/og-image.png';
 const keywords = post.data.tags.join(', ');
 ---
 
 <Layout
-  title={title}
+  title={layoutTitle}
   description={description}
   image={image}
   keywords={keywords}
@@ -60,7 +59,7 @@ const keywords = post.data.tags.join(', ');
       {post.data.description}
     </p>
     <p class="text-subtle text-sm">
-      Posted by {post.data.author}
+      Written by {post.data.author}
       {
         (() => {
           const readingTime = getReadingTime(post.body);
@@ -90,23 +89,6 @@ const keywords = post.data.tags.join(', ');
         )
       }
     </div>
-    <div class="flex items-center justify-between">
-      <div class="flex flex-wrap gap-2">
-        {
-          post.data.tags.map((tag) => (
-            <span class="border-default text-subtle rounded-lg border p-2 font-mono text-sm">
-              {tag}
-            </span>
-          ))
-        }
-      </div>
-      <p class="ml-auto text-sm whitespace-nowrap">
-        🗓️ <FormattedDate date={post.data.pubDate} />
-      </p>
-    </div>
-    <hr />
-    <Content />
-
     <!-- External link for posts with URL -->
     {
       post.data.url && (
@@ -139,6 +121,22 @@ const keywords = post.data.tags.join(', ');
         </div>
       )
     }
+    <div class="mt-8 flex items-center justify-between">
+      <div class="flex flex-wrap gap-2">
+        {
+          post.data.tags.map((tag) => (
+            <span class="border-default text-subtle rounded-lg border p-2 font-mono text-sm">
+              {tag}
+            </span>
+          ))
+        }
+      </div>
+      <p class="ml-auto text-sm whitespace-nowrap">
+        🗓️ <FormattedDate date={post.data.pubDate} />
+      </p>
+    </div>
+    <hr />
+    <Content />
 
     <!-- Post Navigation -->
     <PostNavigation
