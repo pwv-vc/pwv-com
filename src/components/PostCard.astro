@@ -28,7 +28,7 @@ export interface Props {
 const { post, size = 'large', isFeatured = false } = Astro.props;
 
 const isSmall = size === 'small';
-const isRemote = !!post.data.url;
+const isRemote = false; // !!post.data.url;
 const imageHeight = isSmall ? 'h-32' : 'h-48';
 const padding = isSmall ? 'p-2' : 'p-4';
 const titleSize = isSmall ? 'text-sm' : 'text-lg';
@@ -187,7 +187,7 @@ const getSiteName = (url: string) => {
       </p>
       <div class="mt-auto text-center">
         <a
-          href={post.data.url || `/news/${post.id}`}
+          href={`/news/${post.id}`}
           target={isRemote ? '_blank' : undefined}
           rel={isRemote ? 'noopener noreferrer' : undefined}
           class={`btn inline-flex items-center gap-2 ${buttonSize} ${buttonColor} font-mono rounded-lg w-fit`}
@@ -213,7 +213,10 @@ const getSiteName = (url: string) => {
               </>
             ) : (
               <>
-                Read ({getReadingTime(post.body)} Min)
+                {(() => {
+                  const readingTime = getReadingTime(post.body);
+                  return readingTime > 0 ? `Read (${readingTime} Min)` : 'Read';
+                })()}
                 <svg
                   class={iconSize}
                   fill="none"
