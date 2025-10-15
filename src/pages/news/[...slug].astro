@@ -60,7 +60,13 @@ const keywords = post.data.tags.join(', ');
       {post.data.description}
     </p>
     <p class="text-subtle text-sm">
-      Posted by {post.data.author} • {getReadingTime(post.body)} min read
+      Posted by {post.data.author}
+      {
+        (() => {
+          const readingTime = getReadingTime(post.body);
+          return readingTime > 0 ? ` • ${readingTime} min read` : '';
+        })()
+      }
     </p>
     <div class="mx-auto flex justify-center">
       {
@@ -106,7 +112,7 @@ const keywords = post.data.tags.join(', ');
       post.data.url && (
         <div class="border-default bg-surface-muted mt-8 rounded-lg border p-6">
           <p class="text-muted mb-3 text-sm">
-            This is an external article from our library.
+            This is an external article from our community.
           </p>
           <a
             href={post.data.url}

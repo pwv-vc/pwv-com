@@ -37,7 +37,7 @@ export async function getRecentPosts(count: number = 6) {
  * @returns Estimated reading time in minutes
  */
 export function getReadingTime(content: string | undefined): number {
-  if (!content) return 5; // Default reading time if content is undefined
+  if (!content) return 0; // Default reading time if content is undefined
   const wordsPerMinute = 200;
   const wordCount = content.split(/\s+/).length;
   return Math.ceil(wordCount / wordsPerMinute);
