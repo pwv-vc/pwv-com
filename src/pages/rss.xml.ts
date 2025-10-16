@@ -9,10 +9,19 @@ export async function GET(context: any) {
     return dateB - dateA;
   });
 
+  // Get the most recent post date for channel-level lastBuildDate
+  const lastBuildDate =
+    allPosts.length > 0
+      ? allPosts[0].data.updatedDate || allPosts[0].data.pubDate
+      : new Date();
+
   return rss({
     title: `${SITE_NAME} - ${SITE_TITLE}`,
     description: `Latest insights and thoughts`,
     site: context.site,
+    xmlns: {
+      atom: 'http://www.w3.org/2005/Atom',
+    },
     items: allPosts.map((post) => {
       // Normalize site URL (no trailing slash)
       const siteUrl = String(context.site).replace(/\/$/, '');
@@ -48,6 +57,8 @@ export async function GET(context: any) {
             return {
               url: netlifyImgUrl,
               type: 'image/jpeg',
+              // Approximate length for a 1200x630 JPEG image (required by RSS spec)
+              length: '150000',
             };
           })()
         : undefined;
@@ -58,20 +69,16 @@ export async function GET(context: any) {
         pubDate: post.data.pubDate,
         link: postURL,
         guid: postURL,
-        author: post.data.author,
+        // Remove author field since we don't have email addresses
+        // RSS 2.0 requires author to be in format: email@example.com (Name)
         categories: post.data.tags,
-        customData: [
-          post.data.updatedDate
-            ? `<lastBuildDate>${post.data.updatedDate.toUTCString()}</lastBuildDate>`
-            : '',
-          heroImageData
-            ? `<enclosure url="${heroImageData.url}" type="${heroImageData.type}" />`
-            : '',
-        ]
-          .filter(Boolean)
-          .join(''),
+        customData: heroImageData
+          ? `<enclosure url="${heroImageData.url}" type="${heroImageData.type}" length="${heroImageData.length}" />`
+          : '',
       };
     }),
-    customData: `<language>en</language>`,
+    customData: `<language>en</language>
+    <lastBuildDate>${lastBuildDate.toUTCString()}</lastBuildDate>
+    <atom:link href="${String(context.site).replace(/\/$/, '')}/rss.xml" rel="self" type="application/rss+xml" />`,
   });
 }
