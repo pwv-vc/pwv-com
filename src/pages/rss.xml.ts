@@ -15,6 +15,14 @@ export async function GET(context: any) {
       ? allPosts[0].data.updatedDate || allPosts[0].data.pubDate
       : new Date();
 
+  // Normalize site URL (no trailing slash)
+  const siteUrl = String(context.site).replace(/\/$/, '');
+
+  // Use the actual request URL for the self-reference link
+  const selfUrl = context.url
+    ? new URL(context.url.pathname, siteUrl).href
+    : `${siteUrl}/rss.xml`;
+
   return rss({
     title: `${SITE_NAME} - ${SITE_TITLE}`,
     description: `Latest insights and thoughts`,
@@ -23,9 +31,6 @@ export async function GET(context: any) {
       atom: 'http://www.w3.org/2005/Atom',
     },
     items: allPosts.map((post) => {
-      // Normalize site URL (no trailing slash)
-      const siteUrl = String(context.site).replace(/\/$/, '');
-
       // Use the URL if it's an external post, otherwise use the internal library URL
       const postURL = post.data.url || `${siteUrl}/library/${post.id}`;
 
@@ -79,6 +84,6 @@ export async function GET(context: any) {
     }),
     customData: `<language>en</language>
     <lastBuildDate>${lastBuildDate.toUTCString()}</lastBuildDate>
-    <atom:link href="${String(context.site).replace(/\/$/, '')}/rss.xml" rel="self" type="application/rss+xml" />`,
+    <atom:link href="${selfUrl}" rel="self" type="application/rss+xml" />`,
   });
 }
