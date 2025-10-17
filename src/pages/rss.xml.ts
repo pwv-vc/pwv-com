@@ -9,11 +9,8 @@ export async function GET(context: any) {
     return dateB - dateA;
   });
 
-  // Get the most recent post date for channel-level lastBuildDate
-  const lastBuildDate =
-    allPosts.length > 0
-      ? allPosts[0].data.updatedDate || allPosts[0].data.pubDate
-      : new Date();
+  // Use the actual build time for channel-level lastBuildDate
+  const lastBuildDate = new Date();
 
   // Normalize site URL (no trailing slash)
   const siteUrl = String(context.site).replace(/\/$/, '');
