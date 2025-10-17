@@ -1,5 +1,5 @@
 [build]
-  command = "pnpm run build"
+  command = "BUILD_TIMESTAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ) pnpm run build"
   publish = "dist"
 
 # Cache control headers for better performance

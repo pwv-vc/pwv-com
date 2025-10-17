@@ -9,8 +9,12 @@ export async function GET(context: any) {
     return dateB - dateA;
   });
 
-  // Use the actual build time for channel-level lastBuildDate
-  const lastBuildDate = new Date();
+  // Use the build timestamp (set at build time) or fall back to most recent post
+  const lastBuildDate = import.meta.env.BUILD_TIMESTAMP
+    ? new Date(import.meta.env.BUILD_TIMESTAMP)
+    : allPosts.length > 0
+      ? new Date(allPosts[0].data.updatedDate || allPosts[0].data.pubDate)
+      : new Date();
 
   // Normalize site URL (no trailing slash)
   const siteUrl = String(context.site).replace(/\/$/, '');
