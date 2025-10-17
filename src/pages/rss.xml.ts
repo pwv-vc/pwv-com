@@ -9,13 +9,6 @@ export async function GET(context: any) {
     return dateB - dateA;
   });
 
-  // Use the build timestamp (set at build time) or fall back to most recent post
-  const lastBuildDate = import.meta.env.BUILD_TIMESTAMP
-    ? new Date(import.meta.env.BUILD_TIMESTAMP)
-    : allPosts.length > 0
-      ? new Date(allPosts[0].data.updatedDate || allPosts[0].data.pubDate)
-      : new Date();
-
   // Normalize site URL (no trailing slash)
   const siteUrl = String(context.site).replace(/\/$/, '');
 
@@ -26,7 +19,7 @@ export async function GET(context: any) {
 
   return rss({
     title: `${SITE_NAME} - ${SITE_TITLE}`,
-    description: `Latest insights and thoughts`,
+    description: `Latest news from PWV and our founder community`,
     site: context.site,
     xmlns: {
       atom: 'http://www.w3.org/2005/Atom',
@@ -84,7 +77,6 @@ export async function GET(context: any) {
       };
     }),
     customData: `<language>en</language>
-    <lastBuildDate>${lastBuildDate.toUTCString()}</lastBuildDate>
     <atom:link href="${selfUrl}" rel="self" type="application/rss+xml" />`,
   });
 }
