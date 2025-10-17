@@ -31,8 +31,8 @@ export async function GET(context: any) {
       atom: 'http://www.w3.org/2005/Atom',
     },
     items: allPosts.map((post) => {
-      // Use the URL if it's an external post, otherwise use the internal library URL
-      const postURL = post.data.url || `${siteUrl}/library/${post.id}`;
+      // always use the internal post URL
+      const postURL = `${siteUrl}/news/${post.id}`;
 
       // Create canonical URL for hero image if it exists
       const heroImageData = post.data.heroImage
