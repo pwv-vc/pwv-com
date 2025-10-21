@@ -60,7 +60,7 @@ const getSiteName = (url: string) => {
   <div class="flex h-full flex-col">
     <div class={`${padding} flex flex-col flex-grow text-pwv-black`}>
       <div
-        class={`w-full overflow-hidden border-white border rounded-lg mb-4 flex items-center justify-center`}
+        class={`w-full overflow-hidden border-white border rounded-lg mb-4 border-b-1 border-b-pwv-light-green h-68 items-center justify-center`}
       >
         {
           post.data.heroImage ? (
@@ -68,13 +68,13 @@ const getSiteName = (url: string) => {
               src={post.data.heroImage}
               alt={post.data.title}
               size="hero"
-              rounded={false}
-              shadow={false}
-              class="max-h-64 w-full object-contain"
+              rounded={true}
+              shadow={true}
+              class="mb-4 max-h-64 w-full object-cover object-top"
               loading="lazy"
             />
           ) : (
-            <div class="flex h-48 items-center justify-center">
+            <div class="flex h-48 items-start justify-center">
               <svg
                 class="h-12 w-12"
                 fill="none"
