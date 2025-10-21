@@ -29,7 +29,7 @@ const { post, size = 'large', isFeatured = false } = Astro.props;
 
 const isSmall = size === 'small';
 const isRemote = false; // !!post.data.url;
-const imageHeight = isSmall ? 'h-40' : 'h-56';
+const imageHeight = isSmall ? 'h-48' : 'h-64';
 const padding = isSmall ? 'p-2' : 'p-4';
 const titleSize = isSmall ? 'text-sm' : 'text-lg';
 const descriptionSize = isSmall ? 'text-xs' : 'text-sm';
@@ -61,7 +61,7 @@ const getSiteName = (url: string) => {
   <div class="flex h-full flex-col">
     <div class={`${padding} flex flex-col flex-grow text-pwv-black`}>
       <div
-        class={`w-full ${imageHeight} overflow-hidden border-white border rounded-lg mb-4`}
+        class={`w-full ${imageHeight} overflow-hidden border-white border rounded-lg mb-4 flex items-center justify-center`}
       >
         {
           post.data.heroImage ? (
@@ -71,7 +71,7 @@ const getSiteName = (url: string) => {
               size={isSmall ? 'sm' : 'md'}
               rounded={false}
               shadow={false}
-              class="h-full w-full object-cover"
+              class="h-full w-full object-contain"
               loading="lazy"
             />
           ) : (

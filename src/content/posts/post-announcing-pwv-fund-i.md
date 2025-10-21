@@ -1,8 +1,8 @@
 ---
 title: 'Announcing PWV Fund I: Built by Founders. Backing What’s Next.'
 description: "PWV is raising a $100M venture fund to lead pre-seed and seed rounds in today's most exciting software- and AI-driven companies."
-pubDate: '2025-10-21'
-updatedDate: '2025-10-21'
+pubDate: '2025-10-22'
+updatedDate: '2025-10-22'
 tags: ['PWV', 'Fund I', 'Venture Capital', 'Fundraising', 'Investing']
 author: 'Tom Preston-Werner'
 heroImage: '../../images/posts/announcing-pwv-fund-i/og-8-announcing-pwv-fund-i.png'
