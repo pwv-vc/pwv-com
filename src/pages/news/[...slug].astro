@@ -72,14 +72,14 @@ const keywords = post.data.tags.join(', ');
     <div class="mx-auto flex justify-center">
       {
         post.data.heroImage ? (
-          <div class="mb-4 h-auto w-full overflow-hidden lg:w-1/2">
+          <div class="mb-4 w-full max-w-4xl">
             <SmartImage
               src={post.data.heroImage}
               alt={post.data.title}
-              size="full"
+              size="hero"
               rounded={false}
               shadow={false}
-              class="h-full w-full"
+              class="h-auto w-full"
               loading="eager"
             />
           </div>

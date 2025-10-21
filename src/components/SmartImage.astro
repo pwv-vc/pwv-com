@@ -45,7 +45,7 @@ const filterClasses: Record<string, string> = {
 };
 
 const baseClasses = [
-  'p-2',
+  size === 'hero' || size === 'full' ? '' : 'p-2',
   'w-full',
   heightMap[size] ?? heightMap.md,
   size === 'hero' || size === 'full' ? 'object-contain' : 'object-cover',

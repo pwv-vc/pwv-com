@@ -5,7 +5,7 @@ pubDate: '2025-10-21'
 updatedDate: '2025-10-21'
 tags: ['PWV', 'Fund I', 'Venture Capital', 'Fundraising', 'Investing']
 author: 'Tom Preston-Werner'
-heroImage: '../../images/posts/announcing-pwv-fund-i/og-1-announcing-pwv-fund-i.png'
+heroImage: '../../images/posts/announcing-pwv-fund-i/og-8-announcing-pwv-fund-i.png'
 featured: true
 ---
 
