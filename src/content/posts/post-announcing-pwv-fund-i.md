@@ -33,4 +33,4 @@ My goal, with every PWV investment, is to back ideas that truly create a differe
 
 If you’re a visionary technology founder looking to raise your pre-seed or seed, we want to hear from you. Please apply at [pwv.com](http://pwv.com/apply).
 
-If you’d like to learn more about investing in PWV Fund I, please email [david@pwv.com](mailto:david@pwv.com).
+If you’d like to learn more about investing in PWV Fund I, please email [investors@pwv.com](mailto:investors@pwv.com).
