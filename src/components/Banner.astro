@@ -17,7 +17,7 @@ const { message, href, storageKey = 'banner-dismissed' } = Astro.props;
 
 <div
   id="banner"
-  class="bg-pwv-green relative mx-auto flex items-center justify-center gap-x-1 px-4 py-3 pr-14 sm:gap-x-4 sm:px-6 sm:pr-16 md:gap-x-6"
+  class="bg-pwv-green relative mx-auto flex items-center justify-center gap-x-1 px-4 py-3 pr-12 sm:gap-x-4 sm:px-6 sm:pr-16 md:gap-x-6"
   data-storage-key={storageKey}
 >
   <p
@@ -47,7 +47,7 @@ const { message, href, storageKey = 'banner-dismissed' } = Astro.props;
   <button
     type="button"
     id="banner-close"
-    class="absolute right-3 -m-3 p-3 focus-visible:outline-offset-4 sm:right-3"
+    class="absolute -m-3 p-8 focus-visible:outline-offset-4 sm:right-3"
     aria-label="Dismiss"
   >
     <svg
