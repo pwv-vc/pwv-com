@@ -15,6 +15,11 @@ interface TeamMemberData {
   slug: string;
   position: number;
   section: string;
+  linkedin?: string;
+  twitter?: string;
+  github?: string;
+  bluesky?: string;
+  website?: string;
 }
 
 // Group team members by section
@@ -63,6 +68,11 @@ const sortedSections = Object.entries(sections)
               isGeneralPartner={member.isGeneralPartner}
               slug={member.slug}
               showHover={false}
+              linkedin={member.linkedin}
+              twitter={member.twitter}
+              github={member.github}
+              bluesky={member.bluesky}
+              website={member.website}
             />
           ))}
         </div>

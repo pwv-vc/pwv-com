@@ -15,7 +15,7 @@ New achievement\! Preston-Werner Ventures (through which I did my angel investin
 
 Over the past thirteen years, I’ve invested in over 175 amazing startups, including some of the earliest checks in Stripe, Cursor, Netlify, Snyk, Supabase, PlanetScale, Retool, and [so many more](https://pwv.com/portfolio). I feel tremendously lucky to count myself as a part of the journey of such talented and driven founders and teams.
 
-But finding and funding the best startups is hard to do alone. So three years ago, I joined forces with my good friends David Price and David Thyrresson (DT), and together we took my angel investing practices and leveled them up across every metric. More deal flow, deeper diligence, and purposeful community engagement for our founders.
+But finding and funding the best startups is hard to do alone. So three years ago, I joined forces with my good friends [David Price](/about#david-price) and [David Thyresson (DT)](/about#david-thyresson), and together we took my angel investing practices and leveled them up across every metric. More deal flow, deeper diligence, and purposeful community engagement for our founders.
 
 DT and David are both entrepreneurs at heart, having shipped, scaled, and exited on repeat. We know what it’s like to create something from nothing and envision a better future for the users of our creations. And we know how hard that is and how much the right financial partner can increase the probability of success, and how much the wrong partner can make you wish you’d never tried in the first place.
 
