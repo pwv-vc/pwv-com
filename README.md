@@ -236,3 +236,156 @@ After adding content, run `pnpm dev` to sync collections and preview pages. The 
     <h1 class="text-primary">Title</h1>
   </div>
   ```
+
+## 🧩 Reusable Components
+
+### Banner (`src/components/Banner.astro`)
+
+A dismissible banner component that displays messages at the top of pages. The banner persists its dismissed state in `localStorage` to prevent showing again after dismissal.
+
+**Props:**
+
+- `message` (required): The text message to display in the banner
+- `href` (optional): If provided, makes the message clickable as a link with an arrow indicator
+- `storageKey` (optional): Custom localStorage key for tracking dismissal state (default: `'banner-dismissed'`)
+
+**Features:**
+
+- Prevents flash of content by checking `localStorage` immediately on page load
+- Dismissible with a close button (×)
+- Responsive design with proper spacing on all screen sizes
+- Green background (`bg-pwv-green`) with black text
+- Centered content with optional link behavior
+
+**Usage:**
+
+```astro
+---
+import Banner from '../components/Banner.astro';
+---
+
+<!-- Simple message banner -->
+<Banner message="Important announcement!" />
+
+<!-- Banner with link -->
+<Banner message="Read our latest post" href="/news/announcement" />
+
+<!-- Banner with custom storage key -->
+<Banner
+  message="Special event coming soon!"
+  href="/events"
+  storageKey="event-banner-dismissed"
+/>
+```
+
+**Example in Layout:**
+
+```astro
+---
+import Banner from '../components/Banner.astro';
+---
+
+<html>
+  <body>
+    <Banner
+      message="Announcing PWV Fund I"
+      href="/news/announcing-pwv-fund-i"
+      storageKey="fund-i-banner"
+    />
+    <main>
+      <!-- Page content -->
+    </main>
+  </body>
+</html>
+```
+
+### CloudflareStreamPlayer (`src/components/CloudflareStreamPlayer.tsx`)
+
+A React component for embedding Cloudflare Stream videos using the official `@cloudflare/stream-react` package.
+
+**Props:**
+
+- `videoId` (required): Your Cloudflare Stream video ID
+- `autoplay` (optional): Auto-play the video on load (default: `false`)
+- `controls` (optional): Show player controls (default: `true`)
+- `loop` (optional): Loop the video playback (default: `false`)
+- `muted` (optional): Mute audio (default: `false`)
+- `preload` (optional): Preload strategy - `'auto'` | `'metadata'` | `'none'` (default: `'auto'`)
+- `responsive` (optional): Enable responsive sizing (default: `true`)
+- `className` (optional): Additional Tailwind CSS classes for the container
+
+**Features:**
+
+- Built on the official `@cloudflare/stream-react` package
+- Responsive video player that adapts to container width
+- Full control over playback behavior
+- Support for Tailwind CSS styling
+
+**Usage in Astro Pages:**
+
+Since this is a React component, you must use one of Astro's client directives (`client:load`, `client:visible`, `client:idle`) to hydrate it in the browser.
+
+```astro
+---
+import CloudflareStreamPlayer from '../components/CloudflareStreamPlayer';
+---
+
+<!-- Basic usage with client:load -->
+<CloudflareStreamPlayer
+  client:load
+  videoId="bc4641688850e13d7163e4640587b0e0"
+/>
+
+<!-- With custom options -->
+<CloudflareStreamPlayer
+  client:load
+  videoId="bc4641688850e13d7163e4640587b0e0"
+  controls={true}
+  autoplay={false}
+  loop={false}
+  className="mx-auto max-w-4xl rounded-lg shadow-lg"
+/>
+
+<!-- Load only when visible (performance optimization) -->
+<CloudflareStreamPlayer
+  client:visible
+  videoId="bc4641688850e13d7163e4640587b0e0"
+  className="my-8"
+/>
+```
+
+**Example in a Page:**
+
+```astro
+---
+import Layout from '../layouts/Layout.astro';
+import CloudflareStreamPlayer from '../components/CloudflareStreamPlayer';
+---
+
+<Layout title="Video Announcement">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="mb-8 text-4xl font-bold">Our Latest Update</h1>
+
+    <div class="mx-auto max-w-4xl">
+      <CloudflareStreamPlayer
+        client:load
+        videoId="bc4641688850e13d7163e4640587b0e0"
+        controls={true}
+        autoplay={false}
+      />
+    </div>
+
+    <div class="prose mx-auto mt-8">
+      <p>Watch our announcement video above to learn more.</p>
+    </div>
+  </div>
+</Layout>
+```
+
+**Client Directives:**
+
+- `client:load`: Hydrate immediately on page load (use for above-the-fold videos)
+- `client:visible`: Hydrate when the component enters the viewport (better for performance)
+- `client:idle`: Hydrate after the page has finished loading and the browser is idle
+
+Choose the directive based on when you want the video player to become interactive.
