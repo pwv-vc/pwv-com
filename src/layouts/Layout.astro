@@ -32,6 +32,7 @@ export interface Props {
   twitterSite?: string; // e.g. @pwv
   locale?: string; // e.g. en_US
   redirectAfter?: number; // seconds to redirect after, 0 or undefined = no redirect
+  redirectUrl?: string; // URL to redirect to (defaults to '/' if not specified)
   enableUTMTracking?: boolean; // enable UTM tracking for social sharing
   contentType?: 'post' | 'portfolio' | 'about' | 'apply'; // content type for UTM tracking
   contentSlug?: string; // content slug for UTM tracking
@@ -50,6 +51,7 @@ const {
   twitterSite = '@PWVentures',
   locale = 'en_US',
   redirectAfter,
+  redirectUrl = '/',
   enableUTMTracking = true,
   contentType,
   contentSlug,
@@ -135,7 +137,10 @@ if (image) {
     <!-- Auto redirect if specified -->
     {
       redirectAfter && redirectAfter > 0 && (
-        <meta http-equiv="refresh" content={`${redirectAfter}; url=/`} />
+        <meta
+          http-equiv="refresh"
+          content={`${redirectAfter}; url=${redirectUrl}`}
+        />
       )
     }
 
