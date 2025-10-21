@@ -1,0 +1,82 @@
+---
+interface Props {
+  message: string;
+  href?: string;
+  storageKey?: string;
+}
+
+const { message, href, storageKey = 'banner-dismissed' } = Astro.props;
+---
+
+<script is:inline define:vars={{ storageKey }}>
+  // Check localStorage immediately to prevent flash
+  if (localStorage.getItem(storageKey) === 'true') {
+    document.write('<style>#banner{display:none!important}</style>');
+  }
+</script>
+
+<div
+  id="banner"
+  class="bg-pwv-green relative mx-auto flex items-center justify-center gap-x-1 px-4 py-3 pr-14 sm:gap-x-4 sm:px-6 sm:pr-16 md:gap-x-6"
+  data-storage-key={storageKey}
+>
+  <p
+    class="text-pwv-black md:text-md inline-flex max-w-[calc(100%-3rem)] flex-wrap items-center justify-center text-center text-sm sm:max-w-none sm:text-base"
+  >
+    {
+      href ? (
+        <a
+          href={href}
+          class="inline-flex flex-wrap items-center justify-center hover:underline"
+        >
+          <span class="inline">{message}</span>
+          <svg
+            viewBox="0 0 2 2"
+            aria-hidden="true"
+            class="mx-1.5 inline size-0.5 fill-current sm:mx-2"
+          >
+            <circle r={1} cx={1} cy={1} />
+          </svg>
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      ) : (
+        <span>{message}</span>
+      )
+    }
+  </p>
+  <button
+    type="button"
+    id="banner-close"
+    class="absolute right-3 -m-3 p-3 focus-visible:outline-offset-4 sm:right-3"
+    aria-label="Dismiss"
+  >
+    <svg
+      class="text-pwv-black size-5"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </button>
+</div>
+
+<script>
+  const banner = document.getElementById('banner');
+  const closeButton = document.getElementById('banner-close');
+
+  if (banner && closeButton) {
+    const storageKey =
+      banner.getAttribute('data-storage-key') || 'banner-dismissed';
+
+    // Handle close button click
+    closeButton.addEventListener('click', () => {
+      localStorage.setItem(storageKey, 'true');
+      banner.style.display = 'none';
+    });
+  }
+</script>
