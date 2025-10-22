@@ -9,8 +9,6 @@ heroImage: '../../images/posts/announcing-pwv-fund-i/og-9-announcing-pwv-fund-i.
 featured: true
 ---
 
-# Announcing PWV Fund I: Built by Founders. Backing What’s Next.
-
 New achievement\! Preston-Werner Ventures (through which I did my angel investing) has become [PWV](https://pwv.com/)™ and I’m raising a $100M venture fund to lead pre-seed and seed rounds in today’s most exciting software- and AI-driven companies.
 
 Over the past thirteen years, I’ve invested in over 175 amazing startups, including some of the earliest checks in Stripe, Cursor, Netlify, Snyk, Supabase, PlanetScale, Retool, and [so many more](https://pwv.com/portfolio). I feel tremendously lucky to count myself as a part of the journey of such talented and driven founders and teams.
