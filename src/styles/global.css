@@ -1,6 +1,10 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
+html {
+  scroll-behavior: smooth;
+}
+
 @theme {
   /* 🎨 Colors */
   --color-pwv-black: #000000;
@@ -82,4 +86,3 @@ h6 {
 .pwv-link-underline {
   @apply text-pwv-black decoration-pwv-green underline decoration-3 underline-offset-8;
 }
-

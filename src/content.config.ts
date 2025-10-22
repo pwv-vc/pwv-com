@@ -84,6 +84,11 @@ const team = defineCollection({
     slug: z.string(),
     position: z.number(),
     section: z.string(),
+    linkedin: z.string().optional(),
+    twitter: z.string().optional(),
+    github: z.string().optional(),
+    bluesky: z.string().optional(),
+    website: z.string().optional(),
   }),
 });
 

@@ -1,4 +1,10 @@
 ---
+import LinkedInLink from './LinkedInLink.astro';
+import TwitterLink from './TwitterLink.astro';
+import GitHubLink from './GitHubLink.astro';
+import BlueskyLink from './BlueskyLink.astro';
+import WebsiteLink from './WebsiteLink.astro';
+
 export interface Props {
   name: string;
   title: string;
@@ -7,6 +13,11 @@ export interface Props {
   isGeneralPartner?: boolean;
   slug: string;
   showHover?: boolean;
+  linkedin?: string;
+  twitter?: string;
+  github?: string;
+  bluesky?: string;
+  website?: string;
 }
 
 const {
@@ -17,10 +28,15 @@ const {
   isGeneralPartner = false,
   slug,
   showHover = false,
+  linkedin,
+  twitter,
+  github,
+  bluesky,
+  website,
 } = Astro.props;
 ---
 
-<div class="group relative mt-4">
+<div id={slug} class="group relative mt-4 scroll-mt-8">
   <div class="space-y-2">
     <h3 class="text-xl font-bold">
       {name}
@@ -31,6 +47,19 @@ const {
     <p class="mt-4 max-w-screen-md leading-relaxed">
       {bio}
     </p>
+
+    <!-- Social Links -->
+    {
+      (linkedin || twitter || github || bluesky || website) && (
+        <div class="mt-4 flex gap-3">
+          {linkedin && <LinkedInLink handle={linkedin} />}
+          {twitter && <TwitterLink handle={twitter} />}
+          {bluesky && <BlueskyLink handle={bluesky} />}
+          {github && <GitHubLink handle={github} />}
+          {website && <WebsiteLink url={website} />}
+        </div>
+      )
+    }
   </div>
 
   <!-- Hover tooltip -->

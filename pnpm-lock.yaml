@@ -25,7 +25,10 @@ importers:
         version: 4.0.12
       '@c15t/react':
         specifier: ^1.6.1
-        version: 1.6.1(@babel/core@7.28.4)(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.9.0))(@types/react-dom@19.1.9(@types/react@19.1.15))(@types/react@19.1.15)(crossws@0.3.5)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typeorm@0.3.27(reflect-metadata@0.2.2)(ts-node@10.9.2(@types/node@22.13.8)(typescript@5.9.2)))(ws@8.18.3)
+        version: 1.6.1(@babel/core@7.28.4)(@opentelemetry/api@1.8.0)(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.8.0))(@types/react-dom@19.1.9(@types/react@19.1.15))(@types/react@19.1.15)(crossws@0.3.5)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typeorm@0.3.27(reflect-metadata@0.2.2)(ts-node@10.9.2(@types/node@22.13.8)(typescript@5.9.2)))(ws@8.18.3)
+      '@cloudflare/stream-react':
+        specifier: ^1.9.3
+        version: 1.9.3(react@19.1.1)
       '@fal-ai/client':
         specifier: ^1.6.2
         version: 1.6.2
@@ -294,6 +297,12 @@ packages:
 
   '@clack/prompts@0.11.0':
     resolution: {integrity: sha512-pMN5FcrEw9hUkZA4f+zLlzivQSeQf5dRGJjSUbvVYDLvpKCdQx5OaknvKzgbtXOizhP+SJJJjqEbOe55uKKfAw==}
+
+  '@cloudflare/stream-react@1.9.3':
+    resolution: {integrity: sha512-ocr7B+zHk/jq0r/wgtFeyoz7Hr+v3Qn0Ho6yUBkWT07ahr/0GU1dhliYJESwNXMuMYCU1sZ02sFH9pW5r1/BIA==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: '>=16'
 
   '@colors/colors@1.6.0':
     resolution: {integrity: sha512-Ir+AOibqzrIsL6ajt3Rz3LskB7OiMVHqltZmspbW/TJuTVuyOMirVqAkjfY6JISiLHgyNqicAC8AyHHGzNd/dA==}
@@ -7354,7 +7363,7 @@ snapshots:
 
   '@bugsnag/safe-json-stringify@6.1.0': {}
 
-  '@c15t/backend@1.6.0(@babel/core@7.28.4)(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.9.0))(crossws@0.3.5)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typeorm@0.3.27(reflect-metadata@0.2.2)(ts-node@10.9.2(@types/node@22.13.8)(typescript@5.9.2)))(ws@8.18.3)':
+  '@c15t/backend@1.6.0(@babel/core@7.28.4)(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.8.0))(crossws@0.3.5)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typeorm@0.3.27(reflect-metadata@0.2.2)(ts-node@10.9.2(@types/node@22.13.8)(typescript@5.9.2)))(ws@8.18.3)':
     dependencies:
       '@c15t/translations': 1.6.0
       '@doubletie/logger': 1.0.4(@babel/core@7.28.4)(@opentelemetry/api@1.9.0)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
@@ -7364,8 +7373,8 @@ snapshots:
       '@opentelemetry/sdk-trace-base': 2.1.0(@opentelemetry/api@1.9.0)
       '@orpc/contract': 1.8.1(@opentelemetry/api@1.9.0)
       '@orpc/openapi': 1.8.1(@opentelemetry/api@1.9.0)(crossws@0.3.5)(ws@8.18.3)
-      '@orpc/otel': 1.9.2(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.9.0))
-      '@orpc/server': 1.8.1(@opentelemetry/api@1.9.0)(crossws@0.3.5)(ws@8.18.3)
+      '@orpc/otel': 1.9.2(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.8.0))
+      '@orpc/server': 1.8.1(@opentelemetry/api@1.8.0)(crossws@0.3.5)(ws@8.18.3)
       '@orpc/zod': 1.8.1(@opentelemetry/api@1.9.0)(@orpc/contract@1.8.1(@opentelemetry/api@1.9.0))(@orpc/server@1.8.1(@opentelemetry/api@1.9.0)(crossws@0.3.5)(ws@8.18.3))(crossws@0.3.5)(ws@8.18.3)(zod@4.1.11)
       base-x: 5.0.1
       defu: 6.1.4
@@ -7417,12 +7426,12 @@ snapshots:
       - typeorm
       - ws
 
-  '@c15t/react@1.6.1(@babel/core@7.28.4)(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.9.0))(@types/react-dom@19.1.9(@types/react@19.1.15))(@types/react@19.1.15)(crossws@0.3.5)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typeorm@0.3.27(reflect-metadata@0.2.2)(ts-node@10.9.2(@types/node@22.13.8)(typescript@5.9.2)))(ws@8.18.3)':
+  '@c15t/react@1.6.1(@babel/core@7.28.4)(@opentelemetry/api@1.8.0)(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.8.0))(@types/react-dom@19.1.9(@types/react@19.1.15))(@types/react@19.1.15)(crossws@0.3.5)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typeorm@0.3.27(reflect-metadata@0.2.2)(ts-node@10.9.2(@types/node@22.13.8)(typescript@5.9.2)))(ws@8.18.3)':
     dependencies:
       '@radix-ui/react-accordion': 1.2.4(@types/react-dom@19.1.9(@types/react@19.1.15))(@types/react@19.1.15)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@radix-ui/react-slot': 1.2.0(@types/react@19.1.15)(react@19.1.1)
       '@radix-ui/react-switch': 1.1.4(@types/react-dom@19.1.9(@types/react@19.1.15))(@types/react@19.1.15)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
-      c15t: 1.6.0(@babel/core@7.28.4)(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.9.0))(@types/react@19.1.15)(crossws@0.3.5)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typeorm@0.3.27(reflect-metadata@0.2.2)(ts-node@10.9.2(@types/node@22.13.8)(typescript@5.9.2)))(ws@8.18.3)
+      c15t: 1.6.0(@babel/core@7.28.4)(@opentelemetry/api@1.8.0)(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.8.0))(@types/react@19.1.15)(crossws@0.3.5)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typeorm@0.3.27(reflect-metadata@0.2.2)(ts-node@10.9.2(@types/node@22.13.8)(typescript@5.9.2)))(ws@8.18.3)
       clsx: 2.1.1
       react: 19.1.1
       react-dom: 19.1.1(react@19.1.1)
@@ -7488,6 +7497,10 @@ snapshots:
       '@clack/core': 0.5.0
       picocolors: 1.1.1
       sisteransi: 1.0.5
+
+  '@cloudflare/stream-react@1.9.3(react@19.1.1)':
+    dependencies:
+      react: 19.1.1
 
   '@colors/colors@1.6.0': {}
 
@@ -8907,6 +8920,15 @@ snapshots:
       '@opentelemetry/sdk-trace-base': 2.0.1(@opentelemetry/api@1.9.0)
       '@opentelemetry/semantic-conventions': 1.37.0
 
+  '@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.8.0)':
+    dependencies:
+      '@opentelemetry/api': 1.8.0
+      '@opentelemetry/api-logs': 0.203.0
+      import-in-the-middle: 1.14.4
+      require-in-the-middle: 7.5.2
+    transitivePeerDependencies:
+      - supports-color
+
   '@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.9.0)':
     dependencies:
       '@opentelemetry/api': 1.9.0
@@ -9027,6 +9049,15 @@ snapshots:
 
   '@opentelemetry/semantic-conventions@1.37.0': {}
 
+  '@orpc/client@1.8.1(@opentelemetry/api@1.8.0)':
+    dependencies:
+      '@orpc/shared': 1.8.1(@opentelemetry/api@1.8.0)
+      '@orpc/standard-server': 1.8.1(@opentelemetry/api@1.8.0)
+      '@orpc/standard-server-fetch': 1.8.1(@opentelemetry/api@1.8.0)
+      '@orpc/standard-server-peer': 1.8.1(@opentelemetry/api@1.8.0)
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+
   '@orpc/client@1.8.1(@opentelemetry/api@1.9.0)':
     dependencies:
       '@orpc/shared': 1.8.1(@opentelemetry/api@1.9.0)
@@ -9052,7 +9083,7 @@ snapshots:
       '@orpc/contract': 1.8.1(@opentelemetry/api@1.9.0)
       '@orpc/interop': 1.8.1
       '@orpc/openapi': 1.8.1(@opentelemetry/api@1.9.0)(crossws@0.3.5)(ws@8.18.3)
-      '@orpc/server': 1.8.1(@opentelemetry/api@1.9.0)(crossws@0.3.5)(ws@8.18.3)
+      '@orpc/server': 1.8.1(@opentelemetry/api@1.8.0)(crossws@0.3.5)(ws@8.18.3)
       '@orpc/shared': 1.8.1(@opentelemetry/api@1.9.0)
     transitivePeerDependencies:
       - '@opentelemetry/api'
@@ -9074,7 +9105,7 @@ snapshots:
       '@orpc/contract': 1.8.1(@opentelemetry/api@1.9.0)
       '@orpc/interop': 1.8.1
       '@orpc/openapi-client': 1.8.1(@opentelemetry/api@1.9.0)
-      '@orpc/server': 1.8.1(@opentelemetry/api@1.9.0)(crossws@0.3.5)(ws@8.18.3)
+      '@orpc/server': 1.8.1(@opentelemetry/api@1.8.0)(crossws@0.3.5)(ws@8.18.3)
       '@orpc/shared': 1.8.1(@opentelemetry/api@1.9.0)
       '@orpc/standard-server': 1.8.1(@opentelemetry/api@1.9.0)
       rou3: 0.7.5
@@ -9083,13 +9114,13 @@ snapshots:
       - crossws
       - ws
 
-  '@orpc/otel@1.9.2(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.9.0))':
+  '@orpc/otel@1.9.2(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.8.0))':
     dependencies:
       '@opentelemetry/api': 1.9.0
-      '@opentelemetry/instrumentation': 0.203.0(@opentelemetry/api@1.9.0)
+      '@opentelemetry/instrumentation': 0.203.0(@opentelemetry/api@1.8.0)
       '@orpc/shared': 1.9.2(@opentelemetry/api@1.9.0)
 
-  '@orpc/server@1.8.1(@opentelemetry/api@1.9.0)(crossws@0.3.5)(ws@8.18.3)':
+  '@orpc/server@1.8.1(@opentelemetry/api@1.8.0)(crossws@0.3.5)(ws@8.18.3)':
     dependencies:
       '@orpc/client': 1.8.1(@opentelemetry/api@1.9.0)
       '@orpc/contract': 1.8.1(@opentelemetry/api@1.9.0)
@@ -9106,6 +9137,13 @@ snapshots:
       ws: 8.18.3
     transitivePeerDependencies:
       - '@opentelemetry/api'
+
+  '@orpc/shared@1.8.1(@opentelemetry/api@1.8.0)':
+    dependencies:
+      radash: 12.1.1
+      type-fest: 4.40.1
+    optionalDependencies:
+      '@opentelemetry/api': 1.8.0
 
   '@orpc/shared@1.8.1(@opentelemetry/api@1.9.0)':
     dependencies:
@@ -9130,6 +9168,13 @@ snapshots:
     transitivePeerDependencies:
       - '@opentelemetry/api'
 
+  '@orpc/standard-server-fetch@1.8.1(@opentelemetry/api@1.8.0)':
+    dependencies:
+      '@orpc/shared': 1.8.1(@opentelemetry/api@1.8.0)
+      '@orpc/standard-server': 1.8.1(@opentelemetry/api@1.8.0)
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+
   '@orpc/standard-server-fetch@1.8.1(@opentelemetry/api@1.9.0)':
     dependencies:
       '@orpc/shared': 1.8.1(@opentelemetry/api@1.9.0)
@@ -9145,10 +9190,23 @@ snapshots:
     transitivePeerDependencies:
       - '@opentelemetry/api'
 
+  '@orpc/standard-server-peer@1.8.1(@opentelemetry/api@1.8.0)':
+    dependencies:
+      '@orpc/shared': 1.8.1(@opentelemetry/api@1.8.0)
+      '@orpc/standard-server': 1.8.1(@opentelemetry/api@1.8.0)
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+
   '@orpc/standard-server-peer@1.8.1(@opentelemetry/api@1.9.0)':
     dependencies:
       '@orpc/shared': 1.8.1(@opentelemetry/api@1.9.0)
       '@orpc/standard-server': 1.8.1(@opentelemetry/api@1.9.0)
+    transitivePeerDependencies:
+      - '@opentelemetry/api'
+
+  '@orpc/standard-server@1.8.1(@opentelemetry/api@1.8.0)':
+    dependencies:
+      '@orpc/shared': 1.8.1(@opentelemetry/api@1.8.0)
     transitivePeerDependencies:
       - '@opentelemetry/api'
 
@@ -9163,7 +9221,7 @@ snapshots:
       '@orpc/contract': 1.8.1(@opentelemetry/api@1.9.0)
       '@orpc/json-schema': 1.8.1(@opentelemetry/api@1.9.0)(crossws@0.3.5)(ws@8.18.3)
       '@orpc/openapi': 1.8.1(@opentelemetry/api@1.9.0)(crossws@0.3.5)(ws@8.18.3)
-      '@orpc/server': 1.8.1(@opentelemetry/api@1.9.0)(crossws@0.3.5)(ws@8.18.3)
+      '@orpc/server': 1.8.1(@opentelemetry/api@1.8.0)(crossws@0.3.5)(ws@8.18.3)
       '@orpc/shared': 1.8.1(@opentelemetry/api@1.9.0)
       escape-string-regexp: 5.0.0
       wildcard-match: 5.1.4
@@ -10429,12 +10487,12 @@ snapshots:
 
   bytes@3.1.2: {}
 
-  c15t@1.6.0(@babel/core@7.28.4)(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.9.0))(@types/react@19.1.15)(crossws@0.3.5)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typeorm@0.3.27(reflect-metadata@0.2.2)(ts-node@10.9.2(@types/node@22.13.8)(typescript@5.9.2)))(ws@8.18.3):
+  c15t@1.6.0(@babel/core@7.28.4)(@opentelemetry/api@1.8.0)(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.8.0))(@types/react@19.1.15)(crossws@0.3.5)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typeorm@0.3.27(reflect-metadata@0.2.2)(ts-node@10.9.2(@types/node@22.13.8)(typescript@5.9.2)))(ws@8.18.3):
     dependencies:
-      '@c15t/backend': 1.6.0(@babel/core@7.28.4)(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.9.0))(crossws@0.3.5)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typeorm@0.3.27(reflect-metadata@0.2.2)(ts-node@10.9.2(@types/node@22.13.8)(typescript@5.9.2)))(ws@8.18.3)
+      '@c15t/backend': 1.6.0(@babel/core@7.28.4)(@opentelemetry/instrumentation@0.203.0(@opentelemetry/api@1.8.0))(crossws@0.3.5)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(typeorm@0.3.27(reflect-metadata@0.2.2)(ts-node@10.9.2(@types/node@22.13.8)(typescript@5.9.2)))(ws@8.18.3)
       '@c15t/translations': 1.6.0
-      '@orpc/client': 1.8.1(@opentelemetry/api@1.9.0)
-      '@orpc/server': 1.8.1(@opentelemetry/api@1.9.0)(crossws@0.3.5)(ws@8.18.3)
+      '@orpc/client': 1.8.1(@opentelemetry/api@1.8.0)
+      '@orpc/server': 1.8.1(@opentelemetry/api@1.8.0)(crossws@0.3.5)(ws@8.18.3)
       zustand: 5.0.8(@types/react@19.1.15)(react@19.1.1)
     transitivePeerDependencies:
       - '@aws-sdk/client-rds-data'

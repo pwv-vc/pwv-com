@@ -12,6 +12,7 @@ import {
   getPostNavigation,
   getPostBySlug,
 } from '../../lib/news';
+import { KEYWORDS } from '../../consts';
 
 // SSR mode - fetch post data directly
 const slug = Astro.params.slug;
@@ -34,7 +35,7 @@ const title = post.data.title;
 const layoutTitle = 'News | ' + post.data.title + ' by ' + post.data.author;
 const description = post.data.description;
 const image = post.data.heroImage ? post.data.heroImage.src : '/og-image.png';
-const keywords = post.data.tags.join(', ');
+const keywords = post.data.tags.join(', ') + ', ' + KEYWORDS;
 ---
 
 <Layout
@@ -55,41 +56,49 @@ const keywords = post.data.tags.join(', ');
   redirectUrl={post.data.url}
 >
   <div class="prose prose-lg max-w-screen-xl">
-    <Heading1>{title}</Heading1>
+    <!-- Responsive layout: stacked on small, 50/50 side-by-side on medium+ -->
+    <div class="flex flex-col md:flex-row md:items-center md:gap-8 lg:gap-12">
+      <!-- Left column: title, description, author -->
+      <div class="md:w-1/2">
+        <Heading1>{title}</Heading1>
 
-    <p>
-      {post.data.description}
-    </p>
-    <p class="text-subtle text-sm">
-      Written by {post.data.author}
-      {
-        (() => {
-          const readingTime = getReadingTime(post.body);
-          return readingTime > 0 ? ` • ${readingTime} min read` : '';
-        })()
-      }
-    </p>
-    <div class="mx-auto flex justify-center">
-      {
-        post.data.heroImage ? (
-          <div class="mb-4 h-auto w-full overflow-hidden lg:w-1/2">
-            <SmartImage
-              src={post.data.heroImage}
-              alt={post.data.title}
-              size="full"
-              rounded={false}
-              shadow={false}
-              class="h-full w-full"
-              loading="eager"
+        <p>
+          {post.data.description}
+        </p>
+        <p class="text-subtle text-sm">
+          Written by {post.data.author}
+          {
+            (() => {
+              const readingTime = getReadingTime(post.body);
+              return readingTime > 0 ? ` • ${readingTime} min read` : '';
+            })()
+          }
+        </p>
+      </div>
+
+      <!-- Right column: image -->
+      <div class="md:w-1/2">
+        {
+          post.data.heroImage ? (
+            <div class="">
+              <SmartImage
+                src={post.data.heroImage}
+                alt={post.data.title}
+                size="hero"
+                rounded={true}
+                shadow={true}
+                class="h-auto w-full object-contain"
+                loading="eager"
+              />
+            </div>
+          ) : (
+            <PlaceholderImage
+              alt={`Hero image for ${post.data.title}`}
+              class="mb-8 h-64 w-full rounded-lg"
             />
-          </div>
-        ) : (
-          <PlaceholderImage
-            alt={`Hero image for ${post.data.title}`}
-            class="mb-8 h-64 w-full rounded-lg"
-          />
-        )
-      }
+          )
+        }
+      </div>
     </div>
     <!-- External link for posts with URL -->
     {
@@ -127,7 +136,7 @@ const keywords = post.data.tags.join(', ');
       <div class="flex flex-wrap gap-2">
         {
           post.data.tags.map((tag) => (
-            <span class="border-default text-subtle rounded-lg border p-2 font-mono text-sm">
+            <span class="border-default text-pwv-black border-pwv-green rounded-lg border p-2 font-mono text-sm">
               {tag}
             </span>
           ))
@@ -138,7 +147,9 @@ const keywords = post.data.tags.join(', ');
       </p>
     </div>
     <hr />
-    <Content />
+    <section class="max-w-screen-lg">
+      <Content />
+    </section>
 
     <!-- Post Navigation -->
     <PostNavigation

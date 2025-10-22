@@ -109,9 +109,11 @@ export const getNonExternalPosts = cached(
 export const getFeaturedPosts = cached(
   async () => {
     const allPosts = await getAllPosts();
-    return allPosts.filter((post) => post.data.featured === true);
+    return allPosts
+      .filter((post) => post.data.featured === true)
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   },
-  () => 'featured-posts'
+  () => 'featured-posts-v1'
 );
 
 /**

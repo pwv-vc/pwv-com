@@ -6,5 +6,9 @@
   "isGeneralPartner": true,
   "slug": "tom-preston-werner",
   "position": 1,
-  "section": "General Partners"
+  "section": "General Partners",
+  "linkedin": "mojombor",
+  "twitter": "mojombo",
+  "github": "mojombo",
+  "bluesky": "mojombo.bsky.social"
 }

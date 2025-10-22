@@ -4,6 +4,7 @@ import Heading1 from '../../components/Heading1.astro';
 import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
 import PortfolioCompanyCard from '../../components/PortfolioCompanyCard.astro';
 import { getCollection } from 'astro:content';
+import { KEYWORDS } from '../../consts';
 
 // Load all three collections
 const [rolling, angel, fund1] = await Promise.all([
@@ -73,13 +74,16 @@ const toggleTagHref = (tag: string) => {
     : [...selectedTags, tag];
   return buildUrlWithTags(next);
 };
+
+const keywords = KEYWORDS + companies.map((c) => c.data.name).join(', ');
 ---
 
 <Layout
-  title="Portfolio"
+  title="Portfolio - Ideas start with founders. Founders start with PWV."
   description="Backing founders from seed to scale."
   enableUTMTracking={true}
   contentType="portfolio"
+  keywords={keywords}
 >
   <section class="mx-auto">
     <Heading1>Portfolio</Heading1>

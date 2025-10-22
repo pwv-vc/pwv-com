@@ -24,6 +24,7 @@
     "@astrojs/react": "^4.4.0",
     "@astrojs/rss": "^4.0.12",
     "@c15t/react": "^1.6.1",
+    "@cloudflare/stream-react": "^1.9.3",
     "@fal-ai/client": "^1.6.2",
     "@fontsource-variable/dm-sans": "^5.2.7",
     "@fontsource/dm-mono": "^5.2.6",
