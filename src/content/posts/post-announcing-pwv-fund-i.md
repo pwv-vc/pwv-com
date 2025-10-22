@@ -32,3 +32,5 @@ My goal, with every PWV investment, is to back ideas that truly create a differe
 If you’re a visionary technology founder looking to raise your pre-seed or seed, we want to hear from you. Please apply at [pwv.com/apply](http://pwv.com/apply).
 
 If you’d like to learn more about investing in PWV Fund I, please email [investors@pwv.com](mailto:investors@pwv.com).
+
+This post was originally published by Tom Preston-Werner on [tom.preston-werner.com](https://tom.preston-werner.com/2025/10/22/announcing-pwv-fund-1).
