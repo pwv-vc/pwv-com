@@ -1,6 +1,6 @@
 ---
 title: 'Announcing PWV Fund I: Built by Founders. Backing What’s Next.'
-description: "PWV is raising a $100M venture fund to lead pre-seed and seed rounds in today's most exciting software- and AI-driven companies."
+description: "PWV is raising a venture fund targetting $100M to lead pre-seed and seed rounds in today's most exciting software- and AI-driven companies."
 pubDate: '2025-10-22'
 updatedDate: '2025-10-22'
 tags: ['PWV', 'Fund I', 'Venture Capital', 'Fundraising', 'Investing']
@@ -9,7 +9,7 @@ heroImage: '../../images/posts/announcing-pwv-fund-i/og-9-announcing-pwv-fund-i.
 featured: true
 ---
 
-New achievement\! Preston-Werner Ventures (through which I did my angel investing) has become [PWV](https://pwv.com/)™ and I’m raising a $100M venture fund to lead pre-seed and seed rounds in today’s most exciting software- and AI-driven companies.
+New achievement\! Preston-Werner Ventures (through which I did my angel investing) has become [PWV](https://pwv.com/)™ and I’m raising a venture fund targetting $100M to lead pre-seed and seed rounds in today’s most exciting software- and AI-driven companies.
 
 Over the past thirteen years, I’ve invested in over 175 amazing startups, including some of the earliest checks in Stripe, Cursor, Netlify, Snyk, Supabase, PlanetScale, Retool, and [so many more](https://pwv.com/portfolio). I feel tremendously lucky to count myself as a part of the journey of such talented and driven founders and teams.
 
