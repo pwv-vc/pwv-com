@@ -95,7 +95,6 @@ const getSiteName = (url: string) => {
       <div
         class={`flex items-center gap-2 ${dateSize} ${isSmall ? 'mb-2' : 'mb-3'}`}
       >
-        <FormattedDate date={post.data.pubDate} />
         {
           isRemote && post.data.url && (
             <>
@@ -179,11 +178,15 @@ const getSiteName = (url: string) => {
           </p>
         )
       }
+      <p class="text-subtle mb-2 text-xs">
+        <FormattedDate date={post.data.pubDate} />
+      </p>
       <p
         class={`${descriptionSize}  leading-relaxed ${isSmall ? 'mb-3' : 'mb-4'} flex-grow`}
       >
         {post.data.description}
       </p>
+
       <div class="mt-auto text-center">
         <a
           href={`/news/${post.id}`}
