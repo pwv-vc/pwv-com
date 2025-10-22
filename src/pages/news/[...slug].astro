@@ -12,6 +12,7 @@ import {
   getPostNavigation,
   getPostBySlug,
 } from '../../lib/news';
+import { KEYWORDS } from '../../consts';
 
 // SSR mode - fetch post data directly
 const slug = Astro.params.slug;
@@ -34,7 +35,7 @@ const title = post.data.title;
 const layoutTitle = 'News | ' + post.data.title + ' by ' + post.data.author;
 const description = post.data.description;
 const image = post.data.heroImage ? post.data.heroImage.src : '/og-image.png';
-const keywords = post.data.tags.join(', ');
+const keywords = post.data.tags.join(', ') + ', ' + KEYWORDS;
 ---
 
 <Layout
