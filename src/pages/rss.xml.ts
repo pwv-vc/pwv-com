@@ -2,10 +2,27 @@ import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import { SITE_NAME, SITE_TITLE } from '../consts';
 
+// Helper function to convert date strings to Eastern Time
+const parseDateAsEastern = (dateString: string): Date => {
+  // If the date string is just a date (YYYY-MM-DD), treat it as Eastern Time
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+    // Create date in Eastern Time by adding timezone offset
+    const date = new Date(dateString + 'T00:00:00');
+    // Convert to Eastern Time (UTC-5 or UTC-4 depending on DST)
+    // For simplicity, we'll use UTC-5 (EST) - this handles most cases correctly
+    const easternOffset = -5 * 60; // -5 hours in minutes
+    return new Date(
+      date.getTime() + (date.getTimezoneOffset() + easternOffset) * 60000
+    );
+  }
+  // If it's already a full datetime, use as-is
+  return new Date(dateString);
+};
+
 export async function GET(context: any) {
   const allPosts = (await getCollection('posts')).sort((a, b) => {
-    const dateA = new Date(a.data.pubDate).getTime();
-    const dateB = new Date(b.data.pubDate).getTime();
+    const dateA = parseDateAsEastern(a.data.pubDate).getTime();
+    const dateB = parseDateAsEastern(b.data.pubDate).getTime();
     return dateB - dateA;
   });
 
@@ -65,7 +82,7 @@ export async function GET(context: any) {
       return {
         title: post.data.title,
         description: post.data.description,
-        pubDate: post.data.pubDate,
+        pubDate: parseDateAsEastern(post.data.pubDate),
         link: postURL,
         guid: postURL,
         // Remove author field since we don't have email addresses
