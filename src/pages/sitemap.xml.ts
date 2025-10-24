@@ -45,10 +45,10 @@ export async function GET(context: any) {
       | 'never';
     priority: number;
   }> = [
-    { path: '/', changefreq: 'weekly', priority: 1.0 },
-    { path: '/news/', changefreq: 'daily', priority: 0.8 },
-    { path: '/about/', changefreq: 'monthly', priority: 0.7 },
-    { path: '/portfolio/', changefreq: 'monthly', priority: 0.7 },
+    { path: '/', changefreq: 'daily', priority: 1.0 },
+    { path: '/news/', changefreq: 'hourly', priority: 1.0 },
+    { path: '/about/', changefreq: 'weekly', priority: 0.7 },
+    { path: '/portfolio/', changefreq: 'daily', priority: 0.7 },
     { path: '/apply/', changefreq: 'monthly', priority: 0.6 },
   ];
 
