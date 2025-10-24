@@ -46,7 +46,10 @@ export async function GET(context: any) {
     priority: number;
   }> = [
     { path: '/', changefreq: 'weekly', priority: 1.0 },
-    { path: '/library/', changefreq: 'daily', priority: 0.8 },
+    { path: '/news/', changefreq: 'daily', priority: 0.8 },
+    { path: '/about/', changefreq: 'monthly', priority: 0.7 },
+    { path: '/portfolio/', changefreq: 'monthly', priority: 0.7 },
+    { path: '/apply/', changefreq: 'monthly', priority: 0.6 },
   ];
 
   const library = await getCollection('posts');
@@ -68,7 +71,7 @@ export async function GET(context: any) {
         ? escapeXml(String(entry.data.description))
         : undefined;
       return {
-        path: `/library/${entry.id}`,
+        path: `/news/${entry.id}`,
         lastmod,
         changefreq,
         priority,
