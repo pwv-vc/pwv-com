@@ -8,17 +8,18 @@ import Logo from '../assets/logo.svg';
 
   <nav class="flex items-center justify-between py-4">
     <!-- Logo -->
-    <a href="/" class="flex-shrink-0">
+    <a href="/" aria-label="PWV" class="flex-shrink-0">
       <Logo class="h-[74px] w-[300px]" />
     </a>
 
     <!-- Desktop Menu -->
     <div class="hidden md:flex md:items-center md:space-x-8">
-      <a href="/about" class="pwv-link">About</a>
-      <a href="/portfolio" class="pwv-link">Portfolio</a>
-      <a href="/news" class="pwv-link">News</a>
+      <a href="/about" aria-label="About" class="pwv-link">About</a>
+      <a href="/portfolio" aria-label="Portfolio" class="pwv-link">Portfolio</a>
+      <a href="/news" aria-label="News" class="pwv-link">News</a>
       <a
         href="/apply"
+        aria-label="Apply"
         class="bg-pwv-black hover:bg-pwv-black rounded-md px-4 py-2 text-center text-white transition-colors duration-200"
         >Apply</a
       >
