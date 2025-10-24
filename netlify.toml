@@ -10,12 +10,14 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Vary = "Accept-Encoding"
 
 # Cache static assets for 1 year
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    Vary = "Accept-Encoding"
 
 # Cache images for 1 month
 [[headers]]
@@ -43,11 +45,26 @@
   [headers.values]
     Cache-Control = "public, max-age=2592000"
 
+# Cache CSS files with compression
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Vary = "Accept-Encoding"
+
+# Cache JavaScript files with compression
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Vary = "Accept-Encoding"
+
 # Cache HTML pages for 1 hour (since content can change)
 [[headers]]
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=3600, s-maxage=3600"
+    Content-Encoding = "gzip, br"
 
 # Cache news pages for 5 minutes (SSR with filtering)
 [[headers]]
