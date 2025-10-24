@@ -4,7 +4,11 @@ import Heading1 from '../../components/Heading1.astro';
 export const prerender = true;
 ---
 
-<Layout title="Thank You" redirectAfter={5}>
+<Layout
+  title="Thank You"
+  description="Thank you for your application to PWV. We received your submission and will be in touch soon about your funding opportunity."
+  redirectAfter={5}
+>
   <section class="mx-auto">
     <Heading1>Thank you</Heading1>
     <p class="text-pwv-black mt-4">
