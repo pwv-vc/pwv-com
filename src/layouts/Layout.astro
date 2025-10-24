@@ -156,10 +156,7 @@ if (image) {
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
     {author && <meta name="author" content={author} />}
-    <meta
-      name="robots"
-      content={isProduction ? 'index,follow' : 'noindex,nofollow'}
-    />
+    <meta name="robots" content="index,follow" />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={ogSharingURL} />
