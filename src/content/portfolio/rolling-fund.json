@@ -202,5 +202,23 @@
     "slug": "milestone",
     "url": "https://mstone.ai/",
     "tags": ["ai"]
+  },
+  {
+    "name": "Myriad",
+    "url": "https://myriad.company/",
+    "tags": ["ai", "compliance"],
+    "slug": "myriad-ai"
+  },
+  {
+    "name": "Alinia",
+    "url": "https://alinia.ai/",
+    "tags": ["ai", "compliance"],
+    "slug": "alinia"
+  },
+  {
+    "name": "Freeplay",
+    "url": "https://freeplay.ai/",
+    "tags": ["ai", "dev tools"],
+    "slug": "freeplay"
   }
 ]
