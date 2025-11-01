@@ -106,11 +106,19 @@ const toggleTagHref = (tag: string) => {
 };
 
 const keywords = KEYWORDS + companies.map((c) => c.data.name).join(', ');
+
+// Generate dynamic SEO metadata based on selected tag
+const portfolioTitle = hasSelected
+  ? `Portfolio: ${selectedTag} - PWV`
+  : 'Portfolio - Ideas start with founders. Founders start with PWV.';
+const portfolioDescription = hasSelected
+  ? `Explore PWV's ${selectedTag} portfolio companies. We back category-defining founders from seed to scale with $500K–$3M+ investments.`
+  : "PWV's portfolio includes category-defining companies like Cursor, Stripe, Netlify, Supabase, and PlanetScale. We back founders from seed to scale with $500K–$3M+ investments.";
 ---
 
 <Layout
-  title="Portfolio - Ideas start with founders. Founders start with PWV."
-  description="PWV's portfolio includes category-defining companies like Cursor, Stripe, Netlify, Supabase, and PlanetScale. We back founders from seed to scale with $500K–$3M+ investments."
+  title={portfolioTitle}
+  description={portfolioDescription}
   enableUTMTracking={true}
   contentType="portfolio"
   keywords={keywords}
@@ -168,4 +176,3 @@ const keywords = KEYWORDS + companies.map((c) => c.data.name).join(', ');
     </p>
   </section>
 </Layout>
-

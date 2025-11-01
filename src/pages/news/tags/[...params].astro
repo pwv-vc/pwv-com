@@ -51,7 +51,7 @@ const pageSize = 12;
 const { posts, pagination } = await getPaginatedPostsByTag(tag, page, pageSize);
 
 const title = `News tagged "${tag}"`;
-const description = `Articles and posts tagged "${tag}" on PWV.`;
+const description = `Explore articles, posts, and perspectives tagged "${tag}" from PWV, our founders, and our community.`;
 ---
 
 <Layout title={title} description={description}>
@@ -61,20 +61,22 @@ const description = `Articles and posts tagged "${tag}" on PWV.`;
       Articles and posts tagged "{tag}".
     </p>
 
-    {posts.length > 0 ? (
-      <>
-        <Heading2NoUnderline>All Posts</Heading2NoUnderline>
-        <PostsGrid posts={posts} size="large" />
+    {
+      posts.length > 0 ? (
+        <>
+          <Heading2NoUnderline>All Posts</Heading2NoUnderline>
+          <PostsGrid posts={posts} size="large" />
 
-        <Pagination
-          currentPage={pagination.currentPage}
-          totalPages={pagination.totalPages}
-          baseUrl={`/news/tags/${tagSlug}`}
-        />
-      </>
-    ) : (
-      <p class="text-lg">No posts found with this tag.</p>
-    )}
+          <Pagination
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            baseUrl={`/news/tags/${tagSlug}`}
+          />
+        </>
+      ) : (
+        <p class="text-lg">No posts found with this tag.</p>
+      )
+    }
 
     <div class="mt-8 text-center">
       <a
@@ -99,4 +101,3 @@ const description = `Articles and posts tagged "${tag}" on PWV.`;
     </div>
   </section>
 </Layout>
-

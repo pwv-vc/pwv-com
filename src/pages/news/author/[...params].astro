@@ -48,10 +48,14 @@ if (!author) {
 
 // Get paginated posts
 const pageSize = 12;
-const { posts, pagination } = await getPaginatedPostsByAuthor(author, page, pageSize);
+const { posts, pagination } = await getPaginatedPostsByAuthor(
+  author,
+  page,
+  pageSize
+);
 
 const title = `News by ${author}`;
-const description = `Articles and posts by ${author} on PWV.`;
+const description = `Discover perspectives, insights, and announcements by ${author} from PWV and our community.`;
 ---
 
 <Layout title={title} description={description}>
@@ -61,20 +65,22 @@ const description = `Articles and posts by ${author} on PWV.`;
       Articles and posts by {author}.
     </p>
 
-    {posts.length > 0 ? (
-      <>
-        <Heading2NoUnderline>All Posts</Heading2NoUnderline>
-        <PostsGrid posts={posts} size="large" />
+    {
+      posts.length > 0 ? (
+        <>
+          <Heading2NoUnderline>All Posts</Heading2NoUnderline>
+          <PostsGrid posts={posts} size="large" />
 
-        <Pagination
-          currentPage={pagination.currentPage}
-          totalPages={pagination.totalPages}
-          baseUrl={`/news/author/${authorSlug}`}
-        />
-      </>
-    ) : (
-      <p class="text-lg">No posts found by this author.</p>
-    )}
+          <Pagination
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            baseUrl={`/news/author/${authorSlug}`}
+          />
+        </>
+      ) : (
+        <p class="text-lg">No posts found by this author.</p>
+      )
+    }
 
     <div class="mt-8 text-center">
       <a
@@ -99,4 +105,3 @@ const description = `Articles and posts by ${author} on PWV.`;
     </div>
   </section>
 </Layout>
-
