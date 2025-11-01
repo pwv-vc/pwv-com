@@ -6,20 +6,31 @@ import {
   getPaginatedPosts,
   getExternalPosts,
   getNonExternalPosts,
+  getAllPosts,
 } from '../../lib/news';
 import PostsGrid from '../../components/PostsGrid.astro';
 import PostsToggle from '../../components/PostsToggle.astro';
 import FeaturedPosts from '../../components/FeaturedPosts.astro';
 import Pagination from '../../components/Pagination.astro';
 
-// Default page: all filter, page 1
-const activeFilter: 'all' | 'community' | 'pwv' = 'all';
-const page = 1;
+export async function getStaticPaths() {
+  const pageSize = 12;
+  const allPosts = await getAllPosts();
+  const totalPages = Math.ceil(allPosts.length / pageSize);
+  const paths: Array<{ params: { page: string } }> = [];
 
-// Derive heading based on active filter
+  // Generate paths for pages 2 and beyond
+  for (let page = 2; page <= totalPages; page++) {
+    paths.push({ params: { page: page.toString() } });
+  }
+
+  return paths;
+}
+
+const page = parseInt(Astro.params.page ?? '1');
+const activeFilter: 'all' | 'community' | 'pwv' = 'all';
 const postsHeading = 'All Posts';
 
-// Get paginated posts
 const pageSize = 12;
 const { posts, pagination } = await getPaginatedPosts(
   page,
@@ -27,7 +38,6 @@ const { posts, pagination } = await getPaginatedPosts(
   activeFilter
 );
 
-// Get counts for the toggle
 const externalPosts = await getExternalPosts();
 const nonExternalPosts = await getNonExternalPosts();
 const title = 'News';
@@ -83,3 +93,4 @@ const description =
     </div>
   </section>
 </Layout>
+

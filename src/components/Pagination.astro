@@ -50,12 +50,17 @@ const getPageNumbers = () => {
 const pageNumbers = getPageNumbers();
 
 const buildUrl = (page: number) => {
-  const params = new URLSearchParams();
-  params.set('page', page.toString());
   if (filter && filter !== 'all') {
-    params.set('filter', filter);
+    // For filtered pages, use /news/list/[filter]/[page] structure
+    const segments: string[] = ['list', filter];
+    if (page > 1) {
+      segments.push(page.toString());
+    }
+    return `/news/${segments.join('/')}`;
+  } else {
+    // For 'all' filter, use /news or /news/[page]
+    return page > 1 ? `/news/${page}` : '/news';
   }
-  return `${baseUrl}?${params.toString()}`;
 };
 ---
 

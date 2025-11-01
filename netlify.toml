@@ -66,11 +66,25 @@
     Cache-Control = "public, max-age=3600, s-maxage=3600"
     Content-Encoding = "gzip, br"
 
-# Cache news pages for 5 minutes (SSR with filtering)
+# Cache static HTML pages for longer (static generation)
 [[headers]]
   for = "/news*"
   [headers.values]
-    Cache-Control = "public, max-age=300, s-maxage=300"
+    Cache-Control = "public, max-age=3600, s-maxage=3600"
+
+# Set content-type for RSS feed
+[[headers]]
+  for = "/rss.xml"
+  [headers.values]
+    Content-Type = "application/rss+xml; charset=utf-8"
+    Cache-Control = "public, max-age=3600, s-maxage=3600"
+
+# Set content-type for sitemap
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Content-Type = "application/xml; charset=utf-8"
+    Cache-Control = "public, max-age=3600, s-maxage=3600"
 
 [[redirects]]
   from = "/fund-memo"

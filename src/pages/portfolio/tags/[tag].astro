@@ -1,10 +1,47 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Heading1 from '../../components/Heading1.astro';
-import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
-import PortfolioCompanyCard from '../../components/PortfolioCompanyCard.astro';
+import Layout from '../../../layouts/Layout.astro';
+import Heading1 from '../../../components/Heading1.astro';
+import Heading2NoUnderline from '../../../components/Heading2NoUnderline.astro';
+import PortfolioCompanyCard from '../../../components/PortfolioCompanyCard.astro';
 import { getCollection } from 'astro:content';
-import { KEYWORDS } from '../../consts';
+import { KEYWORDS } from '../../../consts';
+
+export async function getStaticPaths() {
+  // Load all three collections
+  const [rolling, angel, fund1] = await Promise.all([
+    getCollection('rollingFundPortfolio'),
+    getCollection('angelPortfolio'),
+    getCollection('fundOnePortfolio'),
+  ]);
+
+  // Merge and dedupe by slug
+  const mergedMap = new Map<string, any>();
+  for (const entry of [...rolling, ...angel, ...fund1]) {
+    mergedMap.set(entry.data.slug, entry);
+  }
+  const companies = Array.from(mergedMap.values()).sort((a, b) =>
+    a.data.name.localeCompare(b.data.name)
+  );
+
+  // Collect available tags (lowercased for consistency)
+  const allTags = Array.from(
+    new Set(
+      companies.flatMap((c) =>
+        (c.data.tags || []).map((t: string) => t.toLowerCase())
+      )
+    )
+  ).sort();
+
+  // Generate paths for single tags only
+  // Astro will automatically handle URL encoding for route params
+  const paths: Array<{ params: { tag: string } }> = [];
+
+  for (const tag of allTags) {
+    paths.push({ params: { tag } });
+  }
+
+  return paths;
+}
 
 // Load all three collections
 const [rolling, angel, fund1] = await Promise.all([
@@ -36,10 +73,22 @@ const orderedTags = allTags.includes('🦄')
   ? ['🦄', ...allTags.filter((t) => t !== '🦄')]
   : allTags;
 
-// Default: no tags selected (show all companies)
-const selectedTags: string[] = [];
-const hasSelected = selectedTags.length > 0;
-const filteredCompanies = companies;
+// Parse single tag from URL params
+// Astro already decodes URL params, so we don't need to decode again
+const tagParam = Astro.params.tag || '';
+const selectedTag = tagParam ? tagParam.trim().toLowerCase() : '';
+
+const hasSelected = Boolean(selectedTag);
+
+// Filter companies: show items that include the selected tag
+const filteredCompanies = hasSelected
+  ? companies.filter((c) => {
+      const companyTags = (c.data.tags || []).map((t: string) =>
+        t.toLowerCase()
+      );
+      return companyTags.includes(selectedTag);
+    })
+  : companies;
 
 // Helpers to build URLs with single tag
 const buildUrlWithTag = (tag: string | null) => {
@@ -49,10 +98,11 @@ const buildUrlWithTag = (tag: string | null) => {
   // encodeURIComponent properly encodes spaces as %20 and other special characters
   return `/portfolio/tags/${encodeURIComponent(tag)}`;
 };
-const isSelected = (tag: string) => false; // No tags selected on index page
+const isSelected = (tag: string) => selectedTag === tag.toLowerCase();
 const toggleTagHref = (tag: string) => {
-  // Always go to the tag page when clicking a tag from index
-  return buildUrlWithTag(tag.toLowerCase());
+  // If clicking the already selected tag, deselect it (go back to /portfolio)
+  // Otherwise, select the new tag
+  return isSelected(tag) ? '/portfolio' : buildUrlWithTag(tag.toLowerCase());
 };
 
 const keywords = KEYWORDS + companies.map((c) => c.data.name).join(', ');
@@ -85,6 +135,14 @@ const keywords = KEYWORDS + companies.map((c) => c.data.name).join(', ');
               {tag}
             </a>
           ))}
+          {hasSelected && (
+            <a
+              href="/portfolio"
+              class="bg-surface text-pwv-black border-pwv-gray hover:bg-pwv-gray-hover rounded-full border px-3 py-1 text-sm"
+            >
+              clear
+            </a>
+          )}
         </div>
       )
     }
@@ -110,3 +168,4 @@ const keywords = KEYWORDS + companies.map((c) => c.data.name).join(', ');
     </p>
   </section>
 </Layout>
+
