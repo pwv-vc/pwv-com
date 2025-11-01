@@ -1,0 +1,158 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Heading1 from '../../../components/Heading1.astro';
+import Heading2NoUnderline from '../../../components/Heading2NoUnderline.astro';
+import {
+  getPaginatedPosts,
+  getExternalPosts,
+  getNonExternalPosts,
+  getAllPosts,
+} from '../../../lib/news';
+import PostsGrid from '../../../components/PostsGrid.astro';
+import PostsToggle from '../../../components/PostsToggle.astro';
+import FeaturedPosts from '../../../components/FeaturedPosts.astro';
+import Pagination from '../../../components/Pagination.astro';
+
+export async function getStaticPaths() {
+  const pageSize = 12;
+  const filters: ('all' | 'community' | 'pwv')[] = ['all', 'community', 'pwv'];
+  const paths: Array<{ params: { params: string } }> = [];
+
+  for (const filter of filters) {
+    let posts;
+    switch (filter) {
+      case 'community':
+        posts = await getExternalPosts();
+        break;
+      case 'pwv':
+        posts = await getNonExternalPosts();
+        break;
+      default:
+        posts = await getAllPosts();
+    }
+
+    const totalPages = Math.ceil(posts.length / pageSize);
+
+    // Generate paths for each page
+    for (let page = 1; page <= totalPages; page++) {
+      // Skip page 1 for 'all' filter (handled by index redirect)
+      if (filter === 'all' && page === 1) {
+        continue;
+      }
+
+      const segments: string[] = [];
+      if (filter !== 'all') {
+        segments.push(filter);
+      }
+      if (page > 1) {
+        segments.push(page.toString());
+      }
+
+      // Only generate if there are segments
+      if (segments.length > 0) {
+        paths.push({ params: { params: segments.join('/') } });
+      }
+    }
+  }
+
+  return paths;
+}
+
+// Parse params from the catch-all route
+const params = Astro.params.params?.split('/') || [];
+let filter: string = 'all';
+let page: number = 1;
+
+if (params.length > 0) {
+  // Check if first param is a filter
+  if (params[0] === 'community' || params[0] === 'pwv') {
+    filter = params[0];
+    // Check if second param is a page number
+    if (params[1] && !isNaN(parseInt(params[1]))) {
+      page = parseInt(params[1]);
+    }
+  } else if (!isNaN(parseInt(params[0]))) {
+    // First param is a page number (all filter)
+    page = parseInt(params[0]);
+  }
+}
+
+const activeFilter: 'all' | 'community' | 'pwv' = ['community', 'pwv'].includes(
+  filter
+)
+  ? (filter as 'community' | 'pwv')
+  : 'all';
+
+// Derive heading based on active filter
+const postsHeading =
+  activeFilter === 'pwv'
+    ? 'PWV Posts'
+    : activeFilter === 'community'
+      ? 'Community Posts'
+      : 'All Posts';
+
+// Get paginated posts
+const pageSize = 12;
+const { posts, pagination } = await getPaginatedPosts(
+  page,
+  pageSize,
+  activeFilter
+);
+
+// Get counts for the toggle
+const externalPosts = await getExternalPosts();
+const nonExternalPosts = await getNonExternalPosts();
+const title = 'News';
+const description =
+  'Perspectives and announcements from PWV, our founders and community.';
+---
+
+<Layout title={title} description={description}>
+  <section class="mx-auto">
+    <Heading1>News</Heading1>
+    <p class="mb-8 text-lg">
+      Perspectives and announcements from PWV, our founders and community.
+    </p>
+
+    <PostsToggle
+      externalCount={externalPosts.length}
+      nonExternalCount={nonExternalPosts.length}
+      activeFilter={activeFilter}
+    />
+
+    {activeFilter === 'all' && <FeaturedPosts />}
+
+    <Heading2NoUnderline>{postsHeading}</Heading2NoUnderline>
+    <PostsGrid posts={posts} size="large" />
+
+    <Pagination
+      currentPage={pagination.currentPage}
+      totalPages={pagination.totalPages}
+      baseUrl="/news/list"
+      filter={activeFilter}
+    />
+
+    <div class="mt-8 text-center">
+      <a
+        href="/"
+        class="bg-pwv-black text-pwv-white inline-flex items-center gap-2 rounded-lg px-5 py-2 text-sm"
+      >
+        <svg
+          class="h-4 w-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"></path>
+        </svg>
+
+        Home
+      </a>
+    </div>
+  </section>
+</Layout>
+

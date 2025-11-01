@@ -4,6 +4,7 @@ import TwitterLink from './TwitterLink.astro';
 import GitHubLink from './GitHubLink.astro';
 import BlueskyLink from './BlueskyLink.astro';
 import WebsiteLink from './WebsiteLink.astro';
+import NewsLink from './NewsLink.astro';
 
 export interface Props {
   name: string;
@@ -18,6 +19,8 @@ export interface Props {
   github?: string;
   bluesky?: string;
   website?: string;
+  includePosts?: boolean;
+  authorName?: string;
 }
 
 const {
@@ -33,6 +36,8 @@ const {
   github,
   bluesky,
   website,
+  includePosts = false,
+  authorName,
 } = Astro.props;
 ---
 
@@ -50,13 +55,14 @@ const {
 
     <!-- Social Links -->
     {
-      (linkedin || twitter || github || bluesky || website) && (
+      (linkedin || twitter || github || bluesky || website || (includePosts && authorName)) && (
         <div class="mt-4 flex gap-3">
           {linkedin && <LinkedInLink handle={linkedin} />}
           {twitter && <TwitterLink handle={twitter} />}
           {bluesky && <BlueskyLink handle={bluesky} />}
           {github && <GitHubLink handle={github} />}
           {website && <WebsiteLink url={website} />}
+          {includePosts && authorName && <NewsLink authorName={authorName} />}
         </div>
       )
     }

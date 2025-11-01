@@ -23,7 +23,7 @@ import { ConsentManagerLayout } from './ConsentManager';
 export interface Props {
   title?: string;
   description?: string;
-  image?: string;
+  image?: string | any; // Can be an imported image object or a string path
   keywords?: string;
   author?: string;
   pubDate?: Date;
@@ -106,13 +106,22 @@ const rssURL = '/rss.xml';
 // Optimize image for OG tags if provided
 let optimizedImageURL;
 if (image) {
-  const optimizedImage = await getImage({
-    src: image,
-    width: 1200, // Recommended OG image width
-    height: 630, // Recommended OG image height
-    // format unspecified will use webp, avif, or original format
-  });
-  optimizedImageURL = new URL(optimizedImage.src, canonicalURL);
+  // Check if image is an imported image object or a string path
+  const isImageObject = typeof image === 'object' && image !== null && 'src' in image;
+  
+  if (isImageObject) {
+    // Use getImage for imported image objects
+    const optimizedImage = await getImage({
+      src: image,
+      width: 1200, // Recommended OG image width
+      height: 630, // Recommended OG image height
+      // format unspecified will use webp, avif, or original format
+    });
+    optimizedImageURL = new URL(optimizedImage.src, canonicalURL);
+  } else {
+    // For string paths (like '/og-image.png'), use directly
+    optimizedImageURL = new URL(image as string, canonicalURL);
+  }
 }
 ---
 

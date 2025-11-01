@@ -20,6 +20,8 @@ interface TeamMemberData {
   github?: string;
   bluesky?: string;
   website?: string;
+  includePosts?: boolean;
+  authorName?: string;
 }
 
 // Group team members by section
@@ -73,6 +75,8 @@ const sortedSections = Object.entries(sections)
               github={member.github}
               bluesky={member.bluesky}
               website={member.website}
+              includePosts={member.includePosts}
+              authorName={member.authorName}
             />
           ))}
         </div>

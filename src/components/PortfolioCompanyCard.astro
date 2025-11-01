@@ -76,7 +76,7 @@ const getTagStyle = (tag: string) => {
           const styles = getTagStyle(tag);
           return (
             <a
-              href={`/portfolio?tags=${encodeURIComponent(tag.toLowerCase())}`}
+              href={`/portfolio/tags/${encodeURIComponent(tag.toLowerCase())}`}
               class={styles.container}
             >
               <span class={styles.dot} />

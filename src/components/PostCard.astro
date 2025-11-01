@@ -1,7 +1,7 @@
 ---
 import SmartImage from './SmartImage.astro';
 import FormattedDate from './FormattedDate.astro';
-import { getReadingTime } from '../lib/news';
+import { getReadingTime, authorToSlug, tagToSlug } from '../lib/news';
 
 export interface Props {
   post: {
@@ -162,9 +162,12 @@ const getSiteName = (url: string) => {
         post.data.tags && post.data.tags.length > 0 && (
           <div class={`flex flex-wrap gap-1 ${isSmall ? 'mb-2' : 'mb-3'}`}>
             {post.data.tags.map((tag) => (
-              <span class="border-pwv-light-green inline-block rounded-md border px-2 py-1 text-xs font-medium">
+              <a
+                href={`/news/tags/${tagToSlug(tag)}`}
+                class="border-pwv-light-green hover:bg-pwv-light-green inline-block rounded-md border px-2 py-1 text-xs font-medium transition-colors"
+              >
                 {tag}
-              </span>
+              </a>
             ))}
           </div>
         )
@@ -174,7 +177,13 @@ const getSiteName = (url: string) => {
           <p
             class={`${descriptionSize} text-subtle font-semibold ${isSmall ? 'mb-2' : 'mb-3'}`}
           >
-            By {post.data.author}
+            By{' '}
+            <a
+              href={`/news/author/${authorToSlug(post.data.author)}`}
+              class="text-pwv-black hover:text-pwv-green underline transition-colors"
+            >
+              {post.data.author}
+            </a>
           </p>
         )
       }

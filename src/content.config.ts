@@ -89,6 +89,8 @@ const team = defineCollection({
     github: z.string().optional(),
     bluesky: z.string().optional(),
     website: z.string().optional(),
+    includePosts: z.boolean().optional().default(false),
+    authorName: z.string().optional(),
   }),
 });
 

@@ -36,43 +36,23 @@ const orderedTags = allTags.includes('🦄')
   ? ['🦄', ...allTags.filter((t) => t !== '🦄')]
   : allTags;
 
-// Read selected tags from query (?tags=ai,dev%20tools)
-const url = new URL(Astro.request.url);
-const tagsParam = url.searchParams.get('tags') || '';
-const selectedTags = tagsParam
-  .split(',')
-  .map((t) => t.trim().toLowerCase())
-  .filter(Boolean);
-
+// Default: no tags selected (show all companies)
+const selectedTags: string[] = [];
 const hasSelected = selectedTags.length > 0;
+const filteredCompanies = companies;
 
-// Filter companies: show items that include all selected tags
-const filteredCompanies = hasSelected
-  ? companies.filter((c) => {
-      const companyTags = (c.data.tags || []).map((t: string) =>
-        t.toLowerCase()
-      );
-      // OR logic: include company if it has ANY of the selected tags
-      return selectedTags.some((t) => companyTags.includes(t));
-    })
-  : companies;
-
-// Helpers to build URLs with added/removed tags
-const buildUrlWithTags = (tags: string[]) => {
-  const u = new URL(url);
-  if (tags.length === 0) {
-    u.searchParams.delete('tags');
-  } else {
-    u.searchParams.set('tags', tags.join(','));
+// Helpers to build URLs with single tag
+const buildUrlWithTag = (tag: string | null) => {
+  if (!tag) {
+    return '/portfolio';
   }
-  return u.pathname + (u.search ? u.search : '');
+  // encodeURIComponent properly encodes spaces as %20 and other special characters
+  return `/portfolio/tags/${encodeURIComponent(tag)}`;
 };
-const isSelected = (tag: string) => selectedTags.includes(tag);
+const isSelected = (tag: string) => false; // No tags selected on index page
 const toggleTagHref = (tag: string) => {
-  const next = isSelected(tag)
-    ? selectedTags.filter((t) => t !== tag)
-    : [...selectedTags, tag];
-  return buildUrlWithTags(next);
+  // Always go to the tag page when clicking a tag from index
+  return buildUrlWithTag(tag.toLowerCase());
 };
 
 const keywords = KEYWORDS + companies.map((c) => c.data.name).join(', ');
@@ -105,14 +85,6 @@ const keywords = KEYWORDS + companies.map((c) => c.data.name).join(', ');
               {tag}
             </a>
           ))}
-          {hasSelected && (
-            <a
-              href={buildUrlWithTags([])}
-              class="bg-surface text-pwv-black border-pwv-gray hover:bg-pwv-gray-hover rounded-full border px-3 py-1 text-sm"
-            >
-              clear
-            </a>
-          )}
         </div>
       )
     }

@@ -6,5 +6,7 @@
   "isGeneralPartner": false,
   "slug": "jennifer-tacheff",
   "position": 1,
-  "section": "Platform"
+  "section": "Platform",
+  "includePosts": true,
+  "authorName": "Jennifer Tacheff"
 }

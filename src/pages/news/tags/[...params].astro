@@ -1,0 +1,103 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Heading1 from '../../../components/Heading1.astro';
+import Heading2NoUnderline from '../../../components/Heading2NoUnderline.astro';
+import {
+  getAllTags,
+  tagToSlug,
+  getTagBySlug,
+  getPaginatedPostsByTag,
+} from '../../../lib/news';
+import PostsGrid from '../../../components/PostsGrid.astro';
+import Pagination from '../../../components/Pagination.astro';
+
+export async function getStaticPaths() {
+  const pageSize = 12;
+  const tags = await getAllTags();
+  const paths: Array<{ params: { params: string } }> = [];
+
+  for (const tag of tags) {
+    const tagSlug = tagToSlug(tag);
+    const posts = await getPaginatedPostsByTag(tag, 1, 9999);
+    const totalPages = Math.ceil(posts.pagination.totalPosts / pageSize);
+
+    // Generate paths for each page
+    for (let page = 1; page <= totalPages; page++) {
+      const segments: string[] = [tagSlug];
+      if (page > 1) {
+        segments.push(page.toString());
+      }
+      paths.push({ params: { params: segments.join('/') } });
+    }
+  }
+
+  return paths;
+}
+
+// Parse params from the catch-all route
+const params = Astro.params.params?.split('/') || [];
+const tagSlug = params[0] || '';
+const page = params[1] ? parseInt(params[1]) : 1;
+
+// Get the actual tag name from slug
+const tag = await getTagBySlug(tagSlug);
+
+if (!tag) {
+  return Astro.redirect('/news');
+}
+
+// Get paginated posts
+const pageSize = 12;
+const { posts, pagination } = await getPaginatedPostsByTag(tag, page, pageSize);
+
+const title = `News tagged "${tag}"`;
+const description = `Explore articles, posts, and perspectives tagged "${tag}" from PWV, our founders, and our community.`;
+---
+
+<Layout title={title} description={description}>
+  <section class="mx-auto">
+    <Heading1>News tagged "{tag}"</Heading1>
+    <p class="mb-8 text-lg">
+      Articles and posts tagged "{tag}".
+    </p>
+
+    {
+      posts.length > 0 ? (
+        <>
+          <Heading2NoUnderline>All Posts</Heading2NoUnderline>
+          <PostsGrid posts={posts} size="large" />
+
+          <Pagination
+            currentPage={pagination.currentPage}
+            totalPages={pagination.totalPages}
+            baseUrl={`/news/tags/${tagSlug}`}
+          />
+        </>
+      ) : (
+        <p class="text-lg">No posts found with this tag.</p>
+      )
+    }
+
+    <div class="mt-8 text-center">
+      <a
+        href="/news"
+        class="bg-pwv-black text-pwv-white inline-flex items-center gap-2 rounded-lg px-5 py-2 text-sm"
+      >
+        <svg
+          class="h-4 w-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"></path>
+        </svg>
+
+        Back to News
+      </a>
+    </div>
+  </section>
+</Layout>

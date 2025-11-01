@@ -1,0 +1,178 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Heading1 from '../../../components/Heading1.astro';
+import Heading2NoUnderline from '../../../components/Heading2NoUnderline.astro';
+import PortfolioCompanyCard from '../../../components/PortfolioCompanyCard.astro';
+import { getCollection } from 'astro:content';
+import { KEYWORDS } from '../../../consts';
+
+export async function getStaticPaths() {
+  // Load all three collections
+  const [rolling, angel, fund1] = await Promise.all([
+    getCollection('rollingFundPortfolio'),
+    getCollection('angelPortfolio'),
+    getCollection('fundOnePortfolio'),
+  ]);
+
+  // Merge and dedupe by slug
+  const mergedMap = new Map<string, any>();
+  for (const entry of [...rolling, ...angel, ...fund1]) {
+    mergedMap.set(entry.data.slug, entry);
+  }
+  const companies = Array.from(mergedMap.values()).sort((a, b) =>
+    a.data.name.localeCompare(b.data.name)
+  );
+
+  // Collect available tags (lowercased for consistency)
+  const allTags = Array.from(
+    new Set(
+      companies.flatMap((c) =>
+        (c.data.tags || []).map((t: string) => t.toLowerCase())
+      )
+    )
+  ).sort();
+
+  // Generate paths for single tags only
+  // Astro will automatically handle URL encoding for route params
+  const paths: Array<{ params: { tag: string } }> = [];
+
+  for (const tag of allTags) {
+    paths.push({ params: { tag } });
+  }
+
+  return paths;
+}
+
+// Load all three collections
+const [rolling, angel, fund1] = await Promise.all([
+  getCollection('rollingFundPortfolio'),
+  getCollection('angelPortfolio'),
+  getCollection('fundOnePortfolio'),
+]);
+
+// Merge and dedupe by slug
+const mergedMap = new Map<string, any>();
+for (const entry of [...rolling, ...angel, ...fund1]) {
+  mergedMap.set(entry.data.slug, entry);
+}
+const companies = Array.from(mergedMap.values()).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name)
+);
+
+// Collect available tags (lowercased for consistency)
+const allTags = Array.from(
+  new Set(
+    companies.flatMap((c) =>
+      (c.data.tags || []).map((t: string) => t.toLowerCase())
+    )
+  )
+).sort();
+
+// Ensure unicorn appears first in the pills order
+const orderedTags = allTags.includes('🦄')
+  ? ['🦄', ...allTags.filter((t) => t !== '🦄')]
+  : allTags;
+
+// Parse single tag from URL params
+// Astro already decodes URL params, so we don't need to decode again
+const tagParam = Astro.params.tag || '';
+const selectedTag = tagParam ? tagParam.trim().toLowerCase() : '';
+
+const hasSelected = Boolean(selectedTag);
+
+// Filter companies: show items that include the selected tag
+const filteredCompanies = hasSelected
+  ? companies.filter((c) => {
+      const companyTags = (c.data.tags || []).map((t: string) =>
+        t.toLowerCase()
+      );
+      return companyTags.includes(selectedTag);
+    })
+  : companies;
+
+// Helpers to build URLs with single tag
+const buildUrlWithTag = (tag: string | null) => {
+  if (!tag) {
+    return '/portfolio';
+  }
+  // encodeURIComponent properly encodes spaces as %20 and other special characters
+  return `/portfolio/tags/${encodeURIComponent(tag)}`;
+};
+const isSelected = (tag: string) => selectedTag === tag.toLowerCase();
+const toggleTagHref = (tag: string) => {
+  // If clicking the already selected tag, deselect it (go back to /portfolio)
+  // Otherwise, select the new tag
+  return isSelected(tag) ? '/portfolio' : buildUrlWithTag(tag.toLowerCase());
+};
+
+const keywords = KEYWORDS + companies.map((c) => c.data.name).join(', ');
+
+// Generate dynamic SEO metadata based on selected tag
+const portfolioTitle = hasSelected
+  ? `Portfolio: ${selectedTag} Companies`
+  : 'Portfolio - Ideas start with founders. Founders start with PWV.';
+const portfolioDescription = hasSelected
+  ? `Explore PWV's ${selectedTag} portfolio companies. We back category-defining founders from seed to scale with $500K–$3M+ investments.`
+  : "PWV's portfolio includes category-defining companies like Cursor, Stripe, Netlify, Supabase, and PlanetScale. We back founders from seed to scale with $500K–$3M+ investments.";
+---
+
+<Layout
+  title={portfolioTitle}
+  description={portfolioDescription}
+  enableUTMTracking={true}
+  contentType="portfolio"
+  keywords={keywords}
+>
+  <section class="mx-auto">
+    <Heading1>Portfolio</Heading1>
+    <Heading2NoUnderline
+      >Backing founders from seed to scale.</Heading2NoUnderline
+    >
+    {
+      allTags.length > 0 && (
+        <div class="mt-6 flex flex-wrap gap-2">
+          {orderedTags.map((tag) => (
+            <a
+              href={toggleTagHref(tag)}
+              class={`rounded-full border px-3 py-1 text-sm transition-colors ${
+                isSelected(tag)
+                  ? 'bg-pwv-white text-body border-pwv-black'
+                  : 'bg-surface text-pwv-black border-pwv-gray hover:bg-pwv-gray-hover'
+              }`}
+            >
+              {tag}
+            </a>
+          ))}
+          {hasSelected && (
+            <a
+              href="/portfolio"
+              class="bg-surface text-pwv-black border-pwv-gray hover:bg-pwv-gray-hover rounded-full border px-3 py-1 text-sm"
+            >
+              clear
+            </a>
+          )}
+        </div>
+      )
+    }
+
+    <div class="mt-8 grid grid-cols-2 gap-6 md:grid-cols-3 xl:grid-cols-3">
+      {
+        filteredCompanies.map((company) => (
+          <PortfolioCompanyCard
+            name={company.data.name}
+            url={company.data.url}
+            tags={company.data.tags}
+            slug={company.data.slug}
+            showTags={true}
+          />
+        ))
+      }
+    </div>
+
+    <p class="text-pwv-black my-8 text-sm">
+      This list is a non-exhaustive representation of the complete, separate
+      investments from PWV Fund I, the PWV Rolling Fund, and earlier investments
+      by Tom Preston-Werner.
+    </p>
+  </section>
+</Layout>

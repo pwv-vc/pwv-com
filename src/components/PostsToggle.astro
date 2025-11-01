@@ -11,7 +11,7 @@ const { externalCount, nonExternalCount, activeFilter = 'all' } = Astro.props;
 <div class="mb-8 flex scroll-mt-20 items-center justify-center" id="view">
   <div class="bg-pwv-gray flex rounded-lg p-1">
     <a
-      href="/news?page=1"
+      href="/news"
       class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-body hover:bg-pwv-gray-hover ${
         activeFilter === 'all'
           ? 'text-body bg-pwv-white shadow-sm'
@@ -24,7 +24,7 @@ const { externalCount, nonExternalCount, activeFilter = 'all' } = Astro.props;
       >
     </a>
     <a
-      href="/news?filter=pwv&page=1"
+      href="/news/list/pwv"
       class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-body hover:bg-pwv-gray-hover ${
         activeFilter === 'pwv'
           ? 'text-body bg-pwv-white shadow-sm'
@@ -35,7 +35,7 @@ const { externalCount, nonExternalCount, activeFilter = 'all' } = Astro.props;
       <span class="ml-1 text-xs opacity-75">({nonExternalCount})</span>
     </a>
     <a
-      href="/news?filter=community&page=1"
+      href="/news/list/community"
       class={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 hover:text-body hover:bg-pwv-gray-hover ${
         activeFilter === 'community'
           ? 'text-body bg-pwv-white shadow-sm'
