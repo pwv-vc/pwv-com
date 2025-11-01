@@ -161,3 +161,183 @@ export async function getPaginatedPosts(
     },
   };
 }
+
+/**
+ * Get posts by author
+ * @param author - The author name to filter by
+ * @returns Array of posts by the author sorted by publication date (newest first)
+ */
+export async function getPostsByAuthor(author: string) {
+  const allPosts = await getAllPosts();
+  return allPosts.filter((post) => post.data.author === author);
+}
+
+/**
+ * Get paginated posts by author
+ * @param author - The author name to filter by
+ * @param page - Page number (1-based)
+ * @param pageSize - Number of posts per page
+ * @returns Object containing posts, pagination info, and total count
+ */
+export async function getPaginatedPostsByAuthor(
+  author: string,
+  page: number = 1,
+  pageSize: number = 12
+) {
+  const allPosts = await getPostsByAuthor(author);
+  
+  const totalPosts = allPosts.length;
+  const totalPages = Math.ceil(totalPosts / pageSize);
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedPosts = allPosts.slice(startIndex, endIndex);
+
+  return {
+    posts: paginatedPosts,
+    pagination: {
+      currentPage: page,
+      totalPages,
+      pageSize,
+      totalPosts,
+      hasNextPage: page < totalPages,
+      hasPreviousPage: page > 1,
+      nextPage: page < totalPages ? page + 1 : null,
+      previousPage: page > 1 ? page - 1 : null,
+    },
+  };
+}
+
+/**
+ * Get all unique authors from posts
+ * @returns Array of unique author names sorted alphabetically
+ */
+export async function getAllAuthors() {
+  const allPosts = await getAllPosts();
+  const authors = Array.from(
+    new Set(allPosts.map((post) => post.data.author).filter(Boolean))
+  );
+  return authors.sort();
+}
+
+/**
+ * Create a URL-safe slug from author name
+ * @param author - The author name
+ * @returns URL-safe slug
+ */
+export function authorToSlug(author: string): string {
+  return author
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim();
+}
+
+/**
+ * Find author by slug
+ * @param slug - The slug to find
+ * @returns The author name or undefined
+ */
+export async function getAuthorBySlug(slug: string): Promise<string | undefined> {
+  const allAuthors = await getAllAuthors();
+  return allAuthors.find((author) => authorToSlug(author) === slug);
+}
+
+/**
+ * Get all unique tags from posts
+ * @returns Array of unique tag names sorted alphabetically
+ */
+export async function getAllTags() {
+  const allPosts = await getAllPosts();
+  const tags = Array.from(
+    new Set(
+      allPosts
+        .flatMap((post) => post.data.tags || [])
+        .filter(Boolean)
+        .map((tag) => tag.toLowerCase())
+    )
+  );
+  return tags.sort();
+}
+
+/**
+ * Create a URL-safe slug from tag name
+ * @param tag - The tag name
+ * @returns URL-safe slug
+ */
+export function tagToSlug(tag: string): string {
+  return tag
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim();
+}
+
+/**
+ * Find tag by slug, preserving original capitalization
+ * @param slug - The slug to find
+ * @returns The tag name (with original case) or undefined
+ */
+export async function getTagBySlug(slug: string): Promise<string | undefined> {
+  const allPosts = await getAllPosts();
+  // Find the first tag that matches the slug, preserving its original case
+  for (const post of allPosts) {
+    const tags = post.data.tags || [];
+    for (const tag of tags) {
+      if (tagToSlug(tag) === slug) {
+        return tag; // Return with original case
+      }
+    }
+  }
+  return undefined;
+}
+
+/**
+ * Get posts by tag
+ * @param tag - The tag name to filter by (case-insensitive)
+ * @returns Array of posts with the tag sorted by publication date (newest first)
+ */
+export async function getPostsByTag(tag: string) {
+  const allPosts = await getAllPosts();
+  const tagLower = tag.toLowerCase();
+  return allPosts.filter((post) => {
+    const postTags = (post.data.tags || []).map((t) => t.toLowerCase());
+    return postTags.includes(tagLower);
+  });
+}
+
+/**
+ * Get paginated posts by tag
+ * @param tag - The tag name to filter by
+ * @param page - Page number (1-based)
+ * @param pageSize - Number of posts per page
+ * @returns Object containing posts, pagination info, and total count
+ */
+export async function getPaginatedPostsByTag(
+  tag: string,
+  page: number = 1,
+  pageSize: number = 12
+) {
+  const allPosts = await getPostsByTag(tag);
+  
+  const totalPosts = allPosts.length;
+  const totalPages = Math.ceil(totalPosts / pageSize);
+  const startIndex = (page - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedPosts = allPosts.slice(startIndex, endIndex);
+
+  return {
+    posts: paginatedPosts,
+    pagination: {
+      currentPage: page,
+      totalPages,
+      pageSize,
+      totalPosts,
+      hasNextPage: page < totalPages,
+      hasPreviousPage: page > 1,
+      nextPage: page < totalPages ? page + 1 : null,
+      previousPage: page > 1 ? page - 1 : null,
+    },
+  };
+}

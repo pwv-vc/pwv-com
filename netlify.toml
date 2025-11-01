@@ -115,3 +115,9 @@
   to = "https://pwv.docsend.com/view/s/4iy3dfkzkgffqt4p"
   status = 301
   force = true
+
+[[redirects]]
+  from = "/rss"
+  to = "/rss.xml"
+  status = 301
+  force = true

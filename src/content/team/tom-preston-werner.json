@@ -11,5 +11,7 @@
   "twitter": "mojombo",
   "github": "mojombo",
   "bluesky": "mojombo.bsky.social",
-  "website": "https://tom.preston-werner.com/"
+  "website": "https://tom.preston-werner.com/",
+  "includePosts": true,
+  "authorName": "Tom Preston-Werner"
 }

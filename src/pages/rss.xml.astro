@@ -2,6 +2,13 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 import { SITE_NAME, SITE_TITLE } from '../consts';
+import {
+  getAllTags,
+  getAllAuthors,
+  tagToSlug,
+  authorToSlug,
+  getTagBySlug,
+} from '../lib/news';
 
 const site = import.meta.env.SITE || 'https://pwv.com';
 
@@ -14,6 +21,73 @@ const allPosts = (await getCollection('posts')).sort((a, b) => {
 // Normalize site URL (no trailing slash)
 const siteUrl = String(site).replace(/\/$/, '');
 
+// Generate listing page items
+const newsTags = await getAllTags();
+const newsAuthors = await getAllAuthors();
+
+const newsTagItems = await Promise.all(
+  newsTags.map(async (tag) => {
+    const tagSlug = tagToSlug(tag);
+    // Get original tag name with proper capitalization
+    const originalTag = await getTagBySlug(tagSlug) || tag;
+    const tagURL = `${siteUrl}/news/tags/${tagSlug}`;
+    return {
+      title: `News tagged "${originalTag}"`,
+      description: `Browse all articles and posts tagged "${originalTag}" on PWV.`,
+      link: tagURL,
+      guid: tagURL,
+      pubDate: new Date(), // Use current date for listing pages
+      categories: [originalTag],
+    };
+  })
+);
+
+const newsAuthorItems = newsAuthors.map((author) => {
+  const authorSlug = authorToSlug(author);
+  const authorURL = `${siteUrl}/news/author/${authorSlug}`;
+  return {
+    title: `News by ${author}`,
+    description: `Browse all articles and posts by ${author} on PWV.`,
+    link: authorURL,
+    guid: authorURL,
+    pubDate: new Date(), // Use current date for listing pages
+    categories: [author],
+  };
+});
+
+// Generate portfolio tag items
+const [rolling, angel, fund1] = await Promise.all([
+  getCollection('rollingFundPortfolio'),
+  getCollection('angelPortfolio'),
+  getCollection('fundOnePortfolio'),
+]);
+
+const mergedMap = new Map<string, any>();
+for (const entry of [...rolling, ...angel, ...fund1]) {
+  mergedMap.set(entry.data.slug, entry);
+}
+const companies = Array.from(mergedMap.values());
+
+const portfolioTags = Array.from(
+  new Set(
+    companies.flatMap((c) =>
+      (c.data.tags || []).map((t: string) => t.toLowerCase())
+    )
+  )
+);
+
+const portfolioTagItems = portfolioTags.map((tag) => {
+  const tagURL = `${siteUrl}/portfolio/tags/${encodeURIComponent(tag)}`;
+  return {
+    title: `Portfolio tagged "${tag}"`,
+    description: `Browse all portfolio companies tagged "${tag}" on PWV.`,
+    link: tagURL,
+    guid: tagURL,
+    pubDate: new Date(), // Use current date for listing pages
+    categories: [tag],
+  };
+});
+
 const rssContent = await rss({
   title: `${SITE_NAME} - ${SITE_TITLE}`,
   description: `Latest news from PWV and our founder community`,
@@ -21,7 +95,8 @@ const rssContent = await rss({
   xmlns: {
     atom: 'http://www.w3.org/2005/Atom',
   },
-  items: allPosts.map((post) => {
+  items: [
+    ...allPosts.map((post) => {
     // always use the internal post URL
     const postURL = `${siteUrl}/news/${post.id}`;
 
@@ -73,6 +148,10 @@ const rssContent = await rss({
         : '',
     };
   }),
+  ...newsTagItems,
+  ...newsAuthorItems,
+  ...portfolioTagItems,
+  ],
   customData: `<language>en</language>
     <atom:link href="${siteUrl}/rss.xml" rel="self" type="application/rss+xml" />`,
 });

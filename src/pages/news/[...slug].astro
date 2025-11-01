@@ -12,6 +12,8 @@ import {
   getPostNavigation,
   getPostBySlug,
   getAllPosts,
+  authorToSlug,
+  tagToSlug,
 } from '../../lib/news';
 import { KEYWORDS } from '../../consts';
 
@@ -68,7 +70,17 @@ const keywords = post.data.tags.join(', ') + ', ' + KEYWORDS;
           {post.data.description}
         </p>
         <p class="text-subtle text-sm">
-          Written by {post.data.author}
+          Written by{' '}
+          {post.data.author ? (
+            <a
+              href={`/news/author/${authorToSlug(post.data.author)}`}
+              class="text-pwv-black hover:text-pwv-green underline transition-colors"
+            >
+              {post.data.author}
+            </a>
+          ) : (
+            'Unknown'
+          )}
           {
             (() => {
               const readingTime = getReadingTime(post.body);
@@ -138,9 +150,12 @@ const keywords = post.data.tags.join(', ') + ', ' + KEYWORDS;
       <div class="flex flex-wrap gap-2">
         {
           post.data.tags.map((tag) => (
-            <span class="border-default text-pwv-black border-pwv-green rounded-lg border p-2 font-mono text-sm">
+            <a
+              href={`/news/tags/${tagToSlug(tag)}`}
+              class="border-default text-pwv-black border-pwv-green hover:bg-pwv-light-green rounded-lg border p-2 font-mono text-sm transition-colors"
+            >
               {tag}
-            </span>
+            </a>
           ))
         }
       </div>

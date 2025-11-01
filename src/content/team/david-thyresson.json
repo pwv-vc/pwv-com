@@ -11,5 +11,7 @@
   "twitter": "dthyresson",
   "github": "dthyresson",
   "bluesky": "thyresson.co",
-  "website": "https://thyresson.io"
+  "website": "https://thyresson.io",
+  "includePosts": true,
+  "authorName": "David Thyresson"
 }
