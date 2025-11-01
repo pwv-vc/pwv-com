@@ -214,7 +214,7 @@ export async function getPaginatedPostsByAuthor(
 export async function getAllAuthors() {
   const allPosts = await getAllPosts();
   const authors = Array.from(
-    new Set(allPosts.map((post) => post.data.author).filter(Boolean))
+    new Set(allPosts.map((post) => post.data.author).filter((author): author is string => Boolean(author)))
   );
   return authors.sort();
 }
