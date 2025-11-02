@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://pwv.com/sitemap.xml
+Sitemap: https://pwv.com/sitemap-index.xml

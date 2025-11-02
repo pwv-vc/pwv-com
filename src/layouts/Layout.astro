@@ -100,15 +100,16 @@ const favicon16URL = `/favicon-16x16.png?v=${version}`;
 const favicon32URL = `/favicon-32x32.png?v=${version}`;
 const appleTouchIconURL = `/apple-touch-icon.png?v=${version}`;
 const manifestURL = '/site.webmanifest';
-const sitemapURL = '/sitemap.xml';
+const sitemapURL = '/sitemap-index.xml';
 const rssURL = '/rss.xml';
 
 // Optimize image for OG tags if provided
 let optimizedImageURL;
 if (image) {
   // Check if image is an imported image object or a string path
-  const isImageObject = typeof image === 'object' && image !== null && 'src' in image;
-  
+  const isImageObject =
+    typeof image === 'object' && image !== null && 'src' in image;
+
   if (isImageObject) {
     // Use getImage for imported image objects
     const optimizedImage = await getImage({
@@ -141,6 +142,7 @@ if (image) {
       title="PWV Feed"
       href={rssURL}
     />
+    <link rel="sitemap" href={sitemapURL} />
     <meta name="theme-color" content="#ffffff" />
     <meta name="generator" content={Astro.generator} />
 
