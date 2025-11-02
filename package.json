@@ -23,6 +23,7 @@
     "@astrojs/netlify": "^6.6.0",
     "@astrojs/react": "^4.4.0",
     "@astrojs/rss": "^4.0.13",
+    "@astrojs/sitemap": "^3.6.0",
     "@c15t/react": "^1.6.1",
     "@cloudflare/stream-react": "^1.9.3",
     "@fal-ai/client": "^1.6.2",
