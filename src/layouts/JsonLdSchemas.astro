@@ -2,6 +2,7 @@
 import {
   generateOrganizationSchema,
   generatePersonSchema,
+  generateWebSiteSchema,
 } from '../lib/schema';
 import { getCollection } from 'astro:content';
 import { SITE_NAME, SITE_DESCRIPTION } from '../consts';
@@ -110,7 +111,22 @@ const personSchemas = generalPartners.map((member: any) => {
     },
   });
 });
+
+// Generate WebSite schema with SearchAction
+const siteUrl = baseURL?.toString() || canonicalURL.toString();
+const websiteSchema = generateWebSiteSchema({
+  name: SITE_NAME,
+  url: siteUrl,
+  description: SITE_DESCRIPTION,
+  potentialAction: {
+    target: `${siteUrl}/news?q={search_term_string}`,
+    queryInput: 'required name=search_term_string',
+  },
+});
 ---
+
+<!-- WebSite JSON-LD Schema with SearchAction -->
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
 
 <!-- Organization JSON-LD Schema -->
 <script

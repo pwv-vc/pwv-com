@@ -38,6 +38,7 @@ export interface Props {
   enableUTMTracking?: boolean; // enable UTM tracking for social sharing
   contentType?: 'post' | 'portfolio' | 'about' | 'apply'; // content type for UTM tracking
   contentSlug?: string; // content slug for UTM tracking
+  additionalSchemas?: Array<{ schema: object }>; // Additional JSON-LD schemas to include in head
 }
 
 const {
@@ -57,6 +58,7 @@ const {
   enableUTMTracking = true,
   contentType,
   contentSlug,
+  additionalSchemas = [],
 } = Astro.props;
 
 export const isProduction = process.env.CONTEXT === 'production';
@@ -237,6 +239,13 @@ if (image) {
     }
 
     <JsonLdSchemas baseURL={baseURL} canonicalURL={canonicalURL} />
+
+    <!-- Additional JSON-LD Schemas -->
+    {
+      additionalSchemas.map(({ schema }) => (
+        <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+      ))
+    }
   </head>
   <body>
     <Banner
