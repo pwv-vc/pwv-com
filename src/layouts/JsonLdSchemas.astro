@@ -70,8 +70,8 @@ const organizationSchema = generateOrganizationSchema({
     organizationSocialProfiles.length > 0
       ? organizationSocialProfiles
       : undefined,
-  // Use InvestmentCompany type for venture capital fund
-  type: 'InvestmentCompany',
+  // Use Organization type (base schema.org type, always valid)
+  type: 'Organization',
 });
 
 // Generate Person schemas for General Partners
