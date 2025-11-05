@@ -1,0 +1,123 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Heading1 from '../../components/Heading1.astro';
+import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
+import LinkedInLink from '../../components/LinkedInLink.astro';
+import TwitterLink from '../../components/TwitterLink.astro';
+import GitHubLink from '../../components/GitHubLink.astro';
+import BlueskyLink from '../../components/BlueskyLink.astro';
+import WebsiteLink from '../../components/WebsiteLink.astro';
+import PostsGrid from '../../components/PostsGrid.astro';
+import { getCollection } from 'astro:content';
+import { getPostsByAuthor } from '../../lib/news';
+
+export async function getStaticPaths() {
+  const teamMembers = await getCollection('team');
+
+  // Only generate paths for team members with hasPage: true
+  return teamMembers
+    .filter((member) => member.data.hasPage === true)
+    .map((member) => ({
+      params: { slug: member.data.slug },
+      props: { member },
+    }));
+}
+
+const { member } = Astro.props;
+
+if (!member || !member.data.hasPage) {
+  return Astro.redirect('/404');
+}
+
+const {
+  name,
+  title,
+  bio,
+  hoverLine,
+  linkedin,
+  twitter,
+  github,
+  bluesky,
+  website,
+  includePosts,
+  authorName,
+} = member.data;
+
+// Get posts by this author if they have includePosts enabled
+let authorPosts: any[] = [];
+if (includePosts && authorName) {
+  authorPosts = await getPostsByAuthor(authorName);
+}
+
+// SEO-optimized title and description
+const pageTitle = `${name} - ${title} | PWV`;
+// Use hoverLine as primary description if available, otherwise use a shortened bio
+const description =
+  hoverLine || (bio.length > 160 ? `${bio.substring(0, 157)}...` : bio);
+const keywords = `${name}, ${title}, PWV, venture capital, early-stage investing, general partner`;
+---
+
+<Layout
+  title={pageTitle}
+  description={description}
+  keywords={keywords}
+  author={name}
+  enableUTMTracking={true}
+  contentType="team"
+  contentSlug={member.data.slug}
+>
+  <section class="mx-auto space-y-4">
+    <Heading1>{name}</Heading1>
+
+    <p class="text-lg font-medium">
+      {title}
+    </p>
+
+    <p class="mt-6 max-w-screen-md text-lg leading-relaxed">
+      {bio}
+    </p>
+
+    <!-- Social Links -->
+    {
+      (linkedin || twitter || github || bluesky || website) && (
+        <div class="mt-6 flex gap-3">
+          {linkedin && <LinkedInLink handle={linkedin} />}
+          {twitter && <TwitterLink handle={twitter} />}
+          {bluesky && <BlueskyLink handle={bluesky} />}
+          {github && <GitHubLink handle={github} />}
+          {website && <WebsiteLink url={website} />}
+        </div>
+      )
+    }
+  </section>
+
+  {
+    authorPosts.length > 0 && (
+      <section class="mt-12 space-y-6">
+        <Heading2NoUnderline>Articles by {name}</Heading2NoUnderline>
+        <PostsGrid posts={authorPosts} size="large" />
+      </section>
+    )
+  }
+
+  <div class="mt-12 text-center">
+    <a
+      href="/about"
+      class="bg-pwv-black text-pwv-white inline-flex items-center gap-2 rounded-lg px-5 py-2 text-sm"
+    >
+      <svg
+        class="h-4 w-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"></path>
+      </svg>
+      Back to Team
+    </a>
+  </div>
+</Layout>

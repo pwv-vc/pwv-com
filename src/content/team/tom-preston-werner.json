@@ -13,5 +13,6 @@
   "bluesky": "mojombo.bsky.social",
   "website": "https://tom.preston-werner.com/",
   "includePosts": true,
-  "authorName": "Tom Preston-Werner"
+  "authorName": "Tom Preston-Werner",
+  "hasPage": true
 }

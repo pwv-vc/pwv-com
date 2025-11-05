@@ -13,5 +13,6 @@
   "bluesky": "thyresson.co",
   "website": "https://thyresson.io",
   "includePosts": true,
-  "authorName": "David Thyresson"
+  "authorName": "David Thyresson",
+  "hasPage": true
 }

@@ -91,6 +91,7 @@ const team = defineCollection({
     website: z.string().optional(),
     includePosts: z.boolean().optional().default(false),
     authorName: z.string().optional(),
+    hasPage: z.boolean().optional().default(false),
   }),
 });
 
