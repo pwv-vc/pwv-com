@@ -49,6 +49,18 @@ unicorn scale in under 24 months.
 - [Open Graph image](https://pwv.com/og-image.png): Default social share image
 - [Favicon (SVG)](https://pwv.com/favicon.svg): Site icon
 
+## Structured Data (JSON-LD)
+
+The site includes JSON-LD structured data for enhanced understanding:
+
+- **Organization Schema**: PWV organization with name, description, logo, contact email (partners@pwv.com), and founders (General Partners)
+- **Person Schemas**: Each General Partner has structured data including:
+  - Name, job title, and bio
+  - URL (personal website or `/about#<slug>`)
+  - Social profiles (LinkedIn, Twitter/X, GitHub, Bluesky) via `sameAs`
+  - Affiliation with PWV via `worksFor`
+- Structured data is embedded in pages via `<script type="application/ld+json">` tags
+
 ## Content Notes for LLMs
 
 - Primary long-form content is under News. Prefer the canonical page at `https://pwv.com/news/...`.
