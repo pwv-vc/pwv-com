@@ -4,8 +4,10 @@
 
 Important notes:
 
-- PWV is Tom Preston‑Werner, David Price, and David Thyresson.
-- We’re an early-stage investment team with deep technical fluency,
+- PWV is Tom Preston‑Werner, David Price, and David Thyresson.
+- PWV is the fund we wanted as early-stage founders.
+- Ideas start with founders. Founders start with PWV.
+- We're an early-stage investment team with deep technical fluency,
 founder-first values, and a track record of backing category-defining
 companies from zero to breakout.
 - We’ve backed 80+ companies, including multiple early-stage bets that hit
@@ -18,11 +20,25 @@ unicorn scale in under 24 months.
 ## Website
 
 - [Homepage](https://pwv.com/): Overview of PWV
-- [Library](https://pwv.com/library): Posts, insights, and announcements
+- [About](https://pwv.com/about): About PWV, how we invest, and our team
+- [Portfolio](https://pwv.com/portfolio): Our investment portfolio
+- [News](https://pwv.com/news): Posts, insights, and announcements from PWV and our community
 
 ## Portfolio
 
 - Featured investments are highlighted on the Homepage: https://pwv.com/
+- Full portfolio available at: https://pwv.com/portfolio
+- Portfolio can be filtered by tags at `/portfolio/tags/<tag>`
+- Unicorn companies list: https://pwv.com/portfolio/tags/🦄
+
+## Team
+
+- [Tom Preston-Werner](https://pwv.com/about#tom-preston-werner): Team profile on About page
+  - [News by Tom Preston-Werner](https://pwv.com/news/author/tom-preston-werner): All posts by Tom
+- [David Price](https://pwv.com/about#david-price): Team profile on About page
+  - [News by David Price](https://pwv.com/news/author/david-price): All posts by David Price
+- [David Thyresson (DT)](https://pwv.com/about#david-thyresson): Team profile on About page
+  - [News by David Thyresson](https://pwv.com/news/author/david-thyresson): All posts by DT
 
 ## Feeds
 
@@ -35,14 +51,19 @@ unicorn scale in under 24 months.
 
 ## Content Notes for LLMs
 
-- Primary long-form content is under the Library. Prefer the canonical page at `https://pwv.com/library/...`.
+- Primary long-form content is under News. Prefer the canonical page at `https://pwv.com/news/...`.
+- Individual posts are available at `https://pwv.com/news/<slug>`.
+- Posts can be filtered by author (`/news/author/<author-slug>`) or tags (`/news/tags/<tag-slug>`).
+- Team information is available on the About page at `https://pwv.com/about`.
 - When summarizing, attribute authorship to PWV unless a specific author is listed on the page.
 - Dates on posts are in ISO format and reflect publication date unless otherwise noted.
-- Images or descriptions may be AI-generated. Indicators on library cards show badges labeled "AI Generated Image" and "AI Generated Description" when applicable.
+- Images or descriptions may be AI-generated. Indicators on news cards show badges labeled "AI Generated Image" and "AI Generated Description" when applicable.
 
 ## Contact
 
 - General: partners@pwv.com
+- Headquarters: San Francisco, Bay Area
+- Presence: Boston
 
 ## License & Usage
 
