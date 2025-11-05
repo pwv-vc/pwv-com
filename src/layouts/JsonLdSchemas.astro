@@ -19,14 +19,43 @@ const generalPartners = (teamMembers as any[])
   .filter((member: any) => member.data.isGeneralPartner)
   .sort((a: any, b: any) => a.data.position - b.data.position);
 
+// Collect organization social media profiles from general partners
+const organizationSocialProfiles: string[] = [];
+const seenProfiles = new Set<string>();
+
+generalPartners.forEach((member: any) => {
+  // Collect Twitter/X profiles
+  if (
+    member.data.twitter &&
+    !seenProfiles.has(`twitter-${member.data.twitter}`)
+  ) {
+    organizationSocialProfiles.push(`https://x.com/${member.data.twitter}`);
+    seenProfiles.add(`twitter-${member.data.twitter}`);
+  }
+  // Collect LinkedIn profiles
+  if (
+    member.data.linkedin &&
+    !seenProfiles.has(`linkedin-${member.data.linkedin}`)
+  ) {
+    organizationSocialProfiles.push(
+      `https://www.linkedin.com/in/${member.data.linkedin}`
+    );
+    seenProfiles.add(`linkedin-${member.data.linkedin}`);
+  }
+});
+
 // Generate Organization schema
 const organizationSchema = generateOrganizationSchema({
   name: SITE_NAME,
   url: baseURL?.toString() || canonicalURL.toString(),
   description: SITE_DESCRIPTION,
-  logo: new URL('/favicon.svg', baseURL || canonicalURL).toString(),
+  // Using PWV logo PNG for better SEO and compatibility
+  logo: new URL(
+    '/logos/pwv-logo-black-1920.png',
+    baseURL || canonicalURL
+  ).toString(),
   email: 'partners@pwv.com',
-  contactType: 'customer service',
+  // Removed contactType - 'customer service' is not appropriate for a VC firm
   founders: generalPartners.map((member: any) => ({
     name: member.data.name,
     url: member.data.website
@@ -36,6 +65,12 @@ const organizationSchema = generateOrganizationSchema({
           baseURL || canonicalURL
         ).toString(),
   })),
+  sameAs:
+    organizationSocialProfiles.length > 0
+      ? organizationSocialProfiles
+      : undefined,
+  // Use InvestmentCompany type for venture capital fund
+  type: 'InvestmentCompany',
 });
 
 // Generate Person schemas for General Partners

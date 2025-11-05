@@ -48,12 +48,14 @@ unicorn scale in under 24 months.
 
 - [Open Graph image](https://pwv.com/og-image.png): Default social share image
 - [Favicon (SVG)](https://pwv.com/favicon.svg): Site icon
+- [PWV Logo](https://pwv.com/logos/): Official PWV logos available in PNG and SVG formats (black and white variants, 800px and 1920px widths)
+  - Primary logo for structured data: `/logos/pwv-logo-black-1920.png`
 
 ## Structured Data (JSON-LD)
 
 The site includes JSON-LD structured data for enhanced understanding:
 
-- **Organization Schema**: PWV organization with name, description, logo, contact email (partners@pwv.com), and founders (General Partners)
+- **Organization Schema**: PWV organization with name, description, logo (`/logos/pwv-logo-black-1920.png`), contact email (partners@pwv.com), social profiles, and founders (General Partners)
 - **Person Schemas**: Each General Partner has structured data including:
   - Name, job title, and bio
   - URL (personal website or `/about#<slug>`)

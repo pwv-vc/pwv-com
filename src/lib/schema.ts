@@ -31,6 +31,7 @@ export interface OrganizationSchemaOptions {
     url?: string;
   }>;
   sameAs?: string[]; // Social media profiles
+  type?: string | string[]; // Allow custom organization types (e.g., 'InvestmentCompany', 'FinancialService')
 }
 
 /**
@@ -56,7 +57,15 @@ export function generatePersonSchema(options: PersonSchemaOptions): object {
   }
 
   if (options.image) {
-    schema.image = options.image;
+    // Image should be an ImageObject or URL string for better SEO
+    if (typeof options.image === 'string' && options.image.startsWith('http')) {
+      schema.image = {
+        '@type': 'ImageObject',
+        url: options.image,
+      };
+    } else {
+      schema.image = options.image;
+    }
   }
 
   if (options.sameAs && options.sameAs.length > 0) {
@@ -86,9 +95,11 @@ export function generatePersonSchema(options: PersonSchemaOptions): object {
 export function generateOrganizationSchema(
   options: OrganizationSchemaOptions
 ): object {
+  // Support custom organization types (e.g., InvestmentCompany, FinancialService)
+  const organizationType = options.type || 'Organization';
   const schema: any = {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    '@type': organizationType,
     name: options.name,
     url: options.url,
   };
@@ -98,11 +109,23 @@ export function generateOrganizationSchema(
   }
 
   if (options.logo) {
-    schema.logo = options.logo;
+    // Logo should be an ImageObject with proper dimensions for better SEO
+    schema.logo = {
+      '@type': 'ImageObject',
+      url: options.logo,
+    };
   }
 
   if (options.image) {
-    schema.image = options.image;
+    // Image should be an ImageObject for better SEO
+    if (typeof options.image === 'string' && options.image.startsWith('http')) {
+      schema.image = {
+        '@type': 'ImageObject',
+        url: options.image,
+      };
+    } else {
+      schema.image = options.image;
+    }
   }
 
   if (options.email || options.telephone) {
@@ -115,10 +138,9 @@ export function generateOrganizationSchema(
     if (options.telephone) {
       schema.contactPoint.telephone = options.telephone;
     }
+    // Only set contactType if explicitly provided (avoid inappropriate defaults)
     if (options.contactType) {
       schema.contactPoint.contactType = options.contactType;
-    } else {
-      schema.contactPoint.contactType = 'customer service';
     }
   }
 
@@ -147,4 +169,3 @@ export function generateOrganizationSchema(
 export function generateJsonLdScript(schema: object): string {
   return JSON.stringify(schema, null, 2);
 }
-
