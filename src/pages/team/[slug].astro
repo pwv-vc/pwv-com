@@ -9,7 +9,7 @@ import BlueskyLink from '../../components/BlueskyLink.astro';
 import WebsiteLink from '../../components/WebsiteLink.astro';
 import PostsGrid from '../../components/PostsGrid.astro';
 import { getCollection } from 'astro:content';
-import { getPostsByAuthor } from '../../lib/news';
+import { getPostsByAuthor, getPostsByTag } from '../../lib/news';
 
 export async function getStaticPaths() {
   const teamMembers = await getCollection('team');
@@ -44,10 +44,28 @@ const {
 } = member.data;
 
 // Get posts by this author if they have includePosts enabled
+// also add posts where their name is in tags
+// then sort by publication date
 let authorPosts: any[] = [];
 if (includePosts && authorName) {
   authorPosts = await getPostsByAuthor(authorName);
 }
+
+// Get posts where the team member's name appears in tags
+const postsByTag = await getPostsByTag(name);
+
+// Combine both arrays and remove duplicates by post ID using a Map
+const postsMap = new Map();
+[...authorPosts, ...postsByTag].forEach((post) => {
+  if (!postsMap.has(post.id)) {
+    postsMap.set(post.id, post);
+  }
+});
+
+// Convert Map values to array and sort by publication date (newest first)
+const sortedPosts = Array.from(postsMap.values()).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
 
 // SEO-optimized title and description
 const pageTitle = `${name} - ${title} | PWV`;
@@ -92,10 +110,10 @@ const keywords = `${name}, ${title}, PWV, venture capital, early-stage investing
   </section>
 
   {
-    authorPosts.length > 0 && (
+    sortedPosts.length > 0 && (
       <section class="mt-12 space-y-6">
         <Heading2NoUnderline>Articles by {name}</Heading2NoUnderline>
-        <PostsGrid posts={authorPosts} size="large" />
+        <PostsGrid posts={sortedPosts} size="large" />
       </section>
     )
   }
