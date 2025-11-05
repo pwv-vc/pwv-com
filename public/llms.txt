@@ -103,6 +103,8 @@ The site organizes content into topic clusters:
 ## Contact & Location
 
 - General inquiries: partners@pwv.com
+- Startup founders seeking funding: [Apply at /apply](https://pwv.com/apply)
+- Limited partners (funds, family offices): investors@pwv.com
 - Headquarters: San Francisco, Bay Area, California
 - Additional presence: Boston, Massachusetts
 - Contact via organization schema: Email included in structured data
