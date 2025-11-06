@@ -14,7 +14,7 @@ Today, Tom leads PWV (Preston-Werner Ventures), the venture firm he founded afte
 
 PWV is now raising a $100M fund to lead pre-seed and seed rounds in the next generation of software- and AI-driven companies.
 
-Tom and his partners, David Price and David Thyresson (DT), have built PWV into the venture firm they wish they'd had early in their own startup journeys:
+Tom and his partners, [David Price](/team/david-price) and [David Thyresson (DT)](/team/david-thyresson), have built PWV into the venture firm they wish they'd had early in their own startup journeys:
 
 **Founder-Focused**: Supporting founders with hands-on guidance rooted in real startup experience.
 
@@ -28,4 +28,4 @@ A signatory of The Giving Pledge, Tom and his wife are committed to using their 
 
 Ideas start with founders. Founders start with PWV.
 
-Learn more or apply at [pwv.com/apply](/apply). To explore LP opportunities, email investors@pwv.com.
+Learn more or [apply](/apply). To explore LP opportunities, email investors@pwv.com.
