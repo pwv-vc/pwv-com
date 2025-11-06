@@ -11,7 +11,11 @@ import PostsGrid from '../../components/PostsGrid.astro';
 import { getCollection } from 'astro:content';
 import { getPostsByAuthor, getPostsByTag } from '../../lib/news';
 import { marked } from 'marked';
-import { generatePersonSchema } from '../../lib/schema';
+import {
+  generatePersonSchema,
+  generateBreadcrumbListSchema,
+  generateItemListSchema,
+} from '../../lib/schema';
 import { SITE_NAME } from '../../consts';
 
 export async function getStaticPaths() {
@@ -237,6 +241,60 @@ if (member.data.homeLocation) {
 
 // Generate Person schema
 const personSchema = generatePersonSchema(schemaOptions);
+
+// Generate BreadcrumbList schema
+const breadcrumbItems = [
+  { name: 'Home', url: new URL('/', baseURL).toString() },
+  { name: 'About', url: new URL('/about', baseURL).toString() },
+  { name: member.data.name, url: canonicalURL.toString() },
+];
+const breadcrumbSchema = generateBreadcrumbListSchema({
+  items: breadcrumbItems,
+});
+
+// Generate ItemList schema for articles by this team member (only if there are posts)
+let itemListSchema: any = null;
+if (sortedPosts.length > 0) {
+  const itemListItems = sortedPosts.map((post) => {
+    const postUrl = new URL(`/news/${post.id}`, baseURL).toString();
+    let postImage: string | undefined;
+
+    if (post.data.heroImage) {
+      if (typeof post.data.heroImage === 'string') {
+        postImage = post.data.heroImage.startsWith('/')
+          ? new URL(post.data.heroImage, baseURL).toString()
+          : undefined;
+      } else if (
+        typeof post.data.heroImage === 'object' &&
+        post.data.heroImage !== null &&
+        'src' in post.data.heroImage
+      ) {
+        const src = (post.data.heroImage as any).src;
+        postImage =
+          typeof src === 'string' && src.startsWith('/')
+            ? new URL(src, baseURL).toString()
+            : undefined;
+      }
+    }
+
+    return {
+      '@type': post.data.url ? 'NewsArticle' : 'BlogPosting',
+      name: post.data.title,
+      url: postUrl,
+      description: post.data.description,
+      ...(postImage && { image: postImage }),
+      datePublished: post.data.pubDate.toISOString(),
+    };
+  });
+
+  itemListSchema = generateItemListSchema({
+    name: `Articles by ${member.data.name}`,
+    description: `Articles and posts by ${member.data.name}`,
+    url: canonicalURL.toString(),
+    items: itemListItems,
+    numberOfItems: sortedPosts.length,
+  });
+}
 ---
 
 <Layout
@@ -247,7 +305,11 @@ const personSchema = generatePersonSchema(schemaOptions);
   enableUTMTracking={true}
   contentType="team"
   contentSlug={member.data.slug}
-  additionalSchemas={[{ schema: personSchema }]}
+  additionalSchemas={[
+    { schema: personSchema },
+    { schema: breadcrumbSchema },
+    ...(itemListSchema ? [{ schema: itemListSchema }] : []),
+  ]}
 >
   <section class="mx-auto space-y-4">
     <Heading1>{name}</Heading1>
