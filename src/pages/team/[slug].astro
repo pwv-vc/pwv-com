@@ -11,9 +11,6 @@ import PostsGrid from '../../components/PostsGrid.astro';
 import { getCollection } from 'astro:content';
 import { getPostsByAuthor, getPostsByTag } from '../../lib/news';
 import { marked } from 'marked';
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { join, dirname } from 'node:path';
 
 export async function getStaticPaths() {
   const teamMembers = await getCollection('team');
@@ -48,26 +45,26 @@ function parseMarkdown(markdown: string) {
   return { frontmatter: '', content: markdown };
 }
 
-// Try to load markdown file for this team member
+// Try to load markdown file for this team member (only the specific file)
 let markdownContent: string | null = null;
 const targetSlug = member.data.slug;
 
-// Get the current file's directory and build path to markdown file
-const currentFile = fileURLToPath(import.meta.url);
-const currentDir = dirname(currentFile);
-const markdownPath = join(
-  currentDir,
-  '..',
-  '..',
-  'content',
-  'team',
-  `${targetSlug}.md`
-);
-
+// Load only the specific markdown file for this team member using dynamic import
 try {
-  const rawMarkdown = readFileSync(markdownPath, 'utf-8');
-  const { content } = parseMarkdown(rawMarkdown);
-  markdownContent = marked.parse(content.trim()) as string;
+  const markdownModule = await import(
+    `../../content/team/${targetSlug}.md?raw`
+  );
+
+  // With ?raw query, Vite returns the content as default export
+  const rawMarkdown =
+    typeof markdownModule === 'string'
+      ? markdownModule
+      : markdownModule.default || markdownModule;
+
+  if (typeof rawMarkdown === 'string' && rawMarkdown) {
+    const { content } = parseMarkdown(rawMarkdown);
+    markdownContent = marked.parse(content.trim()) as string;
+  }
 } catch (error) {
   // Markdown file doesn't exist for this team member, which is fine
   markdownContent = null;
