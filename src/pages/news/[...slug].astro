@@ -15,7 +15,12 @@ import {
   authorToSlug,
   tagToSlug,
 } from '../../lib/news';
-import { KEYWORDS } from '../../consts';
+import { KEYWORDS, SITE_NAME } from '../../consts';
+import {
+  generateArticleSchema,
+  generateBreadcrumbListSchema,
+} from '../../lib/schema';
+import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const allPosts = await getAllPosts();
@@ -40,6 +45,121 @@ const layoutTitle = 'News | ' + post.data.title + ' by ' + post.data.author;
 const description = post.data.description;
 const image = post.data.heroImage || '/og-image.png';
 const keywords = post.data.tags.join(', ') + ', ' + KEYWORDS;
+
+// Get base URL for schema generation
+export const isProduction = process.env.CONTEXT === 'production';
+export const isDeployPreview = process.env.CONTEXT === 'deploy-preview';
+const baseURL = isDeployPreview
+  ? process.env.DEPLOY_PRIME_URL || Astro.site
+  : Astro.site;
+const canonicalURL = new URL(`/news/${post.id}`, baseURL);
+
+// Get team member info if author matches a team member
+let authorInfo: any = null;
+if (post.data.author) {
+  const teamMembers = await getCollection('team' as any);
+  authorInfo = (teamMembers as any[]).find(
+    (member: any) => member.data.name === post.data.author
+  );
+}
+
+// Generate author schema data
+const authorSameAs: string[] = [];
+if (authorInfo) {
+  if (authorInfo.data.linkedin) {
+    authorSameAs.push(
+      `https://www.linkedin.com/in/${authorInfo.data.linkedin}`
+    );
+  }
+  if (authorInfo.data.twitter) {
+    authorSameAs.push(`https://x.com/${authorInfo.data.twitter}`);
+  }
+  if (authorInfo.data.github) {
+    authorSameAs.push(`https://github.com/${authorInfo.data.github}`);
+  }
+  if (authorInfo.data.bluesky) {
+    const blueskyUrl = authorInfo.data.bluesky.startsWith('http')
+      ? authorInfo.data.bluesky
+      : `https://bsky.app/profile/${authorInfo.data.bluesky}`;
+    authorSameAs.push(blueskyUrl);
+  }
+}
+
+// Generate Article schema
+let articleImage: string;
+const heroImage = post.data.heroImage;
+if (heroImage) {
+  if (typeof heroImage === 'string') {
+    const imgStr = heroImage as string;
+    articleImage = imgStr.startsWith('/')
+      ? new URL(imgStr, baseURL).toString()
+      : new URL('/og-image.png', baseURL).toString();
+  } else if (
+    typeof heroImage === 'object' &&
+    heroImage !== null &&
+    'src' in heroImage
+  ) {
+    const src = (heroImage as any).src;
+    articleImage =
+      typeof src === 'string'
+        ? new URL(src, baseURL).toString()
+        : new URL('/og-image.png', baseURL).toString();
+  } else {
+    articleImage = new URL('/og-image.png', baseURL).toString();
+  }
+} else {
+  articleImage = new URL('/og-image.png', baseURL).toString();
+}
+
+const articleSchema = generateArticleSchema({
+  headline: post.data.title,
+  description: post.data.description,
+  url: canonicalURL.toString(),
+  image: articleImage,
+  author: post.data.author
+    ? {
+        name: post.data.author,
+        url: new URL(
+          `/news/author/${authorToSlug(post.data.author)}`,
+          baseURL
+        ).toString(),
+        sameAs: authorSameAs.length > 0 ? authorSameAs : undefined,
+      }
+    : undefined,
+  publisher: {
+    name: SITE_NAME,
+    logo: new URL('/logos/pwv-logo-black-1920.png', baseURL).toString(),
+    url: baseURL?.toString() || canonicalURL.origin,
+  },
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified:
+    post.data.updatedDate?.toISOString() || post.data.pubDate.toISOString(),
+  articleBody: post.body
+    ? post.body
+        .replace(/^#+\s+/gm, '') // Remove markdown headers
+        .replace(/\*\*(.+?)\*\*/g, '$1') // Remove markdown bold
+        .replace(/\*(.+?)\*/g, '$1') // Remove markdown italic
+        .replace(/\[(.+?)\]\(.+?\)/g, '$1') // Remove markdown links, keep text
+        .replace(/<[^>]*>/g, '') // Remove any HTML tags
+        .replace(/\n+/g, ' ') // Replace newlines with spaces
+        .replace(/\s+/g, ' ') // Normalize whitespace
+        .trim()
+        .substring(0, 5000)
+    : undefined,
+  articleSection: post.data.tags.length > 0 ? post.data.tags[0] : undefined,
+  keywords: post.data.tags.length > 0 ? post.data.tags.join(', ') : undefined,
+  type: post.data.url ? 'NewsArticle' : 'BlogPosting',
+});
+
+// Generate BreadcrumbList schema
+const breadcrumbItems = [
+  { name: 'Home', url: new URL('/', baseURL).toString() },
+  { name: 'News', url: new URL('/news', baseURL).toString() },
+  { name: post.data.title, url: canonicalURL.toString() },
+];
+const breadcrumbSchema = generateBreadcrumbListSchema({
+  items: breadcrumbItems,
+});
 ---
 
 <Layout
@@ -58,6 +178,7 @@ const keywords = post.data.tags.join(', ') + ', ' + KEYWORDS;
   contentSlug={post.id}
   redirectAfter={post.data.url ? 3 : undefined}
   redirectUrl={post.data.url}
+  additionalSchemas={[{ schema: articleSchema }, { schema: breadcrumbSchema }]}
 >
   <div class="prose prose-lg max-w-screen-xl">
     <!-- Responsive layout: stacked on small, 50/50 side-by-side on medium+ -->
@@ -71,16 +192,18 @@ const keywords = post.data.tags.join(', ') + ', ' + KEYWORDS;
         </p>
         <p class="text-subtle text-sm">
           Written by{' '}
-          {post.data.author ? (
-            <a
-              href={`/news/author/${authorToSlug(post.data.author)}`}
-              class="text-pwv-black hover:text-pwv-green underline transition-colors"
-            >
-              {post.data.author}
-            </a>
-          ) : (
-            'Unknown'
-          )}
+          {
+            post.data.author ? (
+              <a
+                href={`/news/author/${authorToSlug(post.data.author)}`}
+                class="text-pwv-black hover:text-pwv-green underline transition-colors"
+              >
+                {post.data.author}
+              </a>
+            ) : (
+              'Unknown'
+            )
+          }
           {
             (() => {
               const readingTime = getReadingTime(post.body);

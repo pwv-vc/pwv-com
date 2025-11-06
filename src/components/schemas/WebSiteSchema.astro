@@ -1,0 +1,22 @@
+---
+import { generateWebSiteSchema } from '../../lib/schema';
+import { SITE_NAME, SITE_DESCRIPTION } from '../../consts';
+
+interface Props {
+  baseURL?: string | URL;
+  canonicalURL: URL;
+}
+
+const { baseURL, canonicalURL } = Astro.props;
+
+// Generate WebSite schema (without SearchAction since search is not implemented)
+const siteUrl = baseURL?.toString() || canonicalURL.toString();
+const websiteSchema = generateWebSiteSchema({
+  name: SITE_NAME,
+  url: siteUrl,
+  description: SITE_DESCRIPTION,
+  // SearchAction removed - search functionality not implemented
+});
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />

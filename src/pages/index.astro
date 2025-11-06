@@ -1,6 +1,6 @@
 ---
 import Home from '../components/Home.astro';
-import Layout from '../layouts/Layout.astro';
+import HomeLayout from '../layouts/HomeLayout.astro';
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_IMAGE } from '../consts';
 import '../styles/global.css';
 
@@ -14,11 +14,11 @@ const keywords =
 export const prerender = true;
 ---
 
-<Layout
+<HomeLayout
   title={title}
   description={description}
   image={image}
   keywords={keywords}
 >
   <Home />
-</Layout>
+</HomeLayout>

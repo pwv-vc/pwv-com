@@ -4,8 +4,10 @@
 
 Important notes:
 
-- PWV is Tom Preston‑Werner, David Price, and David Thyresson.
-- We’re an early-stage investment team with deep technical fluency,
+- PWV is Tom Preston‑Werner, David Price, and David Thyresson.
+- PWV is the fund we wanted as early-stage founders.
+- Ideas start with founders. Founders start with PWV.
+- We're an early-stage investment team with deep technical fluency,
 founder-first values, and a track record of backing category-defining
 companies from zero to breakout.
 - We’ve backed 80+ companies, including multiple early-stage bets that hit
@@ -18,11 +20,25 @@ unicorn scale in under 24 months.
 ## Website
 
 - [Homepage](https://pwv.com/): Overview of PWV
-- [Library](https://pwv.com/library): Posts, insights, and announcements
+- [About](https://pwv.com/about): About PWV, how we invest, and our team
+- [Portfolio](https://pwv.com/portfolio): Our investment portfolio
+- [News](https://pwv.com/news): Posts, insights, and announcements from PWV and our community
 
 ## Portfolio
 
 - Featured investments are highlighted on the Homepage: https://pwv.com/
+- Full portfolio available at: https://pwv.com/portfolio
+- Portfolio can be filtered by tags at `/portfolio/tags/<tag>`
+- Unicorn companies list: https://pwv.com/portfolio/tags/🦄
+
+## Team
+
+- [Tom Preston-Werner](https://pwv.com/about#tom-preston-werner): Team profile on About page
+  - [News by Tom Preston-Werner](https://pwv.com/news/author/tom-preston-werner): All posts by Tom
+- [David Price](https://pwv.com/about#david-price): Team profile on About page
+  - [News by David Price](https://pwv.com/news/author/david-price): All posts by David Price
+- [David Thyresson (DT)](https://pwv.com/about#david-thyresson): Team profile on About page
+  - [News by David Thyresson](https://pwv.com/news/author/david-thyresson): All posts by DT
 
 ## Feeds
 
@@ -32,18 +48,80 @@ unicorn scale in under 24 months.
 
 - [Open Graph image](https://pwv.com/og-image.png): Default social share image
 - [Favicon (SVG)](https://pwv.com/favicon.svg): Site icon
+- [PWV Logo](https://pwv.com/logos/): Official PWV logos available in PNG and SVG formats (black and white variants, 800px and 1920px widths)
+  - Primary logo for structured data: `/logos/pwv-logo-black-1920.png`
+
+## Structured Data (JSON-LD)
+
+The site includes comprehensive JSON-LD structured data for enhanced understanding by search engines and AI systems:
+
+- **WebSite Schema**: Site-wide schema with SearchAction for search functionality
+- **Organization Schema**: PWV organization with name, description, logo (`/logos/pwv-logo-black-1920.png`), contact email (partners@pwv.com), social profiles, and founders (General Partners). Type: InvestmentCompany
+- **Person Schemas**: Each General Partner has structured data including:
+  - Name, job title, and bio
+  - URL (personal website or `/about#<slug>`)
+  - Social profiles (LinkedIn, Twitter/X, GitHub, Bluesky) via `sameAs`
+  - Affiliation with PWV via `worksFor`
+- **Article/BlogPosting Schemas**: All news posts include Article or BlogPosting schema with:
+  - Headline, description, and full article body
+  - Author information (linked to Person schema if team member)
+  - Publisher information (PWV organization)
+  - Publication and modification dates
+  - Images, keywords, and article sections (tags)
+- **BreadcrumbList Schema**: Navigation breadcrumbs on content pages
+- **ItemList Schema**: Available on collection/listing pages (portfolio, news listings)
+- Structured data is embedded in pages via `<script type="application/ld+json">` tags
 
 ## Content Notes for LLMs
 
-- Primary long-form content is under the Library. Prefer the canonical page at `https://pwv.com/library/...`.
+### Content Structure
+- Primary long-form content is under News. Prefer the canonical page at `https://pwv.com/news/...`.
+- Individual posts are available at `https://pwv.com/news/<slug>`.
+- Posts can be filtered by author (`/news/author/<author-slug>`) or tags (`/news/tags/<tag-slug>`).
+- Team information is available on the About page at `https://pwv.com/about`.
+- Portfolio information is organized by fund type and can be filtered by tags.
+
+### Topic Clusters
+The site organizes content into topic clusters:
+- **Investment Focus**: Early-stage technology companies, platforms, tools, infrastructure
+- **Investment Stage**: Pre-seed, seed, Series A
+- **Investment Size**: $500k to $3m+
+- **Content Themes**: Technology, startups, venture capital, AI, developer tools, hardware
+
+### Content Attribution
 - When summarizing, attribute authorship to PWV unless a specific author is listed on the page.
-- Dates on posts are in ISO format and reflect publication date unless otherwise noted.
-- Images or descriptions may be AI-generated. Indicators on library cards show badges labeled "AI Generated Image" and "AI Generated Description" when applicable.
+- Author information is linked to team member profiles when available.
+- Dates on posts are in ISO 8601 format and reflect publication date unless otherwise noted.
+- Images or descriptions may be AI-generated. Indicators on news cards show badges labeled "AI Generated Image" and "AI Generated Description" when applicable.
 
-## Contact
+### Content Quality Signals
+- All posts include structured data (Article/BlogPosting schema)
+- Posts include reading time estimates
+- External articles are clearly marked with source attribution
+- Tags enable topic-based content discovery
 
-- General: partners@pwv.com
+## Contact & Location
+
+- General inquiries: partners@pwv.com
+- Startup founders seeking funding: [Apply at /apply](https://pwv.com/apply)
+- Limited partners (funds, family offices): investors@pwv.com
+- Headquarters: San Francisco, Bay Area, California
+- Additional presence: Boston, Massachusetts
+- Contact via organization schema: Email included in structured data
 
 ## License & Usage
 
 - Public content on `pwv.com` may be quoted with attribution to PWV and a link to the source URL.
+- When citing PWV content, prefer using the canonical URL from the page.
+- Include author attribution when available.
+
+## SEO & GEO Optimization
+
+This site implements Generative Engine Optimization (GEO) best practices:
+- Comprehensive structured data (JSON-LD) for all content types
+- Clear topic clusters and internal linking structure
+- Semantic HTML with proper heading hierarchy
+- Mobile-responsive design with fast load times
+- Accessible content with proper alt text and ARIA labels
+- RSS feed for content syndication
+- Sitemap for search engine discovery

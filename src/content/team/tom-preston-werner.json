@@ -7,12 +7,48 @@
   "slug": "tom-preston-werner",
   "position": 1,
   "section": "General Partners",
-  "linkedin": "mojombor",
+  "linkedin": "mojombo",
   "twitter": "mojombo",
   "github": "mojombo",
   "bluesky": "mojombo.bsky.social",
   "website": "https://tom.preston-werner.com/",
   "includePosts": true,
   "authorName": "Tom Preston-Werner",
-  "hasPage": true
+  "hasPage": true,
+  "givenName": "Tom",
+  "familyName": "Preston-Werner",
+  "schemaDescription": "GitHub co-founder and CEO emeritus. Founder & General Partner of PWV™ (Preston-Werner Ventures), an early-stage venture fund investing in software and AI. Creator of Jekyll, Semantic Versioning (SemVer), and TOML; open-source pioneer and early investor in Stripe, Netlify, Snyk, Supabase, and Retool.",
+  "schemaImage": "/assets/press/tom-preston-werner.jpg",
+  "schemaJobTitle": "Founder & General Partner",
+  "affiliation": [
+    {
+      "@type": "Organization",
+      "name": "GitHub"
+    },
+    {
+      "@type": "Organization",
+      "name": "180 Studios"
+    }
+  ],
+  "knowsAbout": [
+    "Venture capital",
+    "Early-stage startups",
+    "Software engineering",
+    "Open-source software",
+    "Developer tools",
+    "Artificial intelligence",
+    "Startup investing",
+    "SaaS infrastructure"
+  ],
+  "nationality": "American",
+  "alumniOf": [
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "Harvey Mudd College"
+    }
+  ],
+  "homeLocation": {
+    "@type": "Place",
+    "name": "San Francisco Bay Area, USA"
+  }
 }
