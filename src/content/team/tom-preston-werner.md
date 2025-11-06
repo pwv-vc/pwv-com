@@ -4,13 +4,13 @@ slug: 'tom-preston-werner'
 
 Tom Preston-Werner is an entrepreneur, technologist, and investor who transformed how the world builds software. As the co-founder and former CEO of [GitHub](https://github.com), he turned a simple idea, collaborating on code, into the global platform that powers nearly every digital product today.
 
-Under his leadership, GitHub became the world's largest developer network and was acquired by Microsoft for $7.5B, one of the most influential acquisitions of its era.
+Under his leadership, GitHub became the world's largest developer network and was [acquired by Microsoft](https://a16z.com/microsoft-buys-github/) for [$7.5B](https://news.microsoft.com/source/2018/06/04/microsoft-to-acquire-github-for-7-5-billion/), one of the most influential acquisitions of its era.
 
 Beyond GitHub, Tom created technologies that quietly support modern digital infrastructure: [Jekyll](https://jekyllrb.com), the engine behind millions of websites; [Semantic Versioning (SemVer)](https://semver.org), the universal standard for software releases; and [TOML](https://toml.io), a configuration format adopted across industries.
 
 His work shaped not only how software is built, but how innovation scales.
 
-After more than a decade of angel investing in over 175 startups, including early checks in [Stripe](https://stripe.com), [Cursor](https://cursor.sh), [Netlify](https://netlify.com), [Snyk](https://snyk.io), [Supabase](https://supabase.com), [PlanetScale](https://planetscale.com), and [Retool](https://retool.com), Tom founded Preston-Werner Ventures (PWV™), an early-stage investment firm backing the next generation of software- and AI-driven companies. PWV is now raising a $100M fund to lead pre-seed and seed rounds for founders redefining what's possible with technology.
+After more than a decade of angel investing in over 175 startups, including early checks in [Stripe](https://stripe.com), [Cursor](https://cursor.sh), [Netlify](https://netlify.com), [Snyk](https://snyk.io), [Supabase](https://supabase.com), [PlanetScale](https://planetscale.com), and [Retool](https://retool.com), Tom founded Preston-Werner Ventures (PWV™), an early-stage investment firm backing the next generation of software- and AI-driven companies. PWV is now [raising a $100M fund](/news/post-announcing-pwv-fund-i/) to lead pre-seed and seed rounds for founders redefining what's possible with technology.
 
 Together with partners [David Price](/team/david-price) and [David Thyresson (DT)](/team/david-thyresson), Tom has built PWV into the venture firm they once wished existed:
 
