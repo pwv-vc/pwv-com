@@ -10,6 +10,10 @@ import WebsiteLink from '../../components/WebsiteLink.astro';
 import PostsGrid from '../../components/PostsGrid.astro';
 import { getCollection } from 'astro:content';
 import { getPostsByAuthor, getPostsByTag } from '../../lib/news';
+import { marked } from 'marked';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { join, dirname } from 'node:path';
 
 export async function getStaticPaths() {
   const teamMembers = await getCollection('team');
@@ -27,6 +31,46 @@ const { member } = Astro.props;
 
 if (!member || !member.data.hasPage) {
   return Astro.redirect('/404');
+}
+
+// Helper function to parse frontmatter and content from markdown
+function parseMarkdown(markdown: string) {
+  const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+  const match = markdown.match(frontmatterRegex);
+
+  if (match) {
+    const frontmatter = match[1];
+    const content = match[2];
+    return { frontmatter, content };
+  }
+
+  // If no frontmatter, return the whole thing as content
+  return { frontmatter: '', content: markdown };
+}
+
+// Try to load markdown file for this team member
+let markdownContent: string | null = null;
+const targetSlug = member.data.slug;
+
+// Get the current file's directory and build path to markdown file
+const currentFile = fileURLToPath(import.meta.url);
+const currentDir = dirname(currentFile);
+const markdownPath = join(
+  currentDir,
+  '..',
+  '..',
+  'content',
+  'team',
+  `${targetSlug}.md`
+);
+
+try {
+  const rawMarkdown = readFileSync(markdownPath, 'utf-8');
+  const { content } = parseMarkdown(rawMarkdown);
+  markdownContent = marked.parse(content.trim()) as string;
+} catch (error) {
+  // Markdown file doesn't exist for this team member, which is fine
+  markdownContent = null;
 }
 
 const {
@@ -87,27 +131,35 @@ const keywords = `${name}, ${title}, PWV, venture capital, early-stage investing
   <section class="mx-auto space-y-4">
     <Heading1>{name}</Heading1>
 
-    <p class="text-lg font-medium">
-      {title}
-    </p>
-
-    <p class="mt-6 max-w-screen-md text-lg leading-relaxed">
-      {bio}
-    </p>
-
-    <!-- Social Links -->
-    {
-      (linkedin || twitter || github || bluesky || website) && (
-        <div class="mt-6 flex gap-3">
-          {linkedin && <LinkedInLink handle={linkedin} />}
-          {twitter && <TwitterLink handle={twitter} />}
-          {bluesky && <BlueskyLink handle={bluesky} />}
-          {github && <GitHubLink handle={github} />}
-          {website && <WebsiteLink url={website} />}
-        </div>
-      )
-    }
+    <Heading2NoUnderline>{title}</Heading2NoUnderline>
   </section>
+
+  <p class="mt-6 max-w-screen-md text-lg leading-relaxed">
+    {bio}
+  </p>
+
+  <!-- Social Links -->
+  {
+    (linkedin || twitter || github || bluesky || website) && (
+      <div class="mt-6 flex gap-3">
+        {linkedin && <LinkedInLink handle={linkedin} />}
+        {twitter && <TwitterLink handle={twitter} />}
+        {bluesky && <BlueskyLink handle={bluesky} />}
+        {github && <GitHubLink handle={github} />}
+        {website && <WebsiteLink url={website} />}
+      </div>
+    )
+  }
+
+  <!-- Markdown Content -->
+  {
+    markdownContent && (
+      <div
+        class="prose prose-lg mt-8 max-w-screen-lg leading-relaxed"
+        set:html={markdownContent}
+      />
+    )
+  }
 
   {
     sortedPosts.length > 0 && (
