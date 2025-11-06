@@ -13,5 +13,27 @@
   "bluesky": "thyresson.co",
   "website": "https://thyresson.io",
   "includePosts": true,
-  "authorName": "David Thyresson"
+  "authorName": "David Thyresson",
+  "givenName": "David",
+  "familyName": "Thyresson",
+  "schemaDescription": "",
+  "schemaImage": "",
+  "schemaJobTitle": "Cofounder & General Partner",
+  "affiliation": [],
+  "knowsAbout": [],
+  "nationality": "Swedish",
+  "alumniOf": [
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "Middlebury College"
+    },
+    {
+      "@type": "School",
+      "name": "Phillips Andover Academy"
+    }
+  ],
+  "homeLocation": {
+    "@type": "Place",
+    "name": "Boston, MA USA"
+  }
 }

@@ -3,8 +3,21 @@ import Layout from '../../layouts/Layout.astro';
 import HowWeInvest from '../../components/HowWeInvest.astro';
 import Team from '../../components/Team.astro';
 import Heading1NoUnderline from '../../components/Heading1NoUnderline.astro';
+import { getPersonSchemas } from '../../lib/person-schemas';
 
 export const prerender = true;
+
+// Get base URL for schema generation
+export const isProduction = process.env.CONTEXT === 'production';
+export const isDeployPreview = process.env.CONTEXT === 'deploy-preview';
+const baseURL = isDeployPreview
+  ? process.env.DEPLOY_PRIME_URL || Astro.site
+  : Astro.site;
+const canonicalURL = new URL(Astro.url.pathname, baseURL);
+
+// Generate Person schemas for team members
+const personSchemas = await getPersonSchemas(baseURL, canonicalURL);
+const additionalSchemas = personSchemas.map((schema) => ({ schema }));
 ---
 
 <Layout
@@ -12,6 +25,7 @@ export const prerender = true;
   description="PWV is the fund we wanted as early-stage founders. We believe in founder-first values and back category-defining companies from zero to breakout."
   enableUTMTracking={true}
   contentType="about"
+  additionalSchemas={additionalSchemas}
 >
   <section class="mx-auto space-y-4">
     <Heading1NoUnderline

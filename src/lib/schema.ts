@@ -4,15 +4,33 @@
 
 export interface PersonSchemaOptions {
   name: string;
+  givenName?: string;
+  familyName?: string;
   jobTitle?: string;
   description?: string;
   url?: string;
   image?: string;
   sameAs?: string[]; // Social media profiles
   email?: string;
+  id?: string; // @id for linking entities (e.g., "#person-tom-preston-werner")
   worksFor?: {
     name: string;
     url?: string;
+    id?: string; // @id reference to Organization (e.g., "#organization-pwv")
+  };
+  affiliation?: Array<{
+    '@type'?: string;
+    name: string;
+  }>;
+  knowsAbout?: string[];
+  nationality?: string;
+  alumniOf?: Array<{
+    '@type'?: string;
+    name: string;
+  }>;
+  homeLocation?: {
+    '@type'?: string;
+    name: string;
   };
 }
 
@@ -26,11 +44,31 @@ export interface OrganizationSchemaOptions {
   telephone?: string;
   contactType?: string;
   foundingDate?: string;
+  foundingLocation?: string;
+  alternateName?: string;
+  areaServed?: string;
+  knowsAbout?: string[];
+  id?: string; // @id for linking entities (e.g., "#organization-pwv")
   founders?: Array<{
     name: string;
     url?: string;
+    id?: string; // @id reference to Person (e.g., "#person-tom-preston-werner")
+    sameAs?: string[]; // Social media profiles for founder
   }>;
+  founder?: {
+    name: string;
+    url?: string;
+    id?: string;
+    sameAs?: string[];
+  };
   sameAs?: string[]; // Social media profiles
+  contactPoint?: Array<{
+    contactType: string;
+    email?: string;
+    url?: string;
+    areaServed?: string;
+    availableLanguage?: string[];
+  }>;
   type?: string | string[]; // Allow custom organization types (e.g., 'InvestmentCompany', 'FinancialService')
 }
 
@@ -43,6 +81,19 @@ export function generatePersonSchema(options: PersonSchemaOptions): object {
     '@type': 'Person',
     name: options.name,
   };
+
+  // Add @id if provided (for linking entities)
+  if (options.id) {
+    schema['@id'] = options.id;
+  }
+
+  if (options.givenName) {
+    schema.givenName = options.givenName;
+  }
+
+  if (options.familyName) {
+    schema.familyName = options.familyName;
+  }
 
   if (options.jobTitle) {
     schema.jobTitle = options.jobTitle;
@@ -84,6 +135,39 @@ export function generatePersonSchema(options: PersonSchemaOptions): object {
     if (options.worksFor.url) {
       schema.worksFor.url = options.worksFor.url;
     }
+    // Add @id reference if provided (links Person to Organization)
+    if (options.worksFor.id) {
+      schema.worksFor['@id'] = options.worksFor.id;
+    }
+  }
+
+  if (options.affiliation && options.affiliation.length > 0) {
+    schema.affiliation = options.affiliation.map((aff) => ({
+      '@type': aff['@type'] || 'Organization',
+      name: aff.name,
+    }));
+  }
+
+  if (options.knowsAbout && options.knowsAbout.length > 0) {
+    schema.knowsAbout = options.knowsAbout;
+  }
+
+  if (options.nationality) {
+    schema.nationality = options.nationality;
+  }
+
+  if (options.alumniOf && options.alumniOf.length > 0) {
+    schema.alumniOf = options.alumniOf.map((school) => ({
+      '@type': school['@type'] || 'CollegeOrUniversity',
+      name: school.name,
+    }));
+  }
+
+  if (options.homeLocation) {
+    schema.homeLocation = {
+      '@type': options.homeLocation['@type'] || 'Place',
+      name: options.homeLocation.name,
+    };
   }
 
   return schema;
@@ -103,6 +187,11 @@ export function generateOrganizationSchema(
     name: options.name,
     url: options.url,
   };
+
+  // Add @id if provided (for linking entities)
+  if (options.id) {
+    schema['@id'] = options.id;
+  }
 
   if (options.description) {
     schema.description = options.description;
@@ -128,7 +217,92 @@ export function generateOrganizationSchema(
     }
   }
 
-  if (options.email || options.telephone) {
+  if (options.alternateName) {
+    schema.alternateName = options.alternateName;
+  }
+
+  if (options.foundingDate) {
+    schema.foundingDate = options.foundingDate;
+  }
+
+  if (options.foundingLocation) {
+    schema.foundingLocation = options.foundingLocation;
+  }
+
+  if (options.areaServed) {
+    schema.areaServed = options.areaServed;
+  }
+
+  if (options.knowsAbout && options.knowsAbout.length > 0) {
+    schema.knowsAbout = options.knowsAbout;
+  }
+
+  // Handle single founder with full details
+  // Note: Schema.org uses 'founder' (singular) which can be a single Person or an array
+  // The deprecated 'founders' (plural) property has been superseded by 'founder'
+  if (options.founder) {
+    const founderSchema: any = {
+      '@type': 'Person',
+      name: options.founder.name,
+    };
+    if (options.founder.url) {
+      founderSchema.url = options.founder.url;
+    }
+    if (options.founder.id) {
+      founderSchema['@id'] = options.founder.id;
+    }
+    if (options.founder.sameAs && options.founder.sameAs.length > 0) {
+      founderSchema.sameAs = options.founder.sameAs;
+    }
+    schema.founder = founderSchema;
+  } else if (options.founders && options.founders.length > 0) {
+    // Handle multiple founders - output as array using 'founder' (singular) property
+    schema.founder = options.founders.map((founder) => {
+      const founderSchema: any = {
+        '@type': 'Person',
+        name: founder.name,
+      };
+      if (founder.url) {
+        founderSchema.url = founder.url;
+      }
+      // Add @id reference if provided (links Organization to Person)
+      if (founder.id) {
+        founderSchema['@id'] = founder.id;
+      }
+      if (founder.sameAs && founder.sameAs.length > 0) {
+        founderSchema.sameAs = founder.sameAs;
+      }
+      return founderSchema;
+    });
+  }
+
+  if (options.sameAs && options.sameAs.length > 0) {
+    schema.sameAs = options.sameAs;
+  }
+
+  // Handle contactPoint as array
+  if (options.contactPoint && options.contactPoint.length > 0) {
+    schema.contactPoint = options.contactPoint.map((cp) => {
+      const contactPointSchema: any = {
+        '@type': 'ContactPoint',
+        contactType: cp.contactType,
+      };
+      if (cp.email) {
+        contactPointSchema.email = cp.email;
+      }
+      if (cp.url) {
+        contactPointSchema.url = cp.url;
+      }
+      if (cp.areaServed) {
+        contactPointSchema.areaServed = cp.areaServed;
+      }
+      if (cp.availableLanguage && cp.availableLanguage.length > 0) {
+        contactPointSchema.availableLanguage = cp.availableLanguage;
+      }
+      return contactPointSchema;
+    });
+  } else if (options.email || options.telephone) {
+    // Backward compatibility: single contactPoint from email/telephone
     schema.contactPoint = {
       '@type': 'ContactPoint',
     };
@@ -142,22 +316,6 @@ export function generateOrganizationSchema(
     if (options.contactType) {
       schema.contactPoint.contactType = options.contactType;
     }
-  }
-
-  if (options.foundingDate) {
-    schema.foundingDate = options.foundingDate;
-  }
-
-  if (options.founders && options.founders.length > 0) {
-    schema.founder = options.founders.map((founder) => ({
-      '@type': 'Person',
-      name: founder.name,
-      ...(founder.url && { url: founder.url }),
-    }));
-  }
-
-  if (options.sameAs && options.sameAs.length > 0) {
-    schema.sameAs = options.sameAs;
   }
 
   return schema;

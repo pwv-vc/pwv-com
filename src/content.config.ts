@@ -91,6 +91,36 @@ const team = defineCollection({
     website: z.string().optional(),
     includePosts: z.boolean().optional().default(false),
     authorName: z.string().optional(),
+    // Person schema fields
+    givenName: z.string().optional(),
+    familyName: z.string().optional(),
+    schemaDescription: z.string().optional(), // Enhanced description for schema
+    schemaImage: z.string().optional(), // Image path for schema (e.g., '/assets/press/tom-preston-werner.jpg')
+    schemaJobTitle: z.string().optional(), // Override job title for schema
+    affiliation: z
+      .array(
+        z.object({
+          '@type': z.string().optional(),
+          name: z.string(),
+        })
+      )
+      .optional(),
+    knowsAbout: z.array(z.string()).optional(),
+    nationality: z.string().optional(),
+    alumniOf: z
+      .array(
+        z.object({
+          '@type': z.string().optional(),
+          name: z.string(),
+        })
+      )
+      .optional(),
+    homeLocation: z
+      .object({
+        '@type': z.string().optional(),
+        name: z.string(),
+      })
+      .optional(),
   }),
 });
 

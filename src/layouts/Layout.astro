@@ -18,7 +18,6 @@ import {
 } from '../consts';
 import { generateContentUTM, generateSocialUTM, addUTMToURL } from '../lib/utm';
 import { ConsentManagerLayout } from './ConsentManager';
-import JsonLdSchemas from './JsonLdSchemas.astro';
 
 // Define props interface
 export interface Props {
@@ -237,8 +236,6 @@ if (image) {
         />
       )
     }
-
-    <JsonLdSchemas baseURL={baseURL} canonicalURL={canonicalURL} />
 
     <!-- Additional JSON-LD Schemas -->
     {

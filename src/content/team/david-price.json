@@ -8,5 +8,18 @@
   "position": 2,
   "section": "General Partners",
   "linkedin": "dsprice",
-  "twitter": "thedavidprice"
+  "twitter": "thedavidprice",
+  "givenName": "David",
+  "familyName": "Price",
+  "schemaDescription": "",
+  "schemaImage": "",
+  "schemaJobTitle": "Cofounder & General Partner",
+  "affiliation": [],
+  "knowsAbout": [],
+  "nationality": "",
+  "alumniOf": [],
+  "homeLocation": {
+    "@type": "Place",
+    "name": "San Francisco, CA USA"
+  }
 }
