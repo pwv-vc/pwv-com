@@ -20,14 +20,14 @@ export async function getPersonSchemas(
   const personSchemas = generalPartners.map((member: any) => {
     // Build sameAs array for social profiles
     const sameAs: string[] = [];
+    if (member.data.github) {
+      sameAs.push(`https://github.com/${member.data.github}`);
+    }
     if (member.data.linkedin) {
       sameAs.push(`https://www.linkedin.com/in/${member.data.linkedin}`);
     }
     if (member.data.twitter) {
       sameAs.push(`https://x.com/${member.data.twitter}`);
-    }
-    if (member.data.github) {
-      sameAs.push(`https://github.com/${member.data.github}`);
     }
     if (member.data.bluesky) {
       // Handle both Bluesky handles and custom domains
@@ -36,28 +36,89 @@ export async function getPersonSchemas(
         : `https://bsky.app/profile/${member.data.bluesky}`;
       sameAs.push(blueskyUrl);
     }
+    if (member.data.website) {
+      sameAs.push(member.data.website);
+    }
 
-    // Generate Person schema with @id linking to Organization
-    return generatePersonSchema({
+    // Add PWV website for all founders
+    const organizationUrl = baseURL?.toString() || canonicalURL.toString();
+    sameAs.push(organizationUrl);
+
+    // Add Wikipedia link for Tom Preston-Werner
+    if (member.data.slug === 'tom-preston-werner') {
+      sameAs.push('https://en.wikipedia.org/wiki/Tom_Preston-Werner');
+    }
+
+    // Use givenName/familyName from data, or parse from name
+    const givenName = member.data.givenName || member.data.name.split(' ')[0];
+    const familyName =
+      member.data.familyName ||
+      (() => {
+        const nameParts = member.data.name.split(' ');
+        if (nameParts.length > 1) {
+          let family = nameParts.slice(1).join(' ');
+          // Remove parenthetical content (e.g., "(DT)")
+          family = family.replace(/\s*\([^)]*\)\s*/g, '').trim();
+          return family || undefined;
+        }
+        return undefined;
+      })();
+
+    // Build person URL
+    const personUrl = new URL(
+      `/team/${member.data.slug}`,
+      baseURL || canonicalURL
+    ).toString();
+
+    // Build schema options from member data
+    const schemaOptions: any = {
       id: `#person-${member.data.slug}`,
       name: member.data.name,
-      jobTitle: member.data.title,
-      description: member.data.bio,
-      url: member.data.website
-        ? member.data.website
-        : new URL(
-            `/about#${member.data.slug}`,
-            baseURL || canonicalURL
-          ).toString(),
+      givenName: givenName,
+      familyName: familyName || undefined,
+      jobTitle: member.data.schemaJobTitle || member.data.title,
+      description: member.data.schemaDescription || member.data.bio,
+      url: personUrl,
       sameAs: sameAs.length > 0 ? sameAs : undefined,
       worksFor: {
         name: SITE_NAME,
-        url: baseURL?.toString() || canonicalURL.toString(),
+        url: organizationUrl,
         id: '#organization-pwv', // Link to Organization schema via @id
       },
-    });
+    };
+
+    // Add image if provided
+    if (member.data.schemaImage) {
+      schemaOptions.image = new URL(
+        member.data.schemaImage,
+        baseURL || canonicalURL
+      ).toString();
+    }
+
+    // Add optional fields from member data
+    if (member.data.affiliation && member.data.affiliation.length > 0) {
+      schemaOptions.affiliation = member.data.affiliation;
+    }
+
+    if (member.data.knowsAbout && member.data.knowsAbout.length > 0) {
+      schemaOptions.knowsAbout = member.data.knowsAbout;
+    }
+
+    if (member.data.nationality) {
+      schemaOptions.nationality = member.data.nationality;
+    }
+
+    if (member.data.alumniOf && member.data.alumniOf.length > 0) {
+      schemaOptions.alumniOf = member.data.alumniOf;
+    }
+
+    if (member.data.homeLocation) {
+      schemaOptions.homeLocation = member.data.homeLocation;
+    }
+
+    // Generate Person schema
+    return generatePersonSchema(schemaOptions);
   });
 
   return personSchemas;
 }
-
