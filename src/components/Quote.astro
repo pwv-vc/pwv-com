@@ -9,8 +9,8 @@ import Heading2 from './Heading2.astro';
     class="bg-pwv-light-yellow flex flex-col gap-8 rounded-lg p-8 lg:flex-row lg:items-center lg:gap-12"
   >
     <!-- Quote Content -->
-    <div class="flex-1">
-      <blockquote class="text-pwv-black text-lg leading-relaxed lg:text-xl">
+    <div class="quote-box bg-pwv-white relative flex-1 rounded-lg p-4">
+      <blockquote class="text-pwv-black p-8 text-lg leading-relaxed lg:text-lg">
         <p class="mb-6">
           "We created PWV with the same focus and commitment that scaled GitHub
           to a $7.5B exit.
@@ -20,7 +20,7 @@ import Heading2 from './Heading2.astro';
           shaping the future of technology."
         </p>
       </blockquote>
-      <div class="mt-6">
+      <div class="mt-6 pl-8">
         <cite class="font-mono text-lg font-semibold not-italic">
           Tom Preston-Werner
         </cite>
@@ -35,8 +35,40 @@ import Heading2 from './Heading2.astro';
         alt="Tom Preston-Werner"
         width={300}
         height={300}
-        class="rounded- w-full object-cover shadow-2xl"
+        class="border-pwv-green w-full rounded-xl border bg-white object-cover p-2 shadow-2xl"
       />
     </div>
   </div>
 </section>
+
+<style>
+  .quote-box::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+
+  /* Mobile: tail points down */
+  .quote-box::after {
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 20px 20px 0 20px;
+    border-color: #ffffff transparent transparent transparent;
+  }
+
+  /* Desktop: tail points right */
+  @media (min-width: 1024px) {
+    .quote-box::after {
+      bottom: auto;
+      top: 50%;
+      right: -20px;
+      left: auto;
+      transform: translateY(-50%);
+      border-width: 20px 0 20px 20px;
+      border-color: transparent transparent transparent #ffffff;
+    }
+  }
+</style>
