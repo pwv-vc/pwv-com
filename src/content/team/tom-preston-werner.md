@@ -2,30 +2,30 @@
 slug: 'tom-preston-werner'
 ---
 
-Tom Preston-Werner is a visionary entrepreneur, technologist, and investor who helped shape the open-source era and modern day software, overall.
+Tom Preston-Werner is an entrepreneur, technologist, and investor who transformed how the world builds software. As the co-founder and former CEO of [GitHub](https://github.com), he turned a simple idea, collaborating on code, into the global platform that powers nearly every digital product today.
 
-As the co-founder and former CEO of GitHub, Tom reinvented how the world builds tools and companies, turning collaboration itself into the cornerstone of global innovation.
+Under his leadership, GitHub became the world's largest developer network and was acquired by Microsoft for $7.5B, one of the most influential acquisitions of its era.
 
-Tom also created foundational technologies including Jekyll, Semantic Versioning (SemVer), and TOML, tools that continue to underpin modern software development globally.
+Beyond GitHub, Tom created technologies that quietly support modern digital infrastructure: [Jekyll](https://jekyllrb.com), the engine behind millions of websites; [Semantic Versioning (SemVer)](https://semver.org), the universal standard for software releases; and [TOML](https://toml.io), a configuration format adopted across industries.
 
-His open-source contributions have influenced millions of developers and remain integral to the world's software infrastructure, cementing his reputation as a leader in tooling innovation. His philosophy of open collaboration extends beyond code, to capital, community, and innovation.
+His work shaped not only how software is built, but how innovation scales.
 
-Today, Tom leads PWV (Preston-Werner Ventures), the venture firm he founded after more than a decade of angel investing in over 175 startups, including early investments in **Stripe**, **Cursor**, **Netlify**, **Snyk**, **Supabase**, **PlanetScale**, and **Retool**.
+After more than a decade of angel investing in over 175 startups, including early checks in [Stripe](https://stripe.com), [Cursor](https://cursor.sh), [Netlify](https://netlify.com), [Snyk](https://snyk.io), [Supabase](https://supabase.com), [PlanetScale](https://planetscale.com), and [Retool](https://retool.com), Tom founded Preston-Werner Ventures (PWV™), an early-stage investment firm backing the next generation of software- and AI-driven companies. PWV is now raising a $100M fund to lead pre-seed and seed rounds for founders redefining what's possible with technology.
 
-PWV is now raising a $100M fund to lead pre-seed and seed rounds in the next generation of software- and AI-driven companies.
+Together with partners [David Price](/team/david-price) and [David Thyresson (DT)](/team/david-thyresson), Tom has built PWV into the venture firm they once wished existed:
 
-Tom and his partners, [David Price](/team/david-price) and [David Thyresson (DT)](/team/david-thyresson), have built PWV into the venture firm they wish they'd had early in their own startup journeys:
+**Founders-First Values**: providing hands-on guidance rooted in proven startup and operator experience
 
-**Founder-Focused**: Supporting founders with hands-on guidance rooted in real startup experience.
+**Community-Oriented**: connecting more than 300+ portfolio founders through shared knowledge, mentorship, and events
 
-**Community-Oriented**: Connecting over 150 portfolio founders through shared knowledge, mentorship, and events.
+**Networked**: Leveraging deep relationships with world-class investors and leaders to accelerate growth and follow-on funding due to the PWV ecosystem and credibility
 
-**Networked**: Leveraging deep relationships with world-class investors and operators to accelerate growth and follow-on funding.
+In addition to his role at PWV, Tom serves as CEO of 180 Studios, leading its expansion into next-generation creative and production software powered by version control and automation systems for the global creative industry.
 
-In addition to his work at PWV, Tom serves as CEO of 180 Studios, leading its expansion into next-generation creative and production software built on version control and automation systems for the global creative industry.
-
-A signatory of The Giving Pledge, Tom and his wife are committed to using their resources to advance technology access, education, and climate resilience. Based in the San Francisco Bay Area, Tom continues to mentor founders and engineers, championing ideas that reimagine what's possible at the intersection of software, AI, and humanity.
+A signatory of [The Giving Pledge](https://www.givingpledge.org), Tom and his wife are committed to advancing technology access, education, and climate resilience. Based in the San Francisco Bay Area, Tom continues to mentor founders and builders, championing ideas that reimagine what's possible at the intersection of software, AI, and humanity.
 
 Ideas start with founders. Founders start with PWV.
 
-Learn more or [apply](/apply). To explore LP opportunities, email investors@pwv.com.
+Learn more or [apply](/apply).
+
+For LP inquiries, contact [investors@pwv.com](mailto:investors@pwv.com)
