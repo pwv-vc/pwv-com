@@ -19,33 +19,18 @@ export async function getHomepageSchemas(
     .filter((member: any) => member.data.isGeneralPartner)
     .sort((a: any, b: any) => a.data.position - b.data.position);
 
-  // Collect organization social media profiles from general partners
-  const organizationSocialProfiles: string[] = [];
-  const seenProfiles = new Set<string>();
-
-  generalPartners.forEach((member: any) => {
-    // Collect Twitter/X profiles
-    if (
-      member.data.twitter &&
-      !seenProfiles.has(`twitter-${member.data.twitter}`)
-    ) {
-      organizationSocialProfiles.push(`https://x.com/${member.data.twitter}`);
-      seenProfiles.add(`twitter-${member.data.twitter}`);
-    }
-    // Collect LinkedIn profiles
-    if (
-      member.data.linkedin &&
-      !seenProfiles.has(`linkedin-${member.data.linkedin}`)
-    ) {
-      organizationSocialProfiles.push(
-        `https://www.linkedin.com/in/${member.data.linkedin}`
-      );
-      seenProfiles.add(`linkedin-${member.data.linkedin}`);
-    }
-  });
-
   // Generate Organization schema with @id
   const organizationUrl = baseURL?.toString() || canonicalURL.toString();
+  
+  // Organization social media profiles (not founder profiles)
+  const organizationSameAs = [
+    organizationUrl,
+    'https://www.linkedin.com/company/pwventures',
+    'https://x.com/pwventures',
+    'https://bsky.app/profile/pwv.com',
+    'https://github.com/pwv-vc',
+  ];
+
   const organizationSchema = generateOrganizationSchema({
     id: '#organization-pwv',
     name: SITE_NAME,
@@ -68,23 +53,17 @@ export async function getHomepageSchemas(
       // Link to Person schema via @id (don't duplicate Person schema here)
       id: `#person-${member.data.slug}`,
     })),
-    sameAs:
-      organizationSocialProfiles.length > 0
-        ? organizationSocialProfiles
-        : undefined,
+    sameAs: organizationSameAs,
     type: 'Organization',
   });
 
-  // Generate WebSite schema with SearchAction
+  // Generate WebSite schema (without SearchAction since search is not implemented)
   const siteUrl = baseURL?.toString() || canonicalURL.toString();
   const websiteSchema = generateWebSiteSchema({
     name: SITE_NAME,
     url: siteUrl,
     description: SITE_DESCRIPTION,
-    potentialAction: {
-      target: `${siteUrl}/news?q={search_term_string}`,
-      queryInput: 'required name=search_term_string',
-    },
+    // SearchAction removed - search functionality not implemented
   });
 
   return [organizationSchema, websiteSchema];

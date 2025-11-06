@@ -9,18 +9,14 @@ interface Props {
 
 const { baseURL, canonicalURL } = Astro.props;
 
-// Generate WebSite schema with SearchAction
+// Generate WebSite schema (without SearchAction since search is not implemented)
 const siteUrl = baseURL?.toString() || canonicalURL.toString();
 const websiteSchema = generateWebSiteSchema({
   name: SITE_NAME,
   url: siteUrl,
   description: SITE_DESCRIPTION,
-  potentialAction: {
-    target: `${siteUrl}/news?q={search_term_string}`,
-    queryInput: 'required name=search_term_string',
-  },
+  // SearchAction removed - search functionality not implemented
 });
 ---
 
 <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
-
