@@ -6,6 +6,7 @@ import Layout from '../../layouts/Layout.astro';
 import PlaceholderImage from '../../components/PlaceholderImage.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import PostNavigation from '../../components/PostNavigation.astro';
+import { marked } from 'marked';
 
 import {
   getReadingTime,
@@ -135,16 +136,22 @@ const articleSchema = generateArticleSchema({
   dateModified:
     post.data.updatedDate?.toISOString() || post.data.pubDate.toISOString(),
   articleBody: post.body
-    ? post.body
-        .replace(/^#+\s+/gm, '') // Remove markdown headers
-        .replace(/\*\*(.+?)\*\*/g, '$1') // Remove markdown bold
-        .replace(/\*(.+?)\*/g, '$1') // Remove markdown italic
-        .replace(/\[(.+?)\]\(.+?\)/g, '$1') // Remove markdown links, keep text
-        .replace(/<[^>]*>/g, '') // Remove any HTML tags
-        .replace(/\n+/g, ' ') // Replace newlines with spaces
-        .replace(/\s+/g, ' ') // Normalize whitespace
-        .trim()
-        .substring(0, 5000)
+    ? (() => {
+        // Remove import statements first
+        let content = post.body.replace(
+          /^import\s+.*?from\s+['"].*?['"];?\s*$/gm,
+          ''
+        );
+        // Render markdown to HTML
+        const html = marked.parse(content.trim()) as string;
+        // Strip HTML tags and normalize whitespace
+        return html
+          .replace(/<[^>]*>/g, '') // Remove HTML tags
+          .replace(/\n+/g, ' ') // Replace newlines with spaces
+          .replace(/\s+/g, ' ') // Normalize whitespace
+          .trim()
+          .substring(0, 5000);
+      })()
     : undefined,
   articleSection: post.data.tags.length > 0 ? post.data.tags[0] : undefined,
   keywords: post.data.tags.length > 0 ? post.data.tags.join(', ') : undefined,

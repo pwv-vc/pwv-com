@@ -2,10 +2,7 @@
  * Helper functions to generate homepage-specific JSON-LD schemas
  */
 
-import {
-  generateOrganizationSchema,
-  generateWebSiteSchema,
-} from './schema';
+import { generateOrganizationSchema, generateWebSiteSchema } from './schema';
 import { getCollection } from 'astro:content';
 import { SITE_NAME, SITE_DESCRIPTION } from '../consts';
 
@@ -21,7 +18,7 @@ export async function getHomepageSchemas(
 
   // Generate Organization schema with @id
   const organizationUrl = baseURL?.toString() || canonicalURL.toString();
-  
+
   // Organization social media profiles (not founder profiles)
   const organizationSameAs = [
     organizationUrl,
@@ -31,8 +28,14 @@ export async function getHomepageSchemas(
     'https://github.com/pwv-vc',
   ];
 
+  // Generate Organization schema with full URL @id
+  const organizationId = new URL(
+    '#organization',
+    baseURL || canonicalURL
+  ).toString();
+
   const organizationSchema = generateOrganizationSchema({
-    id: '#organization-pwv',
+    id: organizationId,
     name: SITE_NAME,
     url: organizationUrl,
     description: SITE_DESCRIPTION,
@@ -42,17 +45,26 @@ export async function getHomepageSchemas(
       baseURL || canonicalURL
     ).toString(),
     email: 'partners@pwv.com',
-    founders: generalPartners.map((member: any) => ({
-      name: member.data.name,
-      url: member.data.website
-        ? member.data.website
-        : new URL(
-            `/about#${member.data.slug}`,
-            baseURL || canonicalURL
-          ).toString(),
-      // Link to Person schema via @id (don't duplicate Person schema here)
-      id: `#person-${member.data.slug}`,
-    })),
+    founders: generalPartners.map((member: any) => {
+      // Always use team page URL for founder
+      const personUrl = new URL(
+        `/team/${member.data.slug}`,
+        baseURL || canonicalURL
+      ).toString();
+
+      // Use full URL for founder ID to match PersonSchema format
+      const founderId = new URL(
+        `/team/${member.data.slug}#person`,
+        baseURL || canonicalURL
+      ).toString();
+
+      return {
+        name: member.data.name,
+        url: personUrl,
+        // Link to Person schema via @id (full URL format)
+        id: founderId,
+      };
+    }),
     sameAs: organizationSameAs,
     type: 'Organization',
   });
@@ -68,4 +80,3 @@ export async function getHomepageSchemas(
 
   return [organizationSchema, websiteSchema];
 }
-

@@ -70,9 +70,21 @@ export async function getPersonSchemas(
       baseURL || canonicalURL
     ).toString();
 
+    // Generate Person schema with full URL @id
+    const personId = new URL(
+      `/team/${member.data.slug}#person`,
+      baseURL || canonicalURL
+    ).toString();
+
+    // Organization @id reference (full URL format)
+    const organizationId = new URL(
+      '#organization',
+      baseURL || canonicalURL
+    ).toString();
+
     // Build schema options from member data
     const schemaOptions: any = {
-      id: `#person-${member.data.slug}`,
+      id: personId,
       name: member.data.name,
       givenName: givenName,
       familyName: familyName || undefined,
@@ -83,7 +95,7 @@ export async function getPersonSchemas(
       worksFor: {
         name: SITE_NAME,
         url: organizationUrl,
-        id: '#organization-pwv', // Link to Organization schema via @id
+        id: organizationId, // Link to Organization schema via @id (full URL format)
       },
     };
 
