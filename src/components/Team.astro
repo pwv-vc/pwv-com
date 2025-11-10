@@ -22,6 +22,7 @@ interface TeamMemberData {
   website?: string;
   includePosts?: boolean;
   authorName?: string;
+  hasPage?: boolean;
 }
 
 // Group team members by section
@@ -77,6 +78,7 @@ const sortedSections = Object.entries(sections)
               website={member.website}
               includePosts={member.includePosts}
               authorName={member.authorName}
+              hasPage={member.hasPage}
             />
           ))}
         </div>

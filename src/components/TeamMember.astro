@@ -21,6 +21,7 @@ export interface Props {
   website?: string;
   includePosts?: boolean;
   authorName?: string;
+  hasPage?: boolean;
 }
 
 const {
@@ -38,13 +39,25 @@ const {
   website,
   includePosts = false,
   authorName,
+  hasPage = false,
 } = Astro.props;
 ---
 
 <div id={slug} class="group relative mt-4 scroll-mt-8">
   <div class="space-y-2">
     <h3 class="text-xl font-bold">
-      {name}
+      {
+        hasPage ? (
+          <a
+            href={`/team/${slug}`}
+            class="pwv-link-underline hover:text-pwv-green transition-colors"
+          >
+            {name}
+          </a>
+        ) : (
+          name
+        )
+      }
     </h3>
     <p class="text-sm font-medium">
       {title}

@@ -1,0 +1,32 @@
+---
+import { Image as UnpicImage } from '@unpic/astro';
+import Heading2 from './Heading2.astro';
+---
+
+<section id="quote" class="mx-auto my-8 pt-4">
+  <Heading2>Message from Tom</Heading2>
+
+  <div class="bg-pwv-light-yellow space-y-4 rounded-lg p-8">
+    <!-- Quote Content -->
+    <div class="space-y-4 font-mono">
+      <blockquote
+        class="text-pwv-black space-y-4 text-lg leading-relaxed lg:text-xl"
+      >
+        <p>
+          "My goal, with every PWV investment, is to back ideas that truly
+          create a differentiated future. Ideas that change the fundamental
+          rules of what’s possible. Ideas that both embrace technology and
+          celebrate people as the most important factor in the better future we
+          want to build.
+        </p>
+        <p>That's how I created and scaled GitHub to a $7.5B exit."</p>
+      </blockquote>
+      <div>
+        <cite class="font-mono text-lg font-semibold not-italic">
+          <a href="/team/tom-preston-werner" class="">Tom Preston-Werner</a>
+        </cite>
+        <p class="mt-2 text-sm">General Partner, GitHub Cofounder</p>
+      </div>
+    </div>
+  </div>
+</section>

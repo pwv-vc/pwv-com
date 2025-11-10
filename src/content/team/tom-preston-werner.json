@@ -2,16 +2,53 @@
   "name": "Tom Preston-Werner",
   "title": "Cofounder & General Partner, Cofounder GitHub",
   "bio": "Tom helped redefine how software gets built. As the cofounder of GitHub, he led the company from idea to $7.5B acquisition and changed how developers collaborate forever. An early investor in Stripe, Netlify, and PlanetScale, he's spent the last decade backing technical founders before the hype hits. His edge: pattern recognition before the pattern.",
-  "hoverLine": "Builds world-changing companies before most know they exist.",
+  "hoverLine": "GitHub co-founder and PWV General Partner. Early-stage investor in software & AI (175+). Creator of Jekyll, SemVer, and TOML.",
   "isGeneralPartner": true,
   "slug": "tom-preston-werner",
   "position": 1,
   "section": "General Partners",
-  "linkedin": "mojombor",
+  "linkedin": "mojombo",
   "twitter": "mojombo",
   "github": "mojombo",
   "bluesky": "mojombo.bsky.social",
   "website": "https://tom.preston-werner.com/",
   "includePosts": true,
-  "authorName": "Tom Preston-Werner"
+  "authorName": "Tom Preston-Werner",
+  "hasPage": true,
+  "givenName": "Tom",
+  "familyName": "Preston-Werner",
+  "schemaDescription": "GitHub co-founder and CEO emeritus. Founder & General Partner of PWV™ (Preston-Werner Ventures), an early-stage venture fund investing in software and AI. Creator of Jekyll, Semantic Versioning (SemVer), and TOML; open-source pioneer and early investor in Stripe, Netlify, Snyk, Supabase, and Retool.",
+  "schemaImage": "/assets/press/tom-preston-werner.jpg",
+  "schemaJobTitle": "Founder & General Partner",
+  "affiliation": [
+    {
+      "@type": "Organization",
+      "name": "GitHub"
+    },
+    {
+      "@type": "Organization",
+      "name": "180 Studios"
+    }
+  ],
+  "knowsAbout": [
+    "Venture capital",
+    "Early-stage startups",
+    "Software engineering",
+    "Open-source software",
+    "Developer tools",
+    "Artificial intelligence",
+    "Startup investing",
+    "SaaS infrastructure"
+  ],
+  "nationality": "American",
+  "alumniOf": [
+    {
+      "@type": "CollegeOrUniversity",
+      "name": "Harvey Mudd College"
+    }
+  ],
+  "homeLocation": {
+    "@type": "Place",
+    "name": "San Francisco Bay Area, USA"
+  }
 }

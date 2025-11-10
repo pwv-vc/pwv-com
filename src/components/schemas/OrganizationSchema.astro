@@ -1,0 +1,131 @@
+---
+import { generateOrganizationSchema } from '../../lib/schema';
+import { getCollection } from 'astro:content';
+import { SITE_NAME, SITE_DESCRIPTION } from '../../consts';
+
+interface Props {
+  baseURL?: string | URL;
+  canonicalURL: URL;
+}
+
+const { baseURL, canonicalURL } = Astro.props;
+
+// Get team members for schema generation
+const teamMembers = await getCollection('team' as any);
+const generalPartners = (teamMembers as any[])
+  .filter((member: any) => member.data.isGeneralPartner)
+  .sort((a: any, b: any) => a.data.position - b.data.position);
+
+// Generate Organization schema with @id
+const organizationUrl = baseURL?.toString() || canonicalURL.toString();
+const organizationId = new URL(
+  '#organization',
+  baseURL || canonicalURL
+).toString();
+
+// Build founder data for all three general partners
+const founders = generalPartners.map((member: any) => {
+  const sameAs: string[] = [];
+
+  // Add GitHub profile
+  if (member.data.github) {
+    sameAs.push(`https://github.com/${member.data.github}`);
+  }
+
+  // Add LinkedIn profile
+  if (member.data.linkedin) {
+    sameAs.push(`https://www.linkedin.com/in/${member.data.linkedin}`);
+  }
+
+  // Add Twitter/X profile
+  if (member.data.twitter) {
+    sameAs.push(`https://x.com/${member.data.twitter}`);
+  }
+
+  // Add Bluesky profile
+  if (member.data.bluesky) {
+    sameAs.push(`https://bsky.app/profile/${member.data.bluesky}`);
+  }
+
+  // Add website
+  if (member.data.website) {
+    sameAs.push(member.data.website);
+  }
+
+  // Add Wikipedia link for Tom Preston-Werner
+  if (member.data.slug === 'tom-preston-werner') {
+    sameAs.push('https://en.wikipedia.org/wiki/Tom_Preston-Werner');
+  }
+
+  // Always use team page URL for founder (full URL format to match PersonSchema)
+  const personUrl = new URL(
+    `/team/${member.data.slug}`,
+    baseURL || canonicalURL
+  ).toString();
+  
+  // Use full URL for founder ID to match PersonSchema format
+  const founderId = new URL(
+    `/team/${member.data.slug}#person`,
+    baseURL || canonicalURL
+  ).toString();
+
+  return {
+    name: member.data.name,
+    url: personUrl,
+    id: founderId,
+    sameAs: sameAs.length > 0 ? sameAs : undefined,
+  };
+});
+
+// Organization social media profiles
+const organizationSameAs = [
+  organizationUrl,
+  'https://www.linkedin.com/company/pwventures',
+  'https://x.com/pwventures',
+  'https://bsky.app/profile/pwv.com',
+  'https://github.com/pwv-vc',
+];
+
+const organizationSchema = generateOrganizationSchema({
+  id: organizationId,
+  name: SITE_NAME,
+  alternateName: 'Preston-Werner Ventures',
+  url: organizationUrl,
+  description:
+    'PWV (Preston-Werner Ventures) is a founder-focused early-stage venture capital firm investing in software, AI, and developer tools. Led by GitHub co-founder Tom Preston-Werner, PWV backs visionary founders building transformative technology companies.',
+  // Using PWV logo PNG for better SEO and compatibility
+  logo: new URL(
+    '/logos/pwv-logo-black-1920.png',
+    baseURL || canonicalURL
+  ).toString(),
+  foundingDate: '2023',
+  foundingLocation: 'San Francisco Bay Area, USA',
+  areaServed: 'Global',
+  knowsAbout: [
+    'Venture capital',
+    'Early-stage investing',
+    'Artificial intelligence',
+    'Software infrastructure',
+    'Developer tools',
+    'Open-source startups',
+    'SaaS',
+  ],
+  founders: founders,
+  sameAs: organizationSameAs,
+  contactPoint: [
+    {
+      contactType: 'Investment Inquiries',
+      email: 'investors@pwv.com',
+      url: new URL('/apply', baseURL || canonicalURL).toString(),
+      areaServed: 'Global',
+      availableLanguage: ['English'],
+    },
+  ],
+  type: 'Organization',
+});
+---
+
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(organizationSchema)}
+/>

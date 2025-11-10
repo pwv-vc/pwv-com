@@ -14,6 +14,16 @@ const getPostsCache = async () => {
   return postsCache;
 };
 
+// Cache for team collection to avoid refetching in serialize
+let teamCache = null;
+const getTeamCache = async () => {
+  if (!teamCache) {
+    const { getCollection } = await import('astro:content');
+    teamCache = await getCollection('team');
+  }
+  return teamCache;
+};
+
 // https://astro.build/config
 export default defineConfig({
   output: 'static',
@@ -43,6 +53,22 @@ export default defineConfig({
             ).toISOString();
             item.changefreq = 'yearly';
             item.priority = post.data.featured ? 0.8 : 0.6;
+            return item;
+          }
+        }
+
+        // Handle team member pages
+        const teamSlugMatch = item.url.match(/\/team\/([^/]+)$/);
+        if (teamSlugMatch) {
+          const teamMembers = await getTeamCache();
+          const teamMember = teamMembers.find(
+            (m) => m.data.slug === teamSlugMatch[1] && m.data.hasPage === true
+          );
+
+          if (teamMember) {
+            // Team member pages may be updated weekly
+            item.changefreq = 'weekly';
+            item.priority = 0.7;
             return item;
           }
         }

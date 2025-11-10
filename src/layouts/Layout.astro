@@ -35,8 +35,9 @@ export interface Props {
   redirectAfter?: number; // seconds to redirect after, 0 or undefined = no redirect
   redirectUrl?: string; // URL to redirect to (defaults to '/' if not specified)
   enableUTMTracking?: boolean; // enable UTM tracking for social sharing
-  contentType?: 'post' | 'portfolio' | 'about' | 'apply'; // content type for UTM tracking
+  contentType?: 'post' | 'portfolio' | 'about' | 'apply' | 'team'; // content type for UTM tracking
   contentSlug?: string; // content slug for UTM tracking
+  additionalSchemas?: Array<{ schema: object }>; // Additional JSON-LD schemas to include in head
 }
 
 const {
@@ -56,6 +57,7 @@ const {
   enableUTMTracking = true,
   contentType,
   contentSlug,
+  additionalSchemas = [],
 } = Astro.props;
 
 export const isProduction = process.env.CONTEXT === 'production';
@@ -233,6 +235,13 @@ if (image) {
           src="https://plausible.io/js/script.js"
         />
       )
+    }
+
+    <!-- Additional JSON-LD Schemas -->
+    {
+      additionalSchemas.map(({ schema }) => (
+        <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+      ))
     }
   </head>
   <body>
