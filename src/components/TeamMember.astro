@@ -22,6 +22,8 @@ export interface Props {
   includePosts?: boolean;
   authorName?: string;
   hasPage?: boolean;
+  nickname?: string;
+  givenName?: string;
 }
 
 const {
@@ -40,7 +42,11 @@ const {
   includePosts = false,
   authorName,
   hasPage = false,
+  nickname,
+  givenName,
 } = Astro.props;
+
+const aboutName = nickname || givenName || name.split(' ')[0];
 ---
 
 <div id={slug} class="group relative mt-4 scroll-mt-8">
@@ -65,6 +71,30 @@ const {
     <p class="mt-4 max-w-screen-md leading-relaxed">
       {bio}
     </p>
+    {
+      hasPage && (
+        <a
+          href={`/team/${slug}`}
+          class="pwv-link-underline hover:text-pwv-green mt-2 inline-flex items-center gap-1.5 text-sm transition-colors"
+        >
+          <span>About {aboutName}</span>
+          <svg
+            class="h-3.5 w-3.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </a>
+      )
+    }
 
     <!-- Social Links -->
     {

@@ -94,6 +94,7 @@ const team = defineCollection({
     // Person schema fields
     givenName: z.string().optional(),
     familyName: z.string().optional(),
+    nickname: z.string().optional(),
     schemaDescription: z.string().optional(), // Enhanced description for schema
     schemaImage: z.string().optional(), // Image path for schema (e.g., '/assets/press/tom-preston-werner.jpg')
     schemaJobTitle: z.string().optional(), // Override job title for schema

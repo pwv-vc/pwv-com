@@ -1,10 +1,21 @@
 ---
-import { getRecentPosts } from '../lib/news';
+import { getRecentPosts, getFeaturedPosts } from '../lib/news';
 import PostsGrid from './PostsGrid.astro';
 import Button from './Button.astro';
 import Heading2 from './Heading2.astro';
 
+const featuredPosts = await getFeaturedPosts();
+const latestFeaturedPost = featuredPosts.length > 0 ? featuredPosts[0] : null;
 const recentPosts = await getRecentPosts(9);
+
+// If there's a featured post, ensure it's first and remove it from recent posts if present
+let postsToShow = [...recentPosts];
+if (latestFeaturedPost) {
+  // Remove the featured post from recent posts if it's already there
+  postsToShow = postsToShow.filter((post) => post.id !== latestFeaturedPost.id);
+  // Put the featured post first
+  postsToShow = [latestFeaturedPost, ...postsToShow].slice(0, 9);
+}
 ---
 
 <section class="mx-auto">
@@ -12,7 +23,7 @@ const recentPosts = await getRecentPosts(9);
     <Heading2>Latest News</Heading2>
 
     <div class="mt-12 mb-6">
-      <PostsGrid posts={recentPosts} size="large" />
+      <PostsGrid posts={postsToShow} size="large" />
     </div>
 
     <div class="mt-8 text-center">
