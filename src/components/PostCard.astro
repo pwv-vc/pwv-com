@@ -17,6 +17,7 @@ export interface Props {
       updatedDate?: Date;
       aiGeneratedImage?: boolean;
       aiGeneratedDescription?: boolean;
+      featured?: boolean;
       isFeatured?: boolean;
     };
     body?: string;
@@ -36,10 +37,12 @@ const buttonSize = isSmall ? 'text-xs px-3 py-2' : 'text-sm px-4 py-2';
 const iconSize = isSmall ? 'w-3 h-3' : 'w-4 h-4';
 const dateSize = isSmall ? 'text-xs' : 'text-sm';
 const marginBottom = isSmall ? 'mb-4' : 'mb-5';
-const borderColor = isFeatured
+// Check if post is featured via prop or post data
+const postIsFeatured = isFeatured || post.data.featured === true;
+const borderColor = postIsFeatured
   ? 'border-pwv-light-teal'
   : 'border-pwv-light-green';
-const buttonColor = isFeatured
+const buttonColor = postIsFeatured
   ? 'bg-pwv-black text-pwv-white'
   : 'bg-pwv-black text-pwv-white';
 

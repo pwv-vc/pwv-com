@@ -1,7 +1,7 @@
 {
   "name": "pwv-com",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.4",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -19,9 +19,9 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.9.5",
-    "@astrojs/mdx": "^4.3.8",
+    "@astrojs/mdx": "^4.3.10",
     "@astrojs/netlify": "^6.6.0",
-    "@astrojs/react": "^4.4.0",
+    "@astrojs/react": "^4.4.2",
     "@astrojs/rss": "^4.0.13",
     "@astrojs/sitemap": "^3.6.0",
     "@c15t/react": "^1.6.1",
@@ -33,7 +33,7 @@
     "@tailwindcss/vite": "^4.0.9",
     "@types/react-dom": "^19.1.9",
     "@unpic/astro": "^1.0.1",
-    "astro": "^5.15.1",
+    "astro": "^5.15.6",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.7",
