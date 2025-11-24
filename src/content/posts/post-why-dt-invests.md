@@ -17,7 +17,10 @@ Recently, I rewatched _Get Back_, the documentary about the Beatles creating wha
 What struck me most wasn’t just the genius of the four Beatles—it was the environment around them. The way the people in the room influenced creativity, for better or worse. The way space, support, and timing mattered as much as talent.
 
 That dynamic reminded me exactly why I invest.
-**I invest because I want to be invested.** Deeply, thoughtfully, and in service of founders’ creativity.
+
+**I invest because I want to be invested.**
+
+Deeply, thoughtfully, and in service of founders’ creativity.
 
 ---
 
