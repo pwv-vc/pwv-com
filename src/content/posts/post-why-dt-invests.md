@@ -12,29 +12,29 @@ aiGeneratedImage: true
 
 # **From Riff to Rooftop: Why I Invest with PWV**
 
-Recently, I rewatched _Get Back_, the documentary about the Beatles creating what would become their final live performance. It’s eight hours of music, tension, experimentation, laughter, boredom, and unexpected breakthroughs. In other words: it looks a lot like building a startup.
+Recently, I rewatched [_Get Back_](https://en.wikipedia.org/wiki/The_Beatles:_Get_Back), the Peter Jackson-produced documentary about the Beatles creating what would become their final live performance. It’s eight hours of music, tension, experimentation, laughter, fear, boredom, and unexpected breakthroughs.
+
+In other words: **it looks a lot like building a startup.**
 
 What struck me most wasn’t just the genius of the four Beatles—it was the environment around them. The way the people in the room influenced creativity, for better or worse. The way space, support, and timing mattered as much as talent.
 
-That dynamic reminded me exactly why I invest.
-
-**I invest because I want to be invested.**
-
-Deeply, thoughtfully, and in service of founders’ creativity.
+That dynamic reminded me exactly why I invest. **I invest because I want to be invested.** Deeply, thoughtfully, and in service of founders’ creativity.
 
 ---
 
 ## **Let the Band Play**
 
 In the early sessions of Get Back, you see the band messing around—riffing on half-formed melodies, swapping instruments, joking, wandering into tangents. They’re searching for something that doesn’t exist yet.
-Around them is a small orbit of people. Some, like Michael Lindsay-Hogg, keep pushing big dramatic concepts—performing in a Libyan amphitheater, filming in random exotic locations. It’s well-intentioned, but intrusive. He’s not really listening; he’s trying to impose his vision, trying to turn them into something they’re not—and don’t want to be. And it pulls focus at the exact moment when the band needs room to explore freely.
-Others in the room stay quieter. They’re present, tuned in, thoughtful, but they don’t interrupt the fragile spark of creation. They keep the studio feeling like a studio—open, loose, alive. They give the session the space it needs so the music can actually form.
-This is exactly what great founders need.
-Early in a company’s life, ideas are raw. The product is a whisper. The team is small, the path unclear. What founders need is not a heavy-handed pitch-deck critique or a calendar full of investor opinions. They need room to riff, iterate, and find their groove.
-My job at that stage is simple:
 
-My job at that stage is simple:
-**show up, stay observant, and let them play.**
+Around them is a small orbit of people. Some, like Michael Lindsay-Hogg, keep pushing big dramatic concepts—performing in a Libyan amphitheater, filming in random exotic locations. It’s well-intentioned, but intrusive. He’s not really listening; he’s trying to impose his vision, trying to turn them into something they’re not—and don’t want to be. And it pulls focus at the exact moment when the band needs room to explore freely.
+
+Others in the room stay quieter. They’re present, tuned in, thoughtful, but they don’t interrupt the fragile spark of creation. They keep the studio feeling like a studio—open, loose, alive. They give the session the space it needs so the music can actually form.
+
+This is exactly what great founders need.
+
+Early in a company’s life, ideas are raw. The product is a whisper. The team is small, the path unclear. What founders need is not a heavy-handed pitch-deck critique or a calendar full of investor opinions. They need room to riff, iterate, and find their groove.
+
+My job at that stage is simple: **show up, stay observant, and let them play.**
 
 ---
 
