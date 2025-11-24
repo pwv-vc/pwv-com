@@ -10,7 +10,7 @@ aiGeneratedDescription: false
 aiGeneratedImage: true
 ---
 
-# **From Riff to Rooftop: Why I Invest with PWV**
+# From Riff to Rooftop: Why I Invest with PWV
 
 Recently, I rewatched [_Get Back_](https://en.wikipedia.org/wiki/The_Beatles:_Get_Back), the Peter Jackson-produced documentary about the Beatles creating what would become their final live performance. It’s eight hours of music, tension, experimentation, laughter, fear, boredom, and unexpected breakthroughs.
 
@@ -22,7 +22,7 @@ That dynamic reminded me exactly why I invest. **I invest because I want to be i
 
 ---
 
-## **Let the Band Play**
+## Let the Band Play
 
 In the early sessions of Get Back, you see the band messing around—riffing on half-formed melodies, swapping instruments, joking, wandering into tangents. They’re searching for something that doesn’t exist yet.
 
@@ -38,7 +38,7 @@ My job at that stage is simple: **show up, stay observant, and let them play.**
 
 ---
 
-## **Creativity Also Needs Craft**
+## Creativity Also Needs Craft
 
 But later in the documentary, the vibe shifts.
 
@@ -64,7 +64,7 @@ It’s about amplifying the founder’s creativity with craft and experience.
 
 ---
 
-## **This Is Exactly What Investing Feels Like**
+## This Is Exactly What Investing Feels Like
 
 Investing, for me, is a creative partnership—not a transaction. I love the energy of the early-stage riff, and I love the discipline of helping shape the final “rooftop performance” moments.
 
@@ -78,7 +78,7 @@ And the joy—truly the joy—is helping them turn raw possibility into a produc
 
 ---
 
-## **Why I’m a GP at PWV**
+## Why I’m a GP at PWV
 
 Preston-Werner Ventures is built around this philosophy.
 
@@ -92,7 +92,7 @@ This is why being a GP here feels like the right place for me. It’s a fund bui
 
 ---
 
-## **I Invest Because I Want to Be Invested**
+## I Invest Because I Want to Be Invested
 
 At the end of _Get Back_, the Beatles walk onto the rooftop with their instruments, vulnerable and alive, still figuring out lyrics and chords as the wind blows. And yet it becomes magic. It becomes legacy.
 
