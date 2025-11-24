@@ -1,6 +1,6 @@
 ---
 title: 'From Riff to Rooftop: Why I Invest with PWV'
-description: 'A reflection on why I invest: inspired by the Beatles’ Get Back, this post explores how great founders need both creative freedom and well-timed support. From riff to rooftop—why being truly invested matters at PWV.'
+description: 'Inspired by the Get Back documentary, this piece explores why investing means being truly invested—giving founders space to create, stepping in at the right moments, and building alongside people who turn ideas into lasting products.'
 pubDate: '2025-11-24'
 updatedDate: '2025-11-24'
 tags: ['PWV', 'Investing', 'Startups', 'Venture Capital']
