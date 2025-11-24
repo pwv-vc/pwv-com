@@ -24,20 +24,17 @@ Deeply, thoughtfully, and in service of founders’ creativity.
 
 ---
 
-## **Creativity Needs Protection**
+## **Let the Band Play**
 
-In the early sessions of _Get Back_, you see the band messing around—riffing on half-formed melodies, swapping instruments, joking, wandering into tangents. They’re searching for something that doesn’t exist yet.
-
-Around them is a small orbit of people. Some, like Michael Lindsay-Hogg, push big dramatic ideas—playing in a Libyan amphitheater, filming in random exotic locations. It’s well-intentioned, but intrusive. It pulls focus at the exact moment when the band needs to explore freely. He isn;t listening, but rather forcing his ideas on them.
-
-Others in the room stay quieter. They’re present, tuned in, thoughtful, but they don’t interrupt the fragile spark of creation. They create _space_. They protect the bubble where messy early work can happen.
-
+In the early sessions of Get Back, you see the band messing around—riffing on half-formed melodies, swapping instruments, joking, wandering into tangents. They’re searching for something that doesn’t exist yet.
+Around them is a small orbit of people. Some, like Michael Lindsay-Hogg, keep pushing big dramatic concepts—performing in a Libyan amphitheater, filming in random exotic locations. It’s well-intentioned, but intrusive. He’s not really listening; he’s trying to impose his vision, trying to turn them into something they’re not—and don’t want to be. And it pulls focus at the exact moment when the band needs room to explore freely.
+Others in the room stay quieter. They’re present, tuned in, thoughtful, but they don’t interrupt the fragile spark of creation. They keep the studio feeling like a studio—open, loose, alive. They give the session the space it needs so the music can actually form.
 This is exactly what great founders need.
-
-Early in a company’s life, ideas are raw. The product is a whisper. The team is small, the path unclear. What founders need is not a heavy-handed pitch deck critique or a calendar full of investor opinions. They need room to riff, iterate, and find their groove.
+Early in a company’s life, ideas are raw. The product is a whisper. The team is small, the path unclear. What founders need is not a heavy-handed pitch-deck critique or a calendar full of investor opinions. They need room to riff, iterate, and find their groove.
+My job at that stage is simple:
 
 My job at that stage is simple:
-**show up, stay observant, and let them riff.**
+**show up, stay observant, and let them play.**
 
 ---
 
