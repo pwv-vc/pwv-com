@@ -1,6 +1,6 @@
 ---
 title: 'From Riff to Rooftop: Why I Invest with PWV'
-description: 'Inspired by the Get Back documentary, this piece explores why investing means being truly invested—giving founders space to create, stepping in at the right moments, and building alongside people who turn ideas into lasting products.'
+description: 'Inspired by the Get Back documentary—why investing means being truly invested: giving founders space to create, stepping in at the right moments, and building alongside people who turn ideas into lasting products.'
 pubDate: '2025-11-24'
 updatedDate: '2025-11-24'
 tags: ['PWV', 'Investing', 'Startups', 'Venture Capital']
