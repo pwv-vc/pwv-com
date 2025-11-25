@@ -56,6 +56,10 @@ if (path) {
       ? ((src as any).src ?? (src as any))
       : (src as string);
 }
+
+const isNetlifyDeploy =
+  process.env.CONTEXT === 'production' ||
+  process.env.CONTEXT === 'deploy-preview';
 ---
 
 <div class="mx-auto w-full md:w-full lg:w-2/3">
@@ -64,6 +68,6 @@ if (path) {
     alt={alt}
     class={baseClasses}
     loading={loading}
-    cdn="netlify"
+    {...isNetlifyDeploy && { cdn: 'netlify' }}
   />
 </div>
