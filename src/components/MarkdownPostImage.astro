@@ -68,6 +68,10 @@ const isNetlifyDeploy =
     alt={alt}
     class={baseClasses}
     loading={loading}
-    {...isNetlifyDeploy && { cdn: 'netlify', format: 'webp' }}
+    operations={{
+      netlify: {
+        fm: 'webp',
+      },
+    }}
   />
 </div>
