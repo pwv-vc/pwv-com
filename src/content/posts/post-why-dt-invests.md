@@ -1,8 +1,8 @@
 ---
 title: 'From Riff to Rooftop: Why I Invest at PWV'
 description: 'Inspired by the Get Back documentary: why investing means being truly invested: giving founders space to create, stepping in at the right moments, and building alongside people who turn ideas into lasting products.'
-pubDate: '2025-11-24'
-updatedDate: '2025-11-24'
+pubDate: '2025-12-02'
+updatedDate: '2025-12-02'
 tags: ['PWV', 'Investing', 'Startups', 'Venture Capital']
 author: 'David Thyresson'
 heroImage: '../../images/posts/post-why-dt-invests/f3T0S3G0nzjy7SJsHsOTq.png'
@@ -86,7 +86,7 @@ PWV is designed for founder-first, craftsmanship-driven investing. We believe in
 
 It’s not just capital.
 
-It’s company-building community.
+It’s [company-building community](https://pwv.com/news/post-thoughtful-capital-extraordinary-founders/).
 
 This is why being a GP here feels like the right place for me. It’s a fund built for riffers, makers, and people who want to ship meaningful things.
 
@@ -112,4 +112,4 @@ And that’s why I do it.
 
 Prompt for the image using [fal-ai/nano-banana-pro](https://fal.ai/models/fal-ai/nano-banana-pro):
 
-> Late-1960s documentary-style scene on a London rooftop on Savile Row. A small, diverse group of creators and early-stage innovators collaborate around sketchpads, analog gear, and handwritten notes, captured at a key inflection point where ideas turn into strategy. Some review product plans, others test assumptions or shape a go-to-market path. In the foreground, a vintage 1960s film clapperboard reads 'Why I Invest'. Cinematic grain, handheld documentary feel, overcast London sky, authentic '60s wardrobe and props. Emphasize the transition from messy exploration to focused, shippable direction."
+> Late-1960s documentary-style scene on a London rooftop on Savile Row. A small, diverse group of creators and early-stage innovators collaborate around sketchpads, analog gear, and handwritten notes, captured at a key inflection point where ideas turn into strategy. Some review product plans, others test assumptions or shape a go-to-market path. In the foreground, a vintage 1960s film clapperboard reads 'Why I Invest'. Cinematic grain, handheld documentary feel, overcast London sky, authentic '60s wardrobe and props. Emphasize the transition from messy exploration to focused, shippable direction.
