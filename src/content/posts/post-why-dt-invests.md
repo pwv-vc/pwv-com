@@ -8,6 +8,7 @@ author: 'David Thyresson'
 heroImage: '../../images/posts/post-why-dt-invests/f3T0S3G0nzjy7SJsHsOTq.png'
 aiGeneratedDescription: false
 aiGeneratedImage: true
+featured: true
 ---
 
 # From Riff to Rooftop: Why I Invest with PWV
