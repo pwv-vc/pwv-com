@@ -291,6 +291,17 @@ const breadcrumbSchema = generateBreadcrumbListSchema({
       </div>
       <p class="ml-auto text-sm whitespace-nowrap">
         🗓️ <FormattedDate date={post.data.pubDate} />
+        {
+          post.data.updatedDate &&
+            post.data.updatedDate.getTime() !== post.data.pubDate.getTime() && (
+              <>
+                {' • '}
+                <span class="text-subtle">
+                  Updated <FormattedDate date={post.data.updatedDate} />
+                </span>
+              </>
+            )
+        }
       </p>
     </div>
     <hr />
