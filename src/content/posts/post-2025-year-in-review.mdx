@@ -9,8 +9,18 @@ featured: true
 ---
 
 import YearInReviewTimeline from '../../components/YearInReviewTimeline/YearInReviewTimeline.astro';
+import YearInReviewStats from '../../components/YearInReviewTimeline/YearInReviewStats.astro';
+import { getCollection } from 'astro:content';
 
-We’re celebrating the energy of 2025 with a running, data-driven timeline of PWV highlights. From founder meetups to community gatherings, explore what we’ve been up to so far this year.
+export const allEvents = await getCollection('events');
+export const yearInReviewEvents = allEvents
+  .filter((event) => event.id.startsWith('2025-year-in-review/'))
+  .map((event) => event.data)
+  .sort((a, b) => a.date.getTime() - b.date.getTime());
+
+We're celebrating the energy of 2025 with a running, data-driven timeline of PWV highlights. From founder meetups to community gatherings, explore what we've been up to so far this year.
+
+<YearInReviewStats events={yearInReviewEvents} />
 
 <YearInReviewTimeline
   slug="2025-year-in-review"

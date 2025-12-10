@@ -4,38 +4,48 @@
   "description": "Highlights and touchpoints with founders, partners, and the PWV community across early 2025.",
   "events": [
     {
-      "id": "2025-01-27-first-c15t-message",
-      "date": "2025-01-27",
-      "title": "First c15t message from Chris Burns",
-      "category": "announcement",
-      "emoji": "💬",
-      "description": "Chris Burns kicked off the c15t thread with the first message to PWV, setting the tone for the year."
+      "id": "2025-01-16-cursor-series-b",
+      "date": "2025-01-16",
+      "title": "Cursor raises $105M Series B",
+      "category": [
+        "raise"
+      ],
+      "round": "Series B",
+      "emoji": "🤖",
+      "description": "Cursor announces $105M Series B from Thrive Capital, Andreessen Horowitz, and Benchmark, exceeding $100M in recurring revenue with millions of programmers using the AI code editor.",
+      "link": "https://cursor.com/en-US/blog/series-b"
     },
     {
-      "id": "2025-01-24-marly-pwv",
-      "date": "2025-01-24",
-      "title": "[In Person] Marly <> PWV",
-      "category": "meetup",
-      "emoji": "🤝",
-      "time": "14:30–15:30 PT",
+      "id": "2025-01-20-stay-bei-san-francisco",
+      "date": "2025-01-20",
+      "title": "Stay: BEI San Francisco, Trademark Collection by Wyndham",
+      "category": [
+        "travel"
+      ],
+      "emoji": "🏙️",
+      "time": "Overnight",
       "location": "San Francisco, CA",
-      "description": "On-site working session with Marly to align on priorities and next steps."
+      "description": "In-town stay supporting a series of founder meetings and community events."
     },
     {
-      "id": "2025-01-23-ralf-schonherr",
-      "date": "2025-01-23",
-      "title": "[In person] Ralf Schonherr <> PWV",
-      "category": "meetup",
+      "id": "2025-01-22-retrace-pwv",
+      "date": "2025-01-22",
+      "title": "[In person] Retrace <> PWV",
+      "category": [
+        "meetup"
+      ],
       "emoji": "🤝",
-      "time": "13:00–14:00 PT",
+      "time": "12:30–13:30 PT",
       "location": "San Francisco, CA",
-      "description": "Deep-dive with Ralf Schonherr covering product traction and upcoming milestones."
+      "description": "Conversation with the Retrace team about product roadmap and go-to-market."
     },
     {
       "id": "2025-01-23-landing-more-customers",
       "date": "2025-01-23",
       "title": "Landing More Customers: A PWV Founder Event",
-      "category": "event",
+      "category": [
+        "event"
+      ],
       "emoji": "🎯",
       "time": "3:00 PM - 6:00 PM PST",
       "location": "95 Cumberland St, San Francisco, California",
@@ -50,45 +60,636 @@
       ]
     },
     {
-      "id": "2025-01-22-retrace-pwv",
-      "date": "2025-01-22",
-      "title": "[In person] Retrace <> PWV",
-      "category": "meetup",
+      "id": "2025-01-23-ralf-schonherr",
+      "date": "2025-01-23",
+      "title": "[In person] Ralf Schonherr <> PWV",
+      "category": [
+        "meetup"
+      ],
       "emoji": "🤝",
-      "time": "12:30–13:30 PT",
+      "time": "13:00–14:00 PT",
       "location": "San Francisco, CA",
-      "description": "Conversation with the Retrace team about product roadmap and go-to-market."
+      "description": "Deep-dive with Ralf Schonherr covering product traction and upcoming milestones."
     },
     {
-      "id": "2025-01-20-stay-bei-san-francisco",
-      "date": "2025-01-20",
-      "title": "Stay: BEI San Francisco, Trademark Collection by Wyndham",
-      "category": "travel",
-      "emoji": "🏙️",
-      "time": "Overnight",
+      "id": "2025-01-24-marly-pwv",
+      "date": "2025-01-24",
+      "title": "[In Person] Marly <> PWV",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "14:30–15:30 PT",
       "location": "San Francisco, CA",
-      "description": "In-town stay supporting a series of founder meetings and community events."
+      "description": "On-site working session with Marly to align on priorities and next steps."
+    },
+    {
+      "id": "2025-01-27-first-c15t-message",
+      "date": "2025-01-27",
+      "title": "First c15t message from Chris Burns",
+      "category": [
+        "announcement"
+      ],
+      "emoji": "💬",
+      "description": "Chris Burns kicked off the c15t thread with the first message to PWV, setting the tone for the year."
     },
     {
       "id": "2025-02-07-keith-brij-david-dt",
       "date": "2025-02-07",
       "title": "Keith / Brij / David / DT",
-      "category": "meetup",
+      "category": [
+        "meetup"
+      ],
       "emoji": "🤝",
       "time": "12:30–13:00 PT",
       "location": "Virtual",
       "description": "Quick sync on fund activity and founder support plans."
     },
     {
+      "id": "2025-02-19-david-thyresson-ahmad-awais",
+      "date": "2025-02-19",
+      "title": "David Thyresson and Ahmad Awais",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "13:30–14:00",
+      "description": "Meeting with Ahmad Awais."
+    },
+    {
+      "id": "2025-02-21-david-thyresson-steve-krouse",
+      "date": "2025-02-21",
+      "title": "David Thyresson and Steve Krouse",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "12:00–12:45",
+      "description": "Meeting with Steve Krouse."
+    },
+    {
+      "id": "2025-02-25-pwv-fund-i-investor-gathering",
+      "date": "2025-02-25",
+      "title": "PWV Fund I Investor Gathering",
+      "category": [
+        "event"
+      ],
+      "emoji": "🤝",
+      "time": "4:30 PM - 6:30 PM PST",
+      "location": "95 Cumberland St, San Francisco, California",
+      "description": "Hosted by Jennifer Tacheff, David Price & David Thyresson. We're bringing together a small group of investors, fund-of-funds (FoFs), and family office representatives for an informal gathering with Tom Preston-Werner, David Thyresson (DT), and David Price to discuss PWV Fund I. This is an opportunity to meet the PWV team and ask questions, learn more about Fund I and access the data room, and connect with others who are exploring the fund over thoughtful conversation and refreshments. This is a private, invitation-only event."
+    },
+    {
+      "id": "2025-02-25-pwv-team-product-session",
+      "date": "2025-02-25",
+      "title": "PWV Team Product Session @ The Light House",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "17:30–18:30",
+      "location": "95 Cumberland St, San Francisco, California",
+      "description": "PWV team product session at The Light House."
+    },
+    {
+      "id": "2025-02-26-elicit-series-a-announcement",
+      "date": "2025-02-26",
+      "title": "FYI: Elicit Series A & Reports announcement",
+      "category": [
+        "announcement"
+      ],
+      "emoji": "📢",
+      "time": "9:30–10:00",
+      "description": "Elicit Series A and Reports announcement."
+    },
+    {
       "id": "2025-02-26-pwv-fund-i-gathering",
       "date": "2025-02-26",
       "title": "Private Gathering with the PWV Fund I Team",
-      "category": "community",
+      "category": [
+        "community"
+      ],
       "emoji": "🎉",
       "time": "19:30–21:30 PT",
       "location": "San Francisco, CA",
       "description": "Evening gathering with Fund I partners and friends to share updates and celebrate momentum."
+    },
+    {
+      "id": "2025-02-26-elicit-series-a",
+      "date": "2025-02-26",
+      "title": "Elicit raises $22M Series A",
+      "category": [
+        "raise"
+      ],
+      "round": "Series A",
+      "emoji": "🔬",
+      "description": "Elicit raises $22M Series A at $100M valuation led by Spark Capital and Footwork to build the most trusted AI platform for evidence-backed decisions, serving 400,000+ researchers monthly.",
+      "link": "https://elicit.com/blog/series-a/"
+    },
+    {
+      "id": "2025-02-27-pwv-liad-elidan",
+      "date": "2025-02-27",
+      "title": "PWV and Liad Elidan",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "15:00–15:30",
+      "description": "Meeting with Liad Elidan."
+    },
+    {
+      "id": "2025-03-31-pwv-fund-i-pre-close-gathering",
+      "date": "2025-03-31",
+      "title": "PWV Fund I Pre-Close Gathering",
+      "category": [
+        "event"
+      ],
+      "emoji": "🤝",
+      "time": "4:30 PM - 6:30 PM PDT",
+      "location": "95 Cumberland St, San Francisco, California",
+      "description": "Hosted by Jennifer Tacheff, David Price & David Thyresson. We're bringing together a small group of prospective LPs, family offices, and fund-of-funds (FoFs) for a private, invitation-only gathering with Tom Preston-Werner, David Thyresson (DT), and David Price before PWV Fund I's first close on Friday, April 18th. This is a final chance to spend time with the PWV team in an informal, high-value setting, ask any final questions about the fund and our investment approach, connect with other investors who are also considering participation, and align on next steps if you've been reviewing the data room. Agenda: 4:30 – 5:30 PM | Drinks, Conversations & Connections - Kick off the evening over great drinks, light bites, and conversations with the PWV team and fellow investors. 5:30 – 6:30 PM | The Inside Track on PWV Fund I - A deeper dive into PWV Fund I, our investment strategy, and what's ahead. We're on track for first close, and this will be one of the final opportunities to engage in person before allocations are set.",
+      "media": [
+        {
+          "type": "image",
+          "src": "post-2025-year-in-review/2025-03-31-pwv-fund-i-private-gathering.jpeg",
+          "alt": "PWV Fund I Pre-Close Gathering at 95 Cumberland St",
+          "caption": "PWV Fund I Pre-Close Gathering"
+        }
+      ]
+    },
+    {
+      "id": "2025-04-01-founder-friends-happy-hour",
+      "date": "2025-04-01",
+      "title": "Founder & Friends Happy Hour",
+      "category": [
+        "event"
+      ],
+      "emoji": "🍻",
+      "time": "4:30 PM - 6:30 PM PDT",
+      "location": "95 Cumberland St, San Francisco, California",
+      "description": "Hosted by Jennifer Tacheff, David Price & David Thyresson. Join an incredible group of founders at The Lighthouse in San Francisco for our Founder & Friends Happy Hour event! Why Attend? Ideas, intros, and opportunities: The right room leads to the right conversations—whether it's a technical breakthrough, a new partner, or a potential client. Surprise guests: Founders and operators behind some of the most exciting companies often drop in, as well as other investors and good humans. Great food, drinks, people, and vibes: The PWV ecosystem is one of the best communities in venture and tech. Period. Spots are limited. RSVP now. We'd love to see you!"
+    },
+    {
+      "id": "2025-04-09-tldraw-series-a",
+      "date": "2025-04-09",
+      "title": "tldraw raises $10M Series A",
+      "category": [
+        "raise"
+      ],
+      "round": "Series A",
+      "emoji": "✏️",
+      "description": "tldraw raises $10M Series A led by Lux Capital and Definition to build the infinite canvas SDK for developers, reaching $1M in revenue through license deals.",
+      "link": "https://tldraw.dev/blog/announcing-tldraw-series-a"
+    },
+    {
+      "id": "2025-05-01-region-earth-london-cloudflare-prisma",
+      "date": "2025-05-01",
+      "title": "🌎 Region: Earth: London with Cloudflare & Prisma",
+      "category": [
+        "event"
+      ],
+      "emoji": "🌎",
+      "time": "12:30–16:00",
+      "location": "London",
+      "description": "Region: Earth event in London with Cloudflare & Prisma. Peter Postorius of redwoodSDK presented."
+    },
+    {
+      "id": "2025-05-02-cesar-commutator-studios-pwv",
+      "date": "2025-05-02",
+      "title": "César (Commutator Studios) <> PWV",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "12:30–13:15",
+      "description": "Meeting with César from Commutator Studios."
+    },
+    {
+      "id": "2025-05-06-stackone-series-a",
+      "date": "2025-05-06",
+      "title": "StackOne raises $20M Series A",
+      "category": [
+        "raise"
+      ],
+      "round": "Series A",
+      "emoji": "🔗",
+      "description": "StackOne raises $20M Series A led by GV (Google Ventures) and Workday Ventures to reinvent SaaS and AI agent integrations with their AI-powered platform.",
+      "link": "https://www.stackone.com/press-releases/stackone-raises-20m-series-a-led-by-gv-google-ventures-to-reinvent-saas-and-ai-agent-integrations"
+    },
+    {
+      "id": "2025-05-13-david-thyresson-linh-pham-lexi",
+      "date": "2025-05-13",
+      "title": "David Thyresson and Linh Pham from Lexi",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "9:00–9:30",
+      "description": "Meeting with Linh Pham from Lexi."
+    },
+    {
+      "id": "2025-05-21-val-town-hall",
+      "date": "2025-05-21",
+      "title": "🌇 Val Town Hall",
+      "category": [
+        "event"
+      ],
+      "emoji": "🌇",
+      "time": "12:00–13:00",
+      "description": "Val Town Hall event."
+    },
+    {
+      "id": "2025-05-28-pwv-firstclose",
+      "date": "2025-05-28",
+      "title": "PWV FirstClose™ 🚀",
+      "category": [
+        "announcement"
+      ],
+      "emoji": "🚀",
+      "time": "18:45–19:00",
+      "description": "PWV Fund I First Close announcement."
+    },
+    {
+      "id": "2025-06-06-cursor-series-c",
+      "date": "2025-06-06",
+      "title": "Cursor raises $900M Series C",
+      "category": [
+        "announcement",
+        "raise",
+        "series-c"
+      ],
+      "emoji": "🚀",
+      "description": "Cursor announces $900M Series C at $9.9B valuation from Thrive, Accel, Andreessen Horowitz, and DST, reaching over $500M in ARR and serving over half of the Fortune 500.",
+      "link": "https://cursor.com/en-US/blog/series-c"
+    },
+    {
+      "id": "2025-06-17-pwv-summer-session",
+      "date": "2025-06-17",
+      "title": "PWV Summer Session – Founder Meetup",
+      "category": [
+        "event"
+      ],
+      "emoji": "🏝️",
+      "time": "1:00 PM - 2:00 PM PT",
+      "location": "Zoom",
+      "description": "Hosted by Jennifer Tacheff, David Price & David Thyresson. Connect. Contribute. Kick back (virtually). Join us for a relaxed Summer Meetup with fellow founders in the PWV portfolio, as well as General Partners, Tom Preston-Werner, DT, and David Price. Why come? Meet other incredible founders across the PWV community. Shape what we're building for you—from our Founder Directory to future programming (we want your input!). Share what you're building or need help with in small, casual breakouts. No demos or decks this time—just good people, conversations, and meaningful connections. Hear about our new Fund's First Close! Whether you're heads-down or raising a round, this is an opportunity to step back, connect with people who get it, and help co-create what's next. Expect special guests to come through as always.",
+      "media": [
+        {
+          "type": "image",
+          "src": "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,background=white,quality=75,width=400,height=400/event-covers/ba/26605de0-e7a0-462b-bb20-ee77bcbb7e6a.png",
+          "alt": "PWV Summer Session – Founder Meetup",
+          "caption": "PWV Summer Session – Founder Meetup"
+        }
+      ]
+    },
+    {
+      "id": "2025-06-30-david-thyresson-scott-johnston-docker",
+      "date": "2025-06-30",
+      "title": "David Thyresson and Scott Johnston former Docker",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "16:00–16:30",
+      "description": "Meeting with Scott Johnston, former CEO of Docker."
+    },
+    {
+      "id": "2025-07-09-pw-pwv",
+      "date": "2025-07-09",
+      "title": "P&W <> PWV",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "15:30–16:30",
+      "description": "Meeting with P&W."
+    },
+    {
+      "id": "2025-07-31-fal-series-c",
+      "date": "2025-07-31",
+      "title": "fal raises $125M Series C",
+      "category": [
+        "announcement",
+        "raise",
+        "series-c"
+      ],
+      "emoji": "🎨",
+      "description": "fal announces $125M Series C led by Meritech with participation from Salesforce Ventures, Shopify Ventures, and Google AI Futures Fund, establishing itself as the generative media platform for developers.",
+      "link": "https://blog.fal.ai/series-c/"
+    },
+    {
+      "id": "2025-08-12-brand-project-jennifer-david-dt",
+      "date": "2025-08-12",
+      "title": "Brand Project Jennifer / David / DT",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🎨",
+      "time": "16:00–17:00",
+      "description": "Brand project meeting with Jennifer, David, and DT."
+    },
+    {
+      "id": "2025-08-19-aalo-series-b",
+      "date": "2025-08-19",
+      "title": "Aalo closes $100M Series B",
+      "category": [
+        "announcement",
+        "raise",
+        "series-b"
+      ],
+      "emoji": "⚛️",
+      "description": "Aalo Atomics closes $100M Series B led by Valor Equity Partners to build their first nuclear power plant (Aalo-X) and scale factory mass-manufactured nuclear energy.",
+      "link": "https://www.aalo.com/post/aalo-closes-100m-series-b"
+    },
+    {
+      "id": "2025-09-02-boston-infra-builders-happy-hour",
+      "date": "2025-09-02",
+      "title": "Boston Infra Builders Happy Hour with MongoDB & Step Function VC",
+      "category": [
+        "event"
+      ],
+      "emoji": "🍻",
+      "time": "5:00 PM - 7:30 PM",
+      "location": "Trade, Boston, Massachusetts",
+      "description": "Join us for an evening with fellow builders, founders, and technical leaders shaping the future of infrastructure. This gathering is a collaboration between MongoDB Ventures and Step Function VC—two investors focused on backing the next generation of infra startups. Whether you're scaling infra, building new primitives, or just getting started, this is a chance to connect with others in the Boston tech community who care deeply about the same things.",
+      "media": [
+        {
+          "type": "image",
+          "src": "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,background=white,quality=75,width=400,height=400/event-covers/gt/e9f2aee2-842f-44e2-b97a-103987586195.png",
+          "alt": "Boston Infra Builders Happy Hour with MongoDB & Step Function VC",
+          "caption": "Boston Infra Builders Happy Hour with MongoDB & Step Function VC"
+        }
+      ]
+    },
+    {
+      "id": "2025-09-12-david-thyresson-nantte-fr8",
+      "date": "2025-09-12",
+      "title": "David Thyresson and Nantte from FR8",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "8:30–9:00",
+      "description": "Meeting with Nantte from FR8."
+    },
+    {
+      "id": "2025-09-22-earthmover-seed-round",
+      "date": "2025-09-22",
+      "title": "Earthmover raises $7.2M Seed Round",
+      "category": [
+        "announcement",
+        "raise",
+        "seed"
+      ],
+      "emoji": "🌍",
+      "description": "Earthmover raises $7.2M seed round led by Lowercarbon Capital to transform Earth science data management with cloud-native tensor storage.",
+      "link": "https://earthmover.io/blog/earthmovers-7-2m-seed-round-led-by-lowercarbon-capital"
+    },
+    {
+      "id": "2025-09-24-commutator-studios-pwv-lighthouse",
+      "date": "2025-09-24",
+      "title": "Commutator Studios <> PWV @The Light House",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "18:00–19:00",
+      "location": "95 Cumberland St, San Francisco, California",
+      "description": "Meeting with Commutator Studios at The Light House."
+    },
+    {
+      "id": "2025-09-25-founder-sessions-san-francisco",
+      "date": "2025-09-25",
+      "title": "Founder Sessions: Join us in San Francisco",
+      "category": [
+        "event"
+      ],
+      "emoji": "🎯",
+      "time": "5:00 PM - 9:00 PM PDT",
+      "location": "95 Cumberland St, San Francisco, California",
+      "description": "Hosted by Jennifer Tacheff, David Price & David Thyresson. On September 25th, join us at The Light House in San Francisco for an evening with one of the best communities in venture and startups: our PWV Founders. We're digging into fundraising and what really matters in building and backing companies. The night kicks off with a conversation on where capital is heading and how the landscape is shifting for founders, featuring leading investors like Topher Conway (Managing Partner of SV Angel), Mary D'Onofrio, (Partner at Crosslink Capital, fmr Bessemer Venture Partners), and David Price (PWV General Partner). Next up, we're hosting a special Founder Sessions panel with Scott Johnston (ex-CEO of Docker), Johannes Landgraf, (Co-Founder & CEO of Ona, formerly Gitpod), and Tom Preston-Werner (Co-Founder of GitHub, PWV General Partner). To round out the evening, expect delectable libations and a family-style dinner fueling dynamic conversations, fresh perspectives, and the kind of connections that make incredible things happen."
+    },
+    {
+      "id": "2025-09-25-poke-wiggle-pwv-lighthouse",
+      "date": "2025-09-25",
+      "title": "Poke & Wiggle <> PWV @The Light House",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "18:00–19:00",
+      "location": "95 Cumberland St, San Francisco, California",
+      "description": "Meeting with Poke & Wiggle at The Light House."
+    },
+    {
+      "id": "2025-09-25-power-planet-pwv-lighthouse",
+      "date": "2025-09-25",
+      "title": "Power Planet <> PWV @The Light House",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "17:00–18:00",
+      "location": "95 Cumberland St, San Francisco, California",
+      "description": "Meeting with Power Planet at The Light House."
+    },
+    {
+      "id": "2025-09-29-pwv-fund-i-q2-update",
+      "date": "2025-09-29",
+      "title": "PWV Fund I Q2 Update (Virtual)",
+      "category": [
+        "event"
+      ],
+      "emoji": "📊",
+      "time": "1:00 PM - 1:45 PM PDT",
+      "location": "Zoom",
+      "description": "Hosted by Jennifer Tacheff, David Price & David Thyresson. This is a virtual event for both current and prospective PWV LPs. We'll cover: Fund Progress: Since our first close on May 28th, things have been busy! We'll catch you up. Investments & Pipeline: Updates on new investments (5) and upcoming opportunities. Strategic Priorities: Focus areas through end of year. Open Discussion. Why Attend: Stay informed on the most important fund updates. Share input and perspectives directly with the general partners. Align on strategy and next steps moving into the next quarter."
+    },
+    {
+      "id": "2025-10-07-boston-steering-toward-future-andover",
+      "date": "2025-10-07",
+      "title": "BOSTON: Steering Toward the Future: Andover's Framework for 21st-Century Learning",
+      "category": [
+        "event"
+      ],
+      "emoji": "🎓",
+      "time": "18:00–20:00",
+      "location": "Boston, Massachusetts",
+      "description": "Steering Toward the Future: Andover's Framework for 21st-Century Learning event in Boston."
+    },
+    {
+      "id": "2025-10-10-fr8-pwv-anette",
+      "date": "2025-10-10",
+      "title": "FR8 <> PWV meet with Anette from FR8",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "11:00–11:45",
+      "description": "Meeting with Anette from FR8."
+    },
+    {
+      "id": "2025-10-13-voidzero-vite-plus",
+      "date": "2025-10-13",
+      "title": "VoidZero announces Vite+",
+      "category": [
+        "announcement"
+      ],
+      "emoji": "⚡",
+      "description": "VoidZero unveils Vite+ at ViteConf Amsterdam - a unified, commercially-licensed toolchain for JavaScript built on open source foundations.",
+      "link": "https://voidzero.dev/posts/announcing-vite-plus"
+    },
+    {
+      "id": "2025-10-21-pwv-founder-meetup-ai-capital-bubble",
+      "date": "2025-10-21",
+      "title": "PWV Founder Meetup: The AI Capital Bubble: let's talk about it!",
+      "category": [
+        "event"
+      ],
+      "emoji": "💬",
+      "time": "9:00 AM - 10:00 AM PT",
+      "location": "Zoom",
+      "description": "Hosted by Jennifer Tacheff, David Price & David Thyresson. Topic: The AI Capital Bubble. Let's talk about it! We're going to discuss the current state of Venture Capital investing + fundraising in the context of the (almost certain) \"AI Bubble\". We don't have all the answers, but we'll make progress by diving into questions as a group: What's going on? What is the felt experience? (ground truth). Should I care? (risks). Should I do anything differently? (strategy + tactics). Before the meetup, we'll start the conversation in the #pwv-founders channel on Slack. And we'll be adding some resources to read and listen to. It's going to be fun + important! We hope you'll join us. About PWV Monthly Virtual Meetups: Hosted by General Partners Tom, DT, and David, this is a monthly opportunity for all founders in the PWV Portfolio Company ecosystem. Why Attend: Meet and learn from other founders in our portfolio (read: the best community!). Hear from the PWV team who have built some of the biggest movements, products, and companies across industries. Plus, you never know who may swing by as a special guest."
+    },
+    {
+      "id": "2025-10-27-ellie-huxtable-atuin-pwv",
+      "date": "2025-10-27",
+      "title": "Ellie Huxtable (Atuin) <> PWV learn about atuin raise",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "18:15–18:45",
+      "description": "Meeting with Ellie Huxtable from Atuin to learn about Atuin raise."
+    },
+    {
+      "id": "2025-10-31-pwv-liquid-dt-darian",
+      "date": "2025-10-31",
+      "title": "PWV <> Liquid - DT and Darian plan for pwv and liquid AI collaboration",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "13:00–14:00",
+      "description": "Planning session with DT and Darian for PWV and Liquid AI collaboration."
+    },
+    {
+      "id": "2025-11-13-cursor-series-d",
+      "date": "2025-11-13",
+      "title": "Cursor raises $2.3B Series D",
+      "category": [
+        "announcement",
+        "raise",
+        "series-d"
+      ],
+      "emoji": "💻",
+      "description": "Cursor announces $2.3B Series D at $29.3B valuation, crossing $1B in annualized revenue with millions of developers using the AI-powered code editor.",
+      "link": "https://cursor.com/blog/series-d"
+    },
+    {
+      "id": "2025-11-13-milestone-seed-round",
+      "date": "2025-11-13",
+      "title": "Milestone raises $10M Seed Round",
+      "category": [
+        "announcement",
+        "raise",
+        "seed"
+      ],
+      "emoji": "📊",
+      "description": "Milestone raises $10M in seed funding led by Heavybit and Hanaco Ventures to build the most trusted AI platform for maximizing ROI of generative AI coding for enterprises.",
+      "link": "https://mstone.ai/blog/from-classroom-in-dublin-to-future-of-ai-engineering/"
+    },
+    {
+      "id": "2025-11-14-pwv-fund-i-q3-update",
+      "date": "2025-11-14",
+      "title": "PWV Fund I Q3 Update (Virtual)",
+      "category": [
+        "event"
+      ],
+      "emoji": "📊",
+      "time": "11:00 AM - 12:00 PM PST",
+      "location": "Zoom",
+      "description": "Hosted by Jennifer Tacheff, David Price & David Thyresson. This is a virtual event for both current and prospective PWV LPs. We'll cover: Investments & Pipeline: Updates on investment highlights and upcoming opportunities. Fund Progress: What's next for our second close and the fund. Strategic Priorities: Focus areas through end of the year. Open Discussion. Why Attend: Stay informed on the most important fund updates. Share input and perspectives directly with the general partners. Align on strategy and next steps moving into the next quarter."
+    },
+    {
+      "id": "2025-11-18-founder-sessions-hire-best-talent",
+      "date": "2025-11-18",
+      "title": "Founder Sessions: How to Hire the Best Talent",
+      "category": [
+        "event"
+      ],
+      "emoji": "👥",
+      "time": "9:00 AM - 10:00 AM PST",
+      "location": "Zoom",
+      "description": "Hosted by GPs Tom Preston-Werner, David Thyresson (DT), and David Price, featuring Martin Kess, Co-Founder & CTO of Purplefish. How to Hire the Best Talent with Martin Kess. Hiring is one of the most critical and challenging parts of building a company, especially in the early stages. In this hands-on workshop, Martin will walk founders through the full lifecycle of hiring: from sourcing and evaluating candidates to closing and retaining top talent. As the former Head of Engineering at Fractal Software, Martin built and ran the CTO vetting process, interviewing and assessing hundreds of founders and helping launch 145+ vertical SaaS startups in just over two years, each backed with $1M in pre-seed capital. Before that, he held engineering roles at Google, Amazon, Lyft, and Tudor, as well as several startups. Martin brings a rare blend of experience, having built technical teams from zero to scale across both startup and enterprise environments. Expect tactical insights, proven frameworks, and candid lessons learned from hundreds of hiring processes. Why Attend: Learn how to build and scale your team the right way, from sourcing to close. Get proven frameworks from someone who's vetted hundreds of founders, CTOs and engineers. Connect with other founders in the PWV ecosystem and hear directly from the PWV leadership team."
+    },
+    {
+      "id": "2025-11-19-boost-6-demo-day",
+      "date": "2025-11-19",
+      "title": "BOOST 6 Demo Day",
+      "category": [
+        "event"
+      ],
+      "emoji": "🏗️",
+      "time": "2:00 PM - 9:00 PM",
+      "location": "Suffolk Construction National Headquarters, Boston, Massachusetts",
+      "description": "Hosted by Suffolk Technologies. Join us for BOOST 6 Demo Day, the culminating event of Suffolk Technologies' premier built environment accelerator. This year's program brings together a dynamic cohort of startups solving some of the industry's most critical challenges across construction, design, real estate, and infrastructure. The afternoon will kick off with a keynote from Jeevan Kalanithi, founder and CEO of OpenSpace, who will share insights on scaling innovation in the built world. Following the keynote, the BOOST 6 companies will take the stage to pitch their cutting-edge solutions to an audience of industry leaders, investors, and potential customers. Following the pitches, dive into our startup showcase to connect with founders, explore hands-on demos, and engage with leaders shaping the future of the industry, then cap off the evening at our BOOST after-party, sponsored by Marsh McLennan and Baker Tilly! Don't miss this opportunity to experience the future of the built environment firsthand.",
+      "media": [
+        {
+          "type": "image",
+          "src": "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,background=white,quality=75,width=400,height=400/event-covers/1x/c673eb04-6c29-46c4-b0a7-9d19c4d56beb.png",
+          "alt": "BOOST 6 Demo Day at Suffolk Construction National Headquarters",
+          "caption": "BOOST 6 Demo Day"
+        }
+      ]
+    },
+    {
+      "id": "2025-12-04-david-thyresson-saqib-ameen-langbase",
+      "date": "2025-12-04",
+      "title": "David Thyresson and Saqib Ameen see Langbase CommandCode in practice",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "14:00–14:30",
+      "description": "Meeting with Saqib Ameen to see Langbase CommandCode in practice."
+    },
+    {
+      "id": "2025-12-04-pwv-team-zoo-demo-spv-planning",
+      "date": "2025-12-04",
+      "title": "PWV Team Zoo Demo possible zoo SPV planning",
+      "category": [
+        "meetup"
+      ],
+      "emoji": "🤝",
+      "time": "17:00–18:00",
+      "description": "PWV team Zoo demo and possible Zoo SPV planning session."
+    },
+    {
+      "id": "2025-12-04-alinia-seed-round",
+      "date": "2025-12-04",
+      "title": "Alinia raises $7.5M Seed Round",
+      "category": [
+        "announcement",
+        "raise",
+        "seed"
+      ],
+      "emoji": "🛡️",
+      "description": "Alinia AI raises $7.5M seed round led by Mouro Capital to power compliance for high-stake AI agents in regulated industries.",
+      "link": "https://alinia.ai/alinia-seed-round-7-5-milions/"
+    },
+    {
+      "id": "2025-12-09-fal-series-d",
+      "date": "2025-12-09",
+      "title": "fal raises $140M Series D",
+      "category": [
+        "announcement",
+        "raise",
+        "series-d"
+      ],
+      "emoji": "🚀",
+      "description": "fal announces $140M Series D funding led by Sequoia, Kleiner Perkins and NVIDIA to scale their generative media platform globally.",
+      "link": "https://blog.fal.ai/our-series-d-scaling-fal/"
     }
   ]
 }
-
