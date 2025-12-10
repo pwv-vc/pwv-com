@@ -220,5 +220,11 @@
     "url": "https://freeplay.ai/",
     "tags": ["ai", "dev tools"],
     "slug": "freeplay"
+  },
+  {
+    "name": "Limitless AI (Rewind AI, acquired by Meta)",
+    "url": "https://www.limitless.ai/",
+    "tags": ["ai", "acquired"],
+    "slug": "limitless"
   }
 ]
