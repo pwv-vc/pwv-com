@@ -1,0 +1,24 @@
+---
+interface Props {
+  year: number;
+  heading: string;
+  description?: string;
+}
+
+const { year, heading, description }: Props = Astro.props;
+---
+
+<header class="mb-8 space-y-2 text-center md:text-left">
+  <div class="inline-flex items-center gap-2 rounded-full bg-pwv-black px-3 py-1 text-xs font-medium text-pwv-white">
+    <span>PWV Year in Review</span>
+    <span aria-hidden="true">•</span>
+    <span>{year}</span>
+  </div>
+  <h2 class="font-serif text-3xl font-medium">{heading}</h2>
+  {description && (
+    <p class="text-base text-pwv-black/80">
+      {description}
+    </p>
+  )}
+</header>
+

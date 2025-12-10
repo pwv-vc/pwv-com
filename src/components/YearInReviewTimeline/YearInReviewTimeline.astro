@@ -1,0 +1,62 @@
+---
+import { getEntry } from 'astro:content';
+import TimelineHeader from './TimelineHeader.astro';
+import TimelineMonthGroup from './TimelineMonthGroup.astro';
+import TimelineShell from './TimelineShell.astro';
+import { categoryStyles } from './categoryStyles';
+import type { TimelineEvent } from './types';
+
+interface Props {
+  slug: string;
+  heading?: string;
+  intro?: string;
+}
+
+const { slug, heading, intro }: Props = Astro.props;
+const entry = await getEntry('events', slug);
+
+if (!entry) {
+  throw new Error(`Year in review entry not found for slug: ${slug}`);
+}
+
+const { events, year, description, title } = entry.data;
+
+const sortedEvents = [...events].sort(
+  (a, b) => a.date.getTime() - b.date.getTime()
+);
+
+const groupedByMonth = sortedEvents.reduce<Record<string, TimelineEvent[]>>(
+  (acc, event) => {
+    const label = event.date.toLocaleDateString('en-US', {
+      month: 'long',
+      year: 'numeric',
+    });
+    if (!acc[label]) acc[label] = [];
+    acc[label].push(event);
+    return acc;
+  },
+  {}
+);
+---
+
+<TimelineShell>
+  <TimelineHeader
+    year={year}
+    heading={heading ?? title}
+    description={intro ?? description}
+  />
+
+  <div class="relative">
+    <div class="absolute left-4 top-2 bottom-2 hidden w-px bg-pwv-black/20 md:block" aria-hidden="true"></div>
+    <div class="space-y-10">
+      {Object.entries(groupedByMonth).map(([month, monthEvents]) => (
+        <TimelineMonthGroup
+          month={month}
+          events={monthEvents}
+          categoryStyles={categoryStyles}
+        />
+      ))}
+    </div>
+  </div>
+</TimelineShell>
+

@@ -152,6 +152,57 @@ const posts = defineCollection({
     }),
 });
 
+const events = defineCollection({
+  loader: glob({ base: './src/content/events', pattern: '**/*.json' }),
+  schema: z.object({
+    title: z.string(),
+    year: z.number(),
+    description: z.string().optional(),
+    heroImage: z.string().optional(),
+    events: z.array(
+      z.object({
+        id: z.string(),
+        date: z.string().transform(parseLocalDate),
+        title: z.string(),
+        category: z
+          .enum([
+            'fundraise',
+            'product_launch',
+            'meetup',
+            'event',
+            'announcement',
+            'travel',
+            'community',
+            'other',
+          ])
+          .optional(),
+        emoji: z.string().optional(),
+        location: z.string().optional(),
+        time: z.string().optional(),
+        description: z.string().optional(),
+        links: z
+          .array(
+            z.object({
+              label: z.string(),
+              url: z.string().url(),
+            })
+          )
+          .optional(),
+        media: z
+          .array(
+            z.object({
+              type: z.enum(['image', 'video']),
+              src: z.string(),
+              alt: z.string().optional(),
+              caption: z.string().optional(),
+            })
+          )
+          .optional(),
+      })
+    ),
+  }),
+});
+
 export const collections = {
   representativePortfolio,
   rollingFundPortfolio,
@@ -160,4 +211,5 @@ export const collections = {
   testimonials,
   team,
   posts,
+  events,
 };

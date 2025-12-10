@@ -1,0 +1,137 @@
+---
+import MarkdownPostImage from '../MarkdownPostImage.astro';
+import type { TimelineEvent } from './types';
+
+interface Props {
+  event: TimelineEvent;
+  categoryStyles: Record<NonNullable<TimelineEvent['category']>, string>;
+  showTime?: boolean;
+  showLocation?: boolean;
+  showCategory?: boolean;
+}
+
+const {
+  event,
+  categoryStyles,
+  showTime = false,
+  showLocation = true,
+  showCategory = true,
+}: Props = Astro.props;
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+
+const formatTime = (time?: string) => time ?? '';
+
+const isRemoteImage = (src: string) => /^https?:\/\//.test(src);
+const normalizePostImagePath = (src: string) =>
+  src.replace(/^\/?(src\/)?images\/posts\//, '');
+---
+
+<article
+  class="border-pwv-gray/70 bg-pwv-white relative rounded-2xl border p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md md:pl-10"
+>
+  <div
+    class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between"
+  >
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center gap-2">
+        {event.emoji && <span class="text-xl leading-none">{event.emoji}</span>}
+        <h3 class="font-serif text-xl font-medium">{event.title}</h3>
+      </div>
+      <div class="text-pwv-black/70 flex flex-wrap items-center gap-3 text-sm">
+        <span class="font-mono text-xs tracking-wide uppercase">
+          {formatDate(event.date)}
+        </span>
+        {
+          showTime && event.time && (
+            <span class="bg-pwv-light-teal text-pwv-black inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium">
+              <span aria-hidden="true">⏰</span>
+              {formatTime(event.time)}
+            </span>
+          )
+        }
+        {
+          showLocation && event.location && (
+            <span class="text-pwv-black/80 inline-flex items-center gap-1 text-sm">
+              <span aria-hidden="true">📍</span>
+              {event.location}
+            </span>
+          )
+        }
+        {
+          event.category && (
+            <span
+              class={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${categoryStyles[event.category]}`}
+            >
+              {event.category.replace('_', ' ')}
+            </span>
+          )
+        }
+      </div>
+      {
+        event.description && (
+          <p class="text-pwv-black/80 text-sm leading-relaxed">
+            {event.description}
+          </p>
+        )
+      }
+      {
+        event.links && event.links.length > 0 && (
+          <div class="flex flex-wrap gap-3 text-sm font-medium">
+            {event.links.map((link) => (
+              <a class="pwv-link" href={link.url}>
+                {link.label}
+              </a>
+            ))}
+          </div>
+        )
+      }
+      {
+        event.media && event.media.length > 0 && (
+          <div class="grid gap-3 md:grid-cols-2">
+            {event.media.map((item) => (
+              <figure class="border-pwv-gray/60 bg-pwv-light-yellow/40 overflow-hidden rounded-xl border">
+                {item.type === 'image' ? (
+                  isRemoteImage(item.src) ? (
+                    <img
+                      src={item.src}
+                      alt={item.alt ?? ''}
+                      loading="lazy"
+                      class="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <MarkdownPostImage
+                      path={normalizePostImagePath(item.src)}
+                      alt={item.alt ?? ''}
+                      size="full"
+                      rounded={false}
+                      class="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  )
+                ) : (
+                  <video
+                    src={item.src}
+                    class="h-full w-full"
+                    controls
+                    preload="metadata"
+                  />
+                )}
+                {(item.caption || item.alt) && (
+                  <figcaption class="text-pwv-black/70 px-3 py-2 text-xs">
+                    {item.caption ?? item.alt}
+                  </figcaption>
+                )}
+              </figure>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </div>
+</article>
