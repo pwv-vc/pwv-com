@@ -41,7 +41,7 @@ const baseClasses = [
   .filter(Boolean)
   .join(' ');
 
-let resolvedSrc: string;
+let resolvedSrc: string | undefined;
 if (path) {
   const images = import.meta.glob('../images/posts/**/*', {
     eager: true,
@@ -55,6 +55,11 @@ if (path) {
     typeof src === 'object' && src !== null
       ? ((src as any).src ?? (src as any))
       : (src as string);
+}
+
+// Validate that we have a valid source before rendering
+if (!resolvedSrc || typeof resolvedSrc !== 'string') {
+  return null;
 }
 
 const isNetlifyDeploy =

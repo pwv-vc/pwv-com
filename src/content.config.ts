@@ -152,6 +152,72 @@ const posts = defineCollection({
     }),
 });
 
+// Event metadata collection (index files for each year)
+const eventMeta = defineCollection({
+  loader: glob({ base: './src/content/events', pattern: '**/index.json' }),
+  schema: z.object({
+    title: z.string(),
+    year: z.number(),
+    description: z.string().optional(),
+    heroImage: z.string().optional(),
+  }),
+});
+
+// Individual events collection
+const events = defineCollection({
+  loader: glob({ base: './src/content/events', pattern: '**/events/*.json' }),
+  schema: z.object({
+    id: z.string(),
+    date: z.string().transform(parseLocalDate),
+    title: z.string(),
+    category: z
+      .array(
+        z.enum([
+          'raise',
+          'seed',
+          'series-a',
+          'series-b',
+          'series-c',
+          'series-d',
+          'fundraise',
+          'product_launch',
+          'meetup',
+          'event',
+          'announcement',
+          'travel',
+          'community',
+          'other',
+        ])
+      )
+      .optional(),
+    emoji: z.string().optional(),
+    logo: z.string().optional(),
+    company: z.string().optional(),
+    location: z.string().optional(),
+    time: z.string().optional(),
+    description: z.string().optional(),
+    link: z.string().url().optional(),
+    links: z
+      .array(
+        z.object({
+          label: z.string(),
+          url: z.string().url(),
+        })
+      )
+      .optional(),
+    media: z
+      .array(
+        z.object({
+          type: z.enum(['image', 'video']),
+          src: z.string(),
+          alt: z.string().optional(),
+          caption: z.string().optional(),
+        })
+      )
+      .optional(),
+  }),
+});
+
 export const collections = {
   representativePortfolio,
   rollingFundPortfolio,
@@ -160,4 +226,6 @@ export const collections = {
   testimonials,
   team,
   posts,
+  events,
+  eventMeta,
 };
