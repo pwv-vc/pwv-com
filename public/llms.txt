@@ -31,6 +31,27 @@ unicorn scale in under 24 months.
 - Portfolio can be filtered by tags at `/portfolio/tags/<tag>`
 - Unicorn companies list: https://pwv.com/portfolio/tags/🦄
 
+### Investment Categories (Portfolio Tags)
+
+PWV invests across multiple technology sectors. Filter portfolio by these tags:
+
+- **AI & Machine Learning**: `/portfolio/tags/ai` - AI platforms, LLM tools, ML infrastructure
+- **Developer Tools**: `/portfolio/tags/dev-tools` - Code editors, databases, deployment platforms, API tools
+- **Hardware**: `/portfolio/tags/hardware` - Physical products, manufacturing, electronics
+- **Aerospace**: `/portfolio/tags/aerospace` - Aviation, space technology, flight systems
+- **Energy**: `/portfolio/tags/energy` - Clean energy, fusion, power systems
+- **SaaS**: `/portfolio/tags/saas` - Software-as-a-service platforms
+- **Infrastructure**: `/portfolio/tags/infrastructure` - Cloud infrastructure, compute platforms
+- **Compliance**: `/portfolio/tags/compliance` - Regulatory technology, data governance
+- **Food Tech**: `/portfolio/tags/food-tech` - Alternative proteins, sustainable food systems
+- **Quantum Computing**: `/portfolio/tags/quantum-computing` - Quantum hardware and software
+- **Payments**: `/portfolio/tags/payments` - Payment processing, fintech infrastructure
+- **CAD**: `/portfolio/tags/cad` - Computer-aided design, 3D modeling
+- **Construction**: `/portfolio/tags/construction` - Construction technology, building software
+- **Acquired**: `/portfolio/tags/acquired` - Portfolio companies that have been acquired
+- **Board Seat**: `/portfolio/tags/board-seat` - Companies where PWV holds a board seat
+- **Unicorns**: `/portfolio/tags/🦄` - Companies valued at $1B+ (includes Cursor, fal, Liquid AI, Stripe, Supabase, Snyk, Netlify, Retool, Astranis, Aalo Atomics, Poolside, CFS, Beta, Impossible Foods)
+
 ## Team
 
 - [Tom Preston-Werner](https://pwv.com/about#tom-preston-werner): Team profile on About page
@@ -108,6 +129,42 @@ The site organizes content into topic clusters:
 - Headquarters: San Francisco, Bay Area, California
 - Additional presence: Boston, Massachusetts
 - Contact via organization schema: Email included in structured data
+
+## Apply for Funding
+
+Founders and startups can apply for funding at: https://pwv.com/apply
+
+### Application Process
+
+PWV provides early-stage capital for technology founders, investing $500K–$3M+ from Pre-Seed through Series A.
+
+**Investment Focus**: Platforms, tools, and infrastructure that use code, models, and data to turn frontier science and engineering into real products with near-term impact.
+
+**Application Form**: The application form at `/apply` requests:
+- **Name**: Founder's name
+- **Email**: Work email address
+- **Company Name**: Your startup's name
+- **Website**: Company website URL (optional)
+- **Pitch Deck**: Link to deck from Docsend, Brieflink, or Google Drive (optional)
+- **Message**: Tell us about your company, team, and what you're building. If fundraising, include:
+  - Current stage
+  - Previous funding rounds (if any)
+  - Amount you're raising
+
+**What to Include in Your Application**:
+- Description of your company and product
+- Team background and expertise
+- What you're building and why it matters
+- Fundraising stage and details (if applicable)
+- Previous funding history (if any)
+- Amount you're raising (if applicable)
+
+**After Applying**:
+- Submissions are reviewed by the PWV team
+- You'll receive a confirmation at `/apply/thank-you`
+- PWV will be in touch about your funding opportunity
+
+**Best for**: Early-stage technology founders building platforms, developer tools, AI/ML infrastructure, hardware, energy, and other frontier technology companies.
 
 ## License & Usage
 
