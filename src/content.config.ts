@@ -152,6 +152,40 @@ const posts = defineCollection({
     }),
 });
 
+const events = defineCollection({
+  loader: glob({ base: './src/content/events/2025-year-in-review/events', pattern: '**/*.json' }),
+  schema: z.object({
+    id: z.string(),
+    date: z.string().transform(parseLocalDate),
+    title: z.string(),
+    category: z.array(z.string()),
+    company: z.string().optional(),
+    description: z.string(),
+    link: z.string().url().optional(),
+    location: z.enum([
+      'San Francisco, CA',
+      'Boston, MA',
+      'Austin, TX',
+      'London, UK',
+      'Berlin, DE',
+      'Riyadh, KSA',
+      'Virtual'
+    ]).optional(),
+    emoji: z.string().optional(),
+    time: z.string().optional(),
+  }),
+});
+
+const eventMeta = defineCollection({
+  loader: glob({ base: './src/content/events', pattern: '**/index.json' }),
+  schema: z.object({
+    title: z.string(),
+    year: z.number(),
+    description: z.string(),
+    intro: z.string().optional(),
+  }),
+});
+
 export const collections = {
   representativePortfolio,
   rollingFundPortfolio,
@@ -160,4 +194,6 @@ export const collections = {
   testimonials,
   team,
   posts,
+  events,
+  eventMeta,
 };

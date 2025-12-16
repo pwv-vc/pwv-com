@@ -1,0 +1,219 @@
+---
+import { Image as UnpicImage } from '@unpic/astro';
+import { resolveImageSrc } from '../../lib/images';
+import MarkdownPostImage from '../MarkdownPostImage.astro';
+import type { TimelineEvent } from './types';
+import { getEventEmoji } from './categoryEmojis';
+
+type CategoryValue =
+  NonNullable<TimelineEvent['category']> extends (infer U)[]
+    ? U
+    : NonNullable<TimelineEvent['category']>;
+
+interface Props {
+  event: TimelineEvent;
+  categoryStyles: Record<CategoryValue, string>;
+  showTime?: boolean;
+  showLocation?: boolean;
+  showCategory?: boolean;
+}
+
+const {
+  event,
+  categoryStyles,
+  showTime = false,
+  showLocation = true,
+  showCategory = true,
+}: Props = Astro.props;
+
+// Determine what to show: logo (if provided), company logo (if company slug provided), or category emoji
+const displayEmoji =
+  !event.logo && !event.company ? getEventEmoji(event.category) : null;
+const hasLogo = event.logo || event.company;
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+
+const formatTime = (time?: string) => time ?? '';
+
+const formatCategory = (category: string) => {
+  // Convert kebab-case to Title Case
+  return category
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
+const addRefParam = (url: string) => {
+  try {
+    const urlObj = new URL(url);
+    urlObj.searchParams.set('ref', 'pwv.com');
+    return urlObj.toString();
+  } catch {
+    // If URL parsing fails, return original URL
+    return url;
+  }
+};
+
+const isRemoteImage = (src: string) => /^https?:\/\//.test(src);
+const normalizePostImagePath = (src: string) =>
+  src.replace(/^\/?(src\/)?images\/posts\//, '');
+---
+
+<article
+  class="border-pwv-gray/70 bg-pwv-white relative rounded-2xl border p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md md:pl-10"
+>
+  <div
+    class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between"
+  >
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center gap-2">
+        {
+          hasLogo ? (
+            event.logo ? (
+              <UnpicImage
+                src={resolveImageSrc(event.logo)}
+                alt={`${event.title} logo`}
+                width={32}
+                height={32}
+                class="border-pwv-gray bg-surface flex-shrink-0 border p-0.5"
+              />
+            ) : event.company ? (
+              <UnpicImage
+                src={resolveImageSrc(`logos/small/${event.company}.png`)}
+                alt={`${event.company} logo`}
+                width={32}
+                height={32}
+                class="border-pwv-gray bg-surface flex-shrink-0 border p-0.5"
+              />
+            ) : null
+          ) : displayEmoji ? (
+            <span class="text-xl leading-none">{displayEmoji}</span>
+          ) : null
+        }
+        <h3 class="font-serif text-xl font-medium">{event.title}</h3>
+      </div>
+      <div class="text-pwv-black/70 flex flex-wrap items-center gap-3 text-sm">
+        <span class="font-mono text-xs tracking-wide uppercase">
+          {formatDate(event.date)}
+        </span>
+        {
+          showTime && event.time && (
+            <span class="bg-pwv-light-teal text-pwv-black inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium">
+              <span aria-hidden="true">⏰</span>
+              {formatTime(event.time)}
+            </span>
+          )
+        }
+        {
+          showLocation && event.location && (
+            <span class="text-pwv-black/80 inline-flex items-center gap-1 text-sm">
+              <span aria-hidden="true">📍</span>
+              {event.location}
+            </span>
+          )
+        }
+        {
+          event.category && (
+            <>
+              {Array.isArray(event.category) ? (
+                event.category.map((cat) => (
+                  <span
+                    class={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${categoryStyles[cat]}`}
+                  >
+                    {formatCategory(cat)}
+                  </span>
+                ))
+              ) : (
+                <span
+                  class={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${categoryStyles[event.category]}`}
+                >
+                  {formatCategory(event.category)}
+                </span>
+              )}
+            </>
+          )
+        }
+      </div>
+      {
+        event.description && (
+          <p class="text-pwv-black/80 text-sm leading-relaxed">
+            {event.description}
+          </p>
+        )
+      }
+      {
+        (event.link || (event.links && event.links.length > 0)) && (
+          <div class="flex flex-wrap gap-3 text-sm font-medium">
+            {event.link && (
+              <a
+                class="pwv-link"
+                href={addRefParam(event.link)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Read
+              </a>
+            )}
+            {event.links &&
+              event.links.map((link) => (
+                <a
+                  class="pwv-link"
+                  href={addRefParam(link.url)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {link.label}
+                </a>
+              ))}
+          </div>
+        )
+      }
+      {
+        event.media && event.media.length > 0 && (
+          <div class="grid gap-3 md:grid-cols-2">
+            {event.media.map((item) => (
+              <figure class="border-pwv-gray/60 bg-pwv-light-yellow/40 overflow-hidden rounded-xl border">
+                {item.type === 'image' ? (
+                  isRemoteImage(item.src) ? (
+                    <img
+                      src={item.src}
+                      alt={item.alt ?? ''}
+                      loading="lazy"
+                      class="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <MarkdownPostImage
+                      path={normalizePostImagePath(item.src)}
+                      alt={item.alt ?? ''}
+                      size="full"
+                      rounded={false}
+                      class="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  )
+                ) : (
+                  <video
+                    src={item.src}
+                    class="h-full w-full"
+                    controls
+                    preload="metadata"
+                  />
+                )}
+                {(item.caption || item.alt) && (
+                  <figcaption class="text-pwv-black/70 px-3 py-2 text-xs">
+                    {item.caption ?? item.alt}
+                  </figcaption>
+                )}
+              </figure>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </div>
+</article>

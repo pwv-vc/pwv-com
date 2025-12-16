@@ -1,0 +1,76 @@
+---
+import { getEntry, getCollection } from 'astro:content';
+import TimelineHeader from './TimelineHeader.astro';
+import TimelineMonthGroup from './TimelineMonthGroup.astro';
+import TimelineShell from './TimelineShell.astro';
+import { categoryStyles } from './categoryStyles';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  slug: string;
+  heading?: string;
+  intro?: string;
+}
+
+const { slug, heading, intro }: Props = Astro.props;
+
+// Get the metadata for this year
+const metaEntry = await getEntry('eventMeta', slug);
+
+if (!metaEntry) {
+  throw new Error(`Year in review metadata not found for slug: ${slug}`);
+}
+
+const { year, description, title } = metaEntry.data;
+
+// Get all individual events - no filtering needed since the collection
+// is already scoped to the correct directory via the glob loader base path
+const allEvents = await getCollection('events');
+const yearEvents = allEvents;
+
+// Sort events by date
+const sortedEvents = yearEvents
+  .map((entry) => entry.data)
+  .sort((a, b) => a.date.getTime() - b.date.getTime());
+
+// Group by month
+const groupedByMonth = sortedEvents.reduce<Record<string, typeof sortedEvents>>(
+  (acc, event) => {
+    const label = event.date.toLocaleDateString('en-US', {
+      month: 'long',
+      year: 'numeric',
+    });
+    if (!acc[label]) acc[label] = [];
+    acc[label].push(event);
+    return acc;
+  },
+  {}
+);
+---
+
+<TimelineShell>
+  <TimelineHeader
+    year={year}
+    heading={heading ?? title}
+    description={intro ?? description}
+  />
+
+  <div class="relative">
+    <div
+      class="bg-pwv-black/20 absolute top-2 bottom-2 left-4 hidden w-px md:block"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="space-y-10">
+      {
+        Object.entries(groupedByMonth).map(([month, monthEvents]) => (
+          <TimelineMonthGroup
+            month={month}
+            events={monthEvents}
+            categoryStyles={categoryStyles}
+          />
+        ))
+      }
+    </div>
+  </div>
+</TimelineShell>

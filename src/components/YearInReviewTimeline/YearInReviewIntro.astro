@@ -1,0 +1,20 @@
+---
+import { getEntry } from 'astro:content';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+
+// Get the metadata for this year
+const metaEntry = await getEntry('eventMeta', slug);
+
+if (!metaEntry) {
+  throw new Error(`Year in review metadata not found for slug: ${slug}`);
+}
+
+const { intro } = metaEntry.data;
+---
+
+{intro && <p class="text-pwv-black/80 mb-8 text-lg leading-relaxed">{intro}</p>}
