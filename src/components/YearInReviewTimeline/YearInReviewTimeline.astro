@@ -23,11 +23,10 @@ if (!metaEntry) {
 
 const { year, description, title } = metaEntry.data;
 
-// Get all individual events and filter by the year's slug (directory name)
+// Get all individual events - no filtering needed since the collection
+// is already scoped to the correct directory via the glob loader base path
 const allEvents = await getCollection('events');
-const yearEvents = allEvents.filter((event) =>
-  event.id.startsWith(`${slug}/events/`)
-);
+const yearEvents = allEvents;
 
 // Sort events by date
 const sortedEvents = yearEvents
