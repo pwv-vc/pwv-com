@@ -16,6 +16,7 @@ interface Props {
   showTime?: boolean;
   showLocation?: boolean;
   showCategory?: boolean;
+  showEmoji?: boolean;
 }
 
 const {
@@ -24,12 +25,13 @@ const {
   showTime = false,
   showLocation = true,
   showCategory = true,
+  showEmoji = false,
 }: Props = Astro.props;
 
 // Determine what to show: logo (if provided), company logo (if company slug provided), or category emoji
-const displayEmoji =
-  !event.logo && !event.company ? getEventEmoji(event.category) : null;
 const hasLogo = event.logo || event.company;
+const displayEmoji =
+  showEmoji && !hasLogo ? getEventEmoji(event.category) : null;
 
 const formatDate = (date: Date) =>
   date.toLocaleDateString('en-US', {
