@@ -152,6 +152,20 @@ const posts = defineCollection({
     }),
 });
 
+const locationEnum = z.enum([
+  'San Francisco, CA',
+  'Boston, MA',
+  'Austin, TX',
+  'Cambridge, MA',
+  'Cambridge, UK',
+  'London, UK',
+  'Denver, CO',
+  'Colorado',
+  'Berlin, DE',
+  'Riyadh, KSA',
+  'Virtual',
+]);
+
 const events = defineCollection({
   loader: glob({ base: './src/content/events/2025-year-in-review/events', pattern: '**/*.json' }),
   schema: z.object({
@@ -162,17 +176,20 @@ const events = defineCollection({
     company: z.string().optional(),
     description: z.string(),
     link: z.string().url().optional(),
-    location: z.enum([
-      'San Francisco, CA',
-      'Boston, MA',
-      'Austin, TX',
-      'London, UK',
-      'Berlin, DE',
-      'Riyadh, KSA',
-      'Virtual'
-    ]).optional(),
+    links: z.array(z.object({
+      url: z.string().url(),
+      label: z.string(),
+    })).optional(),
+    location: locationEnum.optional(),
     emoji: z.string().optional(),
     time: z.string().optional(),
+    logo: z.string().optional(),
+    media: z.array(z.object({
+      type: z.enum(['image', 'video']),
+      src: z.string(),
+      alt: z.string().optional(),
+      caption: z.string().optional(),
+    })).optional(),
   }),
 });
 
