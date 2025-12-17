@@ -10,6 +10,13 @@
   ],
   "emoji": "🤖",
   "location": "San Francisco, CA",
-  "description": "PWV & ReSim.ai hosted a salon focused on production-ready physical AI and robotics, bringing together builders and innovators working at the intersection of AI and physical systems."
+  "description": "PWV & ReSim.ai hosted a salon focused on production-ready physical AI and robotics, bringing together builders and innovators working at the intersection of AI and physical systems.",
+  "media": [
+    {
+      "type": "image",
+      "src": "src/images/posts/post-2025-year-in-review/resim-robotics-salon.jpg",
+      "alt": "PWV & ReSim.ai Robotics Salon"
+    }
+  ]
 }
 
