@@ -7,6 +7,10 @@
     "raise",
     "seed"
   ],
+  "company": "earthmover",
+  "companies": [
+    "Earthmover"
+  ],
   "emoji": "🌍",
   "description": "Earthmover raises $7.2M seed round led by Lowercarbon Capital to transform Earth science data management with cloud-native tensor storage.",
   "link": "https://earthmover.io/blog/earthmovers-7-2m-seed-round-led-by-lowercarbon-capital"

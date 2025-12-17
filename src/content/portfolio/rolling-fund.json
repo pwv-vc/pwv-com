@@ -256,5 +256,17 @@
     "url": "https://rwsdk.com",
     "tags": ["dev tools"],
     "slug": "redwoodjs"
+  },
+  {
+    "name": "Earthmover",
+    "url": "https://earthmover.io",
+    "tags": ["ai", "saas"],
+    "slug": "earthmover"
+  },
+  {
+    "name": "Aera Farms",
+    "url": "https://aerafarms.com",
+    "tags": ["food tech", "hardware"],
+    "slug": "aera-farms"
   }
 ]

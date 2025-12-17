@@ -8,6 +8,9 @@
     "series-a"
   ],
   "company": "tldraw",
+  "companies": [
+    "tldraw"
+  ],
   "description": "tldraw raises $10M Series A led by Lux Capital and Definition to build the infinite canvas SDK for developers, reaching $1M in revenue through license deals.",
   "link": "https://tldraw.dev/blog/announcing-tldraw-series-a"
 }
