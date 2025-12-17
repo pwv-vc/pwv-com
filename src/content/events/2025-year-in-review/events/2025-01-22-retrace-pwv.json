@@ -1,12 +1,16 @@
 {
   "id": "2025-01-22-retrace-pwv",
   "date": "2025-01-22",
-  "title": "[In person] Retrace <> PWV",
+  "title": "PWV meets with Retrace in San Francisco",
   "category": [
     "meetup"
+  ],
+  "company": "retrace",
+  "companies": [
+    "Retrace"
   ],
   "emoji": "🤝",
   "time": "12:30–13:30 PT",
   "location": "San Francisco, CA",
-  "description": "Conversation with the Retrace team about product roadmap and go-to-market."
+  "description": "Conversation with Henry and Nathan from Retrace about product roadmap and go-to-market."
 }

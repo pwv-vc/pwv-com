@@ -5,8 +5,12 @@
   "category": [
     "event"
   ],
+  "companies": [
+    "Prisma",
+    "RedwoodJS"
+  ],
   "emoji": "🌎",
   "time": "12:30–16:00",
   "location": "London, UK",
-  "description": "Region: Earth event in London with Cloudflare & Prisma. Peter Postorius of redwoodSDK presented."
+  "description": "Region: Earth event in London co-hosted by Cloudflare and Prisma, bringing together developers to explore modern platforms for fast, secure, and scalable applications. Peter Pistorius, CEO of Redwood, delivered 'Back to the Future: Server-Side'—making the case for a return to fullstack thinking with serverless runtimes, edge databases, and frameworks that feel good to use. His talk explored how Prisma, Cloudflare, and Redwood are rebuilding the dream: a world where one person can ship something meaningful, fast, and their own—without a maze of dashboards and vendor lock-in."
 }

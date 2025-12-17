@@ -7,5 +7,8 @@
   ],
   "company": "atuin",
   "time": "18:15–18:45",
-  "description": "Meeting with Ellie Huxtable from Atuin to learn about Atuin raise."
+  "description": "Meeting with Ellie Huxtable from Atuin to learn about Atuin raise.",
+  "companies": [
+    "atuin"
+  ]
 }

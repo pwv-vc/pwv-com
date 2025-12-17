@@ -174,6 +174,7 @@ const events = defineCollection({
     title: z.string(),
     category: z.array(z.string()),
     company: z.string().optional(),
+    companies: z.array(z.string()).optional(),
     description: z.string(),
     link: z.string().url().optional(),
     links: z.array(z.object({

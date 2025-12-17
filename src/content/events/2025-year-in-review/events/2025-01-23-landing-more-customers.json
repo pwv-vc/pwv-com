@@ -5,10 +5,15 @@
   "category": [
     "event"
   ],
+  "companies": [
+    "fal",
+    "ReSim",
+    "Massdriver"
+  ],
   "emoji": "🎯",
   "time": "3:00 PM - 6:00 PM PST",
   "location": "San Francisco, CA",
-  "description": "Join the Preston-Werner Ventures Founder Community for an In-Person Event Focused on GTM, Marketing, and Customer Acquisition Strategies to Land More Customers. Hosted by Jennifer Tacheff, David Price & David Thyresson. Why Attend? Get Insights You Can Use: Proven GTM and customer acquisition strategies from founders and leaders who've been there. Tackle Real Challenges: Case studies from PWV portfolio companies showcasing actionable solutions. Build Your Network: Meet potential collaborators, clients, and partners over drinks and bites. Featured speakers include: Tom Preston-Werner, Co-founder of GitHub, GP at PWV; Gorkem Yurtseven, Co-founder of Fal.ai – Generative media platform for developers; Cory O'Daniel, CEO & Co-Founder of Massdriver – DevOps Without the Red Tape; Simon Box, CEO of ReSim.ai, Plug-and-Play Testing for Robotics and AI; And More!",
+  "description": "PWV hosted founders and operators for an evening focused on GTM, marketing, and customer acquisition strategies. Featured speakers included Tom Preston-Werner (GitHub co-founder, PWV GP), Gorkem Yurtseven (fal), Cory O'Daniel (Massdriver), and Simon Box (ReSim), who shared proven strategies and case studies from building and scaling their companies. The event brought together the PWV founder community to tackle real challenges in landing customers, with actionable insights and opportunities for collaboration.",
   "media": [
     {
       "type": "image",

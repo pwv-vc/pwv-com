@@ -8,6 +8,9 @@
     "series-b"
   ],
   "company": "cursor",
+  "companies": [
+    "Cursor"
+  ],
   "description": "Cursor announces $105M Series B from Thrive Capital, Andreessen Horowitz, and Benchmark, exceeding $100M in recurring revenue with millions of programmers using the AI code editor.",
   "link": "https://cursor.com/en-US/blog/series-b"
 }

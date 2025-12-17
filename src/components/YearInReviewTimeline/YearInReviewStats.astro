@@ -18,7 +18,20 @@ const events = allEvents
 const totalEvents = events.length;
 
 // Companies engaged - count unique companies from event data
-const companiesEngaged = 102;
+const uniqueCompanies = new Set<string>();
+events.forEach((event) => {
+  // Add from single company field
+  if (event.company) {
+    uniqueCompanies.add(event.company);
+  }
+  // Add from companies array field
+  if (event.companies) {
+    event.companies.forEach((company) => {
+      uniqueCompanies.add(company);
+    });
+  }
+});
+const companiesEngaged = uniqueCompanies.size;
 
 // Markets activated - count unique locations (excluding Virtual)
 const uniqueLocations = new Set<string>();

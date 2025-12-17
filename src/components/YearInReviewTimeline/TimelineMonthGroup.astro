@@ -5,25 +5,26 @@ import type { TimelineEvent } from './types';
 interface Props {
   month: string;
   events: TimelineEvent[];
-  categoryStyles: Record<NonNullable<TimelineEvent['category']>, string>;
 }
 
-const { month, events, categoryStyles }: Props = Astro.props;
+const { month, events }: Props = Astro.props;
 ---
 
 <div class="relative">
   <div class="mb-4 flex items-center gap-3">
-    <div class="hidden h-3 w-3 rounded-full bg-pwv-green shadow md:block" aria-hidden="true"></div>
-    <p class="text-sm font-semibold uppercase tracking-wide text-pwv-black/70">
+    <div
+      class="bg-pwv-green hidden h-3 w-3 rounded-full shadow md:block"
+      aria-hidden="true"
+    >
+    </div>
+    <p class="text-pwv-black/70 text-sm font-semibold tracking-wide uppercase">
       {month}
     </p>
-    <div class="hidden h-px flex-1 bg-pwv-black/10 md:block" aria-hidden="true"></div>
+    <div class="bg-pwv-black/10 hidden h-px flex-1 md:block" aria-hidden="true">
+    </div>
   </div>
 
   <div class="space-y-6">
-    {events.map((event) => (
-      <TimelineEventCard event={event} categoryStyles={categoryStyles} />
-    ))}
+    {events.map((event) => <TimelineEventCard event={event} />)}
   </div>
 </div>
-

@@ -3,7 +3,6 @@ import { getEntry, getCollection } from 'astro:content';
 import TimelineHeader from './TimelineHeader.astro';
 import TimelineMonthGroup from './TimelineMonthGroup.astro';
 import TimelineShell from './TimelineShell.astro';
-import { categoryStyles } from './categoryStyles';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -67,7 +66,6 @@ const groupedByMonth = sortedEvents.reduce<Record<string, typeof sortedEvents>>(
           <TimelineMonthGroup
             month={month}
             events={monthEvents}
-            categoryStyles={categoryStyles}
           />
         ))
       }

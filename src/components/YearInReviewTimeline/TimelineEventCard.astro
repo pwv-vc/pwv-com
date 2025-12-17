@@ -4,15 +4,12 @@ import { resolveImageSrc } from '../../lib/images';
 import MarkdownPostImage from '../MarkdownPostImage.astro';
 import type { TimelineEvent } from './types';
 import { getEventEmoji } from './categoryEmojis';
-
-type CategoryValue =
-  NonNullable<TimelineEvent['category']> extends (infer U)[]
-    ? U
-    : NonNullable<TimelineEvent['category']>;
+import { categoryStyles } from './categoryStyles';
+import { companyNameToSlug } from '../../lib/utils';
+import { getCollection } from 'astro:content';
 
 interface Props {
   event: TimelineEvent;
-  categoryStyles: Record<CategoryValue, string>;
   showTime?: boolean;
   showLocation?: boolean;
   showCategory?: boolean;
@@ -21,12 +18,32 @@ interface Props {
 
 const {
   event,
-  categoryStyles,
   showTime = false,
   showLocation = true,
   showCategory = true,
   showEmoji = false,
 }: Props = Astro.props;
+
+// Get all portfolio companies to check if company exists
+const allPortfolio = [
+  ...(await getCollection('representativePortfolio')),
+  ...(await getCollection('rollingFundPortfolio')),
+  ...(await getCollection('fundOnePortfolio')),
+  ...(await getCollection('angelPortfolio')),
+];
+
+const portfolioSlugs = new Set(allPortfolio.map((p) => p.data.slug));
+
+// Default style for categories that don't have a specific style defined
+const DEFAULT_CATEGORY_STYLE = 'bg-pwv-black/10 text-pwv-black';
+
+// Get the style for a category, with a default fallback
+const getCategoryStyle = (category: string): string => {
+  return (
+    categoryStyles[category as keyof typeof categoryStyles] ??
+    DEFAULT_CATEGORY_STYLE
+  );
+};
 
 // Determine what to show: logo (if provided), company logo (if company slug provided), or category emoji
 const hasLogo = event.logo || event.company;
@@ -125,14 +142,14 @@ const normalizePostImagePath = (src: string) =>
               {Array.isArray(event.category) ? (
                 event.category.map((cat) => (
                   <span
-                    class={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${categoryStyles[cat]}`}
+                    class={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${getCategoryStyle(cat)}`}
                   >
                     {formatCategory(cat)}
                   </span>
                 ))
               ) : (
                 <span
-                  class={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${categoryStyles[event.category]}`}
+                  class={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${getCategoryStyle(event.category)}`}
                 >
                   {formatCategory(event.category)}
                 </span>
@@ -143,14 +160,42 @@ const normalizePostImagePath = (src: string) =>
       </div>
       {
         event.description && (
-          <p class="text-pwv-black/80 text-sm leading-relaxed">
+          <p class="text-pwv-black/80 text-md leading-relaxed">
             {event.description}
           </p>
         )
       }
       {
+        event.companies && event.companies.length > 0 && (
+          <div class="flex flex-wrap items-center gap-3">
+            {event.companies.map((company) => {
+              const slug = companyNameToSlug(company);
+              const hasLogo = portfolioSlugs.has(slug);
+              return (
+                <a
+                  href={`/portfolio?company=${slug}`}
+                  class="flex items-center gap-2 transition-opacity hover:opacity-80"
+                  title={company}
+                >
+                  {hasLogo && (
+                    <UnpicImage
+                      src={resolveImageSrc(`logos/small/${slug}.png`)}
+                      alt={`${company} logo`}
+                      width={24}
+                      height={24}
+                      class="border-pwv-gray bg-surface flex-shrink-0 border p-0.5"
+                    />
+                  )}
+                  <span class="text-sm font-medium">{company}</span>
+                </a>
+              );
+            })}
+          </div>
+        )
+      }
+      {
         (event.link || (event.links && event.links.length > 0)) && (
-          <div class="flex flex-wrap gap-3 text-sm font-medium">
+          <div class="flex flex-wrap justify-end gap-3 text-sm font-medium">
             {event.link && (
               <a
                 class="pwv-link"
