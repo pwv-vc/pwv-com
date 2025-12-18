@@ -7,6 +7,13 @@
   ],
   "emoji": "🏛️",
   "location": "London, UK",
-  "description": "PWV at Westminster Palace alongside policymakers and technology leaders, contributing perspectives on the future of AI and human-centered innovation."
+  "description": "PWV at Westminster Palace alongside policymakers and technology leaders, contributing perspectives on the future of AI and human-centered innovation.",
+  "media": [
+    {
+      "type": "image",
+      "src": "src/images/posts/post-2025-year-in-review/pwv-jenn-westminster.jpg",
+      "alt": "Jennifer Tacheff at Westminster Palace"
+    }
+  ]
 }
 

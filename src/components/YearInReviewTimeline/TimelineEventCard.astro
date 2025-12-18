@@ -81,6 +81,50 @@ const addRefParam = (url: string) => {
 const isRemoteImage = (src: string) => /^https?:\/\//.test(src);
 const normalizePostImagePath = (src: string) =>
   src.replace(/^\/?(src\/)?images\/posts\//, '');
+
+const isYouTubeUrl = (url: string) => {
+  return /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/)/.test(
+    url
+  );
+};
+
+const getYouTubeEmbedUrl = (url: string): string | null => {
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/,
+    /youtube\.com\/embed\/([^&\n?#]+)/,
+    /youtube\.com\/v\/([^&\n?#]+)/,
+  ];
+
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match && match[1]) {
+      return `https://www.youtube.com/embed/${match[1]}`;
+    }
+  }
+  return null;
+};
+
+const isSpotifyUrl = (url: string) => {
+  return /(?:spotify\.com\/playlist\/|open\.spotify\.com\/playlist\/|spotify\.com\/embed\/playlist\/)/.test(
+    url
+  );
+};
+
+const getSpotifyEmbedUrl = (url: string): string | null => {
+  const patterns = [
+    /spotify\.com\/playlist\/([a-zA-Z0-9]+)/,
+    /open\.spotify\.com\/playlist\/([a-zA-Z0-9]+)/,
+    /spotify\.com\/embed\/playlist\/([a-zA-Z0-9]+)/,
+  ];
+
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match && match[1]) {
+      return `https://open.spotify.com/embed/playlist/${match[1]}?utm_source=generator`;
+    }
+  }
+  return null;
+};
 ---
 
 <article
@@ -166,6 +210,72 @@ const normalizePostImagePath = (src: string) =>
         )
       }
       {
+        event.media && event.media.length > 0 && (
+          <div class="grid gap-3 md:grid-cols-2">
+            {event.media.map((item) => (
+              <figure class="border-pwv-gray/60 bg-pwv-light-yellow/40 overflow-hidden rounded-xl border">
+                {item.type === 'image' ? (
+                  isRemoteImage(item.src) ? (
+                    <img
+                      src={item.src}
+                      alt={item.alt ?? ''}
+                      loading="lazy"
+                      class="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <MarkdownPostImage
+                      path={normalizePostImagePath(item.src)}
+                      alt={item.alt ?? ''}
+                      size="full"
+                      rounded={false}
+                      class="h-full w-full object-cover"
+                      loading="lazy"
+                    />
+                  )
+                ) : item.type === 'spotify' || isSpotifyUrl(item.src) ? (
+                  <div class="w-full">
+                    <iframe
+                      data-testid="spotify-embed-iframe"
+                      style="border-radius: 12px;"
+                      src={getSpotifyEmbedUrl(item.src)}
+                      width="100%"
+                      height="352"
+                      frameborder="0"
+                      allowfullscreen
+                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                      loading="lazy"
+                      title={item.caption ?? item.alt ?? 'Spotify Playlist'}
+                    />
+                  </div>
+                ) : isYouTubeUrl(item.src) ? (
+                  <div class="relative w-full" style="padding-bottom: 56.25%;">
+                    <iframe
+                      class="absolute top-0 left-0 h-full w-full"
+                      src={getYouTubeEmbedUrl(item.src)}
+                      title={item.alt ?? event.title}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowfullscreen
+                    />
+                  </div>
+                ) : (
+                  <video
+                    src={item.src}
+                    class="h-full w-full"
+                    controls
+                    preload="metadata"
+                  />
+                )}
+                {(item.caption || item.alt) && (
+                  <figcaption class="text-pwv-black/70 px-3 py-2 text-xs">
+                    {item.caption ?? item.alt}
+                  </figcaption>
+                )}
+              </figure>
+            ))}
+          </div>
+        )
+      }
+      {
         event.companies && event.companies.length > 0 && (
           <div class="flex flex-wrap items-center gap-3">
             {event.companies.map((company) => {
@@ -217,47 +327,6 @@ const normalizePostImagePath = (src: string) =>
                   {link.label}
                 </a>
               ))}
-          </div>
-        )
-      }
-      {
-        event.media && event.media.length > 0 && (
-          <div class="grid gap-3 md:grid-cols-2">
-            {event.media.map((item) => (
-              <figure class="border-pwv-gray/60 bg-pwv-light-yellow/40 overflow-hidden rounded-xl border">
-                {item.type === 'image' ? (
-                  isRemoteImage(item.src) ? (
-                    <img
-                      src={item.src}
-                      alt={item.alt ?? ''}
-                      loading="lazy"
-                      class="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <MarkdownPostImage
-                      path={normalizePostImagePath(item.src)}
-                      alt={item.alt ?? ''}
-                      size="full"
-                      rounded={false}
-                      class="h-full w-full object-cover"
-                      loading="lazy"
-                    />
-                  )
-                ) : (
-                  <video
-                    src={item.src}
-                    class="h-full w-full"
-                    controls
-                    preload="metadata"
-                  />
-                )}
-                {(item.caption || item.alt) && (
-                  <figcaption class="text-pwv-black/70 px-3 py-2 text-xs">
-                    {item.caption ?? item.alt}
-                  </figcaption>
-                )}
-              </figure>
-            ))}
           </div>
         )
       }

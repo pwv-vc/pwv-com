@@ -15,6 +15,11 @@
       "src": "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,background=white,quality=75,width=400,height=400/event-covers/ba/26605de0-e7a0-462b-bb20-ee77bcbb7e6a.png",
       "alt": "PWV Summer Session – Founder Meetup",
       "caption": "PWV Summer Session – Founder Meetup"
+    },
+    {
+      "type": "spotify",
+      "src": "https://open.spotify.com/playlist/5qQskb5uCEqLKst1DUIVIx",
+      "caption": "PWV Summer Vibes"
     }
   ]
 }

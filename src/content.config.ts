@@ -186,7 +186,7 @@ const events = defineCollection({
     time: z.string().optional(),
     logo: z.string().optional(),
     media: z.array(z.object({
-      type: z.enum(['image', 'video']),
+      type: z.enum(['image', 'video', 'spotify']),
       src: z.string(),
       alt: z.string().optional(),
       caption: z.string().optional(),
