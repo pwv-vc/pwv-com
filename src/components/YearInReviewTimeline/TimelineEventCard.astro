@@ -211,16 +211,16 @@ const getSpotifyEmbedUrl = (url: string): string | null => {
       }
       {
         event.media && event.media.length > 0 && (
-          <div class="grid gap-3 md:grid-cols-2">
+          <div class="mt-4 grid gap-4 md:grid-cols-2">
             {event.media.map((item) => (
-              <figure class="border-pwv-gray/60 bg-pwv-light-yellow/40 overflow-hidden rounded-xl border">
+              <figure class="border-pwv-gray/30 overflow-hidden rounded-lg border bg-white shadow-sm">
                 {item.type === 'image' ? (
                   isRemoteImage(item.src) ? (
                     <img
                       src={item.src}
                       alt={item.alt ?? ''}
                       loading="lazy"
-                      class="h-full w-full object-cover"
+                      class="h-auto w-full object-cover"
                     />
                   ) : (
                     <MarkdownPostImage
@@ -228,12 +228,12 @@ const getSpotifyEmbedUrl = (url: string): string | null => {
                       alt={item.alt ?? ''}
                       size="full"
                       rounded={false}
-                      class="h-full w-full object-cover"
+                      class="h-auto w-full object-cover"
                       loading="lazy"
                     />
                   )
                 ) : item.type === 'spotify' || isSpotifyUrl(item.src) ? (
-                  <div class="w-full">
+                  <div class="w-full p-2">
                     <iframe
                       data-testid="spotify-embed-iframe"
                       style="border-radius: 12px;"
@@ -260,13 +260,13 @@ const getSpotifyEmbedUrl = (url: string): string | null => {
                 ) : (
                   <video
                     src={item.src}
-                    class="h-full w-full"
+                    class="h-auto w-full"
                     controls
                     preload="metadata"
                   />
                 )}
                 {(item.caption || item.alt) && (
-                  <figcaption class="text-pwv-black/70 px-3 py-2 text-xs">
+                  <figcaption class="text-pwv-black/70 bg-pwv-gray/5 px-4 py-2 text-sm italic">
                     {item.caption ?? item.alt}
                   </figcaption>
                 )}
