@@ -93,6 +93,15 @@ sortedEvents.forEach((event) => {
 });
 const companies = Array.from(allCompanies).sort();
 
+// Get unique locations for jump links
+const allLocations = new Set<string>();
+sortedEvents.forEach((event) => {
+  if (event.location) {
+    allLocations.add(event.location);
+  }
+});
+const locations = Array.from(allLocations).sort();
+
 // Helper function to format company name from slug
 const formatCompanyName = (slug: string) => {
   const specialCases: Record<string, string> = {
@@ -179,6 +188,20 @@ const getMonthColor = (index: number) => {
   return monthColors[index % monthColors.length];
 };
 
+// Location colors - rotate through PWV color palette
+const locationColors = [
+  'bg-pwv-soft-green hover:bg-pwv-green',
+  'bg-pwv-light-periwinkle hover:bg-pwv-soft-periwinkle',
+  'bg-pwv-light-coral hover:bg-pwv-soft-coral',
+  'bg-pwv-soft-teal hover:bg-pwv-light-teal',
+  'bg-pwv-light-lavender hover:bg-pwv-soft-lavender',
+  'bg-pwv-light-yellow hover:bg-pwv-soft-yellow',
+];
+
+const getLocationColor = (index: number) => {
+  return locationColors[index % locationColors.length];
+};
+
 // Find first event for each category
 const firstEventByCategory = new Map<string, string>();
 sortedEvents.forEach((event) => {
@@ -211,6 +234,14 @@ sortedEvents.forEach((event) => {
         firstEventByCompany.set(slug, event.id);
       }
     });
+  }
+});
+
+// Find first event for each location
+const firstEventByLocation = new Map<string, string>();
+sortedEvents.forEach((event) => {
+  if (event.location && !firstEventByLocation.has(event.location)) {
+    firstEventByLocation.set(event.location, event.id);
   }
 });
 ---
@@ -256,6 +287,23 @@ sortedEvents.forEach((event) => {
         }
       </div>
 
+      <!-- Location Jump Links -->
+      <div class="flex flex-wrap gap-3">
+        {
+          locations.map((location, index) => {
+            const firstEventId = firstEventByLocation.get(location);
+            return firstEventId ? (
+              <a
+                href={`#event-${firstEventId}`}
+                class={`location-pill text-pwv-black focus:ring-pwv-green rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:scale-105 focus:ring-2 focus:ring-offset-2 focus:outline-none ${getLocationColor(index)}`}
+              >
+                {location}
+              </a>
+            ) : null;
+          })
+        }
+      </div>
+
       <!-- Company Jump Links -->
       <div class="flex flex-wrap gap-4">
         {
@@ -291,17 +339,21 @@ sortedEvents.forEach((event) => {
 
   <div class="relative">
     <div
-      class="bg-pwv-black/20 absolute top-2 bottom-2 left-4 hidden w-px md:block"
+      class="bg-pwv-black/20 absolute top-2 bottom-2 left-8 hidden w-px md:block"
       aria-hidden="true"
     >
     </div>
     <div class="space-y-10">
       {
-        Object.entries(groupedByMonth).map(([month, monthEvents]) => {
+        Object.entries(groupedByMonth).map(([month, monthEvents], index) => {
           const monthName = month.split(' ')[0];
           return (
             <div id={`month-${monthName.toLowerCase()}`}>
-              <TimelineMonthGroup month={month} events={monthEvents} />
+              <TimelineMonthGroup
+                month={month}
+                events={monthEvents}
+                monthIndex={index}
+              />
             </div>
           );
         })
@@ -350,6 +402,19 @@ sortedEvents.forEach((event) => {
   }
 
   .category-jump-pill:hover {
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  }
+
+  .location-pill {
+    border: 1px solid transparent;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .location-pill:hover {
     color: white;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
   }
