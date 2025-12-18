@@ -1,0 +1,59 @@
+[
+  {
+    "id": "total-events",
+    "key": "total-events",
+    "value": 25,
+    "caption": "Organized events PWV participated in or hosted across the ecosystem",
+    "color": "bg-pwv-light-green",
+    "position": 1
+  },
+  {
+    "id": "companies-engaged",
+    "key": "companies-engaged",
+    "value": 102,
+    "caption": "Companies PWV engaged with through direct, substantive interaction",
+    "color": "bg-pwv-light-teal",
+    "position": 2
+  },
+  {
+    "id": "markets-activated",
+    "key": "markets-activated",
+    "value": 8,
+    "caption": "Ecosystems where PWV spent time building founder and partner relationships",
+    "color": "bg-pwv-light-yellow",
+    "position": 3
+  },
+  {
+    "id": "funding-rounds",
+    "key": "funding-rounds",
+    "value": 12,
+    "caption": "Portfolio and ecosystem company raises announced during the year",
+    "color": "bg-pwv-soft-green",
+    "position": 4
+  },
+  {
+    "id": "founder-operator-1-1s",
+    "key": "founder-operator-1-1s",
+    "value": 145,
+    "caption": "Direct conversations with founders and operators across stages",
+    "color": "bg-pwv-light-periwinkle",
+    "position": 5
+  },
+  {
+    "id": "community-convenings",
+    "key": "community-convenings",
+    "value": 16,
+    "caption": "Curated gatherings bringing founders, operators, and partners together",
+    "color": "bg-pwv-light-yellow",
+    "position": 6
+  },
+  {
+    "id": "announcements",
+    "key": "announcements",
+    "value": 10,
+    "caption": "Major fund, portfolio, and community milestones shared publicly",
+    "color": "bg-pwv-light-green",
+    "position": 7
+  }
+]
+

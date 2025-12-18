@@ -204,6 +204,18 @@ const eventMeta = defineCollection({
   }),
 });
 
+const yearInReviewStats = defineCollection({
+  loader: file('src/content/events/2025-year-in-review/stats.json'),
+  schema: z.object({
+    id: z.string(),
+    key: z.string(),
+    value: z.union([z.number(), z.string()]),
+    caption: z.string(),
+    color: z.string(),
+    position: z.number(),
+  }),
+});
+
 export const collections = {
   representativePortfolio,
   rollingFundPortfolio,
@@ -214,4 +226,5 @@ export const collections = {
   posts,
   events,
   eventMeta,
+  yearInReviewStats,
 };
