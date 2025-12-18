@@ -162,6 +162,7 @@ const locationEnum = z.enum([
   'Denver, CO',
   'Colorado',
   'Berlin, DE',
+  'Munich, DE',
   'Riyadh, KSA',
   'Virtual',
 ]);

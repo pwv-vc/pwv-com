@@ -8,6 +8,7 @@ export const categoryStyles: Record<
   community: 'bg-pwv-light-teal text-pwv-black',
   event: 'bg-pwv-light-yellow text-pwv-black',
   fundraise: 'bg-pwv-soft-green text-pwv-black',
+  intro: 'bg-pwv-light-yellow text-pwv-black',
   meetup: 'bg-pwv-light-periwinkle text-pwv-black',
   product_launch: 'bg-pwv-soft-teal text-pwv-black',
   travel: 'bg-pwv-light-coral text-pwv-black',
