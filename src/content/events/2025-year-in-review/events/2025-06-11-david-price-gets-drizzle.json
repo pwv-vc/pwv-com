@@ -1,0 +1,18 @@
+{
+  "id": "2025-06-11-david-price-gets-drizzle",
+  "date": "2025-06-11",
+  "title": "So This Happened",
+  "category": [
+    "announcement"
+  ],
+  "emoji": "🐕",
+  "description": "David Price and family welcomed a new member to the family: Drizzle the dog, not the ORM.",
+  "media": [
+    {
+      "type": "image",
+      "src": "src/images/posts/post-2025-year-in-review/pv-dp-drizzle.jpg",
+      "alt": "So this happened"
+    }
+  ]
+}
+

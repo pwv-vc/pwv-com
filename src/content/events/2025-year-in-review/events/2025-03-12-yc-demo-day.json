@@ -8,6 +8,18 @@
   ],
   "emoji": "🚀",
   "description": "General Partner David Price attends YC Demo Day in San Francisco.",
-  "location": "San Francisco, CA"
+  "location": "San Francisco, CA",
+  "media": [
+    {
+      "type": "image",
+      "src": "src/images/posts/post-2025-year-in-review/2025-yc-demo-day-hall.jpg",
+      "alt": "YC Demo Day Hall"
+    },
+    {
+      "type": "image",
+      "src": "src/images/posts/post-2025-year-in-review/2025-yc-demo-day-screen.jpg",
+      "alt": "YC Demo Day Screen"
+    }
+  ]
 }
 
