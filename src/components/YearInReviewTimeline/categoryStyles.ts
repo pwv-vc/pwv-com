@@ -18,5 +18,8 @@ export const categoryStyles: Record<
   'series-b': 'bg-pwv-soft-teal text-pwv-black',
   'series-c': 'bg-pwv-light-periwinkle text-pwv-black',
   'series-d': 'bg-pwv-light-lavender text-pwv-black',
+  media: 'bg-pwv-light-coral text-pwv-black',
+  team: 'bg-pwv-light-periwinkle text-pwv-black',
+  demo_day: 'bg-pwv-soft-green text-pwv-black',
 };
 

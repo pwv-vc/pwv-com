@@ -4,6 +4,8 @@ import TimelineHeader from './TimelineHeader.astro';
 import TimelineMonthGroup from './TimelineMonthGroup.astro';
 import TimelineShell from './TimelineShell.astro';
 import type { CollectionEntry } from 'astro:content';
+import { Image as UnpicImage } from '@unpic/astro';
+import { resolveImageSrc } from '../../lib/images';
 
 interface Props {
   slug: string;
@@ -22,10 +24,18 @@ if (!metaEntry) {
 
 const { year, description, title } = metaEntry.data;
 
-// Get all individual events - no filtering needed since the collection
-// is already scoped to the correct directory via the glob loader base path
+// Get all individual events
 const allEvents = await getCollection('events');
 const yearEvents = allEvents;
+
+// Get all portfolio companies to check which logos exist
+const allPortfolio = [
+  ...(await getCollection('representativePortfolio')),
+  ...(await getCollection('rollingFundPortfolio')),
+  ...(await getCollection('fundOnePortfolio')),
+  ...(await getCollection('angelPortfolio')),
+];
+const portfolioSlugs = new Set(allPortfolio.map((p) => p.data.slug));
 
 // Sort events by date
 const sortedEvents = yearEvents
@@ -45,6 +55,164 @@ const groupedByMonth = sortedEvents.reduce<Record<string, typeof sortedEvents>>(
   },
   {}
 );
+
+// Get unique months for jump links (just month names)
+const months = Object.keys(groupedByMonth).map((monthYear) => {
+  return monthYear.split(' ')[0];
+});
+
+// Get unique categories for jump links
+const allCategories = new Set<string>();
+sortedEvents.forEach((event) => {
+  if (event.category) {
+    if (Array.isArray(event.category)) {
+      event.category.forEach((cat) => allCategories.add(cat));
+    } else {
+      allCategories.add(event.category);
+    }
+  }
+});
+const categories = Array.from(allCategories).sort();
+
+// Get unique companies for jump links
+const allCompanies = new Set<string>();
+sortedEvents.forEach((event) => {
+  if (event.company) {
+    allCompanies.add(event.company);
+  }
+  if (event.companies && Array.isArray(event.companies)) {
+    event.companies.forEach((company) => {
+      const slug = company
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '')
+        .replace(/-+/g, '-'); // Replace multiple dashes with single dash
+      allCompanies.add(slug);
+    });
+  }
+});
+const companies = Array.from(allCompanies).sort();
+
+// Helper function to format company name from slug
+const formatCompanyName = (slug: string) => {
+  const specialCases: Record<string, string> = {
+    fal: 'fal',
+    resim: 'ReSim',
+    tldraw: 'tldraw',
+    voidzero: 'VoidZero',
+    stackone: 'StackOne',
+    langbase: 'Langbase',
+    'aalo-atomics': 'Aalo Atomics',
+    'power-planet': 'Power Planet',
+    'commutator-studios': 'Commutator Studios',
+    'poke-wiggle': 'Poke & Wiggle',
+    pokewiggle: 'Poke & Wiggle',
+  };
+
+  if (specialCases[slug]) {
+    return specialCases[slug];
+  }
+
+  return slug
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
+// Helper function to format category name
+const formatCategoryName = (category: string) => {
+  const specialCases: Record<string, string> = {
+    demo_day: 'Demo Day',
+    'demo-day': 'Demo Day',
+  };
+
+  if (specialCases[category]) {
+    return specialCases[category];
+  }
+
+  return category
+    .replace(/-/g, ' ')
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, (l) => l.toUpperCase());
+};
+
+// Category colors for pills - matches categoryStyles.ts
+const categoryColors: Record<string, string> = {
+  announcement: 'bg-pwv-light-green hover:bg-pwv-green',
+  community: 'bg-pwv-light-teal hover:bg-pwv-soft-teal',
+  event: 'bg-pwv-light-yellow hover:bg-pwv-soft-yellow',
+  fundraise: 'bg-pwv-soft-green hover:bg-pwv-green',
+  meetup: 'bg-pwv-light-periwinkle hover:bg-pwv-soft-periwinkle',
+  product_launch: 'bg-pwv-soft-teal hover:bg-pwv-light-teal',
+  travel: 'bg-pwv-light-coral hover:bg-pwv-soft-coral',
+  other: 'bg-pwv-light-lavender hover:bg-pwv-soft-lavender',
+  raise: 'bg-pwv-soft-green hover:bg-pwv-green',
+  seed: 'bg-pwv-light-green hover:bg-pwv-green',
+  'series-a': 'bg-pwv-light-teal hover:bg-pwv-soft-teal',
+  'series-b': 'bg-pwv-soft-teal hover:bg-pwv-light-teal',
+  'series-c': 'bg-pwv-light-periwinkle hover:bg-pwv-soft-periwinkle',
+  'series-d': 'bg-pwv-light-lavender hover:bg-pwv-soft-lavender',
+  media: 'bg-pwv-light-coral hover:bg-pwv-soft-coral',
+  team: 'bg-pwv-light-periwinkle hover:bg-pwv-soft-periwinkle',
+  demo_day: 'bg-pwv-soft-green hover:bg-pwv-green',
+  'demo-day': 'bg-pwv-soft-green hover:bg-pwv-green',
+  intro: 'bg-pwv-light-yellow hover:bg-pwv-soft-yellow',
+};
+
+const getCategoryColor = (category: string) => {
+  return categoryColors[category] || 'bg-pwv-light-green hover:bg-pwv-green';
+};
+
+// Month colors - rotate through PWV color palette
+const monthColors = [
+  'bg-pwv-light-green hover:bg-pwv-green',
+  'bg-pwv-light-teal hover:bg-pwv-soft-teal',
+  'bg-pwv-light-yellow hover:bg-pwv-soft-yellow',
+  'bg-pwv-soft-green hover:bg-pwv-green',
+  'bg-pwv-light-periwinkle hover:bg-pwv-soft-periwinkle',
+  'bg-pwv-soft-teal hover:bg-pwv-light-teal',
+  'bg-pwv-light-coral hover:bg-pwv-soft-coral',
+  'bg-pwv-light-lavender hover:bg-pwv-soft-lavender',
+];
+
+const getMonthColor = (index: number) => {
+  return monthColors[index % monthColors.length];
+};
+
+// Find first event for each category
+const firstEventByCategory = new Map<string, string>();
+sortedEvents.forEach((event) => {
+  const cats = Array.isArray(event.category)
+    ? event.category
+    : event.category
+      ? [event.category]
+      : [];
+  cats.forEach((cat) => {
+    if (!firstEventByCategory.has(cat)) {
+      firstEventByCategory.set(cat, event.id);
+    }
+  });
+});
+
+// Find first event for each company
+const firstEventByCompany = new Map<string, string>();
+sortedEvents.forEach((event) => {
+  if (event.company && !firstEventByCompany.has(event.company)) {
+    firstEventByCompany.set(event.company, event.id);
+  }
+  if (event.companies && Array.isArray(event.companies)) {
+    event.companies.forEach((company) => {
+      const slug = company
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '')
+        .replace(/-+/g, '-'); // Replace multiple dashes with single dash
+      if (!firstEventByCompany.has(slug)) {
+        firstEventByCompany.set(slug, event.id);
+      }
+    });
+  }
+});
 ---
 
 <TimelineShell>
@@ -54,6 +222,73 @@ const groupedByMonth = sortedEvents.reduce<Record<string, typeof sortedEvents>>(
     description={intro ?? description}
   />
 
+  <!-- Jump Links -->
+  <div class="mb-10 rounded-2xl bg-white p-6 shadow-sm">
+    <div class="space-y-4">
+      <!-- Month Jump Links -->
+      <div class="flex flex-wrap gap-3">
+        {
+          months.map((month, index) => (
+            <a
+              href={`#month-${month.toLowerCase()}`}
+              class={`month-pill text-pwv-black focus:ring-pwv-green rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:scale-105 focus:ring-2 focus:ring-offset-2 focus:outline-none ${getMonthColor(index)}`}
+            >
+              {month}
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- Category Jump Links -->
+      <div class="flex flex-wrap gap-3">
+        {
+          categories.map((category) => {
+            const firstEventId = firstEventByCategory.get(category);
+            return firstEventId ? (
+              <a
+                href={`#event-${firstEventId}`}
+                class={`category-jump-pill text-pwv-black focus:ring-pwv-green rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:scale-105 focus:ring-2 focus:ring-offset-2 focus:outline-none ${getCategoryColor(category)}`}
+              >
+                {formatCategoryName(category)}
+              </a>
+            ) : null;
+          })
+        }
+      </div>
+
+      <!-- Company Jump Links -->
+      <div class="flex flex-wrap gap-4">
+        {
+          companies.map((company) => {
+            const firstEventId = firstEventByCompany.get(company);
+            if (!firstEventId) return null;
+
+            // Check if this company has a logo in portfolio
+            const hasLogo = portfolioSlugs.has(company);
+
+            return (
+              <a
+                href={`#event-${firstEventId}`}
+                class="company-link focus:ring-pwv-green inline-flex items-center gap-2 text-sm font-medium transition-all hover:opacity-70 focus:ring-2 focus:ring-offset-2 focus:outline-none"
+              >
+                {hasLogo && (
+                  <UnpicImage
+                    src={resolveImageSrc(`logos/small/${company}.png`)}
+                    alt={`${formatCompanyName(company)} logo`}
+                    width={24}
+                    height={24}
+                    class="flex-shrink-0"
+                  />
+                )}
+                <span class="text-pwv-black">{formatCompanyName(company)}</span>
+              </a>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+
   <div class="relative">
     <div
       class="bg-pwv-black/20 absolute top-2 bottom-2 left-4 hidden w-px md:block"
@@ -62,13 +297,79 @@ const groupedByMonth = sortedEvents.reduce<Record<string, typeof sortedEvents>>(
     </div>
     <div class="space-y-10">
       {
-        Object.entries(groupedByMonth).map(([month, monthEvents]) => (
-          <TimelineMonthGroup
-            month={month}
-            events={monthEvents}
-          />
-        ))
+        Object.entries(groupedByMonth).map(([month, monthEvents]) => {
+          const monthName = month.split(' ')[0];
+          return (
+            <div id={`month-${monthName.toLowerCase()}`}>
+              <TimelineMonthGroup month={month} events={monthEvents} />
+            </div>
+          );
+        })
       }
     </div>
   </div>
 </TimelineShell>
+
+<style>
+  .jump-pill {
+    background-color: #ffffff;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .jump-pill:hover {
+    background-color: #10b981;
+    color: white;
+    border-color: #10b981;
+    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3);
+  }
+
+  .month-pill {
+    border: 1px solid transparent;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .month-pill:hover {
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  }
+
+  .category-jump-pill {
+    border: 1px solid transparent;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .category-jump-pill:hover {
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+  }
+
+  .company-link {
+    text-decoration: none;
+  }
+
+  .company-link:hover span {
+    text-decoration: underline;
+  }
+
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Add scroll margin for better positioning */
+  [id^='month-'],
+  [id^='event-'] {
+    scroll-margin-top: 2rem;
+  }
+</style>

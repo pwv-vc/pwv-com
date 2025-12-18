@@ -3,7 +3,8 @@
   "date": "2025-03-12",
   "title": "YC Demo Day",
   "category": [
-    "event"
+    "event",
+    "demo_day"
   ],
   "emoji": "🚀",
   "description": "General Partner David Price attends YC Demo Day in San Francisco.",
