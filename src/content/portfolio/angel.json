@@ -60,9 +60,9 @@
     "slug": "path-water"
   },
   {
-    "name": "Graphite",
+    "name": "Graphite (acquired by Cursor)",
     "url": "https://www.graphite.dev/",
-    "tags": ["dev tools"],
+    "tags": ["dev tools", "ai", "acquired"],
     "slug": "graphite"
   },
   {
