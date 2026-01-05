@@ -1,7 +1,6 @@
 ---
 import { Image as UnpicImage } from '@unpic/astro';
 import { resolveImageSrc } from '../../lib/images';
-import MarkdownPostImage from '../MarkdownPostImage.astro';
 import type { TimelineEvent } from './types';
 import { getEventEmoji } from './categoryEmojis';
 import { categoryStyles } from './categoryStyles';
@@ -81,6 +80,17 @@ const addRefParam = (url: string) => {
 const isRemoteImage = (src: string) => /^https?:\/\//.test(src);
 const normalizePostImagePath = (src: string) =>
   src.replace(/^\/?(src\/)?images\/posts\//, '');
+
+// Resolve post image path the same way MarkdownPostImage does
+const resolvePostImageSrc = (path: string): string | undefined => {
+  const images = import.meta.glob('../../images/posts/**/*', {
+    eager: true,
+    import: 'default',
+  }) as Record<string, any>;
+  const key = `../../images/posts/${path}`;
+  const found = images[key];
+  return typeof found === 'string' ? found : (found?.src ?? found);
+};
 
 const isYouTubeUrl = (url: string) => {
   return /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/)/.test(
@@ -214,60 +224,78 @@ const getSpotifyEmbedUrl = (url: string): string | null => {
         event.media && event.media.length > 0 && (
           <div class="mt-4 grid gap-4 md:grid-cols-2">
             {event.media.map((item) => (
-              <figure class="border-pwv-gray/30 overflow-hidden rounded-lg border bg-white shadow-sm">
-                {item.type === 'image' ? (
-                  isRemoteImage(item.src) ? (
-                    <img
-                      src={item.src}
-                      alt={item.alt ?? ''}
-                      loading="lazy"
-                      class="h-auto w-full object-cover"
-                    />
+              <figure class="border-pwv-gray/30 flex flex-col overflow-hidden rounded-lg border bg-white shadow-sm">
+                <div class="flex-grow">
+                  {item.type === 'image' ? (
+                    isRemoteImage(item.src) ? (
+                      <img
+                        src={item.src}
+                        alt={item.alt ?? ''}
+                        loading="lazy"
+                        class="h-auto w-full object-cover"
+                      />
+                    ) : (
+                      (() => {
+                        const normalizedPath = normalizePostImagePath(item.src);
+                        const resolvedSrc = resolvePostImageSrc(normalizedPath);
+                        // Validate that we have a valid source before rendering
+                        if (!resolvedSrc || typeof resolvedSrc !== 'string') {
+                          return null;
+                        }
+                        return (
+                          <UnpicImage
+                            src={resolvedSrc}
+                            alt={item.alt ?? ''}
+                            class="h-auto w-full object-cover"
+                            loading="lazy"
+                            operations={{
+                              netlify: {
+                                fm: 'webp',
+                              },
+                            }}
+                          />
+                        );
+                      })()
+                    )
+                  ) : item.type === 'spotify' || isSpotifyUrl(item.src) ? (
+                    <div class="w-full p-2">
+                      <iframe
+                        data-testid="spotify-embed-iframe"
+                        style="border-radius: 12px;"
+                        src={getSpotifyEmbedUrl(item.src)}
+                        width="100%"
+                        height="352"
+                        frameborder="0"
+                        allowfullscreen
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"
+                        title={item.caption ?? item.alt ?? 'Spotify Playlist'}
+                      />
+                    </div>
+                  ) : isYouTubeUrl(item.src) ? (
+                    <div
+                      class="relative w-full"
+                      style="padding-bottom: 56.25%;"
+                    >
+                      <iframe
+                        class="absolute top-0 left-0 h-full w-full"
+                        src={getYouTubeEmbedUrl(item.src)}
+                        title={item.alt ?? event.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                      />
+                    </div>
                   ) : (
-                    <MarkdownPostImage
-                      path={normalizePostImagePath(item.src)}
-                      alt={item.alt ?? ''}
-                      size="full"
-                      rounded={false}
-                      class="h-auto w-full object-cover"
-                      loading="lazy"
+                    <video
+                      src={item.src}
+                      class="h-auto w-full"
+                      controls
+                      preload="metadata"
                     />
-                  )
-                ) : item.type === 'spotify' || isSpotifyUrl(item.src) ? (
-                  <div class="w-full p-2">
-                    <iframe
-                      data-testid="spotify-embed-iframe"
-                      style="border-radius: 12px;"
-                      src={getSpotifyEmbedUrl(item.src)}
-                      width="100%"
-                      height="352"
-                      frameborder="0"
-                      allowfullscreen
-                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                      loading="lazy"
-                      title={item.caption ?? item.alt ?? 'Spotify Playlist'}
-                    />
-                  </div>
-                ) : isYouTubeUrl(item.src) ? (
-                  <div class="relative w-full" style="padding-bottom: 56.25%;">
-                    <iframe
-                      class="absolute top-0 left-0 h-full w-full"
-                      src={getYouTubeEmbedUrl(item.src)}
-                      title={item.alt ?? event.title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowfullscreen
-                    />
-                  </div>
-                ) : (
-                  <video
-                    src={item.src}
-                    class="h-auto w-full"
-                    controls
-                    preload="metadata"
-                  />
-                )}
+                  )}
+                </div>
                 {(item.caption || item.alt) && (
-                  <figcaption class="text-pwv-black/70 bg-pwv-gray/5 px-4 py-2 text-sm italic">
+                  <figcaption class="text-pwv-black/70 bg-pwv-gray/5 mt-auto px-4 pt-2 pb-3 text-center text-sm font-semibold">
                     {item.caption ?? item.alt}
                   </figcaption>
                 )}

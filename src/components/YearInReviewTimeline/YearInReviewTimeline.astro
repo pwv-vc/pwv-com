@@ -3,9 +3,6 @@ import { getEntry, getCollection } from 'astro:content';
 import TimelineHeader from './TimelineHeader.astro';
 import TimelineMonthGroup from './TimelineMonthGroup.astro';
 import TimelineShell from './TimelineShell.astro';
-import type { CollectionEntry } from 'astro:content';
-import { Image as UnpicImage } from '@unpic/astro';
-import { resolveImageSrc } from '../../lib/images';
 
 interface Props {
   slug: string;
@@ -257,7 +254,7 @@ sortedEvents.forEach((event) => {
   <div class="mb-10 rounded-2xl bg-white p-6 shadow-sm">
     <div class="space-y-4">
       <!-- Month Jump Links -->
-      <div class="flex flex-wrap gap-3">
+      <div class="flex flex-wrap gap-3 pb-6">
         {
           months.map((month, index) => (
             <a
@@ -269,67 +266,26 @@ sortedEvents.forEach((event) => {
           ))
         }
       </div>
+    </div>
 
-      <!-- Category Jump Links -->
-      <div class="flex flex-wrap gap-3">
-        {
-          categories.map((category) => {
-            const firstEventId = firstEventByCategory.get(category);
-            return firstEventId ? (
-              <a
-                href={`#event-${firstEventId}`}
-                class={`category-jump-pill text-pwv-black focus:ring-pwv-green rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:scale-105 focus:ring-2 focus:ring-offset-2 focus:outline-none ${getCategoryColor(category)}`}
-              >
-                {formatCategoryName(category)}
-              </a>
-            ) : null;
-          })
-        }
+    <div class="relative">
+      <div
+        class="bg-pwv-black/20 absolute top-2 bottom-2 left-8 hidden w-px md:block"
+        aria-hidden="true"
+      >
       </div>
-
-      <!-- Location Jump Links -->
-      <div class="flex flex-wrap gap-3">
+      <div class="space-y-10">
         {
-          locations.map((location, index) => {
-            const firstEventId = firstEventByLocation.get(location);
-            return firstEventId ? (
-              <a
-                href={`#event-${firstEventId}`}
-                class={`location-pill text-pwv-black focus:ring-pwv-green rounded-full px-5 py-2.5 text-sm font-semibold transition-all hover:scale-105 focus:ring-2 focus:ring-offset-2 focus:outline-none ${getLocationColor(index)}`}
-              >
-                {location}
-              </a>
-            ) : null;
-          })
-        }
-      </div>
-
-      <!-- Company Jump Links -->
-      <div class="flex flex-wrap gap-4">
-        {
-          companies.map((company) => {
-            const firstEventId = firstEventByCompany.get(company);
-            if (!firstEventId) return null;
-
-            // Check if this company has a logo in portfolio
-            const hasLogo = portfolioSlugs.has(company);
-
+          Object.entries(groupedByMonth).map(([month, monthEvents], index) => {
+            const monthName = month.split(' ')[0];
             return (
-              <a
-                href={`#event-${firstEventId}`}
-                class="company-link focus:ring-pwv-green inline-flex items-center gap-2 text-sm font-medium transition-all hover:opacity-70 focus:ring-2 focus:ring-offset-2 focus:outline-none"
-              >
-                {hasLogo && (
-                  <UnpicImage
-                    src={resolveImageSrc(`logos/small/${company}.png`)}
-                    alt={`${formatCompanyName(company)} logo`}
-                    width={24}
-                    height={24}
-                    class="flex-shrink-0"
-                  />
-                )}
-                <span class="text-pwv-black">{formatCompanyName(company)}</span>
-              </a>
+              <div id={`month-${monthName.toLowerCase()}`}>
+                <TimelineMonthGroup
+                  month={month}
+                  events={monthEvents}
+                  monthIndex={index}
+                />
+              </div>
             );
           })
         }
@@ -337,104 +293,80 @@ sortedEvents.forEach((event) => {
     </div>
   </div>
 
-  <div class="relative">
-    <div
-      class="bg-pwv-black/20 absolute top-2 bottom-2 left-8 hidden w-px md:block"
-      aria-hidden="true"
-    >
-    </div>
-    <div class="space-y-10">
-      {
-        Object.entries(groupedByMonth).map(([month, monthEvents], index) => {
-          const monthName = month.split(' ')[0];
-          return (
-            <div id={`month-${monthName.toLowerCase()}`}>
-              <TimelineMonthGroup
-                month={month}
-                events={monthEvents}
-                monthIndex={index}
-              />
-            </div>
-          );
-        })
-      }
-    </div>
-  </div>
+  <style>
+    .jump-pill {
+      background-color: #ffffff;
+      color: #374151;
+      border: 1px solid #e5e7eb;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .jump-pill:hover {
+      background-color: #10b981;
+      color: white;
+      border-color: #10b981;
+      box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3);
+    }
+
+    .month-pill {
+      border: 1px solid transparent;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .month-pill:hover {
+      color: white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+
+    .category-jump-pill {
+      border: 1px solid transparent;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .category-jump-pill:hover {
+      color: white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+
+    .location-pill {
+      border: 1px solid transparent;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .location-pill:hover {
+      color: white;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    }
+
+    .company-link {
+      text-decoration: none;
+    }
+
+    .company-link:hover span {
+      text-decoration: underline;
+    }
+
+    /* Smooth scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Add scroll margin for better positioning */
+    [id^='month-'],
+    [id^='event-'] {
+      scroll-margin-top: 2rem;
+    }
+  </style>
 </TimelineShell>
-
-<style>
-  .jump-pill {
-    background-color: #ffffff;
-    color: #374151;
-    border: 1px solid #e5e7eb;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  }
-
-  .jump-pill:hover {
-    background-color: #10b981;
-    color: white;
-    border-color: #10b981;
-    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3);
-  }
-
-  .month-pill {
-    border: 1px solid transparent;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  }
-
-  .month-pill:hover {
-    color: white;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-  }
-
-  .category-jump-pill {
-    border: 1px solid transparent;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  }
-
-  .category-jump-pill:hover {
-    color: white;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-  }
-
-  .location-pill {
-    border: 1px solid transparent;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  }
-
-  .location-pill:hover {
-    color: white;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-  }
-
-  .company-link {
-    text-decoration: none;
-  }
-
-  .company-link:hover span {
-    text-decoration: underline;
-  }
-
-  /* Smooth scroll */
-  html {
-    scroll-behavior: smooth;
-  }
-
-  /* Add scroll margin for better positioning */
-  [id^='month-'],
-  [id^='event-'] {
-    scroll-margin-top: 2rem;
-  }
-</style>
