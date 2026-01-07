@@ -156,6 +156,7 @@ const locationEnum = z.enum([
   'San Francisco, CA',
   'Boston, MA',
   'Austin, TX',
+  'Berkeley, CA',
   'Cambridge, MA',
   'Cambridge, UK',
   'London, UK',

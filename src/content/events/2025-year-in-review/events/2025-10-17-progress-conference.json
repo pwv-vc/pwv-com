@@ -1,0 +1,17 @@
+{
+  "id": "2025-10-17-progress-conference",
+  "date": "2025-10-17",
+  "title": "Progress Conference",
+  "category": ["event"],
+  "emoji": "📈",
+  "location": "Berkeley, CA",
+  "description": "David Price attended the Progress Conference, featuring discussions on technological progress and human flourishing, including Tyler Cowen interviewing Sam Altman.",
+  "link": "https://rootsofprogress.org/conference/",
+  "media": [
+    {
+      "type": "image",
+      "src": "src/images/posts/post-2025-year-in-review/progress-conf-sam-altman.jpeg",
+      "alt": "Tyler Cowen interviewing Sam Altman at Progress Conference"
+    }
+  ]
+}
