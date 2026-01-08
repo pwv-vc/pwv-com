@@ -1,0 +1,22 @@
+{
+  "id": "2025-01-01-pwv-prosieben-documentary",
+  "date": "2025-11-21",
+  "title": "PWV Featured in ProSieben Documentary",
+  "category": [
+    "media"
+  ],
+  "companies": [
+    "Myriad AI"
+  ],
+  "emoji": "📺",
+  "description": "Tom Preston-Werner was featured alongside Ralf Schönherr of Myriad AI in a ProSieben documentary reaching an audience of over 10 million, highlighting perspectives on technology, innovation, and the future of AI.",
+  "link": "https://www.youtube.com/watch?v=usW8yY8WSf4",
+  "media": [
+    {
+      "type": "video",
+      "src": "https://www.youtube.com/watch?v=usW8yY8WSf4",
+      "alt": "ProSieben documentary featuring Tom Preston-Werner and Ralf Schönherr discussing AI and technology. Note: in German."
+    }
+  ]
+}
+

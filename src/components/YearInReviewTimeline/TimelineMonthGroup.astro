@@ -1,0 +1,48 @@
+---
+import TimelineEventCard from './TimelineEventCard.astro';
+import type { TimelineEvent } from './types';
+
+// Props for TimelineMonthGroup component
+interface Props {
+  month: string;
+  events: TimelineEvent[];
+  monthIndex: number;
+}
+
+const { month, events, monthIndex }: Props = Astro.props;
+
+// Cycle through PWV colors for dots - matches month pill colors
+const dotColors = [
+  'bg-pwv-light-green',
+  'bg-pwv-light-teal',
+  'bg-pwv-light-yellow',
+  'bg-pwv-soft-green',
+  'bg-pwv-light-periwinkle',
+  'bg-pwv-soft-teal',
+  'bg-pwv-light-coral',
+  'bg-pwv-light-lavender',
+];
+
+const dotColor = dotColors[monthIndex % dotColors.length];
+---
+
+<div class="relative">
+  <div class="mb-6 flex items-center gap-3 pl-2">
+    <div
+      class={`${dotColor} hidden h-3 w-3 flex-shrink-0 rounded-full shadow md:block`}
+      aria-hidden="true"
+    >
+    </div>
+    <p
+      class="text-pwv-black/70 flex-shrink-0 pl-4 text-sm font-semibold tracking-wide uppercase"
+    >
+      {month}
+    </p>
+    <div class="bg-pwv-black/10 hidden h-px flex-1 md:block" aria-hidden="true">
+    </div>
+  </div>
+
+  <div class="space-y-6">
+    {events.map((event) => <TimelineEventCard event={event} />)}
+  </div>
+</div>

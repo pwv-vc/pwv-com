@@ -1,0 +1,20 @@
+{
+  "id": "2025-10-07-a16z-speedrun-demo-day",
+  "date": "2025-10-07",
+  "title": "a16z Speedrun Demo Day",
+  "category": [
+    "event",
+    "demo_day"
+  ],
+  "emoji": "🏃",
+  "description": "General Partner David Price attends a16z Speedrun Demo Day in San Francisco.",
+  "location": "San Francisco, CA",
+  "media": [
+    {
+      "type": "image",
+      "src": "src/images/posts/post-2025-year-in-review/dp_a16z_speedrun_badge.jpg",
+      "alt": "We need badges!"
+    }
+  ]
+}
+

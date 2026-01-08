@@ -1,0 +1,20 @@
+{
+  "id": "2025-09-02-boston-infra-builders-happy-hour",
+  "date": "2025-09-02",
+  "title": "Boston Infrastructure Builders Happy Hour",
+  "category": [
+    "event"
+  ],
+  "emoji": "🍻",
+  "time": "5:00 PM - 7:30 PM",
+  "location": "Boston, MA",
+  "description": "PWV engaged with infrastructure founders and operators in Boston at a community gathering alongside MongoDB Ventures and Step Function VC, as part of ongoing ecosystem coverage in the region.",
+  "media": [
+    {
+      "type": "image",
+      "src": "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,background=white,quality=75,width=400,height=400/event-covers/gt/e9f2aee2-842f-44e2-b97a-103987586195.png",
+      "alt": "Boston Infra Builders Happy Hour with MongoDB & Step Function VC",
+      "caption": "Boston Infra Builders Happy Hour with MongoDB & Step Function VC"
+    }
+  ]
+}

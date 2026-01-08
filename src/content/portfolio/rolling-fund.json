@@ -222,6 +222,54 @@
     "slug": "freeplay"
   },
   {
+    "name": "Purplefish",
+    "url": "https://purplefish.com",
+    "tags": ["ai", "saas"],
+    "slug": "purplefish"
+  },
+  {
+    "name": "Marly",
+    "url": "https://www.marly.ai",
+    "tags": ["ai", "saas"],
+    "slug": "marly"
+  },
+  {
+    "name": "Retrace",
+    "url": "https://retracesoftware.com",
+    "tags": ["dev tools"],
+    "slug": "retrace"
+  },
+  {
+    "name": "Monumo",
+    "url": "https://monumo.com",
+    "tags": ["ai", "hardware"],
+    "slug": "monumo"
+  },
+  {
+    "name": "Massdriver",
+    "url": "https://www.massdriver.cloud",
+    "tags": ["dev tools", "saas"],
+    "slug": "massdriver"
+  },
+  {
+    "name": "RedwoodJS",
+    "url": "https://rwsdk.com",
+    "tags": ["dev tools"],
+    "slug": "redwoodjs"
+  },
+  {
+    "name": "Earthmover",
+    "url": "https://earthmover.io",
+    "tags": ["ai", "saas"],
+    "slug": "earthmover"
+  },
+  {
+    "name": "Aera Farms",
+    "url": "https://aerafarms.com",
+    "tags": ["food tech", "hardware"],
+    "slug": "aera-farms"
+  },
+  {
     "name": "Limitless AI (Rewind AI, acquired by Meta)",
     "url": "https://www.limitless.ai/",
     "tags": ["ai", "acquired"],

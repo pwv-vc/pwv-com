@@ -1,0 +1,22 @@
+{
+  "id": "2025-05-06-pwv-resim-robotics-salon",
+  "date": "2025-05-06",
+  "title": "PWV & ReSim.ai Robotics Salon: Production-Ready Physical AI",
+  "category": [
+    "event"
+  ],
+  "companies": [
+    "ReSim"
+  ],
+  "emoji": "🤖",
+  "location": "San Francisco, CA",
+  "description": "PWV & ReSim.ai hosted a salon focused on production-ready physical AI and robotics, bringing together builders and innovators working at the intersection of AI and physical systems.",
+  "media": [
+    {
+      "type": "image",
+      "src": "src/images/posts/post-2025-year-in-review/resim-robotics-salon.jpg",
+      "alt": "PWV & ReSim.ai Robotics Salon"
+    }
+  ]
+}
+

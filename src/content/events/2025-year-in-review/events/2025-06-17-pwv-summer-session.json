@@ -1,0 +1,25 @@
+{
+  "id": "2025-06-17-pwv-summer-session",
+  "date": "2025-06-17",
+  "title": "PWV Summer Founder Session",
+  "category": [
+    "event"
+  ],
+  "emoji": "🏝️",
+  "time": "1:00 PM - 2:00 PM PT",
+  "location": "Virtual",
+  "description": "PWV hosted a relaxed founder session with founders and General Partners, creating space for candid conversation, shared challenges, and early collaboration across the ecosystem following Fund I's first close. We even had a summer playlist!",
+  "media": [
+    {
+      "type": "image",
+      "src": "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,background=white,quality=75,width=400,height=400/event-covers/ba/26605de0-e7a0-462b-bb20-ee77bcbb7e6a.png",
+      "alt": "PWV Summer Session – Founder Meetup",
+      "caption": "PWV Summer Session – Founder Meetup"
+    },
+    {
+      "type": "spotify",
+      "src": "https://open.spotify.com/playlist/5qQskb5uCEqLKst1DUIVIx",
+      "caption": "PWV Summer Vibes"
+    }
+  ]
+}

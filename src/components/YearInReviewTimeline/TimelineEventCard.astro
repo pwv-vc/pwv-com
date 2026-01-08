@@ -1,0 +1,364 @@
+---
+import { Image as UnpicImage } from '@unpic/astro';
+import { resolveImageSrc } from '../../lib/images';
+import type { TimelineEvent } from './types';
+import { getEventEmoji } from './categoryEmojis';
+import { categoryStyles } from './categoryStyles';
+import { companyNameToSlug } from '../../lib/utils';
+import { getCollection } from 'astro:content';
+
+interface Props {
+  event: TimelineEvent;
+  showTime?: boolean;
+  showLocation?: boolean;
+  showCategory?: boolean;
+  showEmoji?: boolean;
+}
+
+const {
+  event,
+  showTime = false,
+  showLocation = true,
+  showCategory = true,
+  showEmoji = false,
+}: Props = Astro.props;
+
+// Get all portfolio companies to check if company exists
+const allPortfolio = [
+  ...(await getCollection('representativePortfolio')),
+  ...(await getCollection('rollingFundPortfolio')),
+  ...(await getCollection('fundOnePortfolio')),
+  ...(await getCollection('angelPortfolio')),
+];
+
+const portfolioSlugs = new Set(allPortfolio.map((p) => p.data.slug));
+
+// Default style for categories that don't have a specific style defined
+const DEFAULT_CATEGORY_STYLE = 'bg-pwv-black/10 text-pwv-black';
+
+// Get the style for a category, with a default fallback
+const getCategoryStyle = (category: string): string => {
+  return (
+    categoryStyles[category as keyof typeof categoryStyles] ??
+    DEFAULT_CATEGORY_STYLE
+  );
+};
+
+// Determine what to show: logo (if provided), company logo (if company slug provided), or category emoji
+const hasLogo = event.logo || event.company;
+const displayEmoji =
+  showEmoji && !hasLogo ? getEventEmoji(event.category) : null;
+
+const formatDate = (date: Date) =>
+  date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+
+const formatTime = (time?: string) => time ?? '';
+
+const formatCategory = (category: string) => {
+  // Convert kebab-case to Title Case
+  return category
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
+const addRefParam = (url: string) => {
+  try {
+    const urlObj = new URL(url);
+    urlObj.searchParams.set('ref', 'pwv.com');
+    return urlObj.toString();
+  } catch {
+    // If URL parsing fails, return original URL
+    return url;
+  }
+};
+
+const isRemoteImage = (src: string) => /^https?:\/\//.test(src);
+const normalizePostImagePath = (src: string) =>
+  src.replace(/^\/?(src\/)?images\/posts\//, '');
+
+// Resolve post image path the same way MarkdownPostImage does
+const resolvePostImageSrc = (path: string): string | undefined => {
+  const images = import.meta.glob('../../images/posts/**/*', {
+    eager: true,
+    import: 'default',
+  }) as Record<string, any>;
+  const key = `../../images/posts/${path}`;
+  const found = images[key];
+  return typeof found === 'string' ? found : (found?.src ?? found);
+};
+
+const isYouTubeUrl = (url: string) => {
+  return /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/)/.test(
+    url
+  );
+};
+
+const getYouTubeEmbedUrl = (url: string): string | null => {
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/,
+    /youtube\.com\/embed\/([^&\n?#]+)/,
+    /youtube\.com\/v\/([^&\n?#]+)/,
+  ];
+
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match && match[1]) {
+      return `https://www.youtube.com/embed/${match[1]}`;
+    }
+  }
+  return null;
+};
+
+const isSpotifyUrl = (url: string) => {
+  return /(?:spotify\.com\/playlist\/|open\.spotify\.com\/playlist\/|spotify\.com\/embed\/playlist\/)/.test(
+    url
+  );
+};
+
+const getSpotifyEmbedUrl = (url: string): string | null => {
+  const patterns = [
+    /spotify\.com\/playlist\/([a-zA-Z0-9]+)/,
+    /open\.spotify\.com\/playlist\/([a-zA-Z0-9]+)/,
+    /spotify\.com\/embed\/playlist\/([a-zA-Z0-9]+)/,
+  ];
+
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match && match[1]) {
+      return `https://open.spotify.com/embed/playlist/${match[1]}?utm_source=generator`;
+    }
+  }
+  return null;
+};
+---
+
+<article
+  id={`event-${event.id}`}
+  class="border-pwv-gray/70 bg-pwv-white relative rounded-2xl border p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md md:pl-10"
+>
+  <div
+    class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between"
+  >
+    <div class="flex flex-col gap-2">
+      <div class="flex items-center gap-2">
+        {
+          hasLogo ? (
+            event.logo ? (
+              <UnpicImage
+                src={resolveImageSrc(event.logo)}
+                alt={`${event.title} logo`}
+                width={32}
+                height={32}
+                class="border-pwv-gray bg-surface flex-shrink-0 border p-0.5"
+              />
+            ) : event.company ? (
+              <UnpicImage
+                src={resolveImageSrc(`logos/small/${event.company}.png`)}
+                alt={`${event.company} logo`}
+                width={32}
+                height={32}
+                class="border-pwv-gray bg-surface flex-shrink-0 border p-0.5"
+              />
+            ) : null
+          ) : displayEmoji ? (
+            <span class="text-xl leading-none">{displayEmoji}</span>
+          ) : null
+        }
+        <h3 class="font-serif text-xl font-medium">{event.title}</h3>
+      </div>
+      <div class="text-pwv-black/70 flex flex-wrap items-center gap-3 text-sm">
+        <span class="font-mono text-xs tracking-wide uppercase">
+          {formatDate(event.date)}
+        </span>
+        {
+          showTime && event.time && (
+            <span class="bg-pwv-light-teal text-pwv-black inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium">
+              <span aria-hidden="true">⏰</span>
+              {formatTime(event.time)}
+            </span>
+          )
+        }
+        {
+          showLocation && event.location && (
+            <span class="text-pwv-black/80 inline-flex items-center gap-1 text-sm">
+              <span aria-hidden="true">📍</span>
+              {event.location}
+            </span>
+          )
+        }
+        {
+          event.category && (
+            <>
+              {Array.isArray(event.category) ? (
+                event.category.map((cat) => (
+                  <span
+                    class={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${getCategoryStyle(cat)}`}
+                  >
+                    {formatCategory(cat)}
+                  </span>
+                ))
+              ) : (
+                <span
+                  class={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${getCategoryStyle(event.category)}`}
+                >
+                  {formatCategory(event.category)}
+                </span>
+              )}
+            </>
+          )
+        }
+      </div>
+      {
+        event.description && (
+          <p class="text-pwv-black/80 text-md leading-relaxed">
+            {event.description}
+          </p>
+        )
+      }
+      {
+        event.media && event.media.length > 0 && (
+          <div class="mt-4 grid gap-4 md:grid-cols-2">
+            {event.media.map((item) => (
+              <figure class="border-pwv-gray/30 flex flex-col overflow-hidden rounded-lg border bg-white shadow-sm">
+                <div class="flex-grow">
+                  {item.type === 'image' ? (
+                    isRemoteImage(item.src) ? (
+                      <img
+                        src={item.src}
+                        alt={item.alt ?? ''}
+                        loading="lazy"
+                        class="h-auto w-full object-cover"
+                      />
+                    ) : (
+                      (() => {
+                        const normalizedPath = normalizePostImagePath(item.src);
+                        const resolvedSrc = resolvePostImageSrc(normalizedPath);
+                        // Validate that we have a valid source before rendering
+                        if (!resolvedSrc || typeof resolvedSrc !== 'string') {
+                          return null;
+                        }
+                        return (
+                          <UnpicImage
+                            src={resolvedSrc}
+                            alt={item.alt ?? ''}
+                            class="h-auto w-full object-cover"
+                            loading="lazy"
+                            operations={{
+                              netlify: {
+                                fm: 'webp',
+                              },
+                            }}
+                          />
+                        );
+                      })()
+                    )
+                  ) : item.type === 'spotify' || isSpotifyUrl(item.src) ? (
+                    <div class="w-full p-2">
+                      <iframe
+                        data-testid="spotify-embed-iframe"
+                        style="border-radius: 12px;"
+                        src={getSpotifyEmbedUrl(item.src)}
+                        width="100%"
+                        height="352"
+                        frameborder="0"
+                        allowfullscreen
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"
+                        title={item.caption ?? item.alt ?? 'Spotify Playlist'}
+                      />
+                    </div>
+                  ) : isYouTubeUrl(item.src) ? (
+                    <div
+                      class="relative w-full"
+                      style="padding-bottom: 56.25%;"
+                    >
+                      <iframe
+                        class="absolute top-0 left-0 h-full w-full"
+                        src={getYouTubeEmbedUrl(item.src)}
+                        title={item.alt ?? event.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                      />
+                    </div>
+                  ) : (
+                    <video
+                      src={item.src}
+                      class="h-auto w-full"
+                      controls
+                      preload="metadata"
+                    />
+                  )}
+                </div>
+                {(item.caption || item.alt) && (
+                  <figcaption class="text-pwv-black/70 bg-pwv-gray/5 mt-auto px-4 pt-2 pb-3 text-center text-sm font-semibold">
+                    {item.caption ?? item.alt}
+                  </figcaption>
+                )}
+              </figure>
+            ))}
+          </div>
+        )
+      }
+      {
+        event.companies && event.companies.length > 0 && (
+          <div class="flex flex-wrap items-center gap-3">
+            {event.companies.map((company) => {
+              const slug = companyNameToSlug(company);
+              const hasLogo = portfolioSlugs.has(slug);
+              return (
+                <a
+                  href={`/portfolio?company=${slug}`}
+                  class="flex items-center gap-2 transition-opacity hover:opacity-80"
+                  title={company}
+                >
+                  {hasLogo && (
+                    <UnpicImage
+                      src={resolveImageSrc(`logos/small/${slug}.png`)}
+                      alt={`${company} logo`}
+                      width={24}
+                      height={24}
+                      class="border-pwv-gray bg-surface flex-shrink-0 border p-0.5"
+                    />
+                  )}
+                  <span class="text-sm font-medium">{company}</span>
+                </a>
+              );
+            })}
+          </div>
+        )
+      }
+      {
+        (event.link || (event.links && event.links.length > 0)) && (
+          <div class="flex flex-wrap justify-end gap-3 text-sm font-medium">
+            {event.link && (
+              <a
+                class="pwv-link"
+                href={addRefParam(event.link)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Read
+              </a>
+            )}
+            {event.links &&
+              event.links.map((link) => (
+                <a
+                  class="pwv-link"
+                  href={addRefParam(link.url)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {link.label}
+                </a>
+              ))}
+          </div>
+        )
+      }
+    </div>
+  </div>
+</article>

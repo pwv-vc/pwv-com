@@ -1,0 +1,29 @@
+{
+  "id": "2025-09-25-founder-sessions-san-francisco",
+  "date": "2025-09-25",
+  "title": "Founder Sessions: San Francisco",
+  "category": ["event"],
+  "emoji": "🎯",
+  "time": "5:00 PM - 9:00 PM PDT",
+  "location": "San Francisco, CA",
+  "description": "PWV hosted a Founder Session in San Francisco focused on fundraising and capital formation, featuring founders, operators, and investors including Tom Preston-Werner, David Price, Topher Conway (SV Angel), Mary D'Onofrio (Crosslink Capital), Scott Johnston (former CEO of Docker), and Johannes Landgraf (Ona, formerly Gitpod).",
+  "companies": ["Ona"],
+  "media": [
+    {
+      "type": "image",
+      "src": "src/images/posts/post-2025-year-in-review/pwv-2025-09-25-founder-sessions-dp.jpg",
+      "alt": "David Price leds panel with Mary D'Onofrio (Crosslink Capital) and Topher Conway (SV Angel)"
+    },
+    {
+      "type": "image",
+      "src": "src/images/posts/post-2025-year-in-review/pwv-2025-09-25-founder-sessions-tom.jpg",
+      "alt": "Tom Preston-Werner leads panel with Scott Johnston (former CEO of Docker) and Johannes Landgraf (Ona)"
+    }
+  ],
+  "links": [
+    {
+      "url": "https://luma.com/j3q62v8x",
+      "label": "Event Page"
+    }
+  ]
+}

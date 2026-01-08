@@ -1,0 +1,24 @@
+{
+  "id": "2025-04-01-founder-friends-happy-hour",
+  "date": "2025-04-01",
+  "title": "Founder & Friends Happy Hour",
+  "category": ["event"],
+  "emoji": "🍻",
+  "time": "4:30 PM - 6:30 PM PDT",
+  "location": "San Francisco, CA",
+  "description": "PWV hosted an informal gathering of founders and operators in San Francisco, creating space for conversation, connection, and early collaboration across the ecosystem.",
+  "links": [
+    {
+      "url": "https://luma.com/0enmxaas",
+      "label": "Event Page"
+    }
+  ],
+  "media": [
+    {
+      "type": "image",
+      "src": "post-2025-year-in-review/Founder-Friends-Happy-Hour.jpeg",
+      "alt": "Founder & Friends Happy Hour",
+      "caption": "Founder & Friends Happy Hour"
+    }
+  ]
+}

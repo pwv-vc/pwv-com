@@ -1,0 +1,17 @@
+{
+  "id": "2025-12-16-pwv-founder-holiday-toast",
+  "date": "2025-12-16",
+  "title": "PWV Founder Holiday Toast",
+  "category": ["event"],
+  "emoji": "🥂",
+  "location": "Virtual",
+  "description": "PWV hosted a year-end Founder Holiday Toast, bringing together founders and the PWV team to close out the year and celebrate the community.",
+  "companies": [],
+  "media": [
+    {
+      "type": "image",
+      "src": "src/images/posts/post-2025-year-in-review/dp-pwv-holiday-toast-santa-hat.png",
+      "alt": "David Price grants founder wishes"
+    }
+  ]
+}

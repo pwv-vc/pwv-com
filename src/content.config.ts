@@ -152,6 +152,72 @@ const posts = defineCollection({
     }),
 });
 
+const locationEnum = z.enum([
+  'San Francisco, CA',
+  'Boston, MA',
+  'Austin, TX',
+  'Berkeley, CA',
+  'Cambridge, MA',
+  'Cambridge, UK',
+  'London, UK',
+  'Denver, CO',
+  'Colorado',
+  'Berlin, DE',
+  'Munich, DE',
+  'Riyadh, KSA',
+  'Virtual',
+]);
+
+const events = defineCollection({
+  loader: glob({ base: './src/content/events/2025-year-in-review/events', pattern: '**/*.json' }),
+  schema: z.object({
+    id: z.string(),
+    date: z.string().transform(parseLocalDate),
+    title: z.string(),
+    category: z.array(z.string()),
+    company: z.string().optional(),
+    companies: z.array(z.string()).optional(),
+    description: z.string(),
+    link: z.string().url().optional(),
+    links: z.array(z.object({
+      url: z.string().url(),
+      label: z.string(),
+    })).optional(),
+    location: locationEnum.optional(),
+    emoji: z.string().optional(),
+    time: z.string().optional(),
+    logo: z.string().optional(),
+    media: z.array(z.object({
+      type: z.enum(['image', 'video', 'spotify']),
+      src: z.string(),
+      alt: z.string().optional(),
+      caption: z.string().optional(),
+    })).optional(),
+  }),
+});
+
+const eventMeta = defineCollection({
+  loader: glob({ base: './src/content/events', pattern: '**/index.json' }),
+  schema: z.object({
+    title: z.string(),
+    year: z.number(),
+    description: z.string(),
+    intro: z.string().optional(),
+  }),
+});
+
+const yearInReviewStats = defineCollection({
+  loader: file('src/content/events/2025-year-in-review/stats.json'),
+  schema: z.object({
+    id: z.string(),
+    key: z.string(),
+    value: z.union([z.number(), z.string()]),
+    caption: z.string(),
+    color: z.string(),
+    position: z.number(),
+  }),
+});
+
 export const collections = {
   representativePortfolio,
   rollingFundPortfolio,
@@ -160,4 +226,7 @@ export const collections = {
   testimonials,
   team,
   posts,
+  events,
+  eventMeta,
+  yearInReviewStats,
 };

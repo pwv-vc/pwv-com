@@ -1,0 +1,31 @@
+{
+  "id": "2025-11-19-boost-6-demo-day",
+  "date": "2025-11-19",
+  "title": "BOOST 6 Demo Day",
+  "category": [
+    "event",
+    "demo_day"
+  ],
+  "emoji": "🏗️",
+  "time": "2:00 PM - 9:00 PM",
+  "location": "Boston, MA",
+  "description": "PWV engaged with founders and industry leaders at BOOST 6 Demo Day, Suffolk Technologies' built environment accelerator showcase, focused on innovation across construction, design, real estate, and infrastructure.",
+  "media": [
+    {
+      "type": "image",
+      "src": "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=1,background=white,quality=75,width=400,height=400/event-covers/1x/c673eb04-6c29-46c4-b0a7-9d19c4d56beb.png",
+      "alt": "BOOST 6 Demo Day at Suffolk Construction National Headquarters",
+      "caption": "BOOST 6 Demo Day"
+    },
+    {
+      "type": "image",
+      "src": "src/images/posts/post-2025-year-in-review/boost-board.jpg",
+      "alt": "BOOST 6 Demo Day"
+    },
+    {
+      "type": "image",
+      "src": "src/images/posts/post-2025-year-in-review/boost-truck.jpg",
+      "alt": "BOOST 6 Demo Day"
+    }
+  ]
+}

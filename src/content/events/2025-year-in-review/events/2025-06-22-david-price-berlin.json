@@ -1,0 +1,19 @@
+{
+  "id": "2025-06-22-david-price-berlin",
+  "date": "2025-06-22",
+  "title": "David Price attends SuperVenture 2025 in Berlin",
+  "category": [
+    "event"
+  ],
+  "emoji": "✈️",
+  "description": "General Partner David Price meets with founders and investors in Berlin for SuperVenture 2025.",
+  "location": "Berlin, DE",
+  "media": [
+    {
+      "type": "image",
+      "src": "src/images/posts/post-2025-year-in-review/superventure-2025.jpg",
+      "alt": "SuperVenture 2025"
+    }
+  ]
+}
+

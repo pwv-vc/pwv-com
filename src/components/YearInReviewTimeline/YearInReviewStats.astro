@@ -1,0 +1,178 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+
+// Get all stats from the collection
+const allStats = await getCollection('yearInReviewStats');
+const stats = allStats
+  .map((entry) => entry.data)
+  .sort((a, b) => a.position - b.position);
+
+// Helper function to get stat by key
+const getStat = (key: string) => stats.find((s) => s.key === key);
+
+// Get individual stats
+const totalEvents = getStat('total-events');
+const companiesEngaged = getStat('companies-engaged');
+const marketsActivated = getStat('markets-activated');
+const fundingRounds = getStat('funding-rounds');
+const founderOperator1on1s = getStat('founder-operator-1-1s');
+const communityConvenings = getStat('community-convenings');
+const announcements = getStat('announcements');
+
+// Helper function to format stat labels
+const getStatLabel = (key: string) => {
+  const labels: Record<string, string> = {
+    'total-events': 'Total Events',
+    'companies-engaged': 'Companies Engaged',
+    'markets-activated': 'Markets Activated',
+    'funding-rounds': 'Funding Rounds',
+    'founder-operator-1-1s': 'Founder & Operator 1:1s',
+    'community-convenings': 'Community Convenings',
+    announcements: 'Announcements',
+  };
+  return labels[key] || key;
+};
+---
+
+<div class="mx-auto my-12 max-w-6xl px-4">
+  <div class="mb-8 text-center">
+    <h2 class="text-pwv-black mb-2 font-serif text-3xl font-medium lg:text-4xl">
+      2025 Year in Review: By the Numbers
+    </h2>
+    <p class="text-lg text-gray-700">
+      A data-driven look at PWV's activity throughout the year
+    </p>
+  </div>
+
+  <!-- Main Stats Grid -->
+  <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+    {
+      totalEvents && (
+        <div
+          class={`border-pwv-black ${totalEvents.color} rounded-lg border-2 p-6 shadow-sm`}
+        >
+          <div class="text-pwv-black mb-2 text-5xl font-bold">
+            {totalEvents.value}
+          </div>
+          <div class="text-pwv-black font-serif text-lg font-medium">
+            {getStatLabel(totalEvents.key)}
+          </div>
+          <div class="mt-1 text-sm text-gray-700">{totalEvents.caption}</div>
+        </div>
+      )
+    }
+
+    {
+      companiesEngaged && (
+        <div
+          class={`border-pwv-black ${companiesEngaged.color} rounded-lg border-2 p-6 shadow-sm`}
+        >
+          <div class="text-pwv-black mb-2 text-5xl font-bold">
+            {companiesEngaged.value}
+          </div>
+          <div class="text-pwv-black font-serif text-lg font-medium">
+            {getStatLabel(companiesEngaged.key)}
+          </div>
+          <div class="mt-1 text-sm text-gray-700">
+            {companiesEngaged.caption}
+          </div>
+        </div>
+      )
+    }
+
+    {
+      marketsActivated && (
+        <div
+          class={`border-pwv-black ${marketsActivated.color} rounded-lg border-2 p-6 shadow-sm`}
+        >
+          <div class="text-pwv-black mb-2 text-5xl font-bold">
+            {marketsActivated.value}
+          </div>
+          <div class="text-pwv-black font-serif text-lg font-medium">
+            {getStatLabel(marketsActivated.key)}
+          </div>
+          <div class="mt-1 text-sm text-gray-700">
+            {marketsActivated.caption}
+          </div>
+        </div>
+      )
+    }
+
+    {
+      fundingRounds && (
+        <div
+          class={`border-pwv-black ${fundingRounds.color} rounded-lg border-2 p-6 shadow-sm`}
+        >
+          <div class="text-pwv-black mb-2 text-5xl font-bold">
+            {fundingRounds.value}
+          </div>
+          <div class="text-pwv-black font-serif text-lg font-medium">
+            {getStatLabel(fundingRounds.key)}
+          </div>
+          <div class="mt-1 text-sm text-gray-700">{fundingRounds.caption}</div>
+        </div>
+      )
+    }
+  </div>
+
+  <!-- Activity Breakdown -->
+  <div class="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+    {
+      founderOperator1on1s && (
+        <div
+          class={`border-pwv-black ${founderOperator1on1s.color} rounded-lg border-2 p-6 shadow-sm`}
+        >
+          <div class="text-pwv-black mb-2 text-4xl font-bold">
+            {founderOperator1on1s.value}
+          </div>
+          <div class="text-pwv-black font-serif text-lg font-medium">
+            {getStatLabel(founderOperator1on1s.key)}
+          </div>
+          <div class="mt-1 text-sm text-gray-700">
+            {founderOperator1on1s.caption}
+          </div>
+        </div>
+      )
+    }
+
+    {
+      communityConvenings && (
+        <div
+          class={`border-pwv-black ${communityConvenings.color} rounded-lg border-2 p-6 shadow-sm`}
+        >
+          <div class="text-pwv-black mb-2 text-4xl font-bold">
+            {communityConvenings.value}
+          </div>
+          <div class="text-pwv-black font-serif text-lg font-medium">
+            {getStatLabel(communityConvenings.key)}
+          </div>
+          <div class="mt-1 text-sm text-gray-700">
+            {communityConvenings.caption}
+          </div>
+        </div>
+      )
+    }
+
+    {
+      announcements && (
+        <div
+          class={`border-pwv-black ${announcements.color} rounded-lg border-2 p-6 shadow-sm`}
+        >
+          <div class="text-pwv-black mb-2 text-4xl font-bold">
+            {announcements.value}
+          </div>
+          <div class="text-pwv-black font-serif text-lg font-medium">
+            {getStatLabel(announcements.key)}
+          </div>
+          <div class="mt-1 text-sm text-gray-700">{announcements.caption}</div>
+        </div>
+      )
+    }
+  </div>
+</div>

@@ -1,0 +1,17 @@
+{
+  "id": "2025-10-14-mit-media-lab-workshop",
+  "date": "2025-10-14",
+  "title": "MIT Media Lab Workshop: Benchmarks for Human Flourishing with AI",
+  "category": ["event"],
+  "emoji": "🧠",
+  "location": "Cambridge, MA",
+  "description": "David Price attended the MIT Media Lab workshop on 'Benchmarks for Human Flourishing with AI', exploring frameworks for measuring and ensuring positive outcomes as AI technology advances.",
+  "link": "https://www.media.mit.edu/events/aha-flourishing-workshop/",
+  "media": [
+    {
+      "type": "image",
+      "src": "src/images/posts/post-2025-year-in-review/AHA-Graphics-1.png.1400x1400.png",
+      "alt": "MIT Media Lab Workshop: Benchmarks for Human Flourishing with AI"
+    }
+  ]
+}
