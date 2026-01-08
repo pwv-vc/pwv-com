@@ -36,7 +36,7 @@
     "tags": ["dev tools", "board seat"]
   },
   {
-    "name": "Aerodome",
+    "name": "Aerodome (acquired by Flock Safety)",
     "slug": "aerodome",
     "url": "https://www.aerodome.com",
     "tags": ["hardware", "ai", "acquired"]
@@ -268,5 +268,11 @@
     "url": "https://aerafarms.com",
     "tags": ["food tech", "hardware"],
     "slug": "aera-farms"
+  },
+  {
+    "name": "Limitless AI (Rewind AI, acquired by Meta)",
+    "url": "https://www.limitless.ai/",
+    "tags": ["ai", "acquired"],
+    "slug": "limitless"
   }
 ]
