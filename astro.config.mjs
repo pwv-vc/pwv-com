@@ -34,7 +34,7 @@ export default defineConfig({
     sitemap({
       async serialize(item) {
         // Exclude external posts (those that redirect to external URLs)
-        // These are posts with a URL field that redirect after 3 seconds
+        // These are posts with a URL field that redirect after 5 seconds
         const postSlugMatch = item.url.match(/\/news\/([^/]+)$/);
         if (postSlugMatch) {
           const posts = await getPostsCache();

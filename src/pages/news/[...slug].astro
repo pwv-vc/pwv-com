@@ -183,7 +183,7 @@ const breadcrumbSchema = generateBreadcrumbListSchema({
   enableUTMTracking={true}
   contentType="post"
   contentSlug={post.id}
-  redirectAfter={post.data.url ? 3 : undefined}
+  redirectAfter={post.data.url ? 5 : undefined}
   redirectUrl={post.data.url}
   additionalSchemas={[{ schema: articleSchema }, { schema: breadcrumbSchema }]}
 >
