@@ -112,13 +112,18 @@ if (heroImage) {
   articleImage = new URL('/og-image.png', baseURL).toString();
 }
 
-const articleSchema = generateArticleSchema({
-  headline: post.data.title,
-  description: post.data.description,
-  url: canonicalURL.toString(),
-  image: articleImage,
-  author: post.data.author
+// Generate Organization @id for publisher linking
+const organizationId = new URL('#organization', baseURL || canonicalURL).toString();
+
+// Generate author data - use @id if team member, otherwise full schema
+const authorData = post.data.author
+  ? authorInfo
     ? {
+        // Team member - use @id reference to link to their Person schema
+        id: new URL(`/team/${authorInfo.data.slug}#person`, baseURL || canonicalURL).toString(),
+      }
+    : {
+        // External author - use full schema
         name: post.data.author,
         url: new URL(
           `/news/author/${authorToSlug(post.data.author)}`,
@@ -126,11 +131,17 @@ const articleSchema = generateArticleSchema({
         ).toString(),
         sameAs: authorSameAs.length > 0 ? authorSameAs : undefined,
       }
-    : undefined,
+  : undefined;
+
+const articleSchema = generateArticleSchema({
+  headline: post.data.title,
+  description: post.data.description,
+  url: canonicalURL.toString(),
+  image: articleImage,
+  author: authorData,
   publisher: {
-    name: SITE_NAME,
-    logo: new URL('/logos/pwv-logo-black-1920.png', baseURL).toString(),
-    url: baseURL?.toString() || canonicalURL.origin,
+    // Use @id to link to Organization schema on homepage
+    id: organizationId,
   },
   datePublished: post.data.pubDate.toISOString(),
   dateModified:

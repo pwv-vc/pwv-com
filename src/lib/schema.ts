@@ -38,6 +38,8 @@ export interface OrganizationSchemaOptions {
   name: string;
   url: string;
   description?: string;
+  legalName?: string; // Legal entity name (e.g., "PWV Capital Management LLC")
+  disambiguatingDescription?: string; // Short description to distinguish from similar entities
   logo?: string;
   image?: string;
   email?: string;
@@ -45,7 +47,7 @@ export interface OrganizationSchemaOptions {
   contactType?: string;
   foundingDate?: string;
   foundingLocation?: string;
-  alternateName?: string;
+  alternateName?: string | string[]; // Alternate names/synonyms (e.g., ["PWV", "Preston-Werner Ventures"])
   areaServed?: string;
   knowsAbout?: string[];
   id?: string; // @id for linking entities (e.g., "#organization-pwv")
@@ -197,6 +199,14 @@ export function generateOrganizationSchema(
     schema.description = options.description;
   }
 
+  if (options.legalName) {
+    schema.legalName = options.legalName;
+  }
+
+  if (options.disambiguatingDescription) {
+    schema.disambiguatingDescription = options.disambiguatingDescription;
+  }
+
   if (options.logo) {
     // Logo should be an ImageObject with proper dimensions for better SEO
     schema.logo = {
@@ -218,6 +228,7 @@ export function generateOrganizationSchema(
   }
 
   if (options.alternateName) {
+    // Support both string and array formats
     schema.alternateName = options.alternateName;
   }
 
@@ -333,11 +344,13 @@ export interface ArticleSchemaOptions {
     name: string;
     url?: string;
     sameAs?: string[];
+    id?: string; // @id reference to Person entity
   };
   publisher?: {
     name: string;
     logo?: string;
     url?: string;
+    id?: string; // @id reference to Organization entity
   };
   datePublished: string; // ISO 8601 date
   dateModified?: string; // ISO 8601 date
@@ -366,9 +379,32 @@ export interface WebSiteSchemaOptions {
   name: string;
   url: string;
   description?: string;
+  id?: string; // @id for linking entities (e.g., "#website")
   potentialAction?: {
     target: string;
     queryInput: string;
+  };
+  publisher?: {
+    id: string; // @id reference to Organization
+  };
+}
+
+/**
+ * WebPage schema options
+ */
+export interface WebPageSchemaOptions {
+  name: string;
+  url: string;
+  description?: string;
+  id?: string; // @id for linking entities (e.g., "#webpage")
+  about?: {
+    id: string; // @id reference to Organization/Person
+  };
+  publisher?: {
+    id: string; // @id reference to Organization
+  };
+  isPartOf?: {
+    id: string; // @id reference to WebSite
   };
 }
 
@@ -432,32 +468,48 @@ export function generateArticleSchema(options: ArticleSchemaOptions): object {
 
   // Author information
   if (options.author) {
-    schema.author = {
-      '@type': 'Person',
-      name: options.author.name,
-    };
-    if (options.author.url) {
-      schema.author.url = options.author.url;
-    }
-    if (options.author.sameAs && options.author.sameAs.length > 0) {
-      schema.author.sameAs = options.author.sameAs;
+    // If @id is provided, use reference-only format for entity linking
+    if (options.author.id) {
+      schema.author = {
+        '@id': options.author.id,
+      };
+    } else {
+      // Full Person schema if no @id provided
+      schema.author = {
+        '@type': 'Person',
+        name: options.author.name,
+      };
+      if (options.author.url) {
+        schema.author.url = options.author.url;
+      }
+      if (options.author.sameAs && options.author.sameAs.length > 0) {
+        schema.author.sameAs = options.author.sameAs;
+      }
     }
   }
 
   // Publisher information
   if (options.publisher) {
-    schema.publisher = {
-      '@type': 'Organization',
-      name: options.publisher.name,
-    };
-    if (options.publisher.url) {
-      schema.publisher.url = options.publisher.url;
-    }
-    if (options.publisher.logo) {
-      schema.publisher.logo = {
-        '@type': 'ImageObject',
-        url: options.publisher.logo,
+    // If @id is provided, use reference-only format for entity linking
+    if (options.publisher.id) {
+      schema.publisher = {
+        '@id': options.publisher.id,
       };
+    } else {
+      // Full Organization schema if no @id provided
+      schema.publisher = {
+        '@type': 'Organization',
+        name: options.publisher.name,
+      };
+      if (options.publisher.url) {
+        schema.publisher.url = options.publisher.url;
+      }
+      if (options.publisher.logo) {
+        schema.publisher.logo = {
+          '@type': 'ImageObject',
+          url: options.publisher.logo,
+        };
+      }
     }
   }
 
@@ -512,8 +564,17 @@ export function generateWebSiteSchema(options: WebSiteSchemaOptions): object {
     url: options.url,
   };
 
+  // Add @id if provided (for linking entities)
+  if (options.id) {
+    schema['@id'] = options.id;
+  }
+
   if (options.description) {
     schema.description = options.description;
+  }
+
+  if (options.publisher) {
+    schema.publisher = { '@id': options.publisher.id };
   }
 
   if (options.potentialAction) {
@@ -525,6 +586,41 @@ export function generateWebSiteSchema(options: WebSiteSchemaOptions): object {
       },
       'query-input': options.potentialAction.queryInput,
     };
+  }
+
+  return schema;
+}
+
+/**
+ * Generate WebPage schema JSON-LD
+ */
+export function generateWebPageSchema(options: WebPageSchemaOptions): object {
+  const schema: any = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: options.name,
+    url: options.url,
+  };
+
+  // Add @id if provided (for linking entities)
+  if (options.id) {
+    schema['@id'] = options.id;
+  }
+
+  if (options.description) {
+    schema.description = options.description;
+  }
+
+  if (options.about) {
+    schema.about = { '@id': options.about.id };
+  }
+
+  if (options.publisher) {
+    schema.publisher = { '@id': options.publisher.id };
+  }
+
+  if (options.isPartOf) {
+    schema.isPartOf = { '@id': options.isPartOf.id };
   }
 
   return schema;

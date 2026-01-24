@@ -89,7 +89,10 @@ const organizationSameAs = [
 const organizationSchema = generateOrganizationSchema({
   id: organizationId,
   name: SITE_NAME,
-  alternateName: 'Preston-Werner Ventures',
+  legalName: 'PWV Capital Management LLC',
+  alternateName: ['PWV', 'Preston-Werner Ventures'],
+  disambiguatingDescription:
+    'PWV is a Silicon Valley venture capital firm investing in early-stage technology companies. Not affiliated with any investment product, ETF, ticker symbol, or medical/cardiovascular measurement.',
   url: organizationUrl,
   description:
     'PWV (Preston-Werner Ventures) is a founder-focused early-stage venture capital firm investing in software, AI, and developer tools. Led by GitHub co-founder Tom Preston-Werner, PWV backs visionary founders building transformative technology companies.',
@@ -109,6 +112,8 @@ const organizationSchema = generateOrganizationSchema({
     'Developer tools',
     'Open-source startups',
     'SaaS',
+    'Seed funding',
+    'Pre-seed investing',
   ],
   founders: founders,
   sameAs: organizationSameAs,

@@ -164,8 +164,8 @@ if (image) {
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Primary Meta Tags -->
-    <title>{`${SITE_NAME} - ${title}`}</title>
-    <meta name="title" content={`${SITE_NAME} - ${title}`} />
+    <title>{`${SITE_NAME} | ${title}`}</title>
+    <meta name="title" content={`${SITE_NAME} | ${title}`} />
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
     {author && <meta name="author" content={author} />}
@@ -173,7 +173,10 @@ if (image) {
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={ogSharingURL} />
-    <meta property="og:title" content={`${SITE_NAME} - ${title}`} />
+    <meta
+      property="og:title"
+      content={`${title} | ${SITE_NAME} | Venture Capital`}
+    />
     <meta property="og:description" content={description} />
     <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:locale" content={locale} />

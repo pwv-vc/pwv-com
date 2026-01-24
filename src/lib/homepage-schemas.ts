@@ -2,7 +2,11 @@
  * Helper functions to generate homepage-specific JSON-LD schemas
  */
 
-import { generateOrganizationSchema, generateWebSiteSchema } from './schema';
+import {
+  generateOrganizationSchema,
+  generateWebSiteSchema,
+  generateWebPageSchema,
+} from './schema';
 import { getCollection } from 'astro:content';
 import { SITE_NAME, SITE_DESCRIPTION } from '../consts';
 
@@ -37,6 +41,10 @@ export async function getHomepageSchemas(
   const organizationSchema = generateOrganizationSchema({
     id: organizationId,
     name: SITE_NAME,
+    legalName: 'PWV Capital Management LLC',
+    alternateName: ['PWV', 'Preston-Werner Ventures'],
+    disambiguatingDescription:
+      'PWV is a Silicon Valley venture capital firm investing in early-stage technology companies. Not affiliated with any investment product, ETF, ticker symbol, or medical/cardiovascular measurement.',
     url: organizationUrl,
     description: SITE_DESCRIPTION,
     // Using PWV logo PNG for better SEO and compatibility
@@ -45,6 +53,20 @@ export async function getHomepageSchemas(
       baseURL || canonicalURL
     ).toString(),
     email: 'partners@pwv.com',
+    foundingDate: '2023',
+    foundingLocation: 'San Francisco Bay Area, USA',
+    areaServed: 'Global',
+    knowsAbout: [
+      'Venture capital',
+      'Early-stage investing',
+      'Artificial intelligence',
+      'Software infrastructure',
+      'Developer tools',
+      'Open-source startups',
+      'SaaS',
+      'Seed funding',
+      'Pre-seed investing',
+    ],
     founders: generalPartners.map((member: any) => {
       // Always use team page URL for founder
       const personUrl = new URL(
@@ -66,17 +88,47 @@ export async function getHomepageSchemas(
       };
     }),
     sameAs: organizationSameAs,
+    contactPoint: [
+      {
+        contactType: 'Investment Inquiries',
+        email: 'investors@pwv.com',
+        url: new URL('/apply', baseURL || canonicalURL).toString(),
+        areaServed: 'Global',
+        availableLanguage: ['English'],
+      },
+    ],
     type: 'Organization',
   });
 
   // Generate WebSite schema (without SearchAction since search is not implemented)
   const siteUrl = baseURL?.toString() || canonicalURL.toString();
+  const websiteId = new URL('#website', baseURL || canonicalURL).toString();
   const websiteSchema = generateWebSiteSchema({
+    id: websiteId,
     name: SITE_NAME,
     url: siteUrl,
     description: SITE_DESCRIPTION,
+    publisher: {
+      id: organizationId,
+    },
     // SearchAction removed - search functionality not implemented
   });
 
-  return [organizationSchema, websiteSchema];
+  // Generate WebPage schema for homepage to strengthen entity association
+  const webpageSchema = generateWebPageSchema({
+    name: `${SITE_NAME} - Early stage capital for technology founders`,
+    url: canonicalURL.toString(),
+    description: SITE_DESCRIPTION,
+    about: {
+      id: organizationId,
+    },
+    publisher: {
+      id: organizationId,
+    },
+    isPartOf: {
+      id: websiteId,
+    },
+  });
+
+  return [organizationSchema, websiteSchema, webpageSchema];
 }
