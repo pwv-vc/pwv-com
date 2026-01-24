@@ -11,10 +11,17 @@ const { baseURL, canonicalURL } = Astro.props;
 
 // Generate WebSite schema (without SearchAction since search is not implemented)
 const siteUrl = baseURL?.toString() || canonicalURL.toString();
+const organizationId = new URL(
+  '#organization',
+  baseURL || canonicalURL
+).toString();
 const websiteSchema = generateWebSiteSchema({
   name: SITE_NAME,
   url: siteUrl,
   description: SITE_DESCRIPTION,
+  publisher: {
+    id: organizationId,
+  },
   // SearchAction removed - search functionality not implemented
 });
 ---

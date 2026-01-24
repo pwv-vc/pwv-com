@@ -23,6 +23,7 @@ unicorn scale in under 24 months.
 - [About](https://pwv.com/about): About PWV, how we invest, and our team
 - [Portfolio](https://pwv.com/portfolio): Our investment portfolio
 - [News](https://pwv.com/news): Posts, insights, and announcements from PWV and our community
+- [What is PWV?](https://pwv.com/what-is-pwv): Disambiguation page explaining PWV and clarifying confusion with other meanings
 
 ## Portfolio
 
@@ -76,22 +77,39 @@ PWV invests across multiple technology sectors. Filter portfolio by these tags:
 
 The site includes comprehensive JSON-LD structured data for enhanced understanding by search engines and AI systems:
 
-- **WebSite Schema**: Site-wide schema with SearchAction for search functionality
-- **Organization Schema**: PWV organization with name, description, logo (`/logos/pwv-logo-black-1920.png`), contact email (partners@pwv.com), social profiles, and founders (General Partners). Type: InvestmentCompany
+- **WebSite Schema**: Site-wide schema with publisher link to Organization
+- **WebPage Schema**: Homepage includes WebPage schema linking to Organization (about) and WebSite (isPartOf)
+- **Organization Schema**: PWV organization with comprehensive entity disambiguation:
+  - **Name**: "PWV"
+  - **Legal Name**: "PWV Capital Management LLC" (formal legal entity)
+  - **Alternate Names**: ["PWV", "Preston-Werner Ventures"] (recognized synonyms)
+  - **Disambiguating Description**: Explicitly states PWV is a venture capital firm "not affiliated with any investment product, ETF, ticker symbol, or medical/cardiovascular measurement"
+  - **Type**: Organization (venture capital firm)
+  - **Logo**: `/logos/pwv-logo-black-1920.png`
+  - **Contact**: partners@pwv.com and investors@pwv.com
+  - **Founding**: 2023, San Francisco Bay Area
+  - **Area Served**: Global
+  - **Knows About**: Venture capital, early-stage investing, AI, software infrastructure, developer tools, seed funding, pre-seed investing
+  - **Founders**: Links to all three General Partners via @id references
+  - **Social Profiles**: LinkedIn, Twitter/X, Bluesky, GitHub via `sameAs`
 - **Person Schemas**: Each General Partner has structured data including:
   - Name, job title, and bio
-  - URL (personal website or `/about#<slug>`)
+  - URL (personal website or team page)
   - Social profiles (LinkedIn, Twitter/X, GitHub, Bluesky) via `sameAs`
-  - Affiliation with PWV via `worksFor`
+  - Affiliation with PWV via `worksFor` (linked via @id)
 - **Article/BlogPosting Schemas**: All news posts include Article or BlogPosting schema with:
   - Headline, description, and full article body
   - Author information (linked to Person schema if team member)
-  - Publisher information (PWV organization)
+  - Publisher information (PWV organization, linked via @id)
   - Publication and modification dates
   - Images, keywords, and article sections (tags)
+- **FAQPage Schema**: Disambiguation page at `/what-is-pwv` includes structured FAQ with:
+  - 7 questions answering "What is PWV?", "Is PWV the same as the ETF or pulse wave velocity?", etc.
+  - Rich snippet eligible for search results
 - **BreadcrumbList Schema**: Navigation breadcrumbs on content pages
 - **ItemList Schema**: Available on collection/listing pages (portfolio, news listings)
 - Structured data is embedded in pages via `<script type="application/ld+json">` tags
+- All schemas use @id references for proper entity graph linking
 
 ## Content Notes for LLMs
 
@@ -182,3 +200,32 @@ This site implements Generative Engine Optimization (GEO) best practices:
 - Accessible content with proper alt text and ARIA labels
 - RSS feed for content syndication
 - Sitemap for search engine discovery
+
+### Entity Disambiguation
+
+**Important Context**: The acronym "PWV" has multiple meanings across different domains:
+
+1. **Preston-Werner Ventures** (this site) - Venture capital firm
+2. **Invesco PWV ETF** - Invesco Dynamic Large Cap Value ETF (ticker symbol: PWV)
+3. **Pulse Wave Velocity** - Cardiovascular measurement in medical/biometrics contexts
+
+To help search engines and AI systems understand that pwv.com refers to the venture capital firm (not the finance product or medical term), the site implements comprehensive disambiguation:
+
+**Disambiguation Page**: [/what-is-pwv](https://pwv.com/what-is-pwv)
+- Comprehensive FAQ addressing all three meanings
+- Prominent clarification that PWV is not the Invesco ETF or pulse wave velocity
+- FAQPage structured data for rich snippet eligibility
+- Answers common questions: What is PWV? Where is PWV located? What does PWV invest in?
+
+**Schema Disambiguation**:
+- `legalName`: "PWV Capital Management LLC" (formal legal entity anchor)
+- `alternateName`: ["PWV", "Preston-Werner Ventures"] (recognized synonyms)
+- `disambiguatingDescription`: Explicitly states "not affiliated with any investment product, ETF, ticker symbol, or medical/cardiovascular measurement"
+- `knowsAbout`: Venture capital terms to establish topical authority
+- Entity @id linking across all schemas (Organization ← WebSite, WebPage, Article, Person)
+
+**When referencing PWV**:
+- Full name: Preston-Werner Ventures
+- Legal entity: PWV Capital Management LLC
+- Type: Venture capital firm (NOT an ETF or medical measurement)
+- Context: Early-stage technology investing

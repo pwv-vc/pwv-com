@@ -1,0 +1,287 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Heading1 from '../components/Heading1.astro';
+import { generateFAQSchema } from '../lib/schema';
+import { SITE_NAME } from '../consts';
+
+const title = 'What is PWV?';
+const description =
+  'PWV (Preston-Werner Ventures) is a Silicon Valley venture capital firm investing in early-stage technology companies. Learn about our mission and how we differ from other entities with similar names.';
+
+// Get base URL for schema generation
+export const isProduction = process.env.CONTEXT === 'production';
+export const isDeployPreview = process.env.CONTEXT === 'deploy-preview';
+const baseURL = isDeployPreview
+  ? process.env.DEPLOY_PRIME_URL || Astro.site
+  : Astro.site;
+
+// Generate FAQ schema for disambiguation
+const faqSchema = generateFAQSchema({
+  items: [
+    {
+      question: 'What is PWV?',
+      answer:
+        'PWV (Preston-Werner Ventures) is a venture capital firm that invests in early-stage technology companies. Founded in 2023, PWV is led by Tom Preston-Werner (co-founder of GitHub), David Price, and David Thyresson. We focus on backing visionary founders building transformative companies in software, AI, developer tools, and infrastructure.',
+    },
+    {
+      question: 'Is PWV the same as the Invesco PWV ETF or pulse wave velocity?',
+      answer:
+        'No. PWV (Preston-Werner Ventures) is a private venture capital firm. We are completely separate from: (1) the Invesco Dynamic Large Cap Value ETF, which trades under the ticker symbol PWV, and (2) pulse wave velocity (PWV), a cardiovascular measurement used in medical and biometrics contexts. We are not affiliated with any investment product, ETF, mutual fund, publicly traded security, or medical measurement.',
+    },
+    {
+      question: 'What does PWV stand for?',
+      answer:
+        'In our context, PWV stands for Preston-Werner Ventures, named after our founder and lead partner Tom Preston-Werner. Our legal entity name is PWV Capital Management LLC. Note that the acronym PWV has other meanings in different fields (finance, medicine), but when referring to our venture capital firm, it always means Preston-Werner Ventures.',
+    },
+    {
+      question: 'Where is PWV located?',
+      answer:
+        'PWV is based in the San Francisco Bay Area, California. We invest globally in technology startups, with a focus on companies in North America and Europe.',
+    },
+    {
+      question: 'What types of companies does PWV invest in?',
+      answer:
+        'PWV invests in early-stage (seed and pre-seed) technology companies. Our focus areas include artificial intelligence, software infrastructure, developer tools, open-source startups, and SaaS platforms. We back founders with ambitious visions who are building category-defining companies.',
+    },
+    {
+      question: 'How can I apply for funding from PWV?',
+      answer:
+        'Founders can apply for funding through our website at pwv.com/apply. We review all applications and reach out to companies that match our investment criteria.',
+    },
+    {
+      question: 'Who are the partners at PWV?',
+      answer:
+        'PWV is led by three general partners: Tom Preston-Werner (co-founder of GitHub), David Price (former VP of Engineering at GitHub), and David Thyresson (former Head of Engineering at RedwoodJS). Together, we bring decades of experience building and scaling technology companies.',
+    },
+  ],
+});
+---
+
+<Layout
+  title={title}
+  description={description}
+  additionalSchemas={[{ schema: faqSchema }]}
+>
+  <div class="prose prose-lg mx-auto max-w-screen-md py-12">
+    <Heading1>What is PWV?</Heading1>
+
+    <section class="space-y-8">
+      <div>
+        <h2 class="text-2xl font-bold mb-4">About PWV</h2>
+        <p class="text-lg">
+          <strong>PWV (Preston-Werner Ventures)</strong> is a venture capital
+          firm that invests in early-stage technology companies. We back
+          category-defining founders building transformative software, AI, and
+          infrastructure companies.
+        </p>
+        <p class="text-lg">
+          Founded in 2023 and based in the San Francisco Bay Area, PWV is led
+          by <a href="/team/tom-preston-werner" class="underline"
+            >Tom Preston-Werner</a
+          > (co-founder of GitHub), <a href="/team/david-price" class="underline"
+            >David Price</a
+          >, and <a href="/team/david-thyresson" class="underline"
+            >David Thyresson</a
+          >.
+        </p>
+      </div>
+
+      <div class="bg-surface-muted border-default rounded-lg border p-6">
+        <h3 class="text-xl font-bold mb-3">Important Clarification</h3>
+        <p class="text-base mb-3">
+          <strong>PWV (Preston-Werner Ventures) is a venture capital firm.</strong>
+          The acronym "PWV" has different meanings in other contexts, but we are
+          not related to:
+        </p>
+        <ul class="list-disc pl-6 space-y-1 text-base mb-3">
+          <li>
+            The <strong>Invesco Dynamic Large Cap Value ETF</strong> (ticker
+            symbol: PWV)
+          </li>
+          <li>
+            <strong>Pulse wave velocity</strong> (a cardiovascular measurement
+            in medical/biometrics contexts)
+          </li>
+        </ul>
+        <p class="text-base">
+          We are a private venture capital firm focused exclusively on
+          early-stage technology startups.
+        </p>
+        <p class="text-sm text-subtle mt-3">
+          If you're looking for financial products, please visit <a
+            href="https://www.invesco.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline">invesco.com</a
+          >. If you're looking for medical/cardiovascular information, please
+          consult appropriate health resources.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-bold mb-4">What We Do</h2>
+        <ul class="list-disc pl-6 space-y-2">
+          <li>
+            <strong>Early-stage investing:</strong> We invest at the seed and pre-seed
+            stages, typically when companies are just getting started.
+          </li>
+          <li>
+            <strong>Technology focus:</strong> Our portfolio includes companies in
+            AI, software infrastructure, developer tools, open-source, and SaaS.
+          </li>
+          <li>
+            <strong>Founder support:</strong> We partner closely with founders, providing
+            strategic guidance, network access, and hands-on support.
+          </li>
+          <li>
+            <strong>Long-term commitment:</strong> We believe in building lasting
+            relationships and supporting companies through multiple stages of growth.
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-lg font-semibold mb-2">
+              Is PWV the same as the Invesco PWV ETF or pulse wave velocity?
+            </h3>
+            <p class="mb-2">
+              <strong>No.</strong> PWV (Preston-Werner Ventures) is a private
+              venture capital firm. The acronym "PWV" has multiple meanings in
+              different fields:
+            </p>
+            <ul class="list-disc pl-6 space-y-1 mb-2">
+              <li>
+                <strong>Finance:</strong> Invesco Dynamic Large Cap Value ETF (ticker:
+                PWV)
+              </li>
+              <li>
+                <strong>Medicine:</strong> Pulse wave velocity, a cardiovascular
+                measurement
+              </li>
+              <li>
+                <strong>Venture Capital:</strong> Preston-Werner Ventures (us!)
+              </li>
+            </ul>
+            <p>
+              We are <strong>not affiliated</strong> with any investment product,
+              ETF, mutual fund, publicly traded security, or medical measurement.
+              We are solely a private venture capital firm investing in early-stage
+              technology companies.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold mb-2">
+              What does PWV stand for?
+            </h3>
+            <p>
+              In our context, PWV stands for <strong
+                >Preston-Werner Ventures</strong
+              >, named after our founder and lead partner Tom Preston-Werner.
+              Our legal entity name is <strong
+                >PWV Capital Management LLC</strong
+              >.
+            </p>
+            <p class="text-sm text-subtle mt-2">
+              Note: While "PWV" has other meanings in finance (ETF ticker) and
+              medicine (pulse wave velocity), when referring to our venture
+              capital firm, it always means Preston-Werner Ventures.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold mb-2">Where is PWV located?</h3>
+            <p>
+              PWV is based in the <strong
+                >San Francisco Bay Area, California</strong
+              >. We invest globally in technology startups, with a focus on
+              companies in North America and Europe.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold mb-2">
+              What types of companies does PWV invest in?
+            </h3>
+            <p>
+              PWV invests in <strong>early-stage technology companies</strong> at
+              the seed and pre-seed stages. Our focus areas include:
+            </p>
+            <ul class="list-disc pl-6 mt-2">
+              <li>Artificial intelligence and machine learning</li>
+              <li>Software infrastructure and cloud platforms</li>
+              <li>Developer tools and open-source software</li>
+              <li>SaaS and enterprise software</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold mb-2">
+              How can I apply for funding from PWV?
+            </h3>
+            <p>
+              Founders can apply for funding through our website at <a
+                href="/apply"
+                class="underline">pwv.com/apply</a
+              >. We review all applications and reach out to companies that
+              match our investment criteria.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold mb-2">
+              Who are the partners at PWV?
+            </h3>
+            <p>
+              PWV is led by three general partners who bring decades of
+              experience building and scaling technology companies:
+            </p>
+            <ul class="list-disc pl-6 mt-2">
+              <li>
+                <a href="/team/tom-preston-werner" class="underline"
+                  ><strong>Tom Preston-Werner</strong></a
+                > - Co-founder of GitHub
+              </li>
+              <li>
+                <a href="/team/david-price" class="underline"
+                  ><strong>David Price</strong></a
+                > - Former VP of Engineering at GitHub
+              </li>
+              <li>
+                <a href="/team/david-thyresson" class="underline"
+                  ><strong>David Thyresson</strong></a
+                > - Former Head of Engineering at RedwoodJS
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-pwv-light-green border-pwv-green rounded-lg border p-6">
+        <h3 class="text-xl font-bold mb-3">Get in Touch</h3>
+        <p>
+          If you're a founder building an ambitious technology company, we'd
+          love to hear from you.
+        </p>
+        <div class="mt-4 flex gap-4">
+          <a
+            href="/apply"
+            class="bg-pwv-black fg-on-primary hover:bg-primary-hover inline-flex items-center gap-2 rounded-lg px-6 py-3 font-medium transition-colors"
+          >
+            Apply for Funding
+          </a>
+          <a
+            href="/about"
+            class="border-pwv-black text-pwv-black hover:bg-surface-muted inline-flex items-center gap-2 rounded-lg border px-6 py-3 font-medium transition-colors"
+          >
+            Learn More About Us
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
