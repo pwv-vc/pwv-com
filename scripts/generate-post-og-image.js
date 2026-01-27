@@ -25,20 +25,20 @@ const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, '..');
 
 /**
- * Scans the library directory for markdown and MDX files
+ * Scans the posts directory for markdown and MDX files
  */
-async function scanLibraryFiles() {
-  const libraryDir = path.join(projectRoot, 'src', 'content', 'library');
+async function scanPostFiles() {
+  const postsDir = path.join(projectRoot, 'src', 'content', 'posts');
 
   try {
-    const files = await fs.readdir(libraryDir);
+    const files = await fs.readdir(postsDir);
     const markdownFiles = files
       .filter((file) => file.endsWith('.md') || file.endsWith('.mdx'))
       .sort();
 
     return markdownFiles;
   } catch (error) {
-    console.error('Error scanning library directory:', error);
+    console.error('Error scanning posts directory:', error);
     return [];
   }
 }
@@ -60,7 +60,7 @@ async function selectFile(files) {
   const rl = createReadlineInterface();
 
   return new Promise((resolve, reject) => {
-    console.log('\n📚 Available library files:\n');
+      console.log('\n📚 Available post files:\n');
 
     files.forEach((file, index) => {
       const fileType = file.endsWith('.mdx') ? 'MDX' : 'MD';
@@ -99,7 +99,7 @@ async function selectFile(files) {
           projectRoot,
           'src',
           'content',
-          'library',
+          'posts',
           selectedFile
         );
 
@@ -332,7 +332,7 @@ async function generatePostOGImage(markdownFilePath) {
       projectRoot,
       'src',
       'images',
-      'library',
+      'posts',
       postSlug
     );
     await fs.mkdir(imageDir, { recursive: true });
@@ -368,15 +368,34 @@ async function main() {
   console.log('🎨 PWV OG Image Generator');
   console.log('========================\n');
 
+  // Check if a file path was provided as command line argument
+  const filePathArg = process.argv[2];
+
+  if (filePathArg) {
+    // Use provided file path
+    const fullPath = path.isAbsolute(filePathArg)
+      ? filePathArg
+      : path.join(projectRoot, filePathArg);
+
+    try {
+      await fs.access(fullPath);
+      await generatePostOGImage(fullPath);
+    } catch (error) {
+      console.error(`❌ File not found: ${fullPath}`);
+      process.exit(1);
+    }
+    return;
+  }
+
   // Scan for available files
-  const files = await scanLibraryFiles();
+  const files = await scanPostFiles();
 
   if (files.length === 0) {
-    console.log('❌ No markdown or MDX files found in src/content/library');
+    console.log('❌ No markdown or MDX files found in src/content/posts');
     process.exit(1);
   }
 
-  console.log(`Found ${files.length} files in the library directory.`);
+  console.log(`Found ${files.length} files in the posts directory.`);
 
   // Let user select a file
   const selectedFilePath = await selectFile(files);
