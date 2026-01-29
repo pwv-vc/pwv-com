@@ -45,31 +45,48 @@ const getTeamCache = async () => {
 };
 
 // Determine site URL based on environment
-// Priority: URL env var (production) > DEPLOY_URL (Netlify previews) > localhost (dev) > production fallback
+// Priority: URL env var (production) > Netlify preview URLs > localhost (dev) > production fallback
 const getSiteURL = () => {
   // If URL is explicitly set (production), use it
   if (process.env.URL) {
     return process.env.URL;
   }
-
-  // If DEPLOY_URL is set (Netlify preview/branch deploy), use it
+  
+  // Check for Netlify deploy preview/branch deploy URLs
+  // Netlify sets multiple environment variables we can use
+  if (process.env.DEPLOY_PRIME_URL) {
+    // DEPLOY_PRIME_URL is the primary URL for the deploy (works for previews and branch deploys)
+    return process.env.DEPLOY_PRIME_URL;
+  }
+  
   if (process.env.DEPLOY_URL) {
+    // DEPLOY_URL is also set by Netlify
     return process.env.DEPLOY_URL;
   }
-
+  
   // If in dev mode (astro dev), use localhost
   if (process.argv.includes('dev')) {
     return 'http://localhost:4321';
   }
-
+  
   // Fallback to production URL for builds
   return 'https://pwv.com';
 };
 
+// Debug: Log the resolved site URL during build
+const resolvedSiteURL = getSiteURL();
+console.log('[Astro Config] Site URL resolved to:', resolvedSiteURL);
+console.log('[Astro Config] Environment:', {
+  CONTEXT: process.env.CONTEXT,
+  URL: process.env.URL,
+  DEPLOY_PRIME_URL: process.env.DEPLOY_PRIME_URL,
+  DEPLOY_URL: process.env.DEPLOY_URL,
+});
+
 // https://astro.build/config
 export default defineConfig({
   output: 'static',
-  site: getSiteURL(),
+  site: resolvedSiteURL,
   trailingSlash: 'never', // Ensure consistent URL structure without trailing slashes
   integrations: [
     mdx(),
