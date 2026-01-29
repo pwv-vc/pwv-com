@@ -51,17 +51,17 @@ const getSiteURL = () => {
   if (process.env.URL) {
     return process.env.URL;
   }
-  
+
   // If DEPLOY_URL is set (Netlify preview/branch deploy), use it
   if (process.env.DEPLOY_URL) {
     return process.env.DEPLOY_URL;
   }
-  
+
   // If in dev mode (astro dev), use localhost
   if (process.argv.includes('dev')) {
     return 'http://localhost:4321';
   }
-  
+
   // Fallback to production URL for builds
   return 'https://pwv.com';
 };
