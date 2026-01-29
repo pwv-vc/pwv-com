@@ -47,8 +47,11 @@ const getTeamCache = async () => {
 // Determine site URL based on environment
 // Priority: URL env var (production) > Netlify preview URLs > localhost (dev) > production fallback
 const getSiteURL = () => {
+  console.log('🔍 getSiteURL() called');
+  
   // If URL is explicitly set (production), use it
   if (process.env.URL) {
+    console.log('✅ Using URL env var:', process.env.URL);
     return process.env.URL;
   }
 
@@ -56,32 +59,36 @@ const getSiteURL = () => {
   // Netlify sets multiple environment variables we can use
   if (process.env.DEPLOY_PRIME_URL) {
     // DEPLOY_PRIME_URL is the primary URL for the deploy (works for previews and branch deploys)
+    console.log('✅ Using DEPLOY_PRIME_URL:', process.env.DEPLOY_PRIME_URL);
     return process.env.DEPLOY_PRIME_URL;
   }
 
   if (process.env.DEPLOY_URL) {
     // DEPLOY_URL is also set by Netlify
+    console.log('✅ Using DEPLOY_URL:', process.env.DEPLOY_URL);
     return process.env.DEPLOY_URL;
   }
 
   // If in dev mode (astro dev), use localhost
   if (process.argv.includes('dev')) {
+    console.log('✅ Using localhost (dev mode)');
     return 'http://localhost:4321';
   }
 
   // Fallback to production URL for builds
+  console.log('⚠️ Using fallback production URL');
   return 'https://pwv.com';
 };
 
 // Debug: Log the resolved site URL during build
 const resolvedSiteURL = getSiteURL();
-console.log('[Astro Config] Site URL resolved to:', resolvedSiteURL);
-console.log('[Astro Config] Environment:', {
-  CONTEXT: process.env.CONTEXT,
-  URL: process.env.URL,
-  DEPLOY_PRIME_URL: process.env.DEPLOY_PRIME_URL,
-  DEPLOY_URL: process.env.DEPLOY_URL,
-});
+console.log('='.repeat(80));
+console.log('🔧 [Astro Config] Site URL resolved to:', resolvedSiteURL);
+console.log('🔧 [Astro Config] CONTEXT:', process.env.CONTEXT);
+console.log('🔧 [Astro Config] URL:', process.env.URL);
+console.log('🔧 [Astro Config] DEPLOY_PRIME_URL:', process.env.DEPLOY_PRIME_URL);
+console.log('🔧 [Astro Config] DEPLOY_URL:', process.env.DEPLOY_URL);
+console.log('='.repeat(80));
 
 // https://astro.build/config
 export default defineConfig({
