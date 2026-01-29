@@ -9,6 +9,13 @@
 # Deploy preview and branch deploys will use Netlify's automatic URL
 # (e.g., https://deploy-preview-123--pwv.netlify.app)
 
+# Prevent deploy previews from being indexed by search engines
+[context.deploy-preview.environment]
+  ROBOTS = "noindex"
+
+[context.branch-deploy.environment]
+  ROBOTS = "noindex"
+
 # Cache control headers for better performance
 [[headers]]
   for = "/*"
@@ -18,6 +25,11 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Vary = "Accept-Encoding"
+
+# Prevent deploy previews and branch deploys from being indexed by search engines
+# Note: Netlify doesn't support context-specific headers directly in netlify.toml
+# So we rely on meta tags in HTML (handled by Layout.astro)
+# Alternative: Use edge functions or _headers file for context-specific headers
 
 # Cache static assets for 1 year
 [[headers]]
