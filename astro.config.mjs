@@ -44,10 +44,32 @@ const getTeamCache = async () => {
   return teamCache;
 };
 
+// Determine site URL based on environment
+// Priority: URL env var (production) > DEPLOY_URL (Netlify previews) > localhost (dev) > production fallback
+const getSiteURL = () => {
+  // If URL is explicitly set (production), use it
+  if (process.env.URL) {
+    return process.env.URL;
+  }
+  
+  // If DEPLOY_URL is set (Netlify preview/branch deploy), use it
+  if (process.env.DEPLOY_URL) {
+    return process.env.DEPLOY_URL;
+  }
+  
+  // If in dev mode (astro dev), use localhost
+  if (process.argv.includes('dev')) {
+    return 'http://localhost:4321';
+  }
+  
+  // Fallback to production URL for builds
+  return 'https://pwv.com';
+};
+
 // https://astro.build/config
 export default defineConfig({
   output: 'static',
-  site: process.env.URL || process.env.DEPLOY_URL || 'https://pwv.com',
+  site: getSiteURL(),
   trailingSlash: 'never', // Ensure consistent URL structure without trailing slashes
   integrations: [
     mdx(),
