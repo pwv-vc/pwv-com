@@ -56,9 +56,18 @@ const { posts, pagination } = await getPaginatedPostsByAuthor(
 
 const title = `News by ${author}`;
 const description = `Discover perspectives, insights, and announcements by ${author} from PWV and our community.`;
+
+// Paginated pages should noindex and have canonical pointing to first page
+const shouldNoindex = page > 1;
+const canonicalPageURL = page > 1 ? `/news/author/${authorSlug}` : undefined;
 ---
 
-<Layout title={title} description={description}>
+<Layout
+  title={title}
+  description={description}
+  noindex={shouldNoindex}
+  canonicalURL={canonicalPageURL}
+>
   <section class="mx-auto">
     <Heading1>News by {author}</Heading1>
     <p class="mb-8 text-lg">

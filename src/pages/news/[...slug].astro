@@ -196,6 +196,7 @@ const breadcrumbSchema = generateBreadcrumbListSchema({
   contentSlug={post.id}
   redirectAfter={post.data.url ? 5 : undefined}
   redirectUrl={post.data.url}
+  noindex={post.data.url ? true : false}
   additionalSchemas={[{ schema: articleSchema }, { schema: breadcrumbSchema }]}
 >
   <div class="prose prose-lg max-w-screen-xl">

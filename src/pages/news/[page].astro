@@ -43,9 +43,18 @@ const nonExternalPosts = await getNonExternalPosts();
 const title = 'News';
 const description =
   'Perspectives and announcements from PWV, our founders and community.';
+
+// Paginated pages should noindex and have canonical pointing to first page
+const shouldNoindex = page > 1;
+const canonicalPageURL = page > 1 ? '/news' : undefined;
 ---
 
-<Layout title={title} description={description}>
+<Layout
+  title={title}
+  description={description}
+  noindex={shouldNoindex}
+  canonicalURL={canonicalPageURL}
+>
   <section class="mx-auto">
     <Heading1>News</Heading1>
     <p class="mb-8 text-lg">

@@ -52,9 +52,18 @@ const { posts, pagination } = await getPaginatedPostsByTag(tag, page, pageSize);
 
 const title = `News tagged "${tag}"`;
 const description = `Explore articles, posts, and perspectives tagged "${tag}" from PWV, our founders, and our community.`;
+
+// Paginated pages should noindex and have canonical pointing to first page
+const shouldNoindex = page > 1;
+const canonicalPageURL = page > 1 ? `/news/tags/${tagSlug}` : undefined;
 ---
 
-<Layout title={title} description={description}>
+<Layout
+  title={title}
+  description={description}
+  noindex={shouldNoindex}
+  canonicalURL={canonicalPageURL}
+>
   <section class="mx-auto">
     <Heading1>News tagged "{tag}"</Heading1>
     <p class="mb-8 text-lg">

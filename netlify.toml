@@ -2,6 +2,13 @@
   command = "pnpm run build"
   publish = "dist"
 
+# Production-specific build settings
+[context.production.environment]
+  URL = "https://pwv.com"
+
+# Deploy preview and branch deploys will use Netlify's automatic URL
+# (e.g., https://deploy-preview-123--pwv.netlify.app)
+
 # Cache control headers for better performance
 [[headers]]
   for = "/*"
@@ -85,6 +92,26 @@
   [headers.values]
     Content-Type = "application/xml; charset=utf-8"
     Cache-Control = "public, max-age=3600, s-maxage=3600"
+
+# Force HTTPS for all traffic
+[[redirects]]
+  from = "http://pwv.com/*"
+  to = "https://pwv.com/:splat"
+  status = 301
+  force = true
+
+# Redirect www to non-www
+[[redirects]]
+  from = "https://www.pwv.com/*"
+  to = "https://pwv.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.pwv.com/*"
+  to = "https://pwv.com/:splat"
+  status = 301
+  force = true
 
 [[redirects]]
   from = "/fund-memo"

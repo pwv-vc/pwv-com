@@ -38,6 +38,8 @@ export interface Props {
   contentType?: 'post' | 'portfolio' | 'about' | 'apply' | 'team'; // content type for UTM tracking
   contentSlug?: string; // content slug for UTM tracking
   additionalSchemas?: Array<{ schema: object }>; // Additional JSON-LD schemas to include in head
+  noindex?: boolean; // If true, add noindex meta tag to prevent indexing
+  canonicalURL?: string; // Optional custom canonical URL to override the default
 }
 
 const {
@@ -58,6 +60,8 @@ const {
   contentType,
   contentSlug,
   additionalSchemas = [],
+  noindex = false,
+  canonicalURL: customCanonicalURL,
 } = Astro.props;
 
 export const isProduction = process.env.CONTEXT === 'production';
@@ -66,7 +70,9 @@ export const isDeployPreview = process.env.CONTEXT === 'deploy-preview';
 const baseURL = isDeployPreview
   ? process.env.DEPLOY_PRIME_URL || Astro.site
   : Astro.site;
-const canonicalURL = new URL(Astro.url.pathname, baseURL);
+const canonicalURL = customCanonicalURL
+  ? new URL(customCanonicalURL, baseURL)
+  : new URL(Astro.url.pathname, baseURL);
 
 // Generate UTM-tracked URLs for social sharing if enabled
 let socialSharingURL = canonicalURL.toString();
@@ -169,7 +175,7 @@ if (image) {
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
     {author && <meta name="author" content={author} />}
-    <meta name="robots" content="index,follow" />
+    <meta name="robots" content={noindex ? 'noindex,nofollow' : 'index,follow'} />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={ogSharingURL} />
