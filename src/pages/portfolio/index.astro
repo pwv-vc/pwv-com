@@ -98,6 +98,8 @@ const keywords = KEYWORDS + companies.map((c) => c.data.name).join(', ');
             tags={company.data.tags}
             slug={company.data.slug}
             showTags={true}
+            formerly={company.data.formerly}
+            acquiredBy={company.data.acquiredBy}
           />
         ))
       }

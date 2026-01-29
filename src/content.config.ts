@@ -35,6 +35,8 @@ const portfolioSchema = z.object({
   url: z.string().url(),
   tags: z.array(z.string()),
   slug: z.string(),
+  formerly: z.string().optional(),
+  acquiredBy: z.string().optional(),
 });
 
 const representativePortfolio = defineCollection({
