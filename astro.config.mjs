@@ -48,7 +48,7 @@ const getTeamCache = async () => {
 // Priority: Check CONTEXT first, then use appropriate URL source
 const getSiteURL = () => {
   console.log('🔍 getSiteURL() called');
-  
+
   // If in dev mode (astro dev), use localhost
   if (process.argv.includes('dev')) {
     console.log('✅ Using localhost (dev mode)');
@@ -57,9 +57,15 @@ const getSiteURL = () => {
 
   // For deploy previews and branch deploys, ALWAYS use Netlify's dynamic URLs
   // Never use the URL env var for non-production contexts
-  if (process.env.CONTEXT === 'deploy-preview' || process.env.CONTEXT === 'branch-deploy') {
+  if (
+    process.env.CONTEXT === 'deploy-preview' ||
+    process.env.CONTEXT === 'branch-deploy'
+  ) {
     if (process.env.DEPLOY_PRIME_URL) {
-      console.log('✅ Using DEPLOY_PRIME_URL for preview:', process.env.DEPLOY_PRIME_URL);
+      console.log(
+        '✅ Using DEPLOY_PRIME_URL for preview:',
+        process.env.DEPLOY_PRIME_URL
+      );
       return process.env.DEPLOY_PRIME_URL;
     }
     if (process.env.DEPLOY_URL) {
@@ -85,7 +91,10 @@ console.log('='.repeat(80));
 console.log('🔧 [Astro Config] Site URL resolved to:', resolvedSiteURL);
 console.log('🔧 [Astro Config] CONTEXT:', process.env.CONTEXT);
 console.log('🔧 [Astro Config] URL:', process.env.URL);
-console.log('🔧 [Astro Config] DEPLOY_PRIME_URL:', process.env.DEPLOY_PRIME_URL);
+console.log(
+  '🔧 [Astro Config] DEPLOY_PRIME_URL:',
+  process.env.DEPLOY_PRIME_URL
+);
 console.log('🔧 [Astro Config] DEPLOY_URL:', process.env.DEPLOY_URL);
 console.log('='.repeat(80));
 
