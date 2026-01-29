@@ -9,9 +9,11 @@ interface Props {
   tags: string[];
   slug: string;
   showTags?: boolean;
+  formerly?: string;
+  acquiredBy?: string;
 }
 
-const { name, url, tags, slug, showTags = false } = Astro.props;
+const { name, url, tags, slug, showTags = false, formerly, acquiredBy } = Astro.props;
 
 // Companies that need black background for their logos
 const blackBackgroundSlugs = ['beta'];
@@ -65,9 +67,19 @@ const getTagStyle = (tag: string) => {
       height={32}
       class={`flex-shrink-0 p-0.5 border border-pwv-gray ${blackBackgroundSlugs.includes(slug) ? 'bg-black' : 'bg-surface'}`}
     />
-    <span class="text-md flex-1 leading-snug break-words whitespace-normal"
-      >{name}</span
-    >
+    <span class="text-md flex-1 leading-snug break-words whitespace-normal">
+      {name}
+      {
+        formerly && (
+          <span class="ml-1 text-xs text-gray-500">(formerly {formerly})</span>
+        )
+      }
+      {
+        acquiredBy && (
+          <span class="ml-1 text-xs text-gray-500">(acquired by {acquiredBy})</span>
+        )
+      }
+    </span>
   </a>
   {
     showTags && (

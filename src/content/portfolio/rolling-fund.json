@@ -30,16 +30,18 @@
     "tags": ["ai", "saas"]
   },
   {
-    "name": "Ona (formerly Gitpod)",
+    "name": "Ona",
     "slug": "ona",
     "url": "https://www.ona.com/",
-    "tags": ["dev tools", "board seat"]
+    "tags": ["dev tools", "board seat"],
+    "formerly": "Gitpod"
   },
   {
-    "name": "Aerodome (acquired by Flock Safety)",
+    "name": "Aerodome",
     "slug": "aerodome",
     "url": "https://www.aerodome.com",
-    "tags": ["hardware", "ai", "acquired"]
+    "tags": ["hardware", "ai", "acquired"],
+    "acquiredBy": "Flock Safety"
   },
   {
     "name": "Liquid AI",
@@ -87,7 +89,8 @@
     "name": "Cleanlab",
     "slug": "cleanlab",
     "url": "https://www.cleanlab.ai/",
-    "tags": ["ai", "dev tools"]
+    "tags": ["ai", "dev tools", "acquired"],
+    "acquiredBy": "Handshake"
   },
   {
     "name": "Clerk",
@@ -270,9 +273,11 @@
     "slug": "aera-farms"
   },
   {
-    "name": "Limitless AI (Rewind AI, acquired by Meta)",
+    "name": "Limitless AI",
     "url": "https://www.limitless.ai/",
     "tags": ["ai", "acquired"],
-    "slug": "limitless"
+    "slug": "limitless",
+    "formerly": "Rewind AI",
+    "acquiredBy": "Meta"
   }
 ]
