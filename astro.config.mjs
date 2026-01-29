@@ -45,34 +45,33 @@ const getTeamCache = async () => {
 };
 
 // Determine site URL based on environment
-// Priority: URL env var (production) > Netlify preview URLs > localhost (dev) > production fallback
+// Priority: Check CONTEXT first, then use appropriate URL source
 const getSiteURL = () => {
   console.log('🔍 getSiteURL() called');
   
-  // If URL is explicitly set (production), use it
-  if (process.env.URL) {
-    console.log('✅ Using URL env var:', process.env.URL);
-    return process.env.URL;
-  }
-
-  // Check for Netlify deploy preview/branch deploy URLs
-  // Netlify sets multiple environment variables we can use
-  if (process.env.DEPLOY_PRIME_URL) {
-    // DEPLOY_PRIME_URL is the primary URL for the deploy (works for previews and branch deploys)
-    console.log('✅ Using DEPLOY_PRIME_URL:', process.env.DEPLOY_PRIME_URL);
-    return process.env.DEPLOY_PRIME_URL;
-  }
-
-  if (process.env.DEPLOY_URL) {
-    // DEPLOY_URL is also set by Netlify
-    console.log('✅ Using DEPLOY_URL:', process.env.DEPLOY_URL);
-    return process.env.DEPLOY_URL;
-  }
-
   // If in dev mode (astro dev), use localhost
   if (process.argv.includes('dev')) {
     console.log('✅ Using localhost (dev mode)');
     return 'http://localhost:4321';
+  }
+
+  // For deploy previews and branch deploys, ALWAYS use Netlify's dynamic URLs
+  // Never use the URL env var for non-production contexts
+  if (process.env.CONTEXT === 'deploy-preview' || process.env.CONTEXT === 'branch-deploy') {
+    if (process.env.DEPLOY_PRIME_URL) {
+      console.log('✅ Using DEPLOY_PRIME_URL for preview:', process.env.DEPLOY_PRIME_URL);
+      return process.env.DEPLOY_PRIME_URL;
+    }
+    if (process.env.DEPLOY_URL) {
+      console.log('✅ Using DEPLOY_URL for preview:', process.env.DEPLOY_URL);
+      return process.env.DEPLOY_URL;
+    }
+  }
+
+  // For production context, use the URL env var
+  if (process.env.CONTEXT === 'production' && process.env.URL) {
+    console.log('✅ Using URL env var for production:', process.env.URL);
+    return process.env.URL;
   }
 
   // Fallback to production URL for builds
