@@ -51,24 +51,24 @@ const getSiteURL = () => {
   if (process.env.URL) {
     return process.env.URL;
   }
-  
+
   // Check for Netlify deploy preview/branch deploy URLs
   // Netlify sets multiple environment variables we can use
   if (process.env.DEPLOY_PRIME_URL) {
     // DEPLOY_PRIME_URL is the primary URL for the deploy (works for previews and branch deploys)
     return process.env.DEPLOY_PRIME_URL;
   }
-  
+
   if (process.env.DEPLOY_URL) {
     // DEPLOY_URL is also set by Netlify
     return process.env.DEPLOY_URL;
   }
-  
+
   // If in dev mode (astro dev), use localhost
   if (process.argv.includes('dev')) {
     return 'http://localhost:4321';
   }
-  
+
   // Fallback to production URL for builds
   return 'https://pwv.com';
 };
