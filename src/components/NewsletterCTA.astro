@@ -1,0 +1,47 @@
+---
+// Newsletter CTA component
+// A call-to-action banner that encourages users to subscribe to the PWV newsletter
+
+interface Props {
+  heading?: string;
+  description?: string;
+  buttonText?: string;
+  className?: string;
+}
+
+const {
+  heading = 'Want these stories in your inbox?',
+  description = 'Subscribe to the PWV newsletter for the latest updates from our founders and portfolio.',
+  buttonText = 'Subscribe to Newsletter',
+  className = '',
+} = Astro.props;
+---
+
+<div
+  class={`bg-pwv-light-yellow border-pwv-soft-yellow my-8 rounded-lg border p-8 text-center ${className}`}
+>
+  <h3 class="text-pwv-black mb-2 text-xl font-semibold">
+    {heading}
+  </h3>
+  <p class="text-pwv-black/70 mb-4 text-sm">
+    {description}
+  </p>
+  <a
+    href="/newsletter"
+    class="bg-pwv-black text-pwv-white hover:bg-pwv-green hover:text-pwv-black inline-flex items-center gap-2 rounded-lg px-6 py-3 font-medium transition-colors duration-200"
+  >
+    {buttonText}
+    <svg
+      class="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M9 5l7 7-7 7"></path>
+    </svg>
+  </a>
+</div>
