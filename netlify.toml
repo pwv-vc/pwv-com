@@ -2,6 +2,13 @@
   command = "pnpm run build"
   publish = "dist"
 
+# Trailing slash handling - Netlify automatically adds trailing slashes
+# This matches Astro's trailingSlash: 'always' configuration
+[build.processing]
+  skip_processing = false
+[build.processing.html]
+  pretty_urls = true
+
 # Cache control headers for better performance
 [[headers]]
   for = "/*"
@@ -85,6 +92,28 @@
   [headers.values]
     Content-Type = "application/xml; charset=utf-8"
     Cache-Control = "public, max-age=3600, s-maxage=3600"
+
+# Redirect old /library/ URLs to new /news/ URLs
+[[redirects]]
+  from = "/library/*"
+  to = "/news/:splat"
+  status = 301
+  force = true
+
+# Redirect old portfolio query parameters to new routes
+[[redirects]]
+  from = "/portfolio"
+  to = "/portfolio/tags/:tag"
+  status = 301
+  query = {tags = ":tag"}
+  force = false
+
+[[redirects]]
+  from = "/"
+  to = "/"
+  status = 301
+  query = {ref = ":ref"}
+  force = false
 
 [[redirects]]
   from = "/fund-memo"

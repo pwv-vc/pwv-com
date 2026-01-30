@@ -28,6 +28,7 @@ const getTeamCache = async () => {
 export default defineConfig({
   output: 'static',
   site: process.env.URL || process.env.DEPLOY_URL || 'http://localhost:4321',
+  trailingSlash: 'always', // Ensure all URLs have trailing slashes to match Netlify behavior
   integrations: [
     mdx(),
     react(),
