@@ -23,7 +23,7 @@ unicorn scale in under 24 months.
 - [About](https://pwv.com/about): About PWV, how we invest, and our team
 - [Portfolio](https://pwv.com/portfolio): Our investment portfolio
 - [News](https://pwv.com/news): Posts, insights, and announcements from PWV and our community
-ç- [Newsletter](https://pwv.com/newsletter): Subscribe to the PWV newsletter for updates, insights, and portfolio news
+- [Newsletter](https://pwv.com/newsletter): Subscribe to the PWV newsletter for updates, insights, and portfolio news
 - [What is PWV?](https://pwv.com/what-is-pwv): Disambiguation page explaining PWV and clarifying confusion with other meanings
 
 ## Portfolio
