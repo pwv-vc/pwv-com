@@ -84,29 +84,29 @@ const isInline = variant === 'inline';
             />
           </div>
 
-          {/* GDPR Consent */}
-          {!isCompact && (
-            <div id="mergeRow-gdpr" class="mc-field-group">
-              <div class="text-pwv-black/70 text-sm space-y-3">
-                <label class="flex items-start gap-3 cursor-pointer leading-relaxed">
-                  <input
-                    type="checkbox"
-                    id="gdpr_26464"
-                    name="gdpr[26464]"
-                    value="Y"
-                    class="mt-1 rounded border-pwv-gray focus:ring-pwv-green w-4 h-4 flex-shrink-0"
-                    required
-                  />
-                  <span class="flex-1">
-                    I consent to receiving email updates and communications from PWV. I understand I can unsubscribe at any time. <span class="text-red-500">*</span>
-                  </span>
-                </label>
+          {/* GDPR Consent - Always shown and required */}
+          <div id="mergeRow-gdpr" class="mc-field-group">
+            <div class={`text-pwv-black/70 space-y-3 ${isCompact ? 'text-xs' : 'text-sm'}`}>
+              <label class={`flex items-start cursor-pointer leading-relaxed ${isCompact ? 'gap-2' : 'gap-3'}`}>
+                <input
+                  type="checkbox"
+                  id="gdpr_26464"
+                  name="gdpr[26464]"
+                  value="Y"
+                  class={`rounded border-pwv-gray focus:ring-pwv-green flex-shrink-0 ${isCompact ? 'mt-0.5 w-3.5 h-3.5' : 'mt-1 w-4 h-4'}`}
+                  required
+                />
+                <span class="flex-1">
+                  I consent to receiving email updates and communications from PWV. I understand I can unsubscribe at any time. <span class="text-red-500">*</span>
+                </span>
+              </label>
+              {!isCompact && (
                 <p class="text-pwv-black/60 text-sm leading-relaxed">
                   We use Mailchimp as our marketing platform. By subscribing, you acknowledge that your information will be transferred to Mailchimp for processing. <a href="https://mailchimp.com/legal/terms" class="pwv-link-underline" target="_blank" rel="noopener noreferrer">Learn more</a>
                 </p>
-              </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
         
         <!-- Hidden fields for tracking source and tags -->
