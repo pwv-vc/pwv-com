@@ -129,6 +129,34 @@ const itemListSchema = generateItemListSchema({
       filter={activeFilter}
     />
 
+    <!-- Newsletter CTA -->
+    <div class="bg-pwv-light-yellow my-8 rounded-lg border border-pwv-soft-yellow p-8 text-center">
+      <h3 class="text-pwv-black mb-2 text-xl font-semibold">
+        Want these stories in your inbox?
+      </h3>
+      <p class="text-pwv-black/70 mb-4 text-sm">
+        Subscribe to the PWV newsletter for the latest updates from our founders and portfolio.
+      </p>
+      <a
+        href="/newsletter"
+        class="bg-pwv-black text-pwv-white hover:bg-pwv-green hover:text-pwv-black inline-flex items-center gap-2 rounded-lg px-6 py-3 font-medium transition-colors duration-200"
+      >
+        Subscribe to Newsletter
+        <svg
+          class="h-4 w-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+
     <div class="mt-8 text-center">
       <a
         href="/"

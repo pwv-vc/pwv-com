@@ -1,0 +1,146 @@
+---
+// Mailchimp newsletter signup component
+// Uses embedded form approach with environment variables
+
+const MAILCHIMP_ACTION_URL = import.meta.env.PUBLIC_MAILCHIMP_ACTION_URL;
+const MAILCHIMP_U = import.meta.env.PUBLIC_MAILCHIMP_U;
+const MAILCHIMP_ID = import.meta.env.PUBLIC_MAILCHIMP_ID;
+
+interface Props {
+  variant?: 'default' | 'inline' | 'compact';
+  showHeading?: boolean;
+  headingText?: string;
+  descriptionText?: string;
+  showLearnMore?: boolean;
+}
+
+const {
+  variant = 'default',
+  showHeading = true,
+  headingText = 'Stay Updated',
+  descriptionText = 'Get the latest news and insights from PWV delivered to your inbox.',
+  showLearnMore = true,
+} = Astro.props;
+
+// Construct the form action URL
+// Format: https://{datacenter}.list-manage.com/subscribe/post?u={user_id}&id={audience_id}
+const formAction = MAILCHIMP_ACTION_URL || `https://pwv.us12.list-manage.com/subscribe/post?u=${MAILCHIMP_U || 'PLACEHOLDER_U'}&id=${MAILCHIMP_ID || 'PLACEHOLDER_ID'}`;
+
+const isCompact = variant === 'compact';
+const isInline = variant === 'inline';
+---
+
+<div class={`newsletter-signup ${isCompact ? 'newsletter-compact' : ''} ${isInline ? 'newsletter-inline' : ''}`}>
+  {showHeading && !isCompact && (
+    <h3 class="text-pwv-black mb-2 text-lg font-semibold">
+      {headingText}
+    </h3>
+  )}
+  
+  {!isCompact && (
+    <p class="text-pwv-black/70 mb-4 text-sm">
+      {descriptionText}
+      {showLearnMore && Astro.url.pathname !== '/newsletter' && (
+        <>
+          {' '}
+          <a href="/newsletter" class="text-pwv-green hover:text-pwv-black underline transition-colors">
+            Learn more
+          </a>
+        </>
+      )}
+    </p>
+  )}
+
+  <!-- Begin Mailchimp Signup Form -->
+  <div id="mc_embed_signup">
+    <form
+      action={formAction}
+      method="post"
+      id="mc-embedded-subscribe-form"
+      name="mc-embedded-subscribe-form"
+      class="validate"
+      target="_blank"
+      novalidate
+    >
+      <div id="mc_embed_signup_scroll" class={isInline ? 'flex flex-col gap-3 md:flex-row md:items-end md:max-w-2xl' : 'flex flex-col gap-3'}>
+        <div class="mc-field-group md:flex-1">
+          {!isCompact && (
+            <label for="mce-EMAIL" class="text-pwv-black mb-1 block text-sm font-medium">
+              Email Address <span class="text-red-500">*</span>
+            </label>
+          )}
+          <input
+            type="email"
+            name="EMAIL"
+            class="required email w-full rounded-lg border border-pwv-gray px-4 py-2 text-sm focus:border-pwv-green focus:outline-none focus:ring-1 focus:ring-pwv-green"
+            id="mce-EMAIL"
+            required
+            placeholder={isCompact ? 'your@email.com' : 'Enter your email'}
+            value=""
+          />
+        </div>
+        
+        <!-- Real people should not fill this in and expect good things -->
+        <div style="position: absolute; left: -5000px;" aria-hidden="true">
+          <input
+            type="text"
+            name="b_${MAILCHIMP_U || 'PLACEHOLDER_U'}_${MAILCHIMP_ID || 'PLACEHOLDER_ID'}"
+            tabindex="-1"
+            value=""
+          />
+        </div>
+
+        <div class="clear">
+          <input
+            type="submit"
+            value="Subscribe"
+            name="subscribe"
+            id="mc-embedded-subscribe"
+            class="bg-pwv-black text-pwv-white hover:bg-pwv-green cursor-pointer rounded-lg px-6 py-2 text-sm font-medium transition-colors duration-200"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- End Mailchimp Signup Form -->
+
+  {!isCompact && (
+    <p class="text-pwv-black/60 mt-2 text-xs">
+      We respect your privacy. Unsubscribe at any time.
+    </p>
+  )}
+</div>
+
+<style>
+  /* Override any Mailchimp default styles if needed */
+  #mc_embed_signup {
+    background: transparent;
+    clear: left;
+    width: 100%;
+  }
+
+  #mc_embed_signup form {
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Remove Mailchimp branding styles */
+  #mc_embed_signup .brandingLogo {
+    display: none;
+  }
+
+  /* Ensure responsive behavior */
+  .newsletter-compact {
+    max-width: 100%;
+  }
+
+  .newsletter-inline {
+    max-width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .newsletter-inline #mc_embed_signup_scroll {
+      flex-direction: row;
+    }
+  }
+</style>
