@@ -1,5 +1,15 @@
 User-agent: *
 Allow: /
 
+# Discourage crawling of old /library/ paths (renamed to /news/)
+Disallow: /library/
+
+# Discourage crawling of query parameter URLs
+# These are tracking or filtering parameters that don't create unique content
+Disallow: /*?*ref=
+Disallow: /*?*tags=
+Disallow: /*?*company=
+Disallow: /*?*utm_
+
 # Sitemap
 Sitemap: https://pwv.com/sitemap-index.xml
