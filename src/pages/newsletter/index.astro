@@ -3,13 +3,55 @@ import Layout from '../../layouts/Layout.astro';
 import Heading1 from '../../components/Heading1.astro';
 import Heading2 from '../../components/Heading2.astro';
 import NewsletterSignup from '../../components/NewsletterSignup.astro';
+import {
+  generateBreadcrumbListSchema,
+  generateWebPageSchema,
+} from '../../lib/schema';
 
 const title = 'Newsletter';
 const description =
   'Subscribe to the PWV newsletter for insights on early-stage technology investing, portfolio updates, and perspectives from our founders and community.';
+
+// Get base URL for schema generation
+export const isProduction = process.env.CONTEXT === 'production';
+export const isDeployPreview = process.env.CONTEXT === 'deploy-preview';
+const baseURL = isDeployPreview
+  ? process.env.DEPLOY_PRIME_URL || Astro.site
+  : Astro.site;
+const canonicalURL = new URL('/newsletter', baseURL);
+
+// Generate BreadcrumbList schema
+const breadcrumbItems = [
+  { name: 'Home', url: new URL('/', baseURL).toString() },
+  { name: 'Newsletter', url: canonicalURL.toString() },
+];
+const breadcrumbSchema = generateBreadcrumbListSchema({
+  items: breadcrumbItems,
+});
+
+// Generate WebPage schema
+const webPageSchema = generateWebPageSchema({
+  name: 'PWV Newsletter',
+  url: canonicalURL.toString(),
+  description: description,
+  id: new URL('#webpage', canonicalURL).toString(),
+  publisher: {
+    id: new URL('#organization', baseURL).toString(),
+  },
+  isPartOf: {
+    id: new URL('#website', baseURL).toString(),
+  },
+});
 ---
 
-<Layout title={title} description={description}>
+<Layout 
+  title={title} 
+  description={description}
+  additionalSchemas={[
+    { schema: breadcrumbSchema },
+    { schema: webPageSchema },
+  ]}
+>
   <section class="mx-auto">
     <Heading1>PWV Newsletter</Heading1>
     
