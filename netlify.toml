@@ -150,3 +150,15 @@
   to = "/rss.xml"
   status = 301
   force = true
+  
+[[redirects]]
+  from = "/zoo-spv"
+  to = "https://pwv.docsend.com/view/s/6ccvzkbdkexbu6kb"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/zoospv"
+  to = "https://pwv.docsend.com/view/s/6ccvzkbdkexbu6kb"
+  status = 301
+  force = true  
