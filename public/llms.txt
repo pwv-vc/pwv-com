@@ -1,12 +1,12 @@
-# PWV (pwv.com)
+# PWV (Preston‑Werner Ventures)
 
-> PWV invests in early‑stage technology companies.
+> PWV (Preston‑Werner Ventures) invests in early‑stage technology companies.
 
 Important notes:
 
-- PWV is Tom Preston‑Werner, David Price, and David Thyresson.
-- PWV is the fund we wanted as early-stage founders.
-- Ideas start with founders. Founders start with PWV.
+- PWV (Preston‑Werner Ventures) is Tom Preston‑Werner, David Price, and David Thyresson.
+- PWV (Preston‑Werner Ventures) is the fund we wanted as early-stage founders.
+- Ideas start with founders. Founders start with PWV (Preston‑Werner Ventures).
 - We're an early-stage investment team with deep technical fluency,
 founder-first values, and a track record of backing category-defining
 companies from zero to breakout.

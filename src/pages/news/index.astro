@@ -59,7 +59,7 @@ const breadcrumbSchema = generateBreadcrumbListSchema({
 const itemListItems = posts.map((post) => {
   const postUrl = new URL(`/news/${post.id}`, baseURL).toString();
   let postImage: string | undefined;
-  
+
   if (post.data.heroImage) {
     if (typeof post.data.heroImage === 'string') {
       postImage = post.data.heroImage.startsWith('/')
@@ -100,15 +100,13 @@ const itemListSchema = generateItemListSchema({
 <Layout
   title={title}
   description={description}
-  additionalSchemas={[
-    { schema: breadcrumbSchema },
-    { schema: itemListSchema },
-  ]}
+  additionalSchemas={[{ schema: breadcrumbSchema }, { schema: itemListSchema }]}
 >
   <section class="mx-auto">
     <Heading1>News</Heading1>
     <p class="mb-8 text-lg">
-      Perspectives and announcements from PWV, our founders and community.
+      Perspectives and announcements from PWV (Preston-Werner Ventures), our
+      founders and community.
     </p>
 
     <PostsToggle
