@@ -2,10 +2,12 @@
 // Mailchimp newsletter signup component
 // Uses embedded form approach with environment variables
 
-const MAILCHIMP_U = import.meta.env.PUBLIC_MAILCHIMP_U || '706ed7db916d9dfc1dc8fd3fd';
+const MAILCHIMP_U =
+  import.meta.env.PUBLIC_MAILCHIMP_U || '706ed7db916d9dfc1dc8fd3fd';
 const MAILCHIMP_ID = import.meta.env.PUBLIC_MAILCHIMP_ID || 'c7e71ef004';
 const MAILCHIMP_F_ID = import.meta.env.PUBLIC_MAILCHIMP_F_ID || '00ab1de0f0';
-const MAILCHIMP_DATACENTER = import.meta.env.PUBLIC_MAILCHIMP_DATACENTER || 'us7';
+const MAILCHIMP_DATACENTER =
+  import.meta.env.PUBLIC_MAILCHIMP_DATACENTER || 'us7';
 
 interface Props {
   variant?: 'default' | 'inline' | 'compact';
@@ -18,8 +20,8 @@ interface Props {
 const {
   variant = 'default',
   showHeading = true,
-  headingText = 'Stay Updated',
-  descriptionText = 'Get the latest news and insights from PWV delivered to your inbox.',
+  headingText = 'Sign Up',
+  descriptionText = 'Stay connected with PWV with insights on early-stage technology investing, portfolio updates, and perspectives from our founders and community delivered to your inbox.',
   showLearnMore = true,
 } = Astro.props;
 
@@ -34,26 +36,32 @@ const isCompact = variant === 'compact';
 const isInline = variant === 'inline';
 ---
 
-<div class={`newsletter-signup max-w-2xl mx-auto bg-pwv-soft-yellow/50 rounded-lg p-6 md:p-8 ${isCompact ? 'newsletter-compact' : ''} ${isInline ? 'newsletter-inline' : ''}`}>
-  {showHeading && !isCompact && (
-    <h3 class="text-pwv-black mb-3 text-2xl font-semibold leading-tight">
-      {headingText}
-    </h3>
-  )}
-  
-  {!isCompact && (
-    <p class="text-pwv-black/70 mb-6 text-base leading-relaxed">
-      {descriptionText}
-      {showLearnMore && Astro.url.pathname !== '/newsletter' && (
-        <>
-          {' '}
-          <a href="/newsletter" class="pwv-link-underline">
-            Learn more
-          </a>
-        </>
-      )}
-    </p>
-  )}
+<div
+  class={`newsletter-signup max-w-2xl mx-auto bg-pwv-soft-yellow/50 rounded-lg p-6 md:p-8 ${isCompact ? 'newsletter-compact' : ''} ${isInline ? 'newsletter-inline' : ''}`}
+>
+  {
+    showHeading && !isCompact && (
+      <h3 class="text-pwv-black mb-3 text-2xl leading-tight font-semibold">
+        {headingText}
+      </h3>
+    )
+  }
+
+  {
+    !isCompact && (
+      <p class="text-pwv-black/70 mb-6 text-base leading-relaxed">
+        {descriptionText}
+        {showLearnMore && Astro.url.pathname !== '/newsletter' && (
+          <>
+            {' '}
+            <a href="/newsletter" class="pwv-link-underline">
+              Learn more
+            </a>
+          </>
+        )}
+      </p>
+    )
+  }
 
   <!-- Begin Mailchimp Signup Form -->
   <div id="mc_embed_signup">
@@ -65,18 +73,32 @@ const isInline = variant === 'inline';
       class="validate"
       target="_blank"
     >
-      <div id="mc_embed_signup_scroll" class={isInline ? 'flex flex-col gap-4 md:flex-row md:items-start' : 'flex flex-col gap-4'}>
-        <div class={isInline ? 'md:flex-1 flex flex-col gap-4' : 'flex flex-col gap-4'}>
+      <div
+        id="mc_embed_signup_scroll"
+        class={isInline
+          ? 'flex flex-col gap-4 md:flex-row md:items-start'
+          : 'flex flex-col gap-4'}
+      >
+        <div
+          class={isInline
+            ? 'md:flex-1 flex flex-col gap-4'
+            : 'flex flex-col gap-4'}
+        >
           <div class="mc-field-group">
-            {!isCompact && (
-              <label for="mce-EMAIL" class="text-pwv-black mb-2 block text-base font-medium">
-                Email Address <span class="text-red-500">*</span>
-              </label>
-            )}
+            {
+              !isCompact && (
+                <label
+                  for="mce-EMAIL"
+                  class="text-pwv-black mb-2 block text-base font-medium"
+                >
+                  Email Address <span class="text-red-500">*</span>
+                </label>
+              )
+            }
             <input
               type="email"
               name="EMAIL"
-              class="required email w-full rounded-lg border border-pwv-gray bg-white px-4 py-3 text-base focus:border-pwv-green focus:outline-none focus:ring-2 focus:ring-pwv-green"
+              class="required email border-pwv-gray focus:border-pwv-green focus:ring-pwv-green w-full rounded-lg border bg-white px-4 py-3 text-base focus:ring-2 focus:outline-none"
               id="mce-EMAIL"
               required
               placeholder={isCompact ? 'your work email' : 'your work email'}
@@ -86,8 +108,12 @@ const isInline = variant === 'inline';
 
           {/* GDPR Consent - Always shown and required */}
           <div id="mergeRow-gdpr" class="mc-field-group">
-            <div class={`text-pwv-black/70 space-y-3 ${isCompact ? 'text-xs' : 'text-sm'}`}>
-              <label class={`flex items-start cursor-pointer leading-relaxed ${isCompact ? 'gap-2' : 'gap-3'}`}>
+            <div
+              class={`text-pwv-black/70 space-y-3 ${isCompact ? 'text-xs' : 'text-sm'}`}
+            >
+              <label
+                class={`flex items-start cursor-pointer leading-relaxed ${isCompact ? 'gap-2' : 'gap-3'}`}
+              >
                 <input
                   type="checkbox"
                   id="gdpr_26464"
@@ -97,36 +123,52 @@ const isInline = variant === 'inline';
                   required
                 />
                 <span class="flex-1">
-                  I consent to receiving email updates and communications from PWV. I understand I can unsubscribe at any time. <span class="text-red-500">*</span>
+                  I consent to receiving email updates and communications from
+                  PWV. I understand I can unsubscribe at any time. <span
+                    class="text-red-500">*</span
+                  >
                 </span>
               </label>
-              {!isCompact && (
-                <p class="text-pwv-black/60 text-sm leading-relaxed">
-                  We use Mailchimp as our marketing platform. By subscribing, you acknowledge that your information will be transferred to Mailchimp for processing. <a href="https://mailchimp.com/legal/terms" class="pwv-link-underline" target="_blank" rel="noopener noreferrer">Learn more</a>
-                </p>
-              )}
+              {
+                !isCompact && (
+                  <p class="text-pwv-black/60 text-sm leading-relaxed">
+                    We use Mailchimp as our marketing platform. By subscribing,
+                    you acknowledge that your information will be transferred to
+                    Mailchimp for processing.{' '}
+                    <a
+                      href="https://mailchimp.com/legal/terms"
+                      class="pwv-link-underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Learn more
+                    </a>
+                  </p>
+                )
+              }
             </div>
           </div>
         </div>
-        
+
         <!-- Hidden fields for tracking source and tags -->
         <input type="hidden" name="SIGNUP" value="PWV Newsletter Signup" />
         <!-- Add tag IDs here when ready: <input type="hidden" name="tags" value="TAG_ID_1,TAG_ID_2" /> -->
-        
+
         <!-- Real people should not fill this in and expect good things -->
         <div style="position: absolute; left: -5000px;" aria-hidden="true">
-          <input
-            type="text"
-            name={honeypotField}
-            tabindex="-1"
-            value=""
-          />
+          <input type="text" name={honeypotField} tabindex="-1" value="" />
         </div>
 
         <!-- Response messages -->
         <div id="mce-responses" class="clear">
-          <div class="response" id="mce-error-response" style="display: none;"></div>
-          <div class="response" id="mce-success-response" style="display: none;"></div>
+          <div class="response" id="mce-error-response" style="display: none;">
+          </div>
+          <div
+            class="response"
+            id="mce-success-response"
+            style="display: none;"
+          >
+          </div>
         </div>
 
         <div class={isInline ? 'md:pt-7' : ''}>
@@ -135,7 +177,7 @@ const isInline = variant === 'inline';
             value="Subscribe"
             name="subscribe"
             id="mc-embedded-subscribe"
-            class="bg-pwv-black text-pwv-white hover:bg-pwv-green hover:text-pwv-black cursor-pointer rounded-lg px-8 py-3 text-base font-medium transition-colors duration-200 w-full md:w-auto"
+            class="bg-pwv-black text-pwv-white hover:bg-pwv-green hover:text-pwv-black w-full cursor-pointer rounded-lg px-8 py-3 text-base font-medium transition-colors duration-200 md:w-auto"
           />
         </div>
       </div>
@@ -143,11 +185,13 @@ const isInline = variant === 'inline';
   </div>
   <!-- End Mailchimp Signup Form -->
 
-  {!isCompact && (
-    <p class="text-pwv-black/60 mt-4 text-sm leading-relaxed">
-      We respect your privacy. Unsubscribe at any time.
-    </p>
-  )}
+  {
+    !isCompact && (
+      <p class="text-pwv-black/60 mt-4 text-sm leading-relaxed">
+        We respect your privacy. Unsubscribe at any time.
+      </p>
+    )
+  }
 </div>
 
 <style>

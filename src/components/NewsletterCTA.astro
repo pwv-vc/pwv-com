@@ -10,20 +10,20 @@ interface Props {
 }
 
 const {
-  heading = 'Want these stories in your inbox?',
-  description = 'Subscribe to the PWV newsletter for the latest updates from our founders and portfolio.',
-  buttonText = 'Subscribe to Newsletter',
+  heading = 'Sign up here',
+  description = 'Get the best of PWV news, insights and investments.',
+  buttonText = 'Subscribe',
   className = '',
 } = Astro.props;
 ---
 
 <div
-  class={`bg-pwv-light-yellow border-pwv-soft-yellow my-8 rounded-lg border p-8 text-center ${className}`}
+  class={`bg-pwv-gray border-pwv-gray my-8 rounded-lg border p-8 text-center ${className}`}
 >
   <h3 class="text-pwv-black mb-2 text-xl font-semibold">
     {heading}
   </h3>
-  <p class="text-pwv-black/70 mb-4 text-sm">
+  <p class="text-pwv-black/70 mb-4 text-base">
     {description}
   </p>
   <a
@@ -31,12 +31,7 @@ const {
     class="bg-pwv-black text-pwv-white hover:bg-pwv-green hover:text-pwv-black inline-flex items-center gap-2 rounded-lg px-6 py-3 font-medium transition-colors duration-200"
   >
     {buttonText}
-    <svg
-      class="h-4 w-4"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-    >
+    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path
         stroke-linecap="round"
         stroke-linejoin="round"

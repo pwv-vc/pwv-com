@@ -44,83 +44,88 @@ const webPageSchema = generateWebPageSchema({
 });
 ---
 
-<Layout 
-  title={title} 
+<Layout
+  title={title}
   description={description}
-  additionalSchemas={[
-    { schema: breadcrumbSchema },
-    { schema: webPageSchema },
-  ]}
+  additionalSchemas={[{ schema: breadcrumbSchema }, { schema: webPageSchema }]}
 >
   <section class="mx-auto">
     <Heading1>PWV Newsletter</Heading1>
-    
-    <p class="mb-8 text-lg">
-      Stay connected with PWV. Get insights on early-stage technology investing, 
-      portfolio updates, and perspectives from our founders and community delivered 
-      to your inbox.
-    </p>
 
-    <div class="mb-12 border-b border-pwv-gray pb-8">
+    <div class="border-pwv-gray mb-12 border-b pb-8">
       <NewsletterSignup variant="inline" showLearnMore={false} />
     </div>
 
     <Heading2>What You'll Get</Heading2>
-    
+
     <div class="mb-8 space-y-6">
       <div>
-        <h3 class="text-pwv-black mb-2 text-lg font-semibold">Latest News & Announcements</h3>
-        <p class="text-pwv-black/70 text-sm">
-          Be the first to know about PWV fund updates, new portfolio companies, 
+        <h3 class="text-pwv-black mb-2 text-lg font-semibold">
+          Latest News & Announcements
+        </h3>
+        <p class="text-pwv-black/70 text-base">
+          Be the first to know about PWV fund updates, new portfolio companies,
           and major milestones from our investments.
         </p>
       </div>
 
       <div>
-        <h3 class="text-pwv-black mb-2 text-lg font-semibold">Founder Insights</h3>
-        <p class="text-pwv-black/70 text-sm">
-          Perspectives and lessons learned from Tom Preston-Werner, David Price, 
+        <h3 class="text-pwv-black mb-2 text-lg font-semibold">
+          Founder Insights
+        </h3>
+        <p class="text-pwv-black/70 text-base">
+          Perspectives and lessons learned from Tom Preston-Werner, David Price,
           David Thyresson, and founders in our portfolio.
         </p>
       </div>
 
       <div>
-        <h3 class="text-pwv-black mb-2 text-lg font-semibold">Portfolio Updates</h3>
-        <p class="text-pwv-black/70 text-sm">
-          Follow the journey of category-defining companies we back, from zero to breakout.
+        <h3 class="text-pwv-black mb-2 text-lg font-semibold">
+          Portfolio Updates
+        </h3>
+        <p class="text-pwv-black/70 text-base">
+          Follow the journey of category-defining companies we back, from zero
+          to breakout.
         </p>
       </div>
 
       <div>
-        <h3 class="text-pwv-black mb-2 text-lg font-semibold">Community Highlights</h3>
-        <p class="text-pwv-black/70 text-sm">
-          Curated content from our founders and the broader technology community.
+        <h3 class="text-pwv-black mb-2 text-lg font-semibold">
+          Community Highlights
+        </h3>
+        <p class="text-pwv-black/70 text-base">
+          Curated content from our founders and the broader technology
+          community.
         </p>
       </div>
     </div>
 
     <Heading2>Our Commitment</Heading2>
-    
+
     <div class="mb-8 space-y-4">
       <p class="text-pwv-black/70">
-        We respect your inbox. Our newsletter is thoughtfully curated and sent when we 
-        have something meaningful to share—no spam, no noise.
+        We respect your inbox. Our newsletter is thoughtfully curated and sent
+        when we have something meaningful to share—no spam, no noise.
       </p>
-      
+
       <p class="text-pwv-black/70">
-        You can unsubscribe at any time with one click. We value your privacy and will 
-        never share your email address with third parties.
+        You can unsubscribe at any time with one click. We value your privacy
+        and will never share your email address with third parties.
       </p>
     </div>
 
     <div class="border-pwv-gray/30 mb-8 rounded-lg border bg-gray-50 p-6">
-      <h3 class="text-pwv-black mb-3 text-lg font-semibold">Already subscribed?</h3>
+      <h3 class="text-pwv-black mb-3 text-lg font-semibold">
+        Already subscribed?
+      </h3>
       <p class="text-pwv-black/70 mb-4 text-sm">
-        Make sure to check your spam folder and add us to your contacts to ensure 
-        you receive our updates. Look for emails from <span class="font-mono text-sm">PWV</span>.
+        Make sure to check your spam folder and add us to your contacts to
+        ensure you receive our updates. Look for emails from <span
+          class="font-mono text-sm">PWV</span
+        >.
       </p>
       <p class="text-pwv-black/70 text-sm">
-        If you're having trouble with your subscription, you can manage your 
+        If you're having trouble with your subscription, you can manage your
         preferences or unsubscribe using the links in any email we send.
       </p>
     </div>
