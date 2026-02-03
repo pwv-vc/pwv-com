@@ -10,7 +10,7 @@ import {
 
 const title = 'Newsletter';
 const description =
-  'Subscribe to the PWV newsletter for insights on early-stage technology investing, portfolio updates, and perspectives from our founders and community.';
+  'Subscribe to the PWV (Preston-Werner Ventures) newsletter for insights on early-stage technology investing, portfolio updates, and perspectives from our founders and community.';
 
 // Get base URL for schema generation
 export const isProduction = process.env.CONTEXT === 'production';
@@ -31,7 +31,7 @@ const breadcrumbSchema = generateBreadcrumbListSchema({
 
 // Generate WebPage schema
 const webPageSchema = generateWebPageSchema({
-  name: 'PWV Newsletter',
+  name: 'PWV (Preston-Werner Ventures) Newsletter',
   url: canonicalURL.toString(),
   description: description,
   id: new URL('#webpage', canonicalURL).toString(),
@@ -64,8 +64,8 @@ const webPageSchema = generateWebPageSchema({
           Latest News & Announcements
         </h3>
         <p class="text-pwv-black/70 text-base">
-          Be the first to know about PWV fund updates, new portfolio companies,
-          and major milestones from our investments.
+          Be the first to know about PWV (Preston-Werner Ventures) fund updates,
+          new portfolio companies, and major milestones from our investments.
         </p>
       </div>
 
