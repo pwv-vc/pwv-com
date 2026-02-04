@@ -1,10 +1,108 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import TerminalInterface from '../components/Terminal/TerminalInterface';
 
 const title = 'PWV Discovery Terminal';
 const description =
   'Explore PWV blog posts, companies, people, and insights through a retro terminal interface';
+
+// Load all individual post entity files
+const postEntities = await getCollection('extractedPostEntities');
+
+// Dynamically aggregate entities from individual post files
+const companiesMap = new Map<string, { posts: string[], mentions: number }>();
+const investorsMap = new Map<string, { posts: string[], mentions: number }>();
+const peopleMap = new Map<string, { posts: string[], mentions: number, role?: string }>();
+const topicsMap = new Map<string, { posts: string[], mentions: number }>();
+const quotesArray: Array<{
+  quote: string;
+  speaker: string;
+  context?: string;
+  postSlug: string;
+  postTitle: string;
+  pubDate?: string;
+}> = [];
+
+// Aggregate data from all posts
+for (const post of postEntities) {
+  const { slug, title, companies, investors, people, topics, quotes, pubDate } = post.data;
+
+  // Aggregate companies
+  companies.forEach(company => {
+    if (!companiesMap.has(company)) {
+      companiesMap.set(company, { posts: [], mentions: 0 });
+    }
+    const companyData = companiesMap.get(company)!;
+    companyData.posts.push(slug);
+    companyData.mentions += 1;
+  });
+
+  // Aggregate investors
+  investors.forEach(investor => {
+    if (!investorsMap.has(investor)) {
+      investorsMap.set(investor, { posts: [], mentions: 0 });
+    }
+    const investorData = investorsMap.get(investor)!;
+    investorData.posts.push(slug);
+    investorData.mentions += 1;
+  });
+
+  // Aggregate people
+  people.forEach(person => {
+    const personName = typeof person === 'string' ? person : person.name;
+    const personRole = typeof person === 'object' ? person.role : undefined;
+    
+    if (!peopleMap.has(personName)) {
+      peopleMap.set(personName, { posts: [], mentions: 0, role: personRole });
+    }
+    const personData = peopleMap.get(personName)!;
+    personData.posts.push(slug);
+    personData.mentions += 1;
+    // Update role if this entry has one and we didn't have one before
+    if (personRole && !personData.role) {
+      personData.role = personRole;
+    }
+  });
+
+  // Aggregate topics
+  topics.forEach(topic => {
+    if (!topicsMap.has(topic)) {
+      topicsMap.set(topic, { posts: [], mentions: 0 });
+    }
+    const topicData = topicsMap.get(topic)!;
+    topicData.posts.push(slug);
+    topicData.mentions += 1;
+  });
+
+  // Aggregate quotes
+  quotes.forEach(quote => {
+    quotesArray.push({
+      ...quote,
+      postSlug: slug,
+      postTitle: title,
+      pubDate: pubDate || undefined,
+    });
+  });
+}
+
+// Build the data structure expected by TerminalInterface
+const entitiesData = {
+  posts: Object.fromEntries(
+    postEntities.map(post => [post.id, post.data])
+  ),
+  entities: {
+    companies: Object.fromEntries(companiesMap),
+    investors: Object.fromEntries(investorsMap),
+    people: Object.fromEntries(peopleMap),
+    topics: Object.fromEntries(topicsMap),
+    quotes: quotesArray,
+  },
+  metadata: {
+    extractedAt: new Date().toISOString(),
+    totalPosts: postEntities.length,
+  }
+};
 ---
 
 <Layout title={title} description={description}>
@@ -40,7 +138,7 @@ const description =
 
       <!-- Terminal Interface Component -->
       <div class="terminal-section mb-6">
-        <TerminalInterface client:only="react" />
+        <TerminalInterface client:only="react" entitiesData={entitiesData} />
       </div>
 
       <!-- Fallback Input (shown if React doesn't load) -->

@@ -1,9 +1,19 @@
 export interface Entity {
   companies: string[];
+  investors: string[];
   people: Array<{ name: string; role?: string } | string>;
-  facts: Array<{ text: string; category: string }>;
+  facts: Array<{ 
+    text: string; 
+    category: 'insight' | 'trend' | 'philosophy' | 'announcement' | 'milestone' | 'funding' | 'launch' | 'partnership';
+    date?: string;
+  }>;
   figures: Array<{ value: string; context: string; unit: string }>;
   topics: string[];
+  quotes: Array<{
+    quote: string;
+    speaker: string;
+    context?: string;
+  }>;
 }
 
 export interface PostEntity extends Entity {
@@ -18,6 +28,11 @@ export interface CompanyEntity {
   description?: string;
 }
 
+export interface InvestorEntity {
+  posts: string[];
+  mentions: number;
+}
+
 export interface PersonEntity {
   posts: string[];
   mentions: number;
@@ -29,22 +44,37 @@ export interface TopicEntity {
   mentions: number;
 }
 
+export interface QuoteEntity {
+  quote: string;
+  speaker: string;
+  context?: string;
+  postSlug: string;
+  postTitle: string;
+  pubDate?: string | null;
+}
+
 export interface ExtractedData {
   posts: Record<string, PostEntity>;
   entities: {
     companies: Record<string, CompanyEntity>;
+    investors: Record<string, InvestorEntity>;
     people: Record<string, PersonEntity>;
     topics: Record<string, TopicEntity>;
+    quotes: QuoteEntity[];
   };
   metadata: {
     extractedAt: string;
     totalPosts: number;
+    dateRange?: {
+      oldest: string;
+      newest: string;
+    };
     note?: string;
   };
 }
 
 export interface CommandResult {
-  type: 'text' | 'company' | 'person' | 'topic' | 'fact' | 'connection' | 'timeline' | 'stats' | 'error' | 'list' | 'post';
+  type: 'text' | 'company' | 'investor' | 'person' | 'topic' | 'fact' | 'connection' | 'timeline' | 'stats' | 'error' | 'list' | 'post';
   content: string | React.ReactNode;
   data?: any;
 }
@@ -58,6 +88,6 @@ export interface HistoryEntry {
 export interface SelectableItem {
   id: string;
   label: string;
-  type: 'company' | 'person' | 'topic' | 'post';
+  type: 'company' | 'investor' | 'person' | 'topic' | 'post';
   data?: any;
 }

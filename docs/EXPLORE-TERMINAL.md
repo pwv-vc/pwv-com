@@ -96,7 +96,7 @@ src/
 
 ### Data Structure
 
-The entity database (`src/data/extracted-entities.json`) contains:
+The entity database (`src/content/entities/extracted-entities.json`) contains:
 - **Posts**: Per-post entities, facts, figures, topics
 - **Entities**: Aggregated companies, people, topics with mentions
 - **Metadata**: Extraction timestamp and stats
@@ -118,7 +118,7 @@ pnpm run extract-entities
 This will:
 - Read all posts from `src/content/posts/`
 - Use Claude 3.5 Sonnet via FAL AI to extract entities
-- Generate `src/data/extracted-entities.json`
+- Generate `src/content/entities/extracted-entities.json`
 
 ## 🎨 Styling
 

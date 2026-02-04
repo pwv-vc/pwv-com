@@ -119,7 +119,7 @@ export OPENAI_MODEL=gpt-4o-mini
 node scripts/extract-entities.js --limit 3
 
 # 3. Check quality
-cat src/data/extracted-entities.json | grep -A 10 '"people"'
+cat src/content/entities/extracted-entities.json | grep -A 10 '"people"'
 
 # 4. If good, run full extraction
 node scripts/extract-entities.js

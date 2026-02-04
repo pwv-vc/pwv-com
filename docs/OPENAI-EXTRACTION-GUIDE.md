@@ -56,7 +56,7 @@ node scripts/extract-entities.js --limit 3
 
 ```bash
 # Look at the extracted entities
-cat src/data/extracted-entities.json | grep -A 10 '"people"'
+cat src/content/entities/extracted-entities.json | grep -A 10 '"people"'
 ```
 
 You should see:

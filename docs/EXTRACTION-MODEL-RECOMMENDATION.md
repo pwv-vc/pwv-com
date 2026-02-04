@@ -151,7 +151,7 @@ export LM_STUDIO_MODEL=mistralai/mistral-nemo-12b
 node scripts/extract-entities.js --limit 3
 
 # 4. Check the output quality
-cat src/data/extracted-entities.json | grep -A 10 '"people"'
+cat src/content/entities/extracted-entities.json | grep -A 10 '"people"'
 
 # 5. If output looks good, run full extraction
 node scripts/extract-entities.js

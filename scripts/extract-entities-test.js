@@ -30,8 +30,7 @@ const FAL_MODEL = process.env.FAL_MODEL || 'meta-llama/llama-3.1-70b-instruct'; 
 
 const POSTS_DIR = path.join(__dirname, '../src/content/posts');
 const PORTFOLIO_DIR = path.join(__dirname, '../src/content/portfolio');
-const ENTITIES_DIR = path.join(__dirname, '../src/content/entities');
-const POSTS_OUTPUT_DIR = path.join(ENTITIES_DIR, 'posts');
+const OUTPUT_FILE = path.join(__dirname, '../src/data/extracted-entities.json');
 
 /**
  * Parse frontmatter and content from markdown file
@@ -106,7 +105,7 @@ async function callLMStudio(prompt) {
       }
     ],
     temperature: 0.1, // Lower for more consistent JSON
-    max_tokens: 3000, // Increased for larger responses
+    max_tokens: 2000,
     // Note: response_format not supported by smaller models like liquid/lfm2.5-1.2b
   };
 
@@ -123,19 +122,7 @@ async function callLMStudio(prompt) {
   }
 
   const data = await response.json();
-  
-  // Extract usage information if available
-  const usage = data.usage || {};
-  
-  return {
-    content: data.choices[0].message.content,
-    usage: {
-      promptTokens: usage.prompt_tokens || 0,
-      completionTokens: usage.completion_tokens || 0,
-      totalTokens: usage.total_tokens || 0,
-      cost: 0 // Local model, no cost
-    }
-  };
+  return data.choices[0].message.content;
 }
 
 /**
@@ -159,7 +146,7 @@ async function callOpenAI(prompt) {
       }
     ],
     temperature: 0.1,
-    max_tokens: 3000, // Increased for larger responses
+    max_tokens: 2000,
     response_format: { type: 'json_object' } // OpenAI supports JSON mode
   };
 
@@ -179,28 +166,7 @@ async function callOpenAI(prompt) {
   }
 
   const data = await response.json();
-  
-  // Extract usage information
-  const usage = data.usage || {};
-  const promptTokens = usage.prompt_tokens || 0;
-  const completionTokens = usage.completion_tokens || 0;
-  const totalTokens = usage.total_tokens || 0;
-  
-  // Calculate approximate cost for OpenAI gpt-4o-mini
-  // Pricing: $0.150 per 1M input tokens, $0.600 per 1M output tokens
-  const inputCost = (promptTokens / 1000000) * 0.150;
-  const outputCost = (completionTokens / 1000000) * 0.600;
-  const totalCost = inputCost + outputCost;
-  
-  return {
-    content: data.choices[0].message.content,
-    usage: {
-      promptTokens,
-      completionTokens,
-      totalTokens,
-      cost: totalCost
-    }
-  };
+  return data.choices[0].message.content;
 }
 
 /**
@@ -221,7 +187,7 @@ async function callFAL(prompt) {
     prompt: fullPrompt,
     model: FAL_MODEL,
     temperature: 0.1,
-    max_tokens: 3000, // Increased for larger responses
+    max_tokens: 2000,
     priority: 'throughput' // Use throughput for cost-effectiveness
   };
 
@@ -248,19 +214,7 @@ async function callFAL(prompt) {
   }
   
   if (data.output) {
-    // FAL doesn't always return usage stats, estimate based on model
-    // Approximate cost for meta-llama/llama-3.1-70b-instruct: ~$0.50-0.80 per 1M tokens
-    const estimatedTokens = Math.ceil((fullPrompt.length + data.output.length) / 4); // rough estimate
-    
-    return {
-      content: data.output,
-      usage: {
-        promptTokens: Math.ceil(fullPrompt.length / 4),
-        completionTokens: Math.ceil(data.output.length / 4),
-        totalTokens: estimatedTokens,
-        cost: (estimatedTokens / 1000000) * 0.65 // Estimated cost
-      }
-    };
+    return data.output;
   }
   
   // Fallback to other possible formats
@@ -344,7 +298,7 @@ const KNOWN_INVESTORS = new Set([
  */
 async function extractEntitiesFromPost(slug, title, content, frontmatter = {}, portfolioCompanies = []) {
   try {
-    console.log(`📄 Processing: ${title}`);
+    console.log(`\n📄 Processing: ${title}`);
 
     // Convert markdown to plain text for better processing
     const plainText = marked.parse(content, { async: false });
@@ -354,17 +308,12 @@ async function extractEntitiesFromPost(slug, title, content, frontmatter = {}, p
     const tags = frontmatter.tags || [];
     const author = frontmatter.author || '';
     const url = frontmatter.url || '';
-    const pubDate = frontmatter.pubDate || frontmatter.updatedDate || '';
     
     // Build rich context from all available frontmatter
     let contextParts = [`Title: ${title}`];
     
     if (description) {
       contextParts.push(`Description: ${description}`);
-    }
-    
-    if (pubDate) {
-      contextParts.push(`Published: ${pubDate}`);
     }
     
     if (author) {
@@ -388,8 +337,8 @@ async function extractEntitiesFromPost(slug, title, content, frontmatter = {}, p
       textContent = contextParts.join('\n\n') + '\n\n---\n\nContent:\n' + textContent;
     }
     
-    // Limit to 8000 chars for better context (balance between API efficiency and accuracy)
-    textContent = textContent.substring(0, 8000);
+    // Limit to 3500 chars for API efficiency (increased to accommodate frontmatter)
+    textContent = textContent.substring(0, 3500);
 
     // Build portfolio companies context (as a reference, not to extract)
     const portfolioContext = portfolioCompanies.length > 0 
@@ -436,16 +385,11 @@ Extract the following information. Be pragmatic - work with what you have, even 
 
 4. FACTS
    • Key statements, insights, or announcements
-   • Categories: "insight", "trend", "philosophy", "announcement", "milestone", "funding", "launch", "partnership"
-   • **PRIORITIZE**: Fundraising, product launches, and partnerships - these are critical business events!
+   • Categories: "insight", "trend", "philosophy", "announcement", "milestone"
    • Examples:
-     - "Aalo closed $100M Series B" → {"text": "Aalo raised $100M in Series B funding", "category": "funding", "date": "2025-08-19"}
-     - "Launches new AI platform" → {"text": "Company launched new AI platform", "category": "launch", "date": "2025-09-15"}
-     - "Partners with Google" → {"text": "Company partnered with Google", "category": "partnership", "date": "2025-12-04"}
-     - Acquisitions, milestones, strategic announcements
-   • **Extract from title and description** - external posts often have the key news in metadata!
-   • **IMPORTANT**: Include the "date" field using the Published date from the frontmatter above
-   • The date makes facts useful for timeline views and chronological analysis
+     - "Aalo closed $100M Series B" → {"text": "Aalo raised $100M in Series B funding", "category": "announcement"}
+     - Funding announcements, product launches, company milestones
+   • Extract from title, description, and tags if that's where the news is!
 
 5. FIGURES
    • Numbers with context: funding amounts, metrics, percentages
@@ -458,17 +402,6 @@ Extract the following information. Be pragmatic - work with what you have, even 
    • Tags like ["myriad", "regulatory compliance", "AI compliance"] → extract as topics
    • Also infer from title, description, and content
    • Normalize tag names (e.g., "regtech" → "Regulatory Technology")
-
-7. QUOTES
-   • **NEW**: Memorable, insightful quotes from the content
-   • Include the speaker (person or company name) and optional context
-   • Examples:
-     - {"quote": "Iteration is the new product moat", "speaker": "Tony Holdstock-Brown", "context": "On product development"}
-     - {"quote": "We invest because we want to be invested", "speaker": "David Thyresson", "context": "On investing philosophy"}
-     - {"quote": "Let the band play", "speaker": "Tom Preston-Werner", "context": "On giving founders space"}
-   • Look for: Direct quotes, key philosophies, memorable statements
-   • Speaker can be a person's name OR a company name (if it's a company blog post)
-   • Context is optional but helpful
 
 ────────────────────────────────────────────────────────────
 
@@ -489,17 +422,10 @@ Return ONLY valid JSON with this exact structure:
   "companies": ["Company 1", "Company 2", ...] or [],
   "investors": ["Investor 1", "Investor 2", ...] or [],
   "people": [{"name": "First Last", "role": "Their Role"}, ...] or [],
-  "facts": [{"text": "A fact", "category": "funding", "date": "2025-08-19"}, ...] or [],
+  "facts": [{"text": "A fact", "category": "insight"}, ...] or [],
   "figures": [{"value": "100M", "context": "What it means", "unit": "USD"}, ...] or [],
-  "topics": ["Topic 1", "Topic 2", ...] or [],
-  "quotes": [{"quote": "The quote text", "speaker": "Person or Company Name", "context": "Optional context"}, ...] or []
-}
-
-NOTES ON FACTS:
-- **ALWAYS include "date" field** - use the "Published" date from the frontmatter above
-- For funding/launch/partnership facts, the date is CRITICAL for timeline views
-- Date format: Use exact date from "Published" field (e.g., "2025-08-19")
-- This allows chronological sorting and timeline visualization`;
+  "topics": ["Topic 1", "Topic 2", ...] or []
+}`;
 
     if (AI_PROVIDER === 'openai') {
       console.log(`  Calling OpenAI API...`);
@@ -512,12 +438,10 @@ NOTES ON FACTS:
       console.log(`  Using model: ${LM_STUDIO_MODEL}`);
     }
 
-    const startTime = Date.now();
-    const response = await callAI(prompt);
-    const elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2);
+    const extracted = await callAI(prompt);
 
     // Clean and parse JSON
-    let cleanedJson = response.content.trim();
+    let cleanedJson = extracted.trim();
     
     // Remove markdown code blocks if present
     cleanedJson = cleanedJson.replace(/```json\s*/g, '').replace(/```\s*$/g, '');
@@ -565,12 +489,11 @@ NOTES ON FACTS:
         ? entities.facts
             .filter(f => f && typeof f === 'object' && f.text)
             .map(f => {
-              const validCategories = ['insight', 'trend', 'philosophy', 'announcement', 'milestone', 'funding', 'launch', 'partnership'];
+              const validCategories = ['insight', 'trend', 'philosophy', 'announcement', 'milestone'];
               const category = validCategories.includes(f.category) ? f.category : 'insight';
               return {
                 text: String(f.text || '').trim(),
-                category: category,
-                date: f.date ? String(f.date).trim() : undefined
+                category: category
               };
             })
             .filter(f => f.text)
@@ -587,57 +510,12 @@ NOTES ON FACTS:
         : [],
       topics: Array.isArray(entities.topics) 
         ? entities.topics.filter(t => t && typeof t === 'string' && t.trim())
-        : [],
-      quotes: Array.isArray(entities.quotes)
-        ? entities.quotes
-            .filter(q => q && typeof q === 'object' && q.quote && q.speaker)
-            .map(q => ({
-              quote: String(q.quote || '').trim(),
-              speaker: String(q.speaker || '').trim(),
-              context: q.context ? String(q.context).trim() : undefined
-            }))
-            .filter(q => q.quote && q.speaker)
         : []
     };
     
-    // Log extraction results with timing and cost
-    const costStr = response.usage.cost > 0 
-      ? ` ($${response.usage.cost.toFixed(4)})` 
-      : '';
-    const tokensStr = response.usage.totalTokens > 0 
-      ? ` [${response.usage.totalTokens} tokens]` 
-      : '';
-    
-    console.log(`  ✅ Extracted: ${normalized.companies.length} companies, ${normalized.investors.length} investors, ${normalized.people.length} people, ${normalized.facts.length} facts, ${normalized.quotes.length} quotes`);
-    
-    // Log actual extracted entities for visibility
-    if (normalized.companies.length > 0) {
-      console.log(`     Companies: ${normalized.companies.join(', ')}`);
-    }
-    if (normalized.investors.length > 0) {
-      console.log(`     Investors: ${normalized.investors.join(', ')}`);
-    }
-    if (normalized.people.length > 0) {
-      const peopleNames = normalized.people.map(p => typeof p === 'string' ? p : p.name);
-      console.log(`     People: ${peopleNames.join(', ')}`);
-    }
-    if (normalized.quotes.length > 0) {
-      console.log(`     Quotes:`);
-      normalized.quotes.forEach((q, i) => {
-        const preview = q.quote.length > 60 ? q.quote.substring(0, 60) + '...' : q.quote;
-        console.log(`       ${i + 1}. "${preview}" — ${q.speaker}`);
-      });
-    }
-    
-    console.log(`  ⏱️  Time: ${elapsedTime}s${tokensStr}${costStr}`);
+    console.log(`  ✅ Extracted: ${normalized.companies.length} companies, ${normalized.investors.length} investors, ${normalized.people.length} people, ${normalized.facts.length} facts`);
 
-    return {
-      ...normalized,
-      _meta: {
-        elapsedTime: parseFloat(elapsedTime),
-        usage: response.usage
-      }
-    };
+    return normalized;
   } catch (error) {
     console.error(`  ❌ Error extracting entities: ${error.message}`);
     if (error.message.includes('fetch')) {
@@ -651,7 +529,6 @@ NOTES ON FACTS:
       facts: [],
       figures: [],
       topics: [],
-      quotes: [],
     };
   }
 }
@@ -659,9 +536,8 @@ NOTES ON FACTS:
 /**
  * Process all posts and extract entities
  * @param {number|null} limit - Optional limit on number of posts to process
- * @param {string|null} file - Optional specific file to process
  */
-async function processAllPosts(limit = null, file = null) {
+async function processAllPosts(limit = null) {
   console.log('🚀 Starting entity extraction from blog posts...\n');
 
   // Load portfolio companies
@@ -669,29 +545,15 @@ async function processAllPosts(limit = null, file = null) {
   const portfolioCompanies = await loadPortfolioCompanies();
   console.log(`✅ Loaded ${portfolioCompanies.length} portfolio companies\n`);
 
-  // Ensure output directories exist
-  await fs.mkdir(ENTITIES_DIR, { recursive: true });
-  await fs.mkdir(POSTS_OUTPUT_DIR, { recursive: true });
-
   // Read all post files
   const files = await fs.readdir(POSTS_DIR);
   let postFiles = files.filter(
     (f) => f.endsWith('.md') || f.endsWith('.mdx')
   );
 
-  // Apply file filter if specified
-  if (file) {
-    const matchingFile = postFiles.find(f => f === file);
-    if (!matchingFile) {
-      console.error(`❌ File "${file}" not found in ${POSTS_DIR}`);
-      console.error(`Available files: ${postFiles.slice(0, 5).join(', ')}${postFiles.length > 5 ? '...' : ''}`);
-      process.exit(1);
-    }
-    postFiles = [matchingFile];
-    console.log(`📄 Processing specific file: ${file}\n`);
-  } else if (limit && limit > 0) {
-    // Apply limit if specified (and no specific file)
-    postFiles = postFiles.slice(0, limit);
+  // Apply limit if specified
+  if (limit && limit > 0) {
+    postFiles = postFiles.slice(65, 66);
     console.log(`Found ${files.filter(f => f.endsWith('.md') || f.endsWith('.mdx')).length} total posts`);
     console.log(`⚡ Processing first ${postFiles.length} post(s) (--limit ${limit})\n`);
   } else {
@@ -705,24 +567,15 @@ async function processAllPosts(limit = null, file = null) {
       investors: {},
       people: {},
       topics: {},
-      quotes: [], // Array of all quotes with post references
     },
     metadata: {
       extractedAt: new Date().toISOString(),
       totalPosts: postFiles.length,
     },
   };
-  
-  // Track cumulative costs, timing, and dates
-  let totalCost = 0;
-  let totalTime = 0;
-  let totalTokens = 0;
-  let oldestDate = null;
-  let newestDate = null;
 
   // Process each post
-  for (let i = 0; i < postFiles.length; i++) {
-    const file = postFiles[i];
+  for (const file of postFiles) {
     const filePath = path.join(POSTS_DIR, file);
     const content = await fs.readFile(filePath, 'utf-8');
     const { frontmatter, content: bodyContent } = parseFrontmatter(content);
@@ -734,56 +587,25 @@ async function processAllPosts(limit = null, file = null) {
     const title =
       frontmatter.title?.replace(/['"]/g, '') || slug.replace(/-/g, ' ');
     
-    console.log(`\n[${i + 1}/${postFiles.length}] 📝 ${slug}`);
+    console.log(`  📝 Slug: ${slug}`);
 
     // Extract entities using AI (pass frontmatter and portfolio companies for rich context)
     const entities = await extractEntitiesFromPost(slug, title, bodyContent, frontmatter, portfolioCompanies);
 
     if (entities) {
-      // Track cumulative stats
-      if (entities._meta) {
-        totalCost += entities._meta.usage.cost || 0;
-        totalTime += entities._meta.elapsedTime || 0;
-        totalTokens += entities._meta.usage.totalTokens || 0;
-      }
-      
-      // Store per-post data with useful frontmatter (exclude _meta from stored data)
+      // Store per-post data with useful frontmatter
       const cleanAuthor = frontmatter.author?.replace(/^['"]|['"]$/g, '') || '';
       const tags = frontmatter.tags || [];
       const url = frontmatter.url || '';
-      const pubDate = frontmatter.pubDate || frontmatter.updatedDate || null;
       
-      // Track date range for metadata
-      if (pubDate) {
-        const postDate = new Date(pubDate);
-        if (!isNaN(postDate.getTime())) {
-          if (!oldestDate || postDate < oldestDate) {
-            oldestDate = postDate;
-          }
-          if (!newestDate || postDate > newestDate) {
-            newestDate = postDate;
-          }
-        }
-      }
-      
-      const { _meta, ...entityData } = entities; // Remove _meta before storing
-      
-      const postData = {
-        slug,
+      results.posts[slug] = {
         title,
-        ...entityData,
-        pubDate: pubDate,
+        ...entities,
+        pubDate: frontmatter.pubDate,
         author: cleanAuthor,
         tags: Array.isArray(tags) ? tags : [],
         url: url,
       };
-      
-      results.posts[slug] = postData;
-      
-      // Write individual post file immediately (progressive save)
-      const postFilePath = path.join(POSTS_OUTPUT_DIR, `${slug}.json`);
-      await fs.writeFile(postFilePath, JSON.stringify(postData, null, 2), 'utf-8');
-      console.log(`  💾 Saved: ${slug}.json`);
 
       // Aggregate company data
       entities.companies?.forEach((company) => {
@@ -839,23 +661,15 @@ async function processAllPosts(limit = null, file = null) {
         results.entities.topics[topic].posts.push(slug);
         results.entities.topics[topic].mentions++;
       });
-
-      // Aggregate quotes (store all quotes with post reference)
-      entities.quotes?.forEach((quoteObj) => {
-        results.entities.quotes.push({
-          ...quoteObj,
-          postSlug: slug,
-          postTitle: title,
-          pubDate: pubDate || null
-        });
-      });
     }
 
     // Small delay to avoid rate limiting
     await new Promise((resolve) => setTimeout(resolve, 1000));
   }
 
-  // Directories already created at start of processAllPosts
+  // Create output directory if it doesn't exist
+  const outputDir = path.dirname(OUTPUT_FILE);
+  await fs.mkdir(outputDir, { recursive: true });
 
   // Validate that all referenced posts exist
   console.log('\n🔍 Validating post references...');
@@ -904,16 +718,8 @@ async function processAllPosts(limit = null, file = null) {
     console.warn(`  ⚠️  Found ${invalidReferences} invalid post reference(s)`);
   }
 
-  // Add date range to metadata
-  if (oldestDate && newestDate) {
-    results.metadata.dateRange = {
-      oldest: oldestDate.toISOString().split('T')[0],
-      newest: newestDate.toISOString().split('T')[0],
-    };
-  }
-
-  // Note: Aggregated data is no longer saved to a file
-  // Collections are built from individual post files at build time
+  // Write results to file
+  await fs.writeFile(OUTPUT_FILE, JSON.stringify(results, null, 2), 'utf-8');
 
   console.log('\n✅ Entity extraction complete!');
   console.log(`📊 Results:`);
@@ -930,35 +736,13 @@ async function processAllPosts(limit = null, file = null) {
   console.log(
     `   Topics found: ${Object.keys(results.entities.topics).length}`
   );
-  console.log(
-    `   Quotes found: ${results.entities.quotes.length}`
-  );
-  
-  // Display timing and cost summary
-  if (totalTokens > 0 || totalCost > 0) {
-    console.log(`\n⏱️  Performance:`);
-    console.log(`   Total time: ${totalTime.toFixed(2)}s`);
-    console.log(`   Avg time per post: ${(totalTime / postFiles.length).toFixed(2)}s`);
-    if (totalTokens > 0) {
-      console.log(`   Total tokens: ${totalTokens.toLocaleString()}`);
-      console.log(`   Avg tokens per post: ${Math.round(totalTokens / postFiles.length).toLocaleString()}`);
-    }
-    if (totalCost > 0) {
-      console.log(`\n💰 Cost:`);
-      console.log(`   Total cost: $${totalCost.toFixed(4)}`);
-      console.log(`   Avg cost per post: $${(totalCost / postFiles.length).toFixed(4)}`);
-    }
-  }
-  
-  console.log(`\n💾 Saved:`);
-  console.log(`   Individual files: ${POSTS_OUTPUT_DIR}/`);
+  console.log(`\n💾 Saved to: ${OUTPUT_FILE}`);
 }
 
 // Parse command line arguments
 function parseArgs() {
   const args = process.argv.slice(2);
   let limit = null;
-  let file = null;
   
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--limit' && args[i + 1]) {
@@ -967,9 +751,6 @@ function parseArgs() {
         console.error('❌ --limit must be a positive number');
         process.exit(1);
       }
-      i++; // Skip the next arg since we used it
-    } else if (args[i] === '--file' && args[i + 1]) {
-      file = args[i + 1];
       i++; // Skip the next arg since we used it
     } else if (args[i] === '--help' || args[i] === '-h') {
       console.log(`
@@ -980,14 +761,12 @@ Usage:
 
 Options:
   --limit <number>   Process only the first N posts (for testing)
-  --file <filename>  Process only a specific post file (e.g., post-why-dt-invests.md)
   --help, -h         Show this help message
 
 Examples:
-  node scripts/extract-entities.js                              # Process all posts
-  node scripts/extract-entities.js --limit 5                    # Process only 5 posts
-  node scripts/extract-entities.js --limit 1                    # Process just 1 post (quick test)
-  node scripts/extract-entities.js --file post-why-dt-invests.md  # Process specific file
+  node scripts/extract-entities.js              # Process all posts
+  node scripts/extract-entities.js --limit 5    # Process only 5 posts
+  node scripts/extract-entities.js --limit 1    # Process just 1 post (quick test)
 
 Environment Variables (AI Provider):
   AI_PROVIDER        'lmstudio', 'openai', or 'fal' (default: lmstudio)
@@ -1022,12 +801,12 @@ Recommended setups:
     }
   }
   
-  return { limit, file };
+  return { limit };
 }
 
 // Main execution
 async function main() {
-  const { limit, file } = parseArgs();
+  const { limit } = parseArgs();
   
   console.log('🚀 PWV Entity Extraction Script');
   console.log(`🤖 AI Provider: ${AI_PROVIDER.toUpperCase()}`);
@@ -1052,9 +831,7 @@ async function main() {
     console.log(`📡 Model: ${LM_STUDIO_MODEL}`);
   }
   
-  if (file) {
-    console.log(`📄 File: Processing specific file "${file}"`);
-  } else if (limit) {
+  if (limit) {
     console.log(`🔢 Limit: Processing first ${limit} post(s) only`);
   }
   console.log('');
@@ -1097,7 +874,7 @@ async function main() {
   }
 
   try {
-    await processAllPosts(limit, file);
+    await processAllPosts(limit);
   } catch (error) {
     console.error(`\n❌ Error: ${error.message}`);
     console.error(error.stack);

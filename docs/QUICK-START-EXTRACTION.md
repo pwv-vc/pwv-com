@@ -162,7 +162,7 @@ Larger models are slower but extract more details.
 
 ## Output
 
-The script creates/updates: `src/data/extracted-entities.json`
+The script creates/updates: `src/content/entities/extracted-entities.json`
 
 This file is used by:
 - Astro content collections (`src/content.config.ts`)
@@ -172,7 +172,7 @@ This file is used by:
 ## Next Steps
 
 After extraction:
-1. **Check the output**: Look at `src/data/extracted-entities.json`
+1. **Check the output**: Look at `src/content/entities/extracted-entities.json`
 2. **Build the site**: `pnpm run build`
 3. **Test the terminal**: Visit `/explore` page
 4. **Query entities**: Use helper functions in your pages

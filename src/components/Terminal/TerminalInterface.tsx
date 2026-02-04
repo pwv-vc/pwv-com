@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { QueryEngine } from './QueryEngine';
 import type { CommandResult, HistoryEntry, ExtractedData } from './types';
-import entitiesData from '../../data/extracted-entities.json';
+
+interface TerminalInterfaceProps {
+  entitiesData: ExtractedData;
+}
 
 // Calculate box width based on viewport
 const getBoxWidth = (): number => {
@@ -13,7 +16,7 @@ const getBoxWidth = (): number => {
   return 64; // Desktop
 };
 
-const TerminalInterface: React.FC = () => {
+const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);

@@ -4,7 +4,7 @@ import type { ExtractedData } from '../components/Terminal/types';
  * Load entity data
  */
 export async function loadEntities(): Promise<ExtractedData> {
-  const data = await import('../data/extracted-entities.json');
+  const data = await import('../content/entities/aggregated.json');
   return data.default as ExtractedData;
 }
 
@@ -13,6 +13,13 @@ export async function loadEntities(): Promise<ExtractedData> {
  */
 export function getAllCompanies(data: ExtractedData): string[] {
   return Object.keys(data.entities.companies).sort();
+}
+
+/**
+ * Get all investors
+ */
+export function getAllInvestors(data: ExtractedData): string[] {
+  return Object.keys(data.entities.investors).sort();
 }
 
 /**
@@ -37,6 +44,7 @@ export function searchEntities(
   query: string
 ): {
   companies: string[];
+  investors: string[];
   people: string[];
   topics: string[];
 } {
@@ -45,6 +53,9 @@ export function searchEntities(
   return {
     companies: getAllCompanies(data).filter((c) =>
       c.toLowerCase().includes(lowerQuery)
+    ),
+    investors: getAllInvestors(data).filter((i) =>
+      i.toLowerCase().includes(lowerQuery)
     ),
     people: getAllPeople(data).filter((p) =>
       p.toLowerCase().includes(lowerQuery)

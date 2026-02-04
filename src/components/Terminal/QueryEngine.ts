@@ -147,12 +147,20 @@ export class QueryEngine {
       return this.listCompanies();
     }
 
+    if (command === 'list investors' || command === 'investors') {
+      return this.listInvestors();
+    }
+
     if (command === 'list people' || command === 'people') {
       return this.listPeople();
     }
 
     if (command === 'list topics' || command === 'topics') {
       return this.listTopics();
+    }
+
+    if (command === 'list quotes' || command === 'quotes') {
+      return this.listQuotes();
     }
 
     // Stats command
@@ -226,13 +234,16 @@ export class QueryEngine {
 
 LIST COMMANDS:
   • companies              List all companies
+  • investors              List all investors/VCs
   • people                 List all people
   • topics                 List all topics
+  • quotes                 Browse all quotes
   • <number>               Select item from last list
 
 DISCOVERY COMMANDS:
   • discover random        Random fact/figure/entity
   • discover company <name>   Info about a company
+  • discover investor <name>  Info about an investor/VC
   • discover person <name>    Info about a person
   • discover topic <topic>    Posts about a topic
 
@@ -278,6 +289,35 @@ Example: companies → 1 → (shows company details)
 
     const output = this.buildBox([
       { type: 'header', content: 'ALL COMPANIES' },
+      { type: 'list', content: listItems },
+      { type: 'divider' },
+      { type: 'text', content: 'Type a number to view details (e.g., "1")' },
+    ]);
+
+    return { type: 'list', content: output };
+  }
+
+  /**
+   * List all investors with numbers
+   */
+  private listInvestors(): CommandResult {
+    const investors = Object.keys(this.data.entities.investors).sort();
+    
+    this.currentList = investors.map((name, index) => ({
+      id: name,
+      label: name,
+      type: 'investor',
+      data: this.data.entities.investors[name],
+    }));
+
+    const listItems = investors.map((name, index) => {
+      const investor = this.data.entities.investors[name];
+      const num = (index + 1).toString().padStart(2, ' ');
+      return `${num}. ${name} (${investor.mentions} mentions)`;
+    });
+
+    const output = this.buildBox([
+      { type: 'header', content: 'ALL INVESTORS' },
       { type: 'list', content: listItems },
       { type: 'divider' },
       { type: 'text', content: 'Type a number to view details (e.g., "1")' },
@@ -345,6 +385,42 @@ Example: companies → 1 → (shows company details)
   }
 
   /**
+   * List all quotes
+   */
+  private listQuotes(): CommandResult {
+    const quotes = this.data.entities.quotes || [];
+    
+    if (quotes.length === 0) {
+      return {
+        type: 'text',
+        content: 'No quotes found in the corpus.',
+      };
+    }
+
+    // Sort quotes by date (newest first) if dates available
+    const sortedQuotes = [...quotes].sort((a, b) => {
+      if (!a.pubDate || !b.pubDate) return 0;
+      return new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime();
+    });
+
+    const listItems = sortedQuotes.map((q, index) => {
+      const num = (index + 1).toString().padStart(3, ' ');
+      const dateStr = q.pubDate ? ` (${q.pubDate})` : '';
+      const contextStr = q.context ? ` - ${q.context}` : '';
+      return `${num}. "${q.quote.substring(0, 60)}${q.quote.length > 60 ? '...' : ''}"\n       — ${q.speaker}${contextStr}${dateStr}`;
+    });
+
+    const output = this.buildBox([
+      { type: 'header', content: 'ALL QUOTES' },
+      { type: 'text', content: `Found ${quotes.length} quotes` },
+      { type: 'divider' },
+      { type: 'list', content: listItems },
+    ]);
+
+    return { type: 'list', content: output };
+  }
+
+  /**
    * Select an item from the current list by number
    */
   private selectFromList(num: number): CommandResult {
@@ -369,6 +445,8 @@ Example: companies → 1 → (shows company details)
     switch (item.type) {
       case 'company':
         return this.discoverCompanyWithPosts(item.id);
+      case 'investor':
+        return this.discoverInvestorWithPosts(item.id);
       case 'person':
         return this.discoverPersonWithPosts(item.id);
       case 'topic':
@@ -386,11 +464,18 @@ Example: companies → 1 → (shows company details)
   private showStats(): CommandResult {
     const totalPosts = Object.keys(this.data.posts).length;
     const totalCompanies = Object.keys(this.data.entities.companies).length;
+    const totalInvestors = Object.keys(this.data.entities.investors).length;
     const totalPeople = Object.keys(this.data.entities.people).length;
     const totalTopics = Object.keys(this.data.entities.topics).length;
+    const totalQuotes = (this.data.entities.quotes || []).length;
 
     // Calculate most mentioned company
     const topCompany = Object.entries(this.data.entities.companies).sort(
+      ([, a], [, b]) => b.mentions - a.mentions
+    )[0];
+
+    // Calculate most mentioned investor
+    const topInvestor = Object.entries(this.data.entities.investors).sort(
       ([, a], [, b]) => b.mentions - a.mentions
     )[0];
 
@@ -411,12 +496,16 @@ Example: companies → 1 → (shows company details)
 📊 OVERVIEW:
   Total Posts: ${totalPosts}
   Companies Mentioned: ${totalCompanies}
+  Investors Mentioned: ${totalInvestors}
   People Mentioned: ${totalPeople}
   Topics Identified: ${totalTopics}
+  Quotes Captured: ${totalQuotes}
 
 🏆 TOP MENTIONS:
   Most Mentioned Company: ${topCompany ? topCompany[0] : 'N/A'}
     (${topCompany ? topCompany[1].mentions : 0} mentions)
+  Most Mentioned Investor: ${topInvestor ? topInvestor[0] : 'N/A'}
+    (${topInvestor ? topInvestor[1].mentions : 0} mentions)
   Most Mentioned Person: ${topPerson ? topPerson[0] : 'N/A'}
     (${topPerson ? topPerson[1].mentions : 0} mentions)
   Most Mentioned Topic: ${topTopic ? topTopic[0] : 'N/A'}
@@ -443,6 +532,12 @@ Example: companies → 1 → (shows company details)
       return this.discoverCompany(companyName);
     }
 
+    // Investor discovery
+    if (lowerArgs.startsWith('investor ')) {
+      const investorName = args.substring(9).trim();
+      return this.discoverInvestor(investorName);
+    }
+
     // Person discovery
     if (lowerArgs.startsWith('person ')) {
       const personName = args.substring(7).trim();
@@ -457,7 +552,7 @@ Example: companies → 1 → (shows company details)
 
     return {
       type: 'error',
-      content: `Invalid discover command. Try:\n- discover random\n- discover company <name>\n- discover person <name>\n- discover topic <topic>`,
+      content: `Invalid discover command. Try:\n- discover random\n- discover company <name>\n- discover investor <name>\n- discover person <name>\n- discover topic <topic>`,
     };
   }
 
@@ -465,7 +560,7 @@ Example: companies → 1 → (shows company details)
    * Discover random entity
    */
   private discoverRandom(): CommandResult {
-    const types = ['company', 'person', 'fact', 'figure'];
+    const types = ['company', 'person', 'fact', 'figure', 'quote'];
     const randomType = types[Math.floor(Math.random() * types.length)];
 
     switch (randomType) {
@@ -539,6 +634,30 @@ Example: companies → 1 → (shows company details)
         `;
         return { type: 'text', content: figureDisplay };
       }
+      case 'quote': {
+        const quotes = this.data.entities.quotes || [];
+        if (quotes.length === 0) {
+          return { type: 'text', content: 'No quotes found in the corpus.' };
+        }
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        
+        const contextLine = randomQuote.context ? `\n║  Context: ${randomQuote.context.substring(0, 50).padEnd(50)}  ║` : '';
+        const dateLine = randomQuote.pubDate ? `\n║  Date: ${randomQuote.pubDate.padEnd(53)}  ║` : '';
+        
+        const quoteDisplay = `
+╔══════════════════════════════════════════════════════════════╗
+║                      QUOTE OF THE DAY                        ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                              ║
+║  "${randomQuote.quote}"
+║                                                              ║
+║  — ${randomQuote.speaker.padEnd(57)}  ║${contextLine}${dateLine}
+║                                                              ║
+║  From: ${randomQuote.postTitle.substring(0, 50).padEnd(50)}  ║
+╚══════════════════════════════════════════════════════════════╝
+        `;
+        return { type: 'text', content: quoteDisplay };
+      }
       default:
         return { type: 'text', content: 'Something went wrong.' };
     }
@@ -603,6 +722,66 @@ Example: companies → 1 → (shows company details)
    */
   private discoverCompany(name: string): CommandResult {
     return this.discoverCompanyWithPosts(name);
+  }
+
+  /**
+   * Discover investor with posts
+   */
+  private discoverInvestorWithPosts(name: string): CommandResult {
+    const investorName = Object.keys(this.data.entities.investors).find(
+      (i) => i.toLowerCase() === name.toLowerCase()
+    );
+
+    if (!investorName) {
+      return {
+        type: 'error',
+        content: `Investor "${name}" not found.\nTry 'investors' to see all investors.`,
+      };
+    }
+
+    const investor = this.data.entities.investors[investorName];
+    
+    // Create selectable list of posts
+    this.currentList = investor.posts.map((slug) => ({
+      id: slug,
+      label: this.data.posts[slug]?.title || slug,
+      type: 'post',
+      data: { slug },
+    }));
+
+    const postItems = investor.posts.map((slug, index) => {
+      const post = this.data.posts[slug];
+      const num = (index + 1).toString().padStart(2, ' ');
+      const title = post ? post.title : slug;
+      return `${num}. ${title}`;
+    });
+
+    const sections: BoxSection[] = [
+      { type: 'header', content: 'INVESTOR PROFILE' },
+      { 
+        type: 'keyValue', 
+        content: {
+          'NAME': investorName,
+          'MENTIONS': `${investor.mentions} posts`,
+        }
+      },
+      { type: 'divider' },
+      { type: 'text', content: 'POSTS:' },
+      { type: 'list', content: postItems },
+      { type: 'divider' },
+      { type: 'text', content: 'Type a number to open that post (e.g., "1")' },
+    ];
+
+    const output = this.buildBox(sections);
+
+    return { type: 'investor', content: output, data: { investor: investorName } };
+  }
+
+  /**
+   * Discover investor (legacy - redirects to new version)
+   */
+  private discoverInvestor(name: string): CommandResult {
+    return this.discoverInvestorWithPosts(name);
   }
 
   /**

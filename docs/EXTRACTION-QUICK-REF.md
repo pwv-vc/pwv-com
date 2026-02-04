@@ -77,7 +77,7 @@ pnpm run extract-entities  # same
 
 ## 📁 Output
 
-Creates: `src/data/extracted-entities.json`
+Creates: `src/content/entities/extracted-entities.json`
 
 Used by:
 - Astro content collections (`src/content.config.ts`)
@@ -117,7 +117,7 @@ LM_STUDIO_MODEL=mistralai/mistral-nemo-12b
 ## 💡 Pro Tips
 
 1. **Always test first:** Use `--limit 3` before full run
-2. **Check quality:** `cat src/data/extracted-entities.json | grep -A 10 '"people"'`
+2. **Check quality:** `cat src/content/entities/extracted-entities.json | grep -A 10 '"people"'`
 3. **Use OpenAI:** Much easier than downloading models
 4. **Use mini:** `gpt-4o-mini` is perfect for this task
 5. **Monitor costs:** [platform.openai.com/usage](https://platform.openai.com/usage)
