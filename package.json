@@ -14,6 +14,8 @@
     "download-favicons": "node scripts/download-favicons.js",
     "fetch-external": "node scripts/fetch-external-content.js",
     "generate-post-og-image": "node scripts/generate-post-og-image.js",
+    "extract-entities": "node scripts/extract-entities.js",
+    "extract-entities:test": "node scripts/extract-entities.js --limit 5",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
