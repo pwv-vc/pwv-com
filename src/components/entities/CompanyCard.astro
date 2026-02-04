@@ -1,0 +1,109 @@
+---
+import { Image as UnpicImage } from '@unpic/astro';
+import { getCollection } from 'astro:content';
+import { resolveImageSrc } from '../../lib/images';
+import EntityCard from './EntityCard.astro';
+import ShareButtons from './ShareButtons.astro';
+import RelatedPosts from './RelatedPosts.astro';
+import BuildingIcon from '../icons/BuildingIcon.astro';
+
+interface Props {
+  name: string;
+  mentions: number;
+  posts: string[];
+  borderColor: string;
+  portfolioSlug?: string;
+  url?: string;
+}
+
+const { name, mentions, posts, borderColor, portfolioSlug, url } = Astro.props;
+
+// Create share URL and text - link to company detail page on PWV
+const siteUrl = Astro.site || 'https://pwv.com';
+const companySlug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+const detailPageUrl = `/celebrate/companies/${companySlug}/`;
+const shareUrl = new URL(detailPageUrl, siteUrl).toString();
+const shareText = `${name} - Featured in ${posts.length} PWV post${posts.length === 1 ? '' : 's'}`;
+
+// Load post data to get titles, hero images, and dates
+const allPosts = await getCollection('posts');
+const postData = posts.map(postSlug => {
+  const post = allPosts.find(p => p.id === postSlug);
+  return post ? {
+    slug: postSlug,
+    title: post.data.title,
+    heroImage: post.data.heroImage,
+    pubDate: post.data.pubDate,
+  } : null;
+}).filter(Boolean);
+
+// Sort by publication date (newest first)
+postData.sort((a, b) => {
+  const dateA = a.pubDate ? new Date(a.pubDate).getTime() : 0;
+  const dateB = b.pubDate ? new Date(b.pubDate).getTime() : 0;
+  return dateB - dateA;
+});
+
+// Helper to get a slug-friendly version of company name for logo lookup
+const getCompanySlug = (companyName: string) => {
+  return companyName.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+};
+
+const slug = portfolioSlug || getCompanySlug(name);
+let logoSrc: string | null = null;
+
+try {
+  logoSrc = resolveImageSrc(`logos/small/${slug}.png`);
+} catch (e) {
+  // No logo available, will show fallback
+}
+---
+
+<EntityCard borderColor={borderColor}>
+  <div class="flex flex-col gap-4 h-full">
+    <div class="flex-1 flex flex-col gap-4">
+      <!-- Company Header -->
+      <div class={`flex items-center gap-3 -m-6 mb-0 p-4 rounded-t-lg bg-${borderColor}/20`}>
+        {logoSrc ? (
+          <UnpicImage
+            src={logoSrc}
+            alt={`${name} logo`}
+            width={48}
+            height={48}
+            class="flex-shrink-0 rounded border-2 border-white bg-white p-1 shadow-sm"
+          />
+        ) : (
+          <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded border-2 border-white bg-white text-pwv-black shadow-sm">
+            <BuildingIcon class="h-6 w-6" />
+          </div>
+        )}
+        <div class="flex-1 min-w-0">
+          {url ? (
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-serif text-xl font-medium hover:underline break-words"
+              onclick="event.stopPropagation();"
+            >
+              {name}
+            </a>
+          ) : (
+            <h3 class="font-serif text-xl font-medium break-words">{name}</h3>
+          )}
+        </div>
+      </div>
+
+      <!-- Related Posts -->
+      <RelatedPosts posts={postData} borderColor={borderColor} />
+    </div>
+
+    <!-- Share Buttons (always at bottom) -->
+    <ShareButtons 
+      shareUrl={shareUrl}
+      shareText={shareText}
+      shareType="company"
+      detailPageUrl={detailPageUrl}
+    />
+  </div>
+</EntityCard>

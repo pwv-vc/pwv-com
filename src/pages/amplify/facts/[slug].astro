@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import FactCard from '../../../components/entities/FactCard.astro';
+import EntitySEO from '../../../components/entities/EntitySEO.astro';
+
+export async function getStaticPaths() {
+  const allEntities = await getCollection('extractedPostEntities');
+  const paths: any[] = [];
+
+  for (const entity of allEntities) {
+    const facts = entity.data.facts || [];
+    facts.forEach((fact, index) => {
+      const factId = `${entity.id}-${index}`;
+      paths.push({
+        params: { slug: factId },
+        props: {
+          fact: fact.text,
+          category: fact.category,
+          date: fact.date,
+          postSlug: entity.id,
+          postTitle: entity.data.title,
+          pubDate: entity.data.pubDate,
+          heroImage: entity.data.heroImage,
+          factIndex: index,
+        },
+      });
+    });
+  }
+
+  return paths;
+}
+
+const { fact, category, date, postSlug, postTitle, pubDate, heroImage, factIndex } = Astro.props;
+
+const siteUrl = Astro.site || 'https://pwv.com';
+const factId = `${postSlug}-${factIndex}`;
+const pageUrl = new URL(`/amplify/facts/${factId}/`, siteUrl).toString();
+
+const title = `${fact.substring(0, 60)}${fact.length > 60 ? '...' : ''} [${category}]`;
+const description = `Key ${category} from PWV: ${fact}`;
+
+// Define color palette
+const colors = [
+  'pwv-soft-periwinkle',
+  'pwv-soft-lavender',
+  'pwv-soft-teal',
+  'pwv-soft-yellow',
+  'pwv-soft-green',
+  'pwv-soft-coral',
+];
+
+const borderColor = colors[factIndex % colors.length];
+---
+
+<Layout title={title} description={description}>
+  <EntitySEO
+    title={title}
+    description={description}
+    url={pageUrl}
+    type="article"
+    image={heroImage}
+    entityType="fact"
+  />
+
+  <main class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="mb-8">
+      <a
+        href="/amplify/facts/"
+        class="inline-flex items-center gap-2 text-sm text-pwv-black/70 hover:text-pwv-green transition-colors mb-4"
+      >
+        <span>←</span>
+        <span>Back to all facts</span>
+      </a>
+      <h1 class="font-serif text-3xl font-bold text-pwv-black md:text-4xl">
+        Fact: {category}
+      </h1>
+    </div>
+
+    <div class="max-w-2xl mx-auto">
+      <FactCard
+        fact={fact}
+        category={category}
+        date={date}
+        postSlug={postSlug}
+        postTitle={postTitle}
+        pubDate={pubDate}
+        borderColor={borderColor}
+        factIndex={factIndex}
+      />
+    </div>
+
+    <div class="mt-12 text-center">
+      <a
+        href="/amplify/facts/"
+        class="inline-flex items-center gap-2 rounded-full border-2 border-pwv-gray bg-white px-6 py-3 text-sm font-medium text-pwv-black transition-all hover:border-pwv-green hover:bg-pwv-gray/20"
+      >
+        <span>View all facts</span>
+        <span>→</span>
+      </a>
+    </div>
+  </main>
+</Layout>

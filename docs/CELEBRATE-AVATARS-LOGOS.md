@@ -1,6 +1,6 @@
-# Adding Avatars and Company Logos to Explore Pages
+# Adding Avatars and Company Logos to Celebrate Pages
 
-This guide explains how to add images for people and companies that appear on the explore pages (`/explore/companies/`, `/explore/people/`, `/explore/quotes/`).
+This guide explains how to add images for people and companies that appear on the celebrate pages (`/celebrate/companies/`, `/celebrate/people/`).
 
 ## 📸 People Avatars
 
@@ -271,7 +271,7 @@ After adding images:
 ```bash
 git add src/images/people/*.{jpeg,jpg,png}
 git add src/images/logos/small/*.png
-git commit -m "Add avatars and logos for explore pages"
+git commit -m "Add avatars and logos for celebrate pages"
 git push
 ```
 

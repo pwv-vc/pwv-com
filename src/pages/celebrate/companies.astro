@@ -1,0 +1,110 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Heading1 from '../../components/Heading1.astro';
+import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
+import CompanyCard from '../../components/entities/CompanyCard.astro';
+import CelebrateNav from '../../components/entities/CelebrateNav.astro';
+import TerminalCTA from '../../components/entities/TerminalCTA.astro';
+
+const title = 'Celebrate Companies';
+const description = 'Celebrating companies mentioned in PWV blog posts, extracted and aggregated from our content.';
+
+// Load all individual post entity files
+const postEntities = await getCollection('extractedPostEntities');
+
+// Load portfolio companies for logo matching
+const [rolling, angel, fund1] = await Promise.all([
+  getCollection('rollingFundPortfolio'),
+  getCollection('angelPortfolio'),
+  getCollection('fundOnePortfolio'),
+]);
+
+// Create a map of normalized company names to portfolio slugs
+const portfolioMap = new Map<string, { slug: string; url: string }>();
+for (const entry of [...rolling, ...angel, ...fund1]) {
+  const normalized = entry.data.name.toLowerCase().trim();
+  portfolioMap.set(normalized, { 
+    slug: entry.data.slug,
+    url: entry.data.url 
+  });
+}
+
+// Dynamically aggregate companies from individual post files
+const companiesMap = new Map<string, { posts: string[], mentions: number, portfolioSlug?: string, url?: string }>();
+
+// Aggregate data from all posts
+for (const post of postEntities) {
+  const { slug, companies } = post.data;
+
+  companies.forEach(company => {
+    if (!companiesMap.has(company)) {
+      const normalized = company.toLowerCase().trim();
+      const portfolioData = portfolioMap.get(normalized);
+      companiesMap.set(company, { 
+        posts: [], 
+        mentions: 0,
+        portfolioSlug: portfolioData?.slug,
+        url: portfolioData?.url
+      });
+    }
+    const companyData = companiesMap.get(company)!;
+    companyData.posts.push(slug);
+    companyData.mentions += 1;
+  });
+}
+
+// Convert to array and sort alphabetically (A-Z)
+const companies = Array.from(companiesMap.entries())
+  .map(([name, data]) => ({ name, ...data }))
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+// Color assignment function
+const colors = [
+  'pwv-soft-green',
+  'pwv-soft-teal',
+  'pwv-soft-yellow',
+  'pwv-soft-coral',
+  'pwv-soft-lavender',
+  'pwv-soft-periwinkle',
+];
+
+const getColor = (name: string, index: number) => {
+  const charCode = name.charCodeAt(0) || 0;
+  return colors[(charCode + index) % colors.length];
+};
+---
+
+<Layout title={title} description={description}>
+  <section class="mx-auto mb-12">
+    <Heading1>{title}</Heading1>
+    <Heading2NoUnderline>
+      {companies.length} companies mentioned across {postEntities.length} posts
+    </Heading2NoUnderline>
+
+    <CelebrateNav currentPath="/celebrate/companies/" />
+
+    <TerminalCTA />
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {
+        companies.map((company, index) => (
+          <CompanyCard
+            name={company.name}
+            mentions={company.mentions}
+            posts={company.posts}
+            borderColor={getColor(company.name, index)}
+            portfolioSlug={company.portfolioSlug}
+            url={company.url}
+          />
+        ))
+      }
+    </div>
+
+    {companies.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-lg text-pwv-black/60">No companies found yet.</p>
+      </div>
+    )}
+  </section>
+</Layout>

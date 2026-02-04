@@ -93,16 +93,24 @@ export default defineConfig({
             // Terminal interface page
             item.changefreq = 'weekly';
             item.priority = 0.7;
-          } else if (item.url.endsWith('/explore/companies/')) {
-            // Explore companies page - updates when new posts mention companies
+          } else if (item.url.endsWith('/celebrate/companies/')) {
+            // Celebrate companies page - updates when new posts mention companies
             item.changefreq = 'daily';
             item.priority = 0.7;
-          } else if (item.url.endsWith('/explore/people/')) {
-            // Explore people page - updates when new posts mention people
+          } else if (item.url.endsWith('/celebrate/people/')) {
+            // Celebrate people page - updates when new posts mention people
             item.changefreq = 'daily';
             item.priority = 0.7;
-          } else if (item.url.endsWith('/explore/quotes/')) {
-            // Explore quotes page - updates when new posts add quotes
+          } else if (item.url.endsWith('/amplify/quotes/')) {
+            // Amplify quotes page - updates when new posts add quotes
+            item.changefreq = 'daily';
+            item.priority = 0.7;
+          } else if (item.url.endsWith('/amplify/facts/')) {
+            // Amplify facts page - updates when new posts add facts
+            item.changefreq = 'daily';
+            item.priority = 0.7;
+          } else if (item.url.endsWith('/amplify/figures/')) {
+            // Amplify figures page - updates when new posts add figures
             item.changefreq = 'daily';
             item.priority = 0.7;
           } else if (item.url.match(/\/$/)) {

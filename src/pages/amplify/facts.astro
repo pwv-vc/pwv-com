@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import FactCard from '../../components/entities/FactCard.astro';
+import AmplifyNav from '../../components/entities/AmplifyNav.astro';
+import TerminalCTA from '../../components/entities/TerminalCTA.astro';
+
+// Get all extracted entities
+const allEntities = await getCollection('extractedPostEntities');
+
+// Aggregate all facts with post context
+interface FactWithContext {
+  text: string;
+  category: string;
+  date?: string;
+  postSlug: string;
+  postTitle: string;
+  pubDate?: string;
+}
+
+const factsWithContext: FactWithContext[] = [];
+
+for (const entity of allEntities) {
+  const facts = entity.data.facts || [];
+  for (const fact of facts) {
+    factsWithContext.push({
+      ...fact,
+      postSlug: entity.id,
+      postTitle: entity.data.title,
+      pubDate: entity.data.pubDate,
+    });
+  }
+}
+
+// Define color palette for facts
+const colors = [
+  'pwv-soft-periwinkle',
+  'pwv-soft-lavender',
+  'pwv-soft-teal',
+  'pwv-soft-yellow',
+  'pwv-soft-green',
+  'pwv-soft-coral',
+];
+
+const title = 'Amplify: Facts';
+const description = 'Key insights, trends, and announcements from PWV posts';
+---
+
+<Layout title={title} description={description}>
+  <main class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="mb-8">
+      <h1 class="font-serif text-4xl font-bold text-pwv-black md:text-5xl">
+        Amplify: Facts
+      </h1>
+      <p class="mt-2 text-lg text-pwv-black/70">
+        {factsWithContext.length} key insights, trends, and announcements from PWV posts
+      </p>
+    </div>
+
+    <AmplifyNav currentPath="/amplify/facts/" />
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {factsWithContext.map((fact, index) => (
+        <FactCard
+          fact={fact.text}
+          category={fact.category}
+          date={fact.date}
+          postSlug={fact.postSlug}
+          postTitle={fact.postTitle}
+          pubDate={fact.pubDate}
+          borderColor={colors[index % colors.length]}
+          factIndex={index}
+        />
+      ))}
+    </div>
+
+    <TerminalCTA />
+  </main>
+</Layout>

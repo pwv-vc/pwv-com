@@ -1,0 +1,93 @@
+---
+import { getCollection } from 'astro:content';
+import EntityCard from './EntityCard.astro';
+import ShareButtons from './ShareButtons.astro';
+import RelatedPosts from './RelatedPosts.astro';
+import DocumentIcon from '../icons/DocumentIcon.astro';
+
+interface Props {
+  fact: string;
+  category: string;
+  date?: string;
+  postSlug: string;
+  postTitle: string;
+  pubDate?: string;
+  borderColor: string;
+  factIndex?: number;
+}
+
+const { fact, category, date, postSlug, postTitle, pubDate, borderColor, factIndex = 0 } = Astro.props;
+
+// Create share URL and text - link to the fact detail page on PWV
+const siteUrl = Astro.site || 'https://pwv.com';
+const factId = `${postSlug}-${factIndex}`;
+const detailPageUrl = `/amplify/facts/${factId}/`;
+const shareUrl = new URL(detailPageUrl, siteUrl).toString();
+const shareText = `${fact} [${category}]`;
+
+// Load post data to get hero image and date
+const allPosts = await getCollection('posts');
+const post = allPosts.find(p => p.id === postSlug);
+
+// Format as array for RelatedPosts component
+const postData = post ? [{
+  slug: postSlug,
+  title: post.data.title,
+  heroImage: post.data.heroImage,
+  pubDate: post.data.pubDate,
+}] : [];
+
+// Category badge colors
+const categoryColors: Record<string, string> = {
+  'insight': 'pwv-soft-lavender',
+  'trend': 'pwv-soft-teal',
+  'philosophy': 'pwv-soft-periwinkle',
+  'announcement': 'pwv-soft-yellow',
+  'milestone': 'pwv-soft-green',
+  'funding': 'pwv-soft-coral',
+  'launch': 'pwv-soft-yellow',
+  'partnership': 'pwv-soft-teal',
+};
+
+const categoryColor = categoryColors[category] || 'pwv-soft-periwinkle';
+---
+
+<EntityCard borderColor={borderColor}>
+  <div class="flex flex-col gap-4 h-full">
+    <div class="flex-1 flex flex-col gap-4">
+      <!-- Fact Text -->
+      <div class={`-m-6 mb-0 p-6 rounded-t-lg bg-${borderColor}/10`}>
+        <div class="flex items-start gap-3">
+          <span class="text-2xl flex-shrink-0">💡</span>
+          <p class="font-serif text-lg leading-relaxed text-pwv-black flex-1">
+            {fact}
+          </p>
+        </div>
+      </div>
+
+      <!-- Category and Date -->
+      <div class="flex flex-wrap items-center gap-2">
+        <span class={`inline-flex items-center gap-1.5 rounded-full bg-${categoryColor}/30 px-3 py-1 text-xs font-medium text-pwv-black`}>
+          <span>📌</span>
+          <span class="capitalize">{category}</span>
+        </span>
+        {date && (
+          <span class="text-xs text-pwv-black/60">
+            {date}
+          </span>
+        )}
+      </div>
+
+      <!-- Source Post -->
+      <RelatedPosts posts={postData} borderColor={borderColor} maxDisplay={1} />
+    </div>
+
+    <!-- Share Buttons (always at bottom) -->
+    <ShareButtons 
+      shareUrl={shareUrl}
+      shareText={shareText}
+      shareType="quote"
+      detailPageUrl={detailPageUrl}
+    />
+  </div>
+</EntityCard>

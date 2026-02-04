@@ -5,24 +5,24 @@ import ShareButtons from './ShareButtons.astro';
 import RelatedPosts from './RelatedPosts.astro';
 
 interface Props {
-  quote: string;
-  speaker: string;
-  context?: string;
+  value: string;
+  context: string;
+  unit: string;
   postSlug: string;
   postTitle: string;
   pubDate?: string;
   borderColor: string;
-  quoteIndex?: number;
+  figureIndex?: number;
 }
 
-const { quote, speaker, context, postSlug, postTitle, pubDate, borderColor, quoteIndex = 0 } = Astro.props;
+const { value, context, unit, postSlug, postTitle, pubDate, borderColor, figureIndex = 0 } = Astro.props;
 
-// Create share URL and text - link to the quote detail page on PWV
+// Create share URL and text - link to the figure detail page on PWV
 const siteUrl = Astro.site || 'https://pwv.com';
-const quoteId = `${postSlug}-${quoteIndex}`;
-const detailPageUrl = `/explore/quotes/${quoteId}/`;
+const figureId = `${postSlug}-${figureIndex}`;
+const detailPageUrl = `/amplify/figures/${figureId}/`;
 const shareUrl = new URL(detailPageUrl, siteUrl).toString();
-const shareText = `"${quote}" — ${speaker}`;
+const shareText = `${value}${unit} - ${context}`;
 
 // Load post data to get hero image and date
 const allPosts = await getCollection('posts');
@@ -40,20 +40,20 @@ const postData = post ? [{
 <EntityCard borderColor={borderColor}>
   <div class="flex flex-col gap-4 h-full">
     <div class="flex-1 flex flex-col gap-4">
-      <!-- Quote Text -->
-      <blockquote class={`-m-6 mb-0 p-6 rounded-t-lg bg-${borderColor}/10`}>
-      <p class="font-serif text-lg leading-relaxed italic text-pwv-black">
-        "{quote}"
-      </p>
-    </blockquote>
+      <!-- Figure Display -->
+      <div class={`-m-6 mb-0 p-6 rounded-t-lg bg-${borderColor}/10 text-center`}>
+        <div class="flex flex-col items-center gap-2">
+          <span class="text-3xl">📊</span>
+          <div class="font-serif text-4xl font-bold text-pwv-black">
+            {value}<span class="text-2xl text-pwv-black/70">{unit}</span>
+          </div>
+        </div>
+      </div>
 
-    <!-- Speaker -->
-    <div class={`px-4 py-3 rounded-lg bg-${borderColor}/15`}>
-      <p class="text-pwv-black">— {speaker}</p>
-      {context && (
-        <p class="text-sm text-pwv-black/70 mt-1">{context}</p>
-      )}
-    </div>
+      <!-- Context -->
+      <div class={`px-4 py-3 rounded-lg bg-${borderColor}/15`}>
+        <p class="text-pwv-black text-center">{context}</p>
+      </div>
 
       <!-- Source Post -->
       <RelatedPosts posts={postData} borderColor={borderColor} maxDisplay={1} />

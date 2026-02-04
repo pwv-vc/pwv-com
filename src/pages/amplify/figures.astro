@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import FigureCard from '../../components/entities/FigureCard.astro';
+import AmplifyNav from '../../components/entities/AmplifyNav.astro';
+import TerminalCTA from '../../components/entities/TerminalCTA.astro';
+
+// Get all extracted entities
+const allEntities = await getCollection('extractedPostEntities');
+
+// Aggregate all figures with post context
+interface FigureWithContext {
+  value: string;
+  context: string;
+  unit: string;
+  postSlug: string;
+  postTitle: string;
+  pubDate?: string;
+}
+
+const figuresWithContext: FigureWithContext[] = [];
+
+for (const entity of allEntities) {
+  const figures = entity.data.figures || [];
+  for (const figure of figures) {
+    figuresWithContext.push({
+      ...figure,
+      postSlug: entity.id,
+      postTitle: entity.data.title,
+      pubDate: entity.data.pubDate,
+    });
+  }
+}
+
+// Define color palette for figures
+const colors = [
+  'pwv-soft-periwinkle',
+  'pwv-soft-lavender',
+  'pwv-soft-teal',
+  'pwv-soft-yellow',
+  'pwv-soft-green',
+  'pwv-soft-coral',
+];
+
+const title = 'Amplify: Figures';
+const description = 'Key metrics and numbers from PWV posts';
+---
+
+<Layout title={title} description={description}>
+  <main class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="mb-8">
+      <h1 class="font-serif text-4xl font-bold text-pwv-black md:text-5xl">
+        Amplify: Figures
+      </h1>
+      <p class="mt-2 text-lg text-pwv-black/70">
+        {figuresWithContext.length} key metrics and numbers from PWV posts
+      </p>
+    </div>
+
+    <AmplifyNav currentPath="/amplify/figures/" />
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {figuresWithContext.map((figure, index) => (
+        <FigureCard
+          value={figure.value}
+          context={figure.context}
+          unit={figure.unit}
+          postSlug={figure.postSlug}
+          postTitle={figure.postTitle}
+          pubDate={figure.pubDate}
+          borderColor={colors[index % colors.length]}
+          figureIndex={index}
+        />
+      ))}
+    </div>
+
+    <TerminalCTA />
+  </main>
+</Layout>
