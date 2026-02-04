@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import { resolveImageSrc } from '../../lib/images';
+import EntityCard from './EntityCard.astro';
+import EntityHeader from './EntityHeader.astro';
+import ShareButtons from './ShareButtons.astro';
+import RelatedPosts from './RelatedPosts.astro';
+
+interface Props {
+  name: string;
+  role?: string;
+  mentions: number;
+  posts: string[];
+  borderColor: string;
+}
+
+const { name, role, mentions, posts, borderColor } = Astro.props;
+
+// Create share URL and text
+const siteUrl = Astro.site || 'https://pwv.com';
+const shareUrl = new URL('/explore/people/', siteUrl).toString();
+const shareText = `${name}${role ? ` (${role})` : ''} - Featured in ${posts.length} PWV post${posts.length === 1 ? '' : 's'}`;
+
+// Load post data to get titles, hero images, and dates
+const allPosts = await getCollection('posts');
+const postData = posts.map(postSlug => {
+  const post = allPosts.find(p => p.id === postSlug);
+  return post ? {
+    slug: postSlug,
+    title: post.data.title,
+    heroImage: post.data.heroImage,
+    pubDate: post.data.pubDate,
+  } : null;
+}).filter(Boolean);
+
+// Sort by publication date (newest first)
+postData.sort((a, b) => {
+  const dateA = a.pubDate ? new Date(a.pubDate).getTime() : 0;
+  const dateB = b.pubDate ? new Date(b.pubDate).getTime() : 0;
+  return dateB - dateA;
+});
+
+// Helper to get a slug-friendly version of person name for avatar lookup
+const getPersonSlug = (personName: string) => {
+  return personName.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+};
+
+const slug = getPersonSlug(name);
+let avatarSrc: string | null = null;
+
+try {
+  // Try different image extensions
+  avatarSrc = resolveImageSrc(`people/${slug}.jpeg`);
+} catch (e) {
+  try {
+    avatarSrc = resolveImageSrc(`people/${slug}.jpg`);
+  } catch (e2) {
+    try {
+      avatarSrc = resolveImageSrc(`people/${slug}.png`);
+    } catch (e3) {
+      // No avatar available, will show fallback
+    }
+  }
+}
+---
+
+<EntityCard borderColor={borderColor}>
+  <div class="flex flex-col gap-4 h-full">
+    <div class="flex-1 flex flex-col gap-4">
+      <!-- Person Header -->
+      <EntityHeader 
+        type="person"
+        name={name}
+        imageSrc={avatarSrc}
+        role={role}
+        borderColor={borderColor}
+      />
+
+      <!-- Related Posts -->
+      <RelatedPosts posts={postData} borderColor={borderColor} />
+    </div>
+
+    <!-- Share Buttons (always at bottom) -->
+    <ShareButtons 
+      shareUrl={shareUrl}
+      shareText={shareText}
+      shareType="person"
+    />
+  </div>
+</EntityCard>

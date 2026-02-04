@@ -89,6 +89,22 @@ export default defineConfig({
           } else if (item.url.endsWith('/apply/')) {
             item.changefreq = 'monthly';
             item.priority = 0.6;
+          } else if (item.url.endsWith('/explore/')) {
+            // Explore terminal page
+            item.changefreq = 'weekly';
+            item.priority = 0.7;
+          } else if (item.url.endsWith('/explore/companies/')) {
+            // Explore companies page - updates when new posts mention companies
+            item.changefreq = 'daily';
+            item.priority = 0.7;
+          } else if (item.url.endsWith('/explore/people/')) {
+            // Explore people page - updates when new posts mention people
+            item.changefreq = 'daily';
+            item.priority = 0.7;
+          } else if (item.url.endsWith('/explore/quotes/')) {
+            // Explore quotes page - updates when new posts add quotes
+            item.changefreq = 'daily';
+            item.priority = 0.7;
           } else if (item.url.match(/\/$/)) {
             // Homepage
             item.changefreq = 'daily';

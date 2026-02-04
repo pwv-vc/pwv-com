@@ -1,0 +1,95 @@
+---
+import { Image as UnpicImage } from '@unpic/astro';
+
+interface PostData {
+  slug: string;
+  title: string;
+  heroImage?: string;
+  pubDate?: Date;
+}
+
+interface Props {
+  posts: PostData[];
+  borderColor: string;
+  maxDisplay?: number;
+}
+
+// Helper to format date
+const formatDate = (date: Date | undefined) => {
+  if (!date) return '';
+  try {
+    return new Date(date).toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric' 
+    });
+  } catch (e) {
+    return '';
+  }
+};
+
+const { posts, borderColor, maxDisplay } = Astro.props;
+
+// Show all posts, but add scrolling if more than 3
+const displayPosts = maxDisplay ? posts.slice(0, maxDisplay) : posts;
+const needsScroll = posts.length > 3;
+
+// Map color names to actual color values
+const colorValues: Record<string, string> = {
+  'pwv-soft-green': '#85ffa0',
+  'pwv-soft-teal': '#88fff8',
+  'pwv-soft-yellow': '#ffef9e',
+  'pwv-soft-coral': '#ffc4c4',
+  'pwv-soft-lavender': '#e3c6ff',
+  'pwv-soft-periwinkle': '#bdd4ff',
+};
+
+const postColor = colorValues[borderColor] || colorValues['pwv-soft-periwinkle'];
+
+// Generate a unique ID for this component instance
+const componentId = `posts-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+{displayPosts.length > 0 && (
+  <div class="border-t border-pwv-black/10 pt-3">
+    <div class={`flex flex-col gap-2 ${needsScroll ? 'max-h-[280px] overflow-y-auto pr-2' : ''}`}>
+      {displayPosts.map((post) => (
+        <a
+          href={`/news/${post.slug}/`}
+          class={`post-link post-link-${componentId} flex items-center gap-3 rounded-lg bg-white px-3 py-2 text-sm hover:underline transition-colors border`}
+          style={`--post-color: ${postColor};`}
+        >
+          {post.heroImage ? (
+            <UnpicImage
+              src={post.heroImage}
+              alt={post.title}
+              width={48}
+              height={48}
+              class="flex-shrink-0 rounded object-cover"
+            />
+          ) : (
+            <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded bg-pwv-black/5 text-xl">
+              📄
+            </div>
+          )}
+          <div class="flex-1 min-w-0">
+            <p class="break-words">{post.title}</p>
+            {post.pubDate && (
+              <p class="text-xs text-pwv-black/60 mt-1">{formatDate(post.pubDate)}</p>
+            )}
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+)}
+
+<style>
+  .post-link {
+    border-color: color-mix(in srgb, var(--post-color) 30%, transparent);
+  }
+  
+  .post-link:hover {
+    background-color: color-mix(in srgb, var(--post-color) 10%, transparent);
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+import { Image as UnpicImage } from '@unpic/astro';
+
+interface Props {
+  type: 'person' | 'company';
+  name: string;
+  imageSrc?: string | null;
+  url?: string;
+  role?: string;
+  borderColor: string;
+}
+
+const { type, name, imageSrc, url, role, borderColor } = Astro.props;
+
+const fallbackIcon = type === 'person' ? '👤' : '🏢';
+const imageClass = type === 'person' 
+  ? 'flex-shrink-0 rounded-full border-2 border-white object-cover shadow-sm'
+  : 'flex-shrink-0 rounded border-2 border-white bg-white p-1 shadow-sm';
+const containerClass = type === 'person'
+  ? 'flex items-center gap-3'
+  : `flex items-center gap-3 -m-6 mb-0 p-4 rounded-t-lg bg-${borderColor}/20`;
+const fallbackClass = type === 'person'
+  ? 'flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-2 border-white bg-white text-2xl shadow-sm'
+  : 'flex h-12 w-12 flex-shrink-0 items-center justify-center rounded border-2 border-white bg-white text-2xl shadow-sm';
+---
+
+<div class={containerClass}>
+  {imageSrc ? (
+    <UnpicImage
+      src={imageSrc}
+      alt={`${name} ${type === 'person' ? 'avatar' : 'logo'}`}
+      width={48}
+      height={48}
+      class={imageClass}
+    />
+  ) : (
+    <div class={fallbackClass}>
+      {fallbackIcon}
+    </div>
+  )}
+  <div class="flex-1 min-w-0">
+    {url ? (
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-serif text-xl font-medium hover:underline break-words"
+      >
+        {name}
+      </a>
+    ) : (
+      <h3 class="font-serif text-xl font-medium break-words">{name}</h3>
+    )}
+    {role && type === 'person' && (
+      <p class="text-sm text-pwv-black/70 italic">{role}</p>
+    )}
+  </div>
+</div>

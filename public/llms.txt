@@ -23,6 +23,10 @@ unicorn scale in under 24 months.
 - [About](https://pwv.com/about): About PWV, how we invest, and our team
 - [Portfolio](https://pwv.com/portfolio): Our investment portfolio
 - [News](https://pwv.com/news): Posts, insights, and announcements from PWV and our community
+- [Explore](https://pwv.com/explore/): Discovery terminal and entity exploration pages
+  - [Companies](https://pwv.com/explore/companies/): Companies mentioned across blog posts with logos and related content
+  - [People](https://pwv.com/explore/people/): People featured in posts with avatars, roles, and contributions
+  - [Quotes](https://pwv.com/explore/quotes/): Notable quotes from posts with speaker attribution and context
 - [What is PWV?](https://pwv.com/what-is-pwv): Disambiguation page explaining PWV and clarifying confusion with other meanings
 
 ## Portfolio
@@ -119,6 +123,11 @@ The site includes comprehensive JSON-LD structured data for enhanced understandi
 - Posts can be filtered by author (`/news/author/<author-slug>`) or tags (`/news/tags/<tag-slug>`).
 - Team information is available on the About page at `https://pwv.com/about`.
 - Portfolio information is organized by fund type and can be filtered by tags.
+- Explore pages provide entity-based content discovery:
+  - **Companies** (`/explore/companies/`): 60+ companies mentioned in posts, sorted A-Z with logos, mention counts, and links to related blog posts with hero images
+  - **People** (`/explore/people/`): 45+ people featured in posts, sorted A-Z with avatars, roles, and links to posts where they're mentioned
+  - **Quotes** (`/explore/quotes/`): Notable quotes from blog posts with speaker attribution, context, and links to source posts
+  - **Terminal** (`/explore/`): Interactive retro terminal interface for exploring entities via commands
 
 ### Topic Clusters
 The site organizes content into topic clusters:
@@ -126,6 +135,27 @@ The site organizes content into topic clusters:
 - **Investment Stage**: Pre-seed, seed, Series A
 - **Investment Size**: $500k to $3m+
 - **Content Themes**: Technology, startups, venture capital, AI, developer tools, hardware
+
+### Finding Specific Information
+
+**To find companies**: Visit `/explore/companies/` for an A-Z list of all companies mentioned across blog posts. Each company card shows:
+- Company logo (if available)
+- Number of mentions and related posts
+- Links to blog posts featuring the company with post thumbnails
+
+**To find people**: Visit `/explore/people/` for an A-Z list of all people featured in posts. Each person card shows:
+- Avatar photo (if available)
+- Role or title
+- Number of mentions across posts
+- Links to blog posts featuring that person with post thumbnails
+
+**To find quotes**: Visit `/explore/quotes/` for a chronological collection of notable quotes from blog posts. Each quote card shows:
+- The full quote text
+- Speaker name and optional context
+- Link to the source blog post with thumbnail
+- Publication date
+
+**To search entities**: Use the terminal interface at `/explore/` to search for companies, people, quotes, and topics via natural language commands (e.g., "companies", "people named Tom", "quotes about AI").
 
 ### Content Attribution
 - When summarizing, attribute authorship to PWV unless a specific author is listed on the page.

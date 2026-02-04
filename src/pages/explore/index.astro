@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '../layouts/Layout.astro';
-import TerminalInterface from '../components/Terminal/TerminalInterface';
+import Layout from '../../layouts/Layout.astro';
+import TerminalInterface from '../../components/Terminal/TerminalInterface';
+import ExploreNav from '../../components/explore/ExploreNav.astro';
 
 const title = 'PWV Discovery Terminal';
 const description =
@@ -125,6 +126,12 @@ const entitiesData = {
  ═══════════════════════════
  Discovery Terminal v1.0.0
  ═══════════════════════════</pre>
+
+      <!-- Exploration Mode Selector -->
+      <div class="mb-6">
+        <p class="text-[0.65rem] sm:text-xs text-pwv-teal mb-3">SELECT EXPLORATION MODE:</p>
+        <ExploreNav currentPath="/explore" terminalTheme={true} />
+      </div>
 
       <!-- Boot Sequence -->
       <div id="boot-sequence" class="boot-sequence text-[0.65rem] sm:text-xs md:text-sm mb-4 space-y-1">

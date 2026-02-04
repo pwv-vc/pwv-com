@@ -102,7 +102,28 @@ This project uses Astro Content Collections to type-check and load content.
     - `aiGeneratedImage?: boolean` (default false)
     - `aiGeneratedDescription?: boolean` (default false)
 
+- Extracted Post Entities (`extractedPostEntities`)
+  - Loader: all `*.json` files in `src/content/entities/posts/**`
+  - AI-extracted entities from blog posts including companies, people, topics, quotes, and facts
+  - Used by the `/explore/` pages to showcase content discovery
+  - Schema: `{ slug, title, companies: string[], investors: string[], people: Array<{name, role?}>, facts, figures, topics, quotes: Array<{quote, speaker, context?}>, pubDate?, author?, tags?, url? }`
+
 Images for library posts live in `src/images/library/<slug>/...` and can be referenced via `heroImage` using a relative path.
+
+### Images for Explore Pages
+
+The `/explore/` pages display companies, people, and quotes extracted from blog posts.
+
+- **People avatars**: Place in `src/images/people/`
+  - Format: `firstname-lastname.{jpeg|jpg|png}` (e.g., `tom-preston-werner.jpeg`)
+  - Auto-detected by person name, shows 👤 icon if missing
+
+- **Company logos**: Place in `src/images/logos/small/`
+  - Format: `company-slug.png` (e.g., `liquid-ai.png`)
+  - Matches portfolio slugs first, then generates from company name
+  - Shows 🏢 icon if missing
+
+See **[docs/EXPLORE-AVATARS-LOGOS.md](docs/EXPLORE-AVATARS-LOGOS.md)** for complete documentation on adding avatars and company logos, including naming conventions, image specifications, troubleshooting, and optimization tips.
 
 ## 🧞 Commands
 
