@@ -1,0 +1,31 @@
+{
+  "slug": "external-wandb-ai-weights-biases",
+  "title": "Weights & Biases",
+  "companies": [
+    "Weights & Biases",
+    "CoreWeave"
+  ],
+  "investors": [],
+  "people": [
+    {
+      "name": "Lukas Biewald",
+      "role": "Author"
+    }
+  ],
+  "facts": [
+    {
+      "text": "Weights & Biases is being acquired by CoreWeave",
+      "category": "announcement",
+      "date": "2025-03-04"
+    }
+  ],
+  "figures": [],
+  "topics": [
+    "AI"
+  ],
+  "quotes": [],
+  "pubDate": "2025-03-04",
+  "author": "Lukas Biewald",
+  "tags": [],
+  "url": "https://wandb.ai/wandb/wb-announcements/reports/W-B-being-acquired-by-CoreWeave--VmlldzoxMTY0MDI1MQ?ref=pwv.com"
+}

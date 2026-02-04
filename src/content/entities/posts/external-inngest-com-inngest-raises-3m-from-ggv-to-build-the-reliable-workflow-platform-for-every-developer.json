@@ -1,0 +1,46 @@
+{
+  "slug": "external-inngest-com-inngest-raises-3m-from-ggv-to-build-the-reliable-workflow-platform-for-every-developer",
+  "title": "Inngest raises $3M from GGV to build the reliable workflow platform for every developer",
+  "companies": [
+    "Inngest"
+  ],
+  "investors": [
+    "GGV Capital",
+    "Glenn Solomon",
+    "Guillermo Rauch",
+    "Tom Preston-Werner"
+  ],
+  "people": [
+    {
+      "name": "Dan Farrelly",
+      "role": "Author"
+    },
+    {
+      "name": "Tony Holdstock-Brown",
+      "role": "Author"
+    }
+  ],
+  "facts": [
+    {
+      "text": "Inngest raised $3M to build the reliable workflow platform for every developer",
+      "category": "funding",
+      "date": "2023-07-12"
+    }
+  ],
+  "figures": [
+    {
+      "value": "3M",
+      "context": "Seed funding",
+      "unit": "USD"
+    }
+  ],
+  "topics": [
+    "Funding",
+    "Developer Tools"
+  ],
+  "quotes": [],
+  "pubDate": "2023-07-12",
+  "author": "Dan Farrelly, Tony Holdstock-Brown",
+  "tags": [],
+  "url": "https://www.inngest.com/blog/announcing-inngest-seed-financing?ref=pwv.com"
+}

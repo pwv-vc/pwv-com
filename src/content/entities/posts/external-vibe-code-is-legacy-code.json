@@ -1,0 +1,32 @@
+{
+  "slug": "external-vibe-code-is-legacy-code",
+  "title": "Vibe code is legacy code",
+  "companies": [
+    "Val Town"
+  ],
+  "investors": [],
+  "people": [
+    {
+      "name": "Steve Krouse",
+      "role": "Author"
+    }
+  ],
+  "facts": [],
+  "figures": [],
+  "topics": [
+    "ai",
+    "vibe coding",
+    "val.town"
+  ],
+  "quotes": [
+    {
+      "quote": "vibe coding as a kind of AI-assisted coding where you 'forget that the code even exists.'",
+      "speaker": "Andrej Karpathy",
+      "context": "On vibe coding"
+    }
+  ],
+  "pubDate": "July 30, 2025",
+  "author": "Steve Krouse",
+  "tags": [],
+  "url": "https://blog.val.town/vibe-code?ref=pwv.com"
+}

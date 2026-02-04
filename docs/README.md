@@ -9,6 +9,7 @@ Comprehensive documentation for the PWV.com website project.
 #### Getting Started
 - **[QUICK-START-EXTRACTION.md](./QUICK-START-EXTRACTION.md)** - Quick start guide for entity extraction
 - **[EXTRACTION-QUICK-REF.md](./EXTRACTION-QUICK-REF.md)** - Quick reference for extraction commands
+- **[EXTRACTION-OPTIMIZATION.md](./EXTRACTION-OPTIMIZATION.md)** - Smart extraction skipping & --force option
 
 #### Core Documentation
 - **[ENTITIES-SINGLE-SOURCE-OF-TRUTH.md](./ENTITIES-SINGLE-SOURCE-OF-TRUTH.md)** - ⭐ Current architecture (single source of truth)

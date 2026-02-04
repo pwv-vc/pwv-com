@@ -660,8 +660,9 @@ NOTES ON FACTS:
  * Process all posts and extract entities
  * @param {number|null} limit - Optional limit on number of posts to process
  * @param {string|null} file - Optional specific file to process
+ * @param {boolean} force - If true, re-extract even if entity files exist
  */
-async function processAllPosts(limit = null, file = null) {
+async function processAllPosts(limit = null, file = null, force = false) {
   console.log('🚀 Starting entity extraction from blog posts...\n');
 
   // Load portfolio companies
@@ -696,6 +697,37 @@ async function processAllPosts(limit = null, file = null) {
     console.log(`⚡ Processing first ${postFiles.length} post(s) (--limit ${limit})\n`);
   } else {
     console.log(`Found ${postFiles.length} posts to process\n`);
+  }
+  
+  // Filter out posts that already have entity files (unless force is true)
+  if (!force) {
+    const postsToProcess = [];
+    const skippedPosts = [];
+    
+    for (const postFile of postFiles) {
+      const slug = postFile.replace(/\.(md|mdx)$/, '');
+      const entityFilePath = path.join(POSTS_OUTPUT_DIR, `${slug}.json`);
+      
+      try {
+        await fs.access(entityFilePath);
+        // File exists, skip it
+        skippedPosts.push(postFile);
+      } catch {
+        // File doesn't exist, process it
+        postsToProcess.push(postFile);
+      }
+    }
+    
+    if (skippedPosts.length > 0) {
+      console.log(`⏭️  Skipping ${skippedPosts.length} post(s) with existing entity files`);
+      if (postsToProcess.length === 0) {
+        console.log(`✨ All posts already extracted! Use --force to re-extract.\n`);
+        return;
+      }
+      console.log(`🔄 Processing ${postsToProcess.length} new/missing post(s)\n`);
+    }
+    
+    postFiles = postsToProcess;
   }
 
   const results = {
@@ -959,6 +991,7 @@ function parseArgs() {
   const args = process.argv.slice(2);
   let limit = null;
   let file = null;
+  let force = false;
   
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--limit' && args[i + 1]) {
@@ -971,6 +1004,8 @@ function parseArgs() {
     } else if (args[i] === '--file' && args[i + 1]) {
       file = args[i + 1];
       i++; // Skip the next arg since we used it
+    } else if (args[i] === '--force') {
+      force = true;
     } else if (args[i] === '--help' || args[i] === '-h') {
       console.log(`
 PWV Entity Extraction Script
@@ -981,13 +1016,16 @@ Usage:
 Options:
   --limit <number>   Process only the first N posts (for testing)
   --file <filename>  Process only a specific post file (e.g., post-why-dt-invests.md)
+  --force            Re-extract all posts, even if entity files already exist
   --help, -h         Show this help message
 
 Examples:
-  node scripts/extract-entities.js                              # Process all posts
-  node scripts/extract-entities.js --limit 5                    # Process only 5 posts
-  node scripts/extract-entities.js --limit 1                    # Process just 1 post (quick test)
-  node scripts/extract-entities.js --file post-why-dt-invests.md  # Process specific file
+  node scripts/extract-entities.js                              # Process only new posts
+  node scripts/extract-entities.js --force                      # Re-extract all posts
+  node scripts/extract-entities.js --limit 5                    # Process only 5 new posts
+  node scripts/extract-entities.js --limit 5 --force            # Re-extract 5 posts
+  node scripts/extract-entities.js --file post-why-dt-invests.md  # Process specific file if needed
+  node scripts/extract-entities.js --file post-why-dt-invests.md --force  # Force re-extract specific file
 
 Environment Variables (AI Provider):
   AI_PROVIDER        'lmstudio', 'openai', or 'fal' (default: lmstudio)
@@ -1022,12 +1060,12 @@ Recommended setups:
     }
   }
   
-  return { limit, file };
+  return { limit, file, force };
 }
 
 // Main execution
 async function main() {
-  const { limit, file } = parseArgs();
+  const { limit, file, force } = parseArgs();
   
   console.log('🚀 PWV Entity Extraction Script');
   console.log(`🤖 AI Provider: ${AI_PROVIDER.toUpperCase()}`);
@@ -1056,6 +1094,12 @@ async function main() {
     console.log(`📄 File: Processing specific file "${file}"`);
   } else if (limit) {
     console.log(`🔢 Limit: Processing first ${limit} post(s) only`);
+  }
+  
+  if (force) {
+    console.log(`⚡ Force: Re-extracting posts even if entity files exist`);
+  } else {
+    console.log(`✨ Smart mode: Skipping posts with existing entity files (use --force to override)`);
   }
   console.log('');
 
@@ -1097,7 +1141,7 @@ async function main() {
   }
 
   try {
-    await processAllPosts(limit, file);
+    await processAllPosts(limit, file, force);
   } catch (error) {
     console.error(`\n❌ Error: ${error.message}`);
     console.error(error.stack);

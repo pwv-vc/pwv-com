@@ -1,0 +1,35 @@
+{
+  "slug": "external-lmstudio-ai-nvidia-dgx-spark",
+  "title": "NVIDIA DGX Spark",
+  "companies": [
+    "NVIDIA",
+    "LM Studio"
+  ],
+  "investors": [],
+  "people": [
+    {
+      "name": "LM Studio Team",
+      "role": "Author"
+    }
+  ],
+  "facts": [
+    {
+      "text": "LM Studio now ships for Linux on ARM and launches with NVIDIA DGX Spark",
+      "category": "launch",
+      "date": "2025-10-15"
+    }
+  ],
+  "figures": [],
+  "topics": [
+    "local ai",
+    "local llm",
+    "on-device ai",
+    "nvidia",
+    "dgx spark"
+  ],
+  "quotes": [],
+  "pubDate": "2025-10-15",
+  "author": "LM Studio Team",
+  "tags": [],
+  "url": "https://lmstudio.ai/blog/dgx-spark?ref=pwv.com"
+}

@@ -55,16 +55,27 @@ node scripts/extract-entities.js --limit 3
 # Help
 node scripts/extract-entities.js --help
 
-# Test with 1 post
+# Process only new posts (smart mode - DEFAULT)
+node scripts/extract-entities.js
+
+# Test with 1 new post
 node scripts/extract-entities.js --limit 1
 
-# Test with 5 posts
+# Test with 5 new posts
 node scripts/extract-entities.js --limit 5
 pnpm run extract-entities:test  # same
 
-# All posts
-node scripts/extract-entities.js
-pnpm run extract-entities  # same
+# Force re-extract all posts (ignores existing files)
+node scripts/extract-entities.js --force
+
+# Force re-extract first 5 posts
+node scripts/extract-entities.js --limit 5 --force
+
+# Process specific file (only if not already extracted)
+node scripts/extract-entities.js --file post-slug.md
+
+# Force re-extract specific file
+node scripts/extract-entities.js --file post-slug.md --force
 ```
 
 ## ✅ What It Extracts
@@ -77,12 +88,13 @@ pnpm run extract-entities  # same
 
 ## 📁 Output
 
-Creates: `src/content/entities/extracted-entities.json`
+Creates individual files: `src/content/entities/posts/{slug}.json`
 
 Used by:
 - Astro content collections (`src/content.config.ts`)
-- Helper functions (`src/lib/extracted-entities.ts`)
-- Terminal UI (`/explore` page)
+- Terminal UI (`/explore` page - dynamically aggregated at build time)
+
+**Optimization:** Script skips posts that already have entity files (unless `--force` is used)
 
 ## 📚 Documentation
 
@@ -116,11 +128,12 @@ LM_STUDIO_MODEL=mistralai/mistral-nemo-12b
 
 ## 💡 Pro Tips
 
-1. **Always test first:** Use `--limit 3` before full run
-2. **Check quality:** `cat src/content/entities/extracted-entities.json | grep -A 10 '"people"'`
-3. **Use OpenAI:** Much easier than downloading models
-4. **Use mini:** `gpt-4o-mini` is perfect for this task
-5. **Monitor costs:** [platform.openai.com/usage](https://platform.openai.com/usage)
+1. **Smart mode saves time & money:** Default behavior skips already-extracted posts
+2. **Always test first:** Use `--limit 3` before full run
+3. **Check quality:** `cat src/content/entities/posts/post-slug.json`
+4. **Use FAL or OpenAI:** Much easier than downloading models
+5. **Use --force sparingly:** Only when you need to re-extract (prompt changes, bug fixes)
+6. **Monitor costs:** [platform.openai.com/usage](https://platform.openai.com/usage) or [fal.ai/dashboard](https://fal.ai/dashboard)
 
 ## ❌ Troubleshooting
 

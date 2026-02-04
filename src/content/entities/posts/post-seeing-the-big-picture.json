@@ -1,0 +1,97 @@
+{
+  "slug": "post-seeing-the-big-picture",
+  "title": "Seeing the Big Picture",
+  "companies": [
+    "tldraw",
+    "FAL"
+  ],
+  "investors": [
+    "Meritech",
+    "Salesforce Ventures",
+    "Shopify Ventures",
+    "Google AI Futures Fund"
+  ],
+  "people": [
+    {
+      "name": "David Thyresson",
+      "role": "Author"
+    },
+    {
+      "name": "Steve Ruiz",
+      "role": "Founder of tldraw"
+    },
+    {
+      "name": "Görkem Yurtseven",
+      "role": "Founder of FAL"
+    },
+    {
+      "name": "Burkay Gür",
+      "role": "Co-founder of FAL"
+    }
+  ],
+  "facts": [
+    {
+      "text": "FAL closed a $125 million Series C round",
+      "category": "funding",
+      "date": "2025-08-18"
+    },
+    {
+      "text": "FAL announced that it has raised a $140M Series D round",
+      "category": "funding",
+      "date": "2025-12-09"
+    }
+  ],
+  "figures": [
+    {
+      "value": "125M",
+      "context": "Series C funding",
+      "unit": "USD"
+    },
+    {
+      "value": "140M",
+      "context": "Series D funding",
+      "unit": "USD"
+    },
+    {
+      "value": "1.5 billion",
+      "context": "FAL's valuation",
+      "unit": "USD"
+    },
+    {
+      "value": "1 million",
+      "context": "developers served by FAL",
+      "unit": ""
+    },
+    {
+      "value": "100+",
+      "context": "enterprise customers of FAL",
+      "unit": ""
+    },
+    {
+      "value": "50%",
+      "context": "revenue surge before Series C raise",
+      "unit": "%"
+    }
+  ],
+  "topics": [
+    "Startups",
+    "Generative AI",
+    "Investment",
+    "PWV",
+    "FAL"
+  ],
+  "quotes": [
+    {
+      "quote": "What if the next billion-dollar company doesn’t start with a pitch deck, but with a doodle?",
+      "speaker": "David Thyresson"
+    },
+    {
+      "quote": "Opportunities don’t always arrive looking like billion-dollar markets. Sometimes they arrive looking like doodles.",
+      "speaker": "David Thyresson"
+    }
+  ],
+  "pubDate": "18 August 2025",
+  "author": "David Thyresson",
+  "tags": [],
+  "url": ""
+}

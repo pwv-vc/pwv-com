@@ -1,0 +1,32 @@
+{
+  "slug": "external-cursor-com-series-a-and-magic",
+  "title": "Series A and Magic",
+  "companies": [
+    "Cursor"
+  ],
+  "investors": [],
+  "people": [],
+  "facts": [
+    {
+      "text": "We've raised $60M to create a magical tool with the aim of writing the world's software",
+      "category": "funding",
+      "date": "2024-08-22"
+    }
+  ],
+  "figures": [
+    {
+      "value": "60M",
+      "context": "Series A funding",
+      "unit": "USD"
+    }
+  ],
+  "topics": [
+    "AI",
+    "Funding"
+  ],
+  "quotes": [],
+  "pubDate": "2024-08-22",
+  "author": "Anysphere Teams",
+  "tags": [],
+  "url": "https://cursor.com/en/blog/series-a?ref=pwv.com"
+}
