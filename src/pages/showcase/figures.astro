@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import FigureCard from '../../components/entities/FigureCard.astro';
-import AmplifyNav from '../../components/entities/AmplifyNav.astro';
+import ShowcaseNav from '../../components/entities/ShowcaseNav.astro';
 import TerminalCTA from '../../components/entities/TerminalCTA.astro';
 
 // Get all extracted entities
@@ -42,7 +42,7 @@ const colors = [
   'pwv-soft-coral',
 ];
 
-const title = 'Amplify: Figures';
+const title = 'Showcase Figures';
 const description = 'Key metrics and numbers from PWV posts';
 ---
 
@@ -50,14 +50,14 @@ const description = 'Key metrics and numbers from PWV posts';
   <main class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
     <div class="mb-8">
       <h1 class="font-serif text-4xl font-bold text-pwv-black md:text-5xl">
-        Amplify: Figures
+        Showcase Figures
       </h1>
       <p class="mt-2 text-lg text-pwv-black/70">
         {figuresWithContext.length} key metrics and numbers from PWV posts
       </p>
     </div>
 
-    <AmplifyNav currentPath="/amplify/figures/" />
+    <ShowcaseNav currentPath="/showcase/figures/" />
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
       {figuresWithContext.map((figure, index) => (

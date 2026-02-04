@@ -1,0 +1,88 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Heading1 from '../../components/Heading1.astro';
+import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
+import TopicCard from '../../components/entities/TopicCard.astro';
+import ShowcaseNav from '../../components/entities/ShowcaseNav.astro';
+import TerminalCTA from '../../components/entities/TerminalCTA.astro';
+
+const title = 'Showcase Topics';
+const description = 'Showcasing topics mentioned in PWV blog posts, extracted and aggregated from our content.';
+
+// Load all individual post entity files
+const postEntities = await getCollection('extractedPostEntities');
+
+// Aggregate all topics with post context
+interface TopicWithContext {
+  topic: string;
+  postSlugs: string[];
+}
+
+const topicsMap = new Map<string, string[]>();
+
+for (const post of postEntities) {
+  const topics = post.data.topics || [];
+  
+  topics.forEach(topic => {
+    if (!topicsMap.has(topic)) {
+      topicsMap.set(topic, []);
+    }
+    const postList = topicsMap.get(topic)!;
+    if (!postList.includes(post.id)) {
+      postList.push(post.id);
+    }
+  });
+}
+
+// Convert to array and sort alphabetically
+const topicsArray: TopicWithContext[] = Array.from(topicsMap.entries())
+  .map(([topic, postSlugs]) => ({ topic, postSlugs }))
+  .sort((a, b) => a.topic.localeCompare(b.topic));
+
+// Define color palette
+const colors = [
+  'pwv-soft-periwinkle',
+  'pwv-soft-lavender',
+  'pwv-soft-teal',
+  'pwv-soft-yellow',
+  'pwv-soft-green',
+  'pwv-soft-coral',
+];
+
+const getColor = (topic: string, index: number) => {
+  const charCode = topic.charCodeAt(0) || 0;
+  return colors[(charCode + index) % colors.length];
+};
+---
+
+<Layout title={title} description={description}>
+  <section class="mx-auto mb-12">
+    <Heading1>{title}</Heading1>
+    <Heading2NoUnderline>
+      {topicsArray.length} topics mentioned across {postEntities.length} posts
+    </Heading2NoUnderline>
+
+    <ShowcaseNav currentPath="/showcase/topics/" />
+
+    <TerminalCTA />
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {
+        topicsArray.map((item, index) => (
+          <TopicCard
+            topic={item.topic}
+            postSlugs={item.postSlugs}
+            borderColor={getColor(item.topic, index)}
+          />
+        ))
+      }
+    </div>
+
+    {topicsArray.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-lg text-pwv-black/60">No topics found yet.</p>
+      </div>
+    )}
+  </section>
+</Layout>

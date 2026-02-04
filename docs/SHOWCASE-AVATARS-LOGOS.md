@@ -1,6 +1,6 @@
-# Adding Avatars and Company Logos to Celebrate Pages
+# Adding Avatars and Company Logos to Showcase Pages
 
-This guide explains how to add images for people and companies that appear on the celebrate pages (`/celebrate/companies/`, `/celebrate/people/`).
+This guide explains how to add images for people and companies that appear on the showcase pages (`/showcase/companies/`, `/showcase/people/`).
 
 ## 📸 People Avatars
 
@@ -271,7 +271,7 @@ After adding images:
 ```bash
 git add src/images/people/*.{jpeg,jpg,png}
 git add src/images/logos/small/*.png
-git commit -m "Add avatars and logos for celebrate pages"
+git commit -m "Add avatars and logos for showcase pages"
 git push
 ```
 

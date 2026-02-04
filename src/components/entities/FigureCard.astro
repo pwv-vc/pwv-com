@@ -21,7 +21,7 @@ const { value, context, unit, postSlug, postTitle, pubDate, borderColor, figureI
 // Create share URL and text - link to the figure detail page on PWV
 const siteUrl = Astro.site || 'https://pwv.com';
 const figureId = `${postSlug}-${figureIndex}`;
-const detailPageUrl = `/amplify/figures/${figureId}/`;
+const detailPageUrl = `/showcase/figures/${figureId}/`;
 const shareUrl = new URL(detailPageUrl, siteUrl).toString();
 const shareText = `${value}${unit} - ${context}`;
 

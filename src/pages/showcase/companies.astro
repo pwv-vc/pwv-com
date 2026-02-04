@@ -4,11 +4,11 @@ import Layout from '../../layouts/Layout.astro';
 import Heading1 from '../../components/Heading1.astro';
 import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
 import CompanyCard from '../../components/entities/CompanyCard.astro';
-import CelebrateNav from '../../components/entities/CelebrateNav.astro';
+import ShowcaseNav from '../../components/entities/ShowcaseNav.astro';
 import TerminalCTA from '../../components/entities/TerminalCTA.astro';
 
-const title = 'Celebrate Companies';
-const description = 'Celebrating companies mentioned in PWV blog posts, extracted and aggregated from our content.';
+const title = 'Showcase Companies';
+const description = 'Showcasing companies mentioned in PWV blog posts, extracted and aggregated from our content.';
 
 // Load all individual post entity files
 const postEntities = await getCollection('extractedPostEntities');
@@ -82,7 +82,7 @@ const getColor = (name: string, index: number) => {
       {companies.length} companies mentioned across {postEntities.length} posts
     </Heading2NoUnderline>
 
-    <CelebrateNav currentPath="/celebrate/companies/" />
+    <ShowcaseNav currentPath="/showcase/companies/" />
 
     <TerminalCTA />
 

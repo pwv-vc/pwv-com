@@ -20,7 +20,7 @@ const { name, role, mentions, posts, borderColor } = Astro.props;
 // Create share URL and text - link to person detail page on PWV
 const siteUrl = Astro.site || 'https://pwv.com';
 const personSlug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-const detailPageUrl = `/celebrate/people/${personSlug}/`;
+const detailPageUrl = `/showcase/people/${personSlug}/`;
 const shareUrl = new URL(detailPageUrl, siteUrl).toString();
 const shareText = `${name}${role ? ` (${role})` : ''} - Featured in ${posts.length} PWV post${posts.length === 1 ? '' : 's'}`;
 

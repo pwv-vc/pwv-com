@@ -23,13 +23,13 @@ unicorn scale in under 24 months.
 - [About](https://pwv.com/about): About PWV, how we invest, and our team
 - [Portfolio](https://pwv.com/portfolio): Our investment portfolio
 - [News](https://pwv.com/news): Posts, insights, and announcements from PWV and our community
-- [Celebrate](https://pwv.com/celebrate/companies/): Entity pages celebrating companies and people featured in PWV content
-  - [Companies](https://pwv.com/celebrate/companies/): Companies mentioned across blog posts with logos and related content
-  - [People](https://pwv.com/celebrate/people/): People featured in posts with avatars, roles, and contributions
-- [Amplify](https://pwv.com/amplify/quotes/): Amplify insights, quotes, facts, and figures from PWV content
-  - [Quotes](https://pwv.com/amplify/quotes/): Notable quotes from posts with speaker attribution and context
-  - [Facts](https://pwv.com/amplify/facts/): Key insights, trends, and announcements from PWV posts
-  - [Figures](https://pwv.com/amplify/figures/): Key metrics and numbers from PWV posts
+- [Showcase](https://pwv.com/showcase/companies/): Entity pages celebrating companies and people featured in PWV content
+  - [Companies](https://pwv.com/showcase/companies/): Companies mentioned across blog posts with logos and related content
+  - [People](https://pwv.com/showcase/people/): People featured in posts with avatars, roles, and contributions
+- [Showcase](https://pwv.com/showcase/quotes/): Showcase insights, quotes, facts, and figures from PWV content
+  - [Quotes](https://pwv.com/showcase/quotes/): Notable quotes from posts with speaker attribution and context
+  - [Facts](https://pwv.com/showcase/facts/): Key insights, trends, and announcements from PWV posts
+  - [Figures](https://pwv.com/showcase/figures/): Key metrics and numbers from PWV posts
 - [Terminal](https://pwv.com/terminal/): Interactive terminal interface for exploring PWV data via command-line style interface
 - [What is PWV?](https://pwv.com/what-is-pwv): Disambiguation page explaining PWV and clarifying confusion with other meanings
 
@@ -127,13 +127,13 @@ The site includes comprehensive JSON-LD structured data for enhanced understandi
 - Posts can be filtered by author (`/news/author/<author-slug>`) or tags (`/news/tags/<tag-slug>`).
 - Team information is available on the About page at `https://pwv.com/about`.
 - Portfolio information is organized by fund type and can be filtered by tags.
-- Celebrate pages provide entity-based content discovery for people and companies:
-  - **Companies** (`/celebrate/companies/`): 60+ companies mentioned in posts, sorted A-Z with logos, mention counts, and links to related blog posts with hero images
-  - **People** (`/celebrate/people/`): 45+ people featured in posts, sorted A-Z with avatars, roles, and links to posts where they're mentioned
-- Amplify pages surface key insights and data from PWV content:
-  - **Quotes** (`/amplify/quotes/`): Notable quotes from blog posts with speaker attribution, context, and links to source posts
-  - **Facts** (`/amplify/facts/`): Key insights, trends, and announcements extracted from PWV posts
-  - **Figures** (`/amplify/figures/`): Key metrics and numbers highlighted in PWV posts
+- Showcase pages provide entity-based content discovery for people and companies:
+  - **Companies** (`/showcase/companies/`): 60+ companies mentioned in posts, sorted A-Z with logos, mention counts, and links to related blog posts with hero images
+  - **People** (`/showcase/people/`): 45+ people featured in posts, sorted A-Z with avatars, roles, and links to posts where they're mentioned
+- Showcase pages surface key insights and data from PWV content:
+  - **Quotes** (`/showcase/quotes/`): Notable quotes from blog posts with speaker attribution, context, and links to source posts
+  - **Facts** (`/showcase/facts/`): Key insights, trends, and announcements extracted from PWV posts
+  - **Figures** (`/showcase/figures/`): Key metrics and numbers highlighted in PWV posts
 - **Terminal** (`/terminal/`): Interactive retro terminal interface for exploring entities via commands
 
 ### Topic Clusters
@@ -145,29 +145,29 @@ The site organizes content into topic clusters:
 
 ### Finding Specific Information
 
-**To find companies**: Visit `/celebrate/companies/` for an A-Z list of all companies mentioned across blog posts. Each company card shows:
+**To find companies**: Visit `/showcase/companies/` for an A-Z list of all companies mentioned across blog posts. Each company card shows:
 - Company logo (if available)
 - Number of mentions and related posts
 - Links to blog posts featuring the company with post thumbnails
 
-**To find people**: Visit `/celebrate/people/` for an A-Z list of all people featured in posts. Each person card shows:
+**To find people**: Visit `/showcase/people/` for an A-Z list of all people featured in posts. Each person card shows:
 - Avatar photo (if available)
 - Role or title
 - Number of mentions across posts
 - Links to blog posts featuring that person with post thumbnails
 
-**To find quotes**: Visit `/amplify/quotes/` for a chronological collection of notable quotes from blog posts. Each quote card shows:
+**To find quotes**: Visit `/showcase/quotes/` for a chronological collection of notable quotes from blog posts. Each quote card shows:
 - The full quote text
 - Speaker name and optional context
 - Link to the source blog post with thumbnail
 - Publication date
 
-**To find facts**: Visit `/amplify/facts/` for key insights, trends, and announcements extracted from PWV posts. Each fact card shows:
+**To find facts**: Visit `/showcase/facts/` for key insights, trends, and announcements extracted from PWV posts. Each fact card shows:
 - Fact text and category (insight, trend, philosophy, announcement, milestone, funding, launch, partnership)
 - Optional date context
 - Link to the source blog post
 
-**To find figures**: Visit `/amplify/figures/` for key metrics and numbers highlighted in PWV posts. Each figure card shows:
+**To find figures**: Visit `/showcase/figures/` for key metrics and numbers highlighted in PWV posts. Each figure card shows:
 - Value, unit, and context
 - Link to the source blog post
 

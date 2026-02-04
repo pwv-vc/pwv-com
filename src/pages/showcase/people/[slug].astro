@@ -46,7 +46,7 @@ const { name, role, mentions, posts } = Astro.props;
 const title = `${name}${role ? ` (${role})` : ''} | PWV Explore`;
 const description = `${name}${role ? `, ${role},` : ''} mentioned ${mentions} time${mentions === 1 ? '' : 's'} across ${posts.length} PWV blog post${posts.length === 1 ? '' : 's'}. Explore people featured in PWV content.`;
 const personSlug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-const pageUrl = `/celebrate/people/${personSlug}/`;
+const pageUrl = `/showcase/people/${personSlug}/`;
 
 // Get hero image from first post if available
 const allPosts = await getCollection('posts');
@@ -66,7 +66,7 @@ const heroImageUrl = firstPost?.data.heroImage;
 <Layout title={title} description={description}>
   <section class="mx-auto mb-12 max-w-4xl">
     <div class="mb-8">
-      <a href="/celebrate/people/" class="text-sm text-pwv-black/60 hover:text-pwv-green transition-colors">
+      <a href="/showcase/people/" class="text-sm text-pwv-black/60 hover:text-pwv-green transition-colors">
         ← Back to all people
       </a>
     </div>
@@ -95,7 +95,7 @@ const heroImageUrl = firstPost?.data.heroImage;
 
     <div class="text-center mt-8">
       <a 
-        href="/celebrate/people/"
+        href="/showcase/people/"
         class="inline-block rounded-full border-2 border-pwv-black bg-pwv-black px-6 py-3 text-white hover:bg-pwv-green hover:border-pwv-green transition-colors"
       >
         Explore more people

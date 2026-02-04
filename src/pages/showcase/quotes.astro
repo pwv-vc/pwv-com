@@ -4,11 +4,11 @@ import Layout from '../../layouts/Layout.astro';
 import Heading1 from '../../components/Heading1.astro';
 import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
 import QuoteCard from '../../components/entities/QuoteCard.astro';
-import CelebrateNav from '../../components/entities/CelebrateNav.astro';
+import ShowcaseNav from '../../components/entities/ShowcaseNav.astro';
 import TerminalCTA from '../../components/entities/TerminalCTA.astro';
 
-const title = 'Amplify Quotes';
-const description = 'Amplifying insightful quotes from PWV blog posts, extracted and curated from our content.';
+const title = 'Showcase Quotes';
+const description = 'Showcasing insightful quotes from PWV blog posts, extracted and curated from our content.';
 
 // Load all individual post entity files
 const postEntities = await getCollection('extractedPostEntities');
@@ -68,7 +68,7 @@ const getColor = (text: string, index: number) => {
       {quotes.length} quotes collected from {postEntities.length} posts
     </Heading2NoUnderline>
 
-    <CelebrateNav currentPath="/amplify/quotes/" />
+    <ShowcaseNav currentPath="/showcase/quotes/" />
 
     <TerminalCTA />
 

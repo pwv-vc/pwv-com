@@ -1,0 +1,107 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import TopicCard from '../../../components/entities/TopicCard.astro';
+import EntitySEO from '../../../components/entities/EntitySEO.astro';
+
+export async function getStaticPaths() {
+  const postEntities = await getCollection('extractedPostEntities');
+  const topicsMap = new Map<string, { postSlugs: string[], heroImage?: string }>();
+
+  for (const post of postEntities) {
+    const topics = post.data.topics || [];
+    
+    topics.forEach(topic => {
+      if (!topicsMap.has(topic)) {
+        topicsMap.set(topic, { postSlugs: [], heroImage: post.data.heroImage });
+      }
+      const topicData = topicsMap.get(topic)!;
+      if (!topicData.postSlugs.includes(post.id)) {
+        topicData.postSlugs.push(post.id);
+      }
+      // Use first post's hero image if available
+      if (!topicData.heroImage && post.data.heroImage) {
+        topicData.heroImage = post.data.heroImage;
+      }
+    });
+  }
+
+  return Array.from(topicsMap.entries()).map(([topic, data]) => {
+    const slug = topic.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+    
+    return {
+      params: { slug },
+      props: {
+        topic,
+        postSlugs: data.postSlugs,
+        heroImage: data.heroImage,
+      },
+    };
+  });
+}
+
+const { topic, postSlugs, heroImage } = Astro.props;
+
+const siteUrl = Astro.site || 'https://pwv.com';
+const topicSlug = topic.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+const pageUrl = new URL(`/showcase/topics/${topicSlug}/`, siteUrl).toString();
+
+const title = `${topic}`;
+const description = `Topic: ${topic} - Featured in ${postSlugs.length} PWV post${postSlugs.length === 1 ? '' : 's'}`;
+
+// Define color palette
+const colors = [
+  'pwv-soft-periwinkle',
+  'pwv-soft-lavender',
+  'pwv-soft-teal',
+  'pwv-soft-yellow',
+  'pwv-soft-green',
+  'pwv-soft-coral',
+];
+
+const borderColor = colors[topic.charCodeAt(0) % colors.length];
+---
+
+<Layout title={title} description={description}>
+  <EntitySEO
+    title={title}
+    description={description}
+    url={pageUrl}
+    type="article"
+    image={heroImage}
+    entityType="topic"
+  />
+
+  <main class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="mb-8">
+      <a
+        href="/showcase/topics/"
+        class="inline-flex items-center gap-2 text-sm text-pwv-black/70 hover:text-pwv-green transition-colors mb-4"
+      >
+        <span>←</span>
+        <span>Back to all topics</span>
+      </a>
+      <h1 class="font-serif text-3xl font-bold text-pwv-black md:text-4xl">
+        Topic: {topic}
+      </h1>
+    </div>
+
+    <div class="max-w-2xl mx-auto">
+      <TopicCard
+        topic={topic}
+        postSlugs={postSlugs}
+        borderColor={borderColor}
+      />
+    </div>
+
+    <div class="mt-12 text-center">
+      <a
+        href="/showcase/topics/"
+        class="inline-flex items-center gap-2 rounded-full border-2 border-pwv-gray bg-white px-6 py-3 text-sm font-medium text-pwv-black transition-all hover:border-pwv-green hover:bg-pwv-gray/20"
+      >
+        <span>View all topics</span>
+        <span>→</span>
+      </a>
+    </div>
+  </main>
+</Layout>

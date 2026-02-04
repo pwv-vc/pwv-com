@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
-import FigureCard from '../../../components/entities/FigureCard.astro';
+import FactCard from '../../../components/entities/FactCard.astro';
 import EntitySEO from '../../../components/entities/EntitySEO.astro';
 
 export async function getStaticPaths() {
@@ -9,20 +9,20 @@ export async function getStaticPaths() {
   const paths: any[] = [];
 
   for (const entity of allEntities) {
-    const figures = entity.data.figures || [];
-    figures.forEach((figure, index) => {
-      const figureId = `${entity.id}-${index}`;
+    const facts = entity.data.facts || [];
+    facts.forEach((fact, index) => {
+      const factId = `${entity.id}-${index}`;
       paths.push({
-        params: { slug: figureId },
+        params: { slug: factId },
         props: {
-          value: figure.value,
-          context: figure.context,
-          unit: figure.unit,
+          fact: fact.text,
+          category: fact.category,
+          date: fact.date,
           postSlug: entity.id,
           postTitle: entity.data.title,
           pubDate: entity.data.pubDate,
           heroImage: entity.data.heroImage,
-          figureIndex: index,
+          factIndex: index,
         },
       });
     });
@@ -31,14 +31,14 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { value, context, unit, postSlug, postTitle, pubDate, heroImage, figureIndex } = Astro.props;
+const { fact, category, date, postSlug, postTitle, pubDate, heroImage, factIndex } = Astro.props;
 
 const siteUrl = Astro.site || 'https://pwv.com';
-const figureId = `${postSlug}-${figureIndex}`;
-const pageUrl = new URL(`/amplify/figures/${figureId}/`, siteUrl).toString();
+const factId = `${postSlug}-${factIndex}`;
+const pageUrl = new URL(`/showcase/facts/${factId}/`, siteUrl).toString();
 
-const title = `${value}${unit} - ${context}`;
-const description = `Key figure from PWV: ${value}${unit} - ${context}`;
+const title = `${fact.substring(0, 60)}${fact.length > 60 ? '...' : ''} [${category}]`;
+const description = `Key ${category} from PWV: ${fact}`;
 
 // Define color palette
 const colors = [
@@ -50,7 +50,7 @@ const colors = [
   'pwv-soft-coral',
 ];
 
-const borderColor = colors[figureIndex % colors.length];
+const borderColor = colors[factIndex % colors.length];
 ---
 
 <Layout title={title} description={description}>
@@ -60,42 +60,42 @@ const borderColor = colors[figureIndex % colors.length];
     url={pageUrl}
     type="article"
     image={heroImage}
-    entityType="figure"
+    entityType="fact"
   />
 
   <main class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
     <div class="mb-8">
       <a
-        href="/amplify/figures/"
+        href="/showcase/facts/"
         class="inline-flex items-center gap-2 text-sm text-pwv-black/70 hover:text-pwv-green transition-colors mb-4"
       >
         <span>←</span>
-        <span>Back to all figures</span>
+        <span>Back to all facts</span>
       </a>
       <h1 class="font-serif text-3xl font-bold text-pwv-black md:text-4xl">
-        Figure: {value}{unit}
+        Fact: {category}
       </h1>
     </div>
 
     <div class="max-w-2xl mx-auto">
-      <FigureCard
-        value={value}
-        context={context}
-        unit={unit}
+      <FactCard
+        fact={fact}
+        category={category}
+        date={date}
         postSlug={postSlug}
         postTitle={postTitle}
         pubDate={pubDate}
         borderColor={borderColor}
-        figureIndex={figureIndex}
+        factIndex={factIndex}
       />
     </div>
 
     <div class="mt-12 text-center">
       <a
-        href="/amplify/figures/"
+        href="/showcase/facts/"
         class="inline-flex items-center gap-2 rounded-full border-2 border-pwv-gray bg-white px-6 py-3 text-sm font-medium text-pwv-black transition-all hover:border-pwv-green hover:bg-pwv-gray/20"
       >
-        <span>View all figures</span>
+        <span>View all facts</span>
         <span>→</span>
       </a>
     </div>

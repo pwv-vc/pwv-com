@@ -1,11 +1,11 @@
-# Celebrate & Amplify Implementation Summary
+# Showcase & Showcase Implementation Summary
 
 ## Overview
 
 Successfully transformed the `/explore/` entity pages into two value-driven sections that reflect PWV's founder-first philosophy:
 
-- **Celebrate** (`/celebrate/`): Companies and people — honoring the human element
-- **Amplify** (`/amplify/`): Quotes, facts, and figures — sharing breakthrough ideas
+- **Showcase** (`/showcase/`): Companies and people — honoring the human element
+- **Showcase** (`/showcase/`): Quotes, facts, and figures — sharing breakthrough ideas
 
 ## What Was Implemented
 
@@ -14,14 +14,14 @@ Successfully transformed the `/explore/` entity pages into two value-driven sect
 **Created new page directories:**
 ```
 src/pages/
-├── celebrate/
+├── showcase/
 │   ├── companies/
 │   │   ├── index.astro (copied from explore)
 │   │   └── [slug].astro (copied from explore)
 │   └── people/
 │       ├── index.astro (copied from explore)
 │       └── [slug].astro (copied from explore)
-└── amplify/
+└── showcase/
     ├── quotes/
     │   ├── index.astro (copied from explore)
     │   └── [slug].astro (copied from explore)
@@ -53,33 +53,33 @@ Created specialized components for facts and figures:
    - Related post with thumbnail
    - Social sharing buttons + View link
 
-3. **`CelebrateNav.astro`** — Navigation for Companies/People sections
+3. **`ShowcaseNav.astro`** — Navigation for Companies/People sections
 
-4. **`AmplifyNav.astro`** — Navigation for Quotes/Facts/Figures sections
+4. **`ShowcaseNav.astro`** — Navigation for Quotes/Facts/Figures sections
 
 ### 3. New Pages ✅
 
 Created browse and detail pages for facts and figures:
 
-1. **`/amplify/facts/`** — Browse all facts extracted from posts
+1. **`/showcase/facts/`** — Browse all facts extracted from posts
    - Grid layout with colorful cards
    - Category badges for each fact
    - Links to source posts with hero images
    - Count display showing total facts
 
-2. **`/amplify/figures/`** — Browse all figures/metrics from posts
+2. **`/showcase/figures/`** — Browse all figures/metrics from posts
    - Grid layout with metric-focused cards
    - Large value displays with units
    - Context descriptions
    - Links to source posts
 
-3. **`/amplify/facts/[slug]/`** — Individual fact detail pages
+3. **`/showcase/facts/[slug]/`** — Individual fact detail pages
    - Full SEO metadata (Open Graph, Twitter Cards, JSON-LD)
    - Single fact card display
    - Back navigation to all facts
    - Shareable URLs for social media
 
-4. **`/amplify/figures/[slug]/`** — Individual figure detail pages
+4. **`/showcase/figures/[slug]/`** — Individual figure detail pages
    - Full SEO metadata
    - Single figure card display
    - Back navigation to all figures
@@ -88,49 +88,49 @@ Created browse and detail pages for facts and figures:
 ### 4. URL Updates ✅
 
 **Updated all internal URLs:**
-- PersonCard: `/explore/people/` → `/celebrate/people/`
-- CompanyCard: `/explore/companies/` → `/celebrate/companies/`
-- QuoteCard: `/explore/quotes/` → `/amplify/quotes/`
-- FactCard: Links to `/amplify/facts/[slug]/`
-- FigureCard: Links to `/amplify/figures/[slug]/`
+- PersonCard: `/explore/people/` → `/showcase/people/`
+- CompanyCard: `/explore/companies/` → `/showcase/companies/`
+- QuoteCard: `/explore/quotes/` → `/showcase/quotes/`
+- FactCard: Links to `/showcase/facts/[slug]/`
+- FigureCard: Links to `/showcase/figures/[slug]/`
 
 **Created 301 redirects for old URLs:**
-- `/explore/` → `/celebrate/companies/`
-- `/explore/companies/` → `/celebrate/companies/`
-- `/explore/people/` → `/celebrate/people/`
-- `/explore/quotes/` → `/amplify/quotes/`
-- `/explore/companies/[slug]/` → `/celebrate/companies/[slug]/`
-- `/explore/people/[slug]/` → `/celebrate/people/[slug]/`
-- `/explore/quotes/[slug]/` → `/amplify/quotes/[slug]/`
+- `/explore/` → `/showcase/companies/`
+- `/explore/companies/` → `/showcase/companies/`
+- `/explore/people/` → `/showcase/people/`
+- `/explore/quotes/` → `/showcase/quotes/`
+- `/explore/companies/[slug]/` → `/showcase/companies/[slug]/`
+- `/explore/people/[slug]/` → `/showcase/people/[slug]/`
+- `/explore/quotes/[slug]/` → `/showcase/quotes/[slug]/`
 
 ### 5. Navigation Updates ✅
 
 **Header & Footer:**
-- Replaced "Explore" → "Celebrate" (links to `/celebrate/companies/`)
+- Replaced "Explore" → "Showcase" (links to `/showcase/companies/`)
 - "Terminal" remains separate at `/terminal/`
-- "Amplify" accessible via Celebrate page navigation and Terminal CTA
+- "Showcase" accessible via Showcase page navigation and Terminal CTA
 
 **Sub-navigation:**
-- CelebrateNav shows Companies | People
-- AmplifyNav shows Quotes | Facts | Figures
+- ShowcaseNav shows Companies | People
+- ShowcaseNav shows Quotes | Facts | Figures
 
 ### 6. Documentation Updates ✅
 
 **Updated files:**
 1. **README.md**
-   - "Images for Explore Pages" → "Images for Celebrate Pages"
+   - "Images for Explore Pages" → "Images for Showcase Pages"
    - Updated all URL references
    - Updated doc link to `CELEBRATE-AVATARS-LOGOS.md`
 
 2. **public/llms.txt**
-   - Added Celebrate and Amplify sections
+   - Added Showcase and Showcase sections
    - Documented facts and figures pages
    - Updated all URL references and search instructions
 
 3. **astro.config.mjs**
    - Updated sitemap configuration with new URL patterns
-   - Added `/celebrate/companies/`, `/celebrate/people/`
-   - Added `/amplify/quotes/`, `/amplify/facts/`, `/amplify/figures/`
+   - Added `/showcase/companies/`, `/showcase/people/`
+   - Added `/showcase/quotes/`, `/showcase/facts/`, `/showcase/figures/`
    - Set appropriate `changefreq: 'daily'` and `priority: 0.7` for all
 
 **Renamed documentation files:**
@@ -202,18 +202,18 @@ Every entity detail page includes:
 
 To verify the implementation:
 
-- [ ] Visit `/celebrate/companies/` — Should show company grid
-- [ ] Visit `/celebrate/people/` — Should show people grid
-- [ ] Visit `/amplify/quotes/` — Should show quotes grid
-- [ ] Visit `/amplify/facts/` — Should show facts grid with category badges
-- [ ] Visit `/amplify/figures/` — Should show figures grid with metrics
+- [ ] Visit `/showcase/companies/` — Should show company grid
+- [ ] Visit `/showcase/people/` — Should show people grid
+- [ ] Visit `/showcase/quotes/` — Should show quotes grid
+- [ ] Visit `/showcase/facts/` — Should show facts grid with category badges
+- [ ] Visit `/showcase/figures/` — Should show figures grid with metrics
 - [ ] Click on any entity card — Should navigate to detail page
 - [ ] Test social sharing buttons — Should link to PWV-hosted detail pages
 - [ ] Visit old `/explore/` URLs — Should redirect to new URLs (301)
-- [ ] Check Header navigation — Should show "Celebrate" link
-- [ ] Check Footer navigation — Should show "Celebrate" and "Terminal" links
-- [ ] Test CelebrateNav — Should show Companies | People
-- [ ] Test AmplifyNav — Should show Quotes | Facts | Figures
+- [ ] Check Header navigation — Should show "Showcase" link
+- [ ] Check Footer navigation — Should show "Showcase" and "Terminal" links
+- [ ] Test ShowcaseNav — Should show Companies | People
+- [ ] Test ShowcaseNav — Should show Quotes | Facts | Figures
 - [ ] Verify responsive layout — Should work on mobile, tablet, desktop
 - [ ] Check SEO metadata — Should have proper OG tags and JSON-LD
 
@@ -221,11 +221,11 @@ To verify the implementation:
 
 This implementation directly reflects PWV's core values:
 
-> "Ideas that both embrace technology and celebrate people as the most important factor in the better future we want to build."
+> "Ideas that both embrace technology and showcase people as the most important factor in the better future we want to build."
 > — Tom Preston-Werner
 
-**Celebrate** = People & Companies (the human element)
-**Amplify** = Quotes, Facts & Figures (the ideas and insights)
+**Showcase** = People & Companies (the human element)
+**Showcase** = Quotes, Facts & Figures (the ideas and insights)
 
 The structure transforms entity pages from generic "browse" functionality into a statement of values that reinforces PWV's founder-first approach at every touchpoint.
 

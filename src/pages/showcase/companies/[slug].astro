@@ -63,7 +63,7 @@ const { name, mentions, posts, portfolioSlug, url } = Astro.props;
 const title = `${name} | PWV Explore`;
 const description = `${name} mentioned ${mentions} time${mentions === 1 ? '' : 's'} across ${posts.length} PWV blog post${posts.length === 1 ? '' : 's'}. Explore companies featured in PWV content.`;
 const companySlug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-const pageUrl = `/celebrate/companies/${companySlug}/`;
+const pageUrl = `/showcase/companies/${companySlug}/`;
 
 // Get hero image from first post if available
 const allPosts = await getCollection('posts');
@@ -83,7 +83,7 @@ const heroImageUrl = firstPost?.data.heroImage;
 <Layout title={title} description={description}>
   <section class="mx-auto mb-12 max-w-4xl">
     <div class="mb-8">
-      <a href="/celebrate/companies/" class="text-sm text-pwv-black/60 hover:text-pwv-green transition-colors">
+      <a href="/showcase/companies/" class="text-sm text-pwv-black/60 hover:text-pwv-green transition-colors">
         ← Back to all companies
       </a>
     </div>
@@ -110,7 +110,7 @@ const heroImageUrl = firstPost?.data.heroImage;
 
     <div class="text-center mt-8">
       <a 
-        href="/celebrate/companies/"
+        href="/showcase/companies/"
         class="inline-block rounded-full border-2 border-pwv-black bg-pwv-black px-6 py-3 text-white hover:bg-pwv-green hover:border-pwv-green transition-colors"
       >
         Explore more companies

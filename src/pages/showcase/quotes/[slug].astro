@@ -42,7 +42,7 @@ const { quote } = Astro.props;
 
 const title = `"${quote.quote.substring(0, 60)}${quote.quote.length > 60 ? '...' : ''}" — ${quote.speaker}`;
 const description = `${quote.quote} — ${quote.speaker}${quote.context ? ` (${quote.context})` : ''}`;
-const pageUrl = `/amplify/quotes/${quote.id}/`;
+const pageUrl = `/showcase/quotes/${quote.id}/`;
 
 // Get hero image from the source post
 const allPosts = await getCollection('posts');
@@ -68,7 +68,7 @@ const formattedDate = quote.pubDate ? new Date(quote.pubDate).toLocaleDateString
 <Layout title={title} description={description}>
   <section class="mx-auto mb-12 max-w-3xl">
     <div class="mb-8">
-      <a href="/amplify/quotes/" class="text-sm text-pwv-black/60 hover:text-pwv-green transition-colors">
+      <a href="/showcase/quotes/" class="text-sm text-pwv-black/60 hover:text-pwv-green transition-colors">
         ← Back to all quotes
       </a>
     </div>
@@ -99,7 +99,7 @@ const formattedDate = quote.pubDate ? new Date(quote.pubDate).toLocaleDateString
       
       <div class="mt-6 pt-6 border-t border-pwv-black/10">
       <a 
-        href="/amplify/quotes/"
+        href="/showcase/quotes/"
           class="inline-block rounded-full border-2 border-pwv-black bg-pwv-black px-6 py-2 text-white hover:bg-pwv-green hover:border-pwv-green transition-colors"
         >
           Explore more quotes

@@ -21,7 +21,7 @@ const { name, mentions, posts, borderColor, portfolioSlug, url } = Astro.props;
 // Create share URL and text - link to company detail page on PWV
 const siteUrl = Astro.site || 'https://pwv.com';
 const companySlug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
-const detailPageUrl = `/celebrate/companies/${companySlug}/`;
+const detailPageUrl = `/showcase/companies/${companySlug}/`;
 const shareUrl = new URL(detailPageUrl, siteUrl).toString();
 const shareText = `${name} - Featured in ${posts.length} PWV post${posts.length === 1 ? '' : 's'}`;
 

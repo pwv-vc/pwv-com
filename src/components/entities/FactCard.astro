@@ -21,7 +21,7 @@ const { fact, category, date, postSlug, postTitle, pubDate, borderColor, factInd
 // Create share URL and text - link to the fact detail page on PWV
 const siteUrl = Astro.site || 'https://pwv.com';
 const factId = `${postSlug}-${factIndex}`;
-const detailPageUrl = `/amplify/facts/${factId}/`;
+const detailPageUrl = `/showcase/facts/${factId}/`;
 const shareUrl = new URL(detailPageUrl, siteUrl).toString();
 const shareText = `${fact} [${category}]`;
 
