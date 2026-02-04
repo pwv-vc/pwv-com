@@ -1,13 +1,11 @@
 ---
 interface Props {
   currentPath?: string;
-  terminalTheme?: boolean;
 }
 
-const { currentPath = '', terminalTheme = false } = Astro.props;
+const { currentPath = '' } = Astro.props;
 
 const navItems = [
-  { href: '/explore/', label: 'Terminal', icon: '💻' },
   { href: '/explore/companies/', label: 'Companies', icon: '🏢' },
   { href: '/explore/people/', label: 'People', icon: '👥' },
   { href: '/explore/quotes/', label: 'Quotes', icon: '💬' },
@@ -20,25 +18,19 @@ const isActive = (href: string) => {
   return normalizedCurrent === normalizedHref;
 };
 
-// Terminal theme styles
-const terminalActiveClass = 'border-pwv-green bg-pwv-green/20 text-pwv-green';
-const terminalInactiveClass = 'border-pwv-green/40 bg-transparent text-pwv-green/80 hover:border-pwv-green hover:bg-pwv-green/10 hover:text-pwv-green';
-
 // Standard theme styles
-const standardActiveClass = 'border-pwv-green bg-pwv-green/10 text-pwv-black';
-const standardInactiveClass = 'border-pwv-gray bg-white text-pwv-black hover:border-pwv-green/50 hover:bg-pwv-gray/20';
+const activeClass = 'border-pwv-green bg-pwv-green/10 text-pwv-black';
+const inactiveClass = 'border-pwv-gray bg-white text-pwv-black hover:border-pwv-green/50 hover:bg-pwv-gray/20';
 ---
 
-<nav class={terminalTheme ? 'mb-6' : 'mb-8 border-b border-pwv-gray pb-4'}>
+<nav class="mb-8 border-b border-pwv-gray pb-4">
   <div class="flex flex-wrap gap-2">
     {
       navItems.map((item) => (
         <a
           href={item.href}
           class={`inline-flex items-center gap-2 rounded-full border-2 px-4 py-2 text-sm font-medium transition-all ${
-            isActive(item.href)
-              ? (terminalTheme ? terminalActiveClass : standardActiveClass)
-              : (terminalTheme ? terminalInactiveClass : standardInactiveClass)
+            isActive(item.href) ? activeClass : inactiveClass
           }`}
         >
           <span class="text-base">{item.icon}</span>

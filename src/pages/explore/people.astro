@@ -5,6 +5,7 @@ import Heading1 from '../../components/Heading1.astro';
 import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
 import PersonCard from '../../components/explore/PersonCard.astro';
 import ExploreNav from '../../components/explore/ExploreNav.astro';
+import TerminalCTA from '../../components/explore/TerminalCTA.astro';
 
 const title = 'Explore People';
 const description = 'Discover people mentioned in PWV blog posts, extracted and aggregated from our content.';
@@ -64,7 +65,9 @@ const getColor = (name: string, index: number) => {
       {people.length} people mentioned across {postEntities.length} posts
     </Heading2NoUnderline>
 
-    <ExploreNav currentPath="/explore/people" />
+    <ExploreNav currentPath="/explore/people/" />
+
+    <TerminalCTA />
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
       {

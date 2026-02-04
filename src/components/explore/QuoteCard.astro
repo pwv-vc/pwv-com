@@ -12,13 +12,16 @@ interface Props {
   postTitle: string;
   pubDate?: string;
   borderColor: string;
+  quoteIndex?: number;
 }
 
-const { quote, speaker, context, postSlug, postTitle, pubDate, borderColor } = Astro.props;
+const { quote, speaker, context, postSlug, postTitle, pubDate, borderColor, quoteIndex = 0 } = Astro.props;
 
-// Create share URL and text
+// Create share URL and text - link to the quote detail page on PWV
 const siteUrl = Astro.site || 'https://pwv.com';
-const shareUrl = new URL(`/news/${postSlug}`, siteUrl).toString();
+const quoteId = `${postSlug}-${quoteIndex}`;
+const detailPageUrl = `/explore/quotes/${quoteId}/`;
+const shareUrl = new URL(detailPageUrl, siteUrl).toString();
 const shareText = `"${quote}" — ${speaker}`;
 
 // Load post data to get hero image and date
@@ -61,6 +64,7 @@ const postData = post ? [{
       shareUrl={shareUrl}
       shareText={shareText}
       shareType="quote"
+      detailPageUrl={detailPageUrl}
     />
   </div>
 </EntityCard>

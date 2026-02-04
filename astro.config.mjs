@@ -89,8 +89,8 @@ export default defineConfig({
           } else if (item.url.endsWith('/apply/')) {
             item.changefreq = 'monthly';
             item.priority = 0.6;
-          } else if (item.url.endsWith('/explore/')) {
-            // Explore terminal page
+          } else if (item.url.endsWith('/terminal/')) {
+            // Terminal interface page
             item.changefreq = 'weekly';
             item.priority = 0.7;
           } else if (item.url.endsWith('/explore/companies/')) {

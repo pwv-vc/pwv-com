@@ -23,10 +23,11 @@ unicorn scale in under 24 months.
 - [About](https://pwv.com/about): About PWV, how we invest, and our team
 - [Portfolio](https://pwv.com/portfolio): Our investment portfolio
 - [News](https://pwv.com/news): Posts, insights, and announcements from PWV and our community
-- [Explore](https://pwv.com/explore/): Discovery terminal and entity exploration pages
+- [Explore](https://pwv.com/explore/): Entity exploration pages for discovering companies, people, and quotes
   - [Companies](https://pwv.com/explore/companies/): Companies mentioned across blog posts with logos and related content
   - [People](https://pwv.com/explore/people/): People featured in posts with avatars, roles, and contributions
   - [Quotes](https://pwv.com/explore/quotes/): Notable quotes from posts with speaker attribution and context
+- [Terminal](https://pwv.com/terminal/): Interactive terminal interface for exploring PWV data via command-line style interface
 - [What is PWV?](https://pwv.com/what-is-pwv): Disambiguation page explaining PWV and clarifying confusion with other meanings
 
 ## Portfolio

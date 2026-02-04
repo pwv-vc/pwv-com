@@ -5,6 +5,7 @@ import Heading1 from '../../components/Heading1.astro';
 import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
 import CompanyCard from '../../components/explore/CompanyCard.astro';
 import ExploreNav from '../../components/explore/ExploreNav.astro';
+import TerminalCTA from '../../components/explore/TerminalCTA.astro';
 
 const title = 'Explore Companies';
 const description = 'Discover companies mentioned in PWV blog posts, extracted and aggregated from our content.';
@@ -81,7 +82,9 @@ const getColor = (name: string, index: number) => {
       {companies.length} companies mentioned across {postEntities.length} posts
     </Heading2NoUnderline>
 
-    <ExploreNav currentPath="/explore/companies" />
+    <ExploreNav currentPath="/explore/companies/" />
+
+    <TerminalCTA />
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
       {

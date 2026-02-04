@@ -3,9 +3,10 @@ interface Props {
   shareUrl: string;
   shareText: string;
   shareType: 'quote' | 'person' | 'company';
+  detailPageUrl?: string;
 }
 
-const { shareUrl, shareText, shareType } = Astro.props;
+const { shareUrl, shareText, shareType, detailPageUrl } = Astro.props;
 
 // Encode text for URLs
 const encodedText = encodeURIComponent(shareText);
@@ -18,7 +19,20 @@ const blueskyUrl = `https://bsky.app/intent/compose?text=${encodedText}%20${enco
 ---
 
 <div class="flex flex-col items-center gap-2 pt-3 border-t border-pwv-black/10">
-  <div class="flex gap-2">
+  <div class="flex gap-2 items-center">
+    {detailPageUrl && (
+      <a
+        href={detailPageUrl}
+        class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-pwv-green hover:bg-pwv-black text-white transition-colors"
+        title={`View ${shareType} details`}
+        aria-label={`View ${shareType} details`}
+      >
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+        </svg>
+      </a>
+    )}
     <a
       href={twitterUrl}
       target="_blank"

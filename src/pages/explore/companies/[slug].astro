@@ -1,0 +1,120 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Heading1 from '../../../components/Heading1.astro';
+import CompanyCard from '../../../components/explore/CompanyCard.astro';
+import EntitySEO from '../../../components/explore/EntitySEO.astro';
+
+export async function getStaticPaths() {
+  const postEntities = await getCollection('extractedPostEntities');
+  
+  // Load portfolio companies for logo matching
+  const [rolling, angel, fund1] = await Promise.all([
+    getCollection('rollingFundPortfolio'),
+    getCollection('angelPortfolio'),
+    getCollection('fundOnePortfolio'),
+  ]);
+
+  const portfolioMap = new Map<string, { slug: string; url: string }>();
+  for (const entry of [...rolling, ...angel, ...fund1]) {
+    const normalized = entry.data.name.toLowerCase().trim();
+    portfolioMap.set(normalized, { 
+      slug: entry.data.slug,
+      url: entry.data.url 
+    });
+  }
+
+  const companiesMap = new Map<string, { posts: string[], mentions: number, portfolioSlug?: string, url?: string }>();
+
+  for (const post of postEntities) {
+    const { slug, companies } = post.data;
+
+    companies.forEach(company => {
+      if (!companiesMap.has(company)) {
+        const normalized = company.toLowerCase().trim();
+        const portfolioData = portfolioMap.get(normalized);
+        companiesMap.set(company, { 
+          posts: [], 
+          mentions: 0,
+          portfolioSlug: portfolioData?.slug,
+          url: portfolioData?.url
+        });
+      }
+      const companyData = companiesMap.get(company)!;
+      companyData.posts.push(slug);
+      companyData.mentions += 1;
+    });
+  }
+
+  return Array.from(companiesMap.entries()).map(([name, data]) => {
+    const slug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+    return {
+      params: { slug },
+      props: { 
+        name,
+        ...data,
+      },
+    };
+  });
+}
+
+const { name, mentions, posts, portfolioSlug, url } = Astro.props;
+
+const title = `${name} | PWV Explore`;
+const description = `${name} mentioned ${mentions} time${mentions === 1 ? '' : 's'} across ${posts.length} PWV blog post${posts.length === 1 ? '' : 's'}. Explore companies featured in PWV content.`;
+const companySlug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+const pageUrl = `/explore/companies/${companySlug}/`;
+
+// Get hero image from first post if available
+const allPosts = await getCollection('posts');
+const firstPost = posts[0] ? allPosts.find(p => p.id === posts[0]) : null;
+const heroImageUrl = firstPost?.data.heroImage;
+---
+
+<EntitySEO 
+  title={title}
+  description={description}
+  type="company"
+  entityName={name}
+  url={pageUrl}
+  imageUrl={heroImageUrl}
+/>
+
+<Layout title={title} description={description}>
+  <section class="mx-auto mb-12 max-w-4xl">
+    <div class="mb-8">
+      <a href="/explore/companies/" class="text-sm text-pwv-black/60 hover:text-pwv-green transition-colors">
+        ← Back to all companies
+      </a>
+    </div>
+
+    <Heading1>{name}</Heading1>
+    
+    <div class="mb-8">
+      <p class="text-lg text-pwv-black/80">
+        Featured in <span class="font-bold">{posts.length}</span> PWV blog post{posts.length === 1 ? '' : 's'} 
+        with <span class="font-bold">{mentions}</span> mention{mentions === 1 ? '' : 's'}.
+      </p>
+    </div>
+
+    <div class="max-w-md mx-auto mb-8">
+      <CompanyCard
+        name={name}
+        mentions={mentions}
+        posts={posts}
+        borderColor="pwv-soft-periwinkle"
+        portfolioSlug={portfolioSlug}
+        url={url}
+      />
+    </div>
+
+    <div class="text-center mt-8">
+      <a 
+        href="/explore/companies/"
+        class="inline-block rounded-full border-2 border-pwv-black bg-pwv-black px-6 py-3 text-white hover:bg-pwv-green hover:border-pwv-green transition-colors"
+      >
+        Explore more companies
+      </a>
+    </div>
+  </section>
+</Layout>

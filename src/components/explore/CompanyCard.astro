@@ -1,8 +1,8 @@
 ---
+import { Image as UnpicImage } from '@unpic/astro';
 import { getCollection } from 'astro:content';
 import { resolveImageSrc } from '../../lib/images';
 import EntityCard from './EntityCard.astro';
-import EntityHeader from './EntityHeader.astro';
 import ShareButtons from './ShareButtons.astro';
 import RelatedPosts from './RelatedPosts.astro';
 
@@ -17,9 +17,11 @@ interface Props {
 
 const { name, mentions, posts, borderColor, portfolioSlug, url } = Astro.props;
 
-// Create share URL and text
+// Create share URL and text - link to company detail page on PWV
 const siteUrl = Astro.site || 'https://pwv.com';
-const shareUrl = url || new URL('/explore/companies/', siteUrl).toString();
+const companySlug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+const detailPageUrl = `/explore/companies/${companySlug}/`;
+const shareUrl = new URL(detailPageUrl, siteUrl).toString();
 const shareText = `${name} - Featured in ${posts.length} PWV post${posts.length === 1 ? '' : 's'}`;
 
 // Load post data to get titles, hero images, and dates
@@ -60,13 +62,36 @@ try {
   <div class="flex flex-col gap-4 h-full">
     <div class="flex-1 flex flex-col gap-4">
       <!-- Company Header -->
-      <EntityHeader 
-        type="company"
-        name={name}
-        imageSrc={logoSrc}
-        url={url}
-        borderColor={borderColor}
-      />
+      <div class={`flex items-center gap-3 -m-6 mb-0 p-4 rounded-t-lg bg-${borderColor}/20`}>
+        {logoSrc ? (
+          <UnpicImage
+            src={logoSrc}
+            alt={`${name} logo`}
+            width={48}
+            height={48}
+            class="flex-shrink-0 rounded border-2 border-white bg-white p-1 shadow-sm"
+          />
+        ) : (
+          <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded border-2 border-white bg-white text-2xl shadow-sm">
+            🏢
+          </div>
+        )}
+        <div class="flex-1 min-w-0">
+          {url ? (
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-serif text-xl font-medium hover:underline break-words"
+              onclick="event.stopPropagation();"
+            >
+              {name}
+            </a>
+          ) : (
+            <h3 class="font-serif text-xl font-medium break-words">{name}</h3>
+          )}
+        </div>
+      </div>
 
       <!-- Related Posts -->
       <RelatedPosts posts={postData} borderColor={borderColor} />
@@ -77,6 +102,7 @@ try {
       shareUrl={shareUrl}
       shareText={shareText}
       shareType="company"
+      detailPageUrl={detailPageUrl}
     />
   </div>
 </EntityCard>

@@ -5,6 +5,7 @@ import Heading1 from '../../components/Heading1.astro';
 import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
 import QuoteCard from '../../components/explore/QuoteCard.astro';
 import ExploreNav from '../../components/explore/ExploreNav.astro';
+import TerminalCTA from '../../components/explore/TerminalCTA.astro';
 
 const title = 'Explore Quotes';
 const description = 'Discover insightful quotes from PWV blog posts, extracted and curated from our content.';
@@ -25,12 +26,13 @@ const quotesArray: Array<{
 for (const post of postEntities) {
   const { slug, title: postTitle, quotes, pubDate } = post.data;
 
-  quotes.forEach(quote => {
+  quotes.forEach((quote, quoteIndex) => {
     quotesArray.push({
       ...quote,
       postSlug: slug,
       postTitle: postTitle,
       pubDate: pubDate || undefined,
+      quoteIndex,
     });
   });
 }
@@ -66,7 +68,9 @@ const getColor = (text: string, index: number) => {
       {quotes.length} quotes collected from {postEntities.length} posts
     </Heading2NoUnderline>
 
-    <ExploreNav currentPath="/explore/quotes" />
+    <ExploreNav currentPath="/explore/quotes/" />
+
+    <TerminalCTA />
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
       {
@@ -78,6 +82,7 @@ const getColor = (text: string, index: number) => {
             postSlug={quote.postSlug}
             postTitle={quote.postTitle}
             pubDate={quote.pubDate}
+            quoteIndex={quote.quoteIndex}
             borderColor={getColor(quote.quote, index)}
           />
         ))
