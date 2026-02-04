@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import Heading1 from '../../components/Heading1.astro';
+import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
 import FactCard from '../../components/entities/FactCard.astro';
 import ShowcaseNav from '../../components/entities/ShowcaseNav.astro';
 import TerminalCTA from '../../components/entities/TerminalCTA.astro';
@@ -47,19 +49,17 @@ const description = 'Key insights, trends, and announcements from PWV posts';
 ---
 
 <Layout title={title} description={description}>
-  <main class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-    <div class="mb-8">
-      <h1 class="font-serif text-4xl font-bold text-pwv-black md:text-5xl">
-        Showcase Facts
-      </h1>
-      <p class="mt-2 text-lg text-pwv-black/70">
-        {factsWithContext.length} key insights, trends, and announcements from PWV posts
-      </p>
-    </div>
+  <section class="mx-auto mb-12">
+    <Heading1>{title}</Heading1>
+    <Heading2NoUnderline>
+      {factsWithContext.length} key insights, trends, and announcements from PWV posts
+    </Heading2NoUnderline>
 
     <ShowcaseNav currentPath="/showcase/facts/" />
 
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <TerminalCTA />
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
       {factsWithContext.map((fact, index) => (
         <FactCard
           fact={fact.text}
@@ -74,6 +74,10 @@ const description = 'Key insights, trends, and announcements from PWV posts';
       ))}
     </div>
 
-    <TerminalCTA />
-  </main>
+    {factsWithContext.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-lg text-pwv-black/60">No facts found yet.</p>
+      </div>
+    )}
+  </section>
 </Layout>
