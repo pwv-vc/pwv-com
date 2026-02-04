@@ -58,7 +58,9 @@ const categoryColor = categoryColors[category] || 'pwv-soft-periwinkle';
       <!-- Fact Text -->
       <div class={`-m-6 mb-0 p-6 rounded-t-lg bg-${borderColor}/10`}>
         <div class="flex items-start gap-3">
-          <span class="text-2xl flex-shrink-0">💡</span>
+          <div class="flex-shrink-0 text-pwv-black">
+            <DocumentIcon class="h-6 w-6" />
+          </div>
           <p class="font-serif text-lg leading-relaxed text-pwv-black flex-1">
             {fact}
           </p>
