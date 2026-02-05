@@ -1,24 +1,43 @@
 ---
-// Fun terminal-themed CTA for explore pages
+// Terminal-themed CTA with instructions
 ---
 
-<div class="my-8 rounded-lg border-2 border-pwv-green/40 bg-pwv-black p-6 text-pwv-green">
-  <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-    <div class="flex-1">
-      <div class="mb-2 flex items-center gap-2">
-        <span class="text-2xl">💻</span>
-        <h3 class="font-mono text-lg font-bold">Try Terminal Mode</h3>
-      </div>
-      <p class="font-mono text-sm text-pwv-green/80">
-        <span class="text-pwv-green">$</span> Explore PWV data with an interactive terminal interface
-      </p>
+<div class="my-8 rounded-lg border-2 border-pwv-green/40 bg-pwv-black p-8 text-pwv-green">
+  <div class="flex flex-col gap-6">
+    <!-- Header -->
+    <div class="flex items-center gap-3">
+      <span class="text-3xl">💻</span>
+      <h1 class="font-mono text-2xl font-bold">Terminal</h1>
     </div>
-    <a
-      href="/terminal/"
-      class="inline-flex items-center gap-2 rounded-full border-2 border-pwv-green bg-transparent px-6 py-3 font-mono text-sm font-medium text-pwv-green transition-all hover:bg-pwv-green hover:text-pwv-black"
-    >
-      <span>Launch Terminal</span>
-      <span>→</span>
-    </a>
+
+    <!-- How to use section -->
+    <div class="space-y-4">
+      <h2 class="font-mono text-lg font-semibold text-pwv-green/90">How to use</h2>
+      <ul class="space-y-3 font-mono text-sm text-pwv-green/80">
+        <li class="flex items-start gap-2">
+          <span class="text-pwv-green">▸</span>
+          <span>Use our portfolio terminal to find industry highlights, raises, feature announcements and more</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-pwv-green">▸</span>
+          <span>View aggregate news and insights from the PWV ecosystem</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-pwv-green">▸</span>
+          <span>Share on social</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- CTA Button -->
+    <div class="flex justify-start">
+      <a
+        href="/terminal/"
+        class="inline-flex items-center gap-2 rounded-full border-2 border-pwv-green bg-transparent px-8 py-3 font-mono text-sm font-medium text-pwv-green transition-all hover:bg-pwv-green hover:text-pwv-black"
+      >
+        <span>Launch Terminal</span>
+        <span>→</span>
+      </a>
+    </div>
   </div>
 </div>

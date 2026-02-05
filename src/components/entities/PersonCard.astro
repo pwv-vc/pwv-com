@@ -22,7 +22,7 @@ const siteUrl = Astro.site || 'https://pwv.com';
 const personSlug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
 const detailPageUrl = `/showcase/people/${personSlug}/`;
 const shareUrl = new URL(detailPageUrl, siteUrl).toString();
-const shareText = `${name}${role ? ` (${role})` : ''} - Featured in ${posts.length} PWV post${posts.length === 1 ? '' : 's'}`;
+const shareText = `${name}${role ? ` (${role})` : ''} - Featured in ${posts.length} PWV ${posts.length === 1 ? 'post' : 'posts'}`;
 
 // Load post data to get titles, hero images, and dates
 const allPosts = await getCollection('posts');

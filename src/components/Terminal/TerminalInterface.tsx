@@ -26,6 +26,8 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     return new QueryEngine(entitiesData as ExtractedData, width);
   });
   const [isTyping, setIsTyping] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [showMoreCommands, setShowMoreCommands] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLDivElement>(null);
 
@@ -34,12 +36,13 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     inputRef.current?.focus();
   }, []);
 
-  // Handle responsive box width
+  // Handle responsive box width and mobile detection
   useEffect(() => {
     const handleResize = () => {
       const newWidth = getBoxWidth();
       setBoxWidth(newWidth);
       queryEngine.setBoxWidth(newWidth);
+      setIsMobile(window.innerWidth < 768);
     };
 
     // Set initial width
@@ -57,24 +60,22 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     }
   }, [history]);
 
-  // Handle command submission
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!input.trim()) return;
+  // Execute a command (used by both form submit and touch buttons)
+  const executeCommand = (commandText: string) => {
+    if (!commandText.trim()) return;
 
     // Clear command
-    if (input.trim().toLowerCase() === 'clear' || input.trim().toLowerCase() === 'cls') {
+    if (commandText.trim().toLowerCase() === 'clear' || commandText.trim().toLowerCase() === 'cls') {
       setHistory([]);
       setInput('');
       return;
     }
 
     // Execute command
-    const result = queryEngine.executeCommand(input);
+    const result = queryEngine.executeCommand(commandText);
     
     const newEntry: HistoryEntry = {
-      command: input,
+      command: commandText,
       result,
       timestamp: new Date(),
     };
@@ -82,6 +83,7 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     setHistory([...history, newEntry]);
     setInput('');
     setHistoryIndex(-1);
+    setShowMoreCommands(false);
 
     // Auto-open post if requested
     if (result.type === 'post' && result.data?.autoOpen && result.data?.url) {
@@ -89,6 +91,17 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
         window.open(result.data.url, '_blank');
       }, 500);
     }
+  };
+
+  // Handle command submission from form
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    executeCommand(input);
+  };
+
+  // Handle touch command button click
+  const handleCommandClick = (command: string) => {
+    executeCommand(command);
   };
 
   // Handle keyboard navigation
@@ -122,26 +135,27 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     }
   };
 
-  // Convert /news/ paths to clickable links with trailing slashes
+  // Convert /news/ and /showcase/ paths to clickable links with trailing slashes
   const linkifyContent = (text: string) => {
     const lines = text.split('\n');
     return lines.map((line, lineIndex) => {
-      // Match /news/ paths (with or without trailing slash)
-      const newsLinkRegex = /\/news\/([a-z0-9-]+)\/?/g;
+      // Match /news/ and /showcase/ paths (with or without trailing slash)
+      const linkRegex = /\/(news|showcase)\/([a-z0-9-]+(?:\/[a-z0-9-]+)?)\/?/g;
       const parts: (string | JSX.Element)[] = [];
       let lastIndex = 0;
       let match;
 
-      while ((match = newsLinkRegex.exec(line)) !== null) {
+      while ((match = linkRegex.exec(line)) !== null) {
         // Add text before the link
         if (match.index > lastIndex) {
           parts.push(line.substring(lastIndex, match.index));
         }
         
         // Add the link with trailing slash
-        const slug = match[1];
+        const pathType = match[1]; // 'news' or 'showcase'
+        const pathRest = match[2]; // rest of path
         const displayPath = match[0]; // Keep original display (might not have /)
-        const linkPath = `/news/${slug}/`; // Always add trailing slash for href
+        const linkPath = `/${pathType}/${pathRest}/`; // Always add trailing slash for href
         
         parts.push(
           <a
@@ -172,6 +186,28 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     });
   };
 
+  // Get available numbers from last result
+  const getAvailableNumbers = (): number[] => {
+    if (history.length === 0) return [];
+    const lastEntry = history[history.length - 1];
+    const { result } = lastEntry;
+    
+    // Check if last result was a list type
+    if (result.type === 'list' || result.type === 'company' || result.type === 'person' || result.type === 'topic' || result.type === 'investor') {
+      // Count numbered items in the output
+      const content = result.content || '';
+      const matches = content.match(/^\s*\d+\./gm);
+      if (matches) {
+        return Array.from({ length: matches.length }, (_, i) => i + 1);
+      }
+    }
+    return [];
+  };
+
+  // Popular commands for touch mode
+  const popularCommands = ['portfolio', 'companies', 'people', 'topics', 'quotes', 'facts'];
+  const moreCommands = ['figures', 'investors', 'showcase random', 'stats', 'surprise me', 'help', 'clear'];
+
   // Render output with typewriter effect for certain types
   const renderOutput = (entry: HistoryEntry, index: number) => {
     const { result } = entry;
@@ -195,12 +231,14 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
         {/* Helper text for lists */}
         {result.type === 'list' || result.type === 'company' || result.type === 'person' || result.type === 'topic' ? (
           <div className="mt-2 text-xs text-pwv-teal opacity-70">
-            Type a number to select an item from the list above
+            {isMobile ? 'Tap a number below to select' : 'Type a number to select an item from the list above'}
           </div>
         ) : null}
       </div>
     );
   };
+
+  const availableNumbers = getAvailableNumbers();
 
   return (
     <div className="terminal-interface" style={{ display: 'block', minHeight: '60px' }}>
@@ -211,6 +249,61 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
       >
         {history.map((entry, index) => renderOutput(entry, index))}
       </div>
+
+      {/* Touch mode: Number selection buttons (mobile only, when numbers available) */}
+      {isMobile && availableNumbers.length > 0 && (
+        <div className="mb-4 pb-3 border-b border-pwv-green/30">
+          <div className="text-xs text-pwv-teal mb-2 font-mono">Select:</div>
+          <div className="flex flex-wrap gap-2">
+            {availableNumbers.map((num) => (
+              <button
+                key={num}
+                onClick={() => handleCommandClick(num.toString())}
+                className="px-3 py-1.5 bg-pwv-green/10 border border-pwv-green/40 rounded text-pwv-green font-mono text-sm hover:bg-pwv-green/20 active:bg-pwv-green/30 transition-colors"
+              >
+                {num}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Touch mode: Command buttons (mobile only) */}
+      {isMobile && (
+        <div className="mb-4 pb-3 border-b border-pwv-green/30">
+          <div className="text-xs text-pwv-teal mb-2 font-mono">Commands:</div>
+          <div className="flex flex-wrap gap-2">
+            {popularCommands.map((cmd) => (
+              <button
+                key={cmd}
+                onClick={() => handleCommandClick(cmd)}
+                className="px-3 py-1.5 bg-pwv-green/10 border border-pwv-green/40 rounded text-pwv-green font-mono text-xs hover:bg-pwv-green/20 active:bg-pwv-green/30 transition-colors"
+              >
+                {cmd}
+              </button>
+            ))}
+            <button
+              onClick={() => setShowMoreCommands(!showMoreCommands)}
+              className="px-3 py-1.5 bg-pwv-teal/10 border border-pwv-teal/40 rounded text-pwv-teal font-mono text-xs hover:bg-pwv-teal/20 active:bg-pwv-teal/30 transition-colors"
+            >
+              {showMoreCommands ? '− Less' : '+ More'}
+            </button>
+          </div>
+          {showMoreCommands && (
+            <div className="flex flex-wrap gap-2 mt-2">
+              {moreCommands.map((cmd) => (
+                <button
+                  key={cmd}
+                  onClick={() => handleCommandClick(cmd)}
+                  className="px-3 py-1.5 bg-pwv-green/10 border border-pwv-green/40 rounded text-pwv-green font-mono text-xs hover:bg-pwv-green/20 active:bg-pwv-green/30 transition-colors"
+                >
+                  {cmd}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Input area - Always visible */}
       <form 
@@ -231,17 +324,18 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
           spellCheck={false}
           autoComplete="off"
           autoCapitalize="off"
-          placeholder="Type 'help'..."
+          placeholder={isMobile ? "Or type here..." : "Type 'help'..."}
           style={{ fontSize: '16px' }}
         />
         <span className="cursor-blink text-pwv-green text-base md:text-lg flex-shrink-0">█</span>
       </form>
 
       {/* Mobile helper */}
-      <div className="sm:hidden mt-3 text-xs text-pwv-green/50 space-y-1">
-        <p>💡 Tap input to type commands</p>
-        <p>Try: <span className="text-pwv-teal">help</span>, <span className="text-pwv-teal">surprise me</span></p>
-      </div>
+      {isMobile && history.length === 0 && (
+        <div className="mt-3 text-xs text-pwv-green/50 space-y-1">
+          <p>💡 Tap command buttons above or type below</p>
+        </div>
+      )}
     </div>
   );
 };

@@ -23,6 +23,13 @@ export class QueryEngine {
   }
 
   /**
+   * Generate slug from entity name
+   */
+  private generateSlug(name: string): string {
+    return name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+  }
+
+  /**
    * Update box width dynamically (for responsive design)
    */
   setBoxWidth(width: number) {
@@ -163,6 +170,18 @@ export class QueryEngine {
       return this.listQuotes();
     }
 
+    if (command === 'list facts' || command === 'facts') {
+      return this.listFacts();
+    }
+
+    if (command === 'list figures' || command === 'figures') {
+      return this.listFigures();
+    }
+
+    if (command === 'list portfolio' || command === 'portfolio') {
+      return this.listPortfolio();
+    }
+
     // Stats command
     if (command === 'stats') {
       return this.showStats();
@@ -173,10 +192,12 @@ export class QueryEngine {
       return this.surpriseMe();
     }
 
-    // Discovery commands
-    if (command.startsWith('discover ')) {
-      const args = input.substring(9).trim();
-      return this.discover(args);
+    // Showcase commands (also accept "discover" for backwards compatibility)
+    if (command.startsWith('showcase ') || command.startsWith('discover ')) {
+      const args = command.startsWith('showcase ')
+        ? input.substring(9).trim()
+        : input.substring(9).trim();
+      return this.showcase(args);
     }
 
     // Timeline commands
@@ -229,7 +250,7 @@ export class QueryEngine {
    */
   private showHelp(): CommandResult {
     const helpText = `
->> PWV DISCOVERY TERMINAL
+>> PWV TERMINAL
 ─────────────────────────────────────────────────────
 
 LIST COMMANDS:
@@ -238,14 +259,17 @@ LIST COMMANDS:
   • people                 List all people
   • topics                 List all topics
   • quotes                 Browse all quotes
+  • facts                  Browse all facts
+  • figures                Browse all figures/metrics
+  • portfolio              Browse PWV portfolio companies
   • <number>               Select item from last list
 
-DISCOVERY COMMANDS:
-  • discover random        Random fact/figure/entity
-  • discover company <name>   Info about a company
-  • discover investor <name>  Info about an investor/VC
-  • discover person <name>    Info about a person
-  • discover topic <topic>    Posts about a topic
+SHOWCASE COMMANDS:
+  • showcase random        Random fact/figure/entity
+  • showcase company <name>   Info about a company
+  • showcase investor <name>  Info about an investor/VC
+  • showcase person <name>    Info about a person
+  • showcase topic <topic>    Posts about a topic
 
 EXPLORATION:
   • surprise me            Random combination of entities
@@ -273,7 +297,7 @@ Example: companies → 1 → (shows company details)
    */
   private listCompanies(): CommandResult {
     const companies = Object.keys(this.data.entities.companies).sort();
-    
+
     this.currentList = companies.map((name, index) => ({
       id: name,
       label: name,
@@ -302,7 +326,7 @@ Example: companies → 1 → (shows company details)
    */
   private listInvestors(): CommandResult {
     const investors = Object.keys(this.data.entities.investors).sort();
-    
+
     this.currentList = investors.map((name, index) => ({
       id: name,
       label: name,
@@ -331,7 +355,7 @@ Example: companies → 1 → (shows company details)
    */
   private listPeople(): CommandResult {
     const people = Object.keys(this.data.entities.people).sort();
-    
+
     this.currentList = people.map((name, index) => ({
       id: name,
       label: name,
@@ -360,7 +384,7 @@ Example: companies → 1 → (shows company details)
    */
   private listTopics(): CommandResult {
     const topics = Object.keys(this.data.entities.topics).sort();
-    
+
     this.currentList = topics.map((name, index) => ({
       id: name,
       label: name,
@@ -389,7 +413,7 @@ Example: companies → 1 → (shows company details)
    */
   private listQuotes(): CommandResult {
     const quotes = this.data.entities.quotes || [];
-    
+
     if (quotes.length === 0) {
       return {
         type: 'text',
@@ -421,6 +445,215 @@ Example: companies → 1 → (shows company details)
   }
 
   /**
+   * List all facts from all posts
+   */
+  private listFacts(): CommandResult {
+    const facts: Array<{
+      text: string;
+      category: string;
+      date?: string;
+      postSlug: string;
+      postTitle: string;
+    }> = [];
+
+    // Aggregate facts from all posts
+    Object.entries(this.data.posts).forEach(([slug, post]) => {
+      if (post.facts && post.facts.length > 0) {
+        post.facts.forEach((fact) => {
+          facts.push({
+            text: fact.text,
+            category: fact.category,
+            date: fact.date,
+            postSlug: slug,
+            postTitle: post.title,
+          });
+        });
+      }
+    });
+
+    if (facts.length === 0) {
+      return {
+        type: 'text',
+        content: 'No facts found in the corpus.',
+      };
+    }
+
+    // Sort by date if available (newest first)
+    facts.sort((a, b) => {
+      if (!a.date || !b.date) return 0;
+      return b.date.localeCompare(a.date);
+    });
+
+    const listItems = facts.map((fact, index) => {
+      const num = (index + 1).toString().padStart(3, ' ');
+      const categoryBadge = `[${fact.category}]`;
+      const dateStr = fact.date ? ` (${fact.date})` : '';
+      const truncatedFact = fact.text.length > 70 ? fact.text.substring(0, 70) + '...' : fact.text;
+      return `${num}. ${truncatedFact}\n       ${categoryBadge}${dateStr} - ${fact.postTitle.substring(0, 40)}...`;
+    });
+
+    const output = this.buildBox([
+      { type: 'header', content: 'ALL FACTS' },
+      { type: 'text', content: `Found ${facts.length} facts` },
+      { type: 'divider' },
+      { type: 'list', content: listItems },
+    ]);
+
+    return { type: 'list', content: output };
+  }
+
+  /**
+   * List all figures/metrics from all posts
+   */
+  private listFigures(): CommandResult {
+    const figures: Array<{
+      value: string;
+      unit: string;
+      context: string;
+      postSlug: string;
+      postTitle: string;
+    }> = [];
+
+    // Aggregate figures from all posts
+    Object.entries(this.data.posts).forEach(([slug, post]) => {
+      if (post.figures && post.figures.length > 0) {
+        post.figures.forEach((figure) => {
+          figures.push({
+            value: figure.value,
+            unit: figure.unit,
+            context: figure.context,
+            postSlug: slug,
+            postTitle: post.title,
+          });
+        });
+      }
+    });
+
+    if (figures.length === 0) {
+      return {
+        type: 'text',
+        content: 'No figures found in the corpus.',
+      };
+    }
+
+    const listItems = figures.map((figure, index) => {
+      const num = (index + 1).toString().padStart(3, ' ');
+      const metric = `${figure.value}${figure.unit}`;
+      const truncatedContext = figure.context.length > 60 ? figure.context.substring(0, 60) + '...' : figure.context;
+      return `${num}. ${metric} - ${truncatedContext}\n       From: ${figure.postTitle.substring(0, 50)}...`;
+    });
+
+    const output = this.buildBox([
+      { type: 'header', content: 'ALL FIGURES' },
+      { type: 'text', content: `Found ${figures.length} figures` },
+      { type: 'divider' },
+      { type: 'list', content: listItems },
+    ]);
+
+    return { type: 'list', content: output };
+  }
+
+  /**
+   * List all portfolio companies
+   */
+  private listPortfolio(): CommandResult {
+    if (!this.data.portfolio) {
+      return {
+        type: 'text',
+        content: 'No portfolio data available.',
+      };
+    }
+
+    // Combine all portfolio companies
+    const allPortfolio = [
+      ...this.data.portfolio.representative.map(p => ({ ...p, fund: 'Representative' })),
+      ...this.data.portfolio.fundOne.map(p => ({ ...p, fund: 'Fund I' })),
+      ...this.data.portfolio.rollingFund.map(p => ({ ...p, fund: 'Rolling Fund' })),
+      ...this.data.portfolio.angel.map(p => ({ ...p, fund: 'Angel' })),
+    ];
+
+    // Sort alphabetically
+    allPortfolio.sort((a, b) => a.name.localeCompare(b.name));
+
+    // Create selectable list
+    this.currentList = allPortfolio.map((company, index) => ({
+      id: company.slug,
+      label: company.name,
+      type: 'company',
+      data: company,
+    }));
+
+    const listItems = allPortfolio.map((company, index) => {
+      const num = (index + 1).toString().padStart(3, ' ');
+      const tags = company.tags.join(', ');
+      const fundBadge = `[${company.fund}]`;
+
+      // Check if company is in our entities (has posts)
+      const hasEntityData = this.data.entities.companies[company.name];
+      const entityIndicator = hasEntityData ? ' 📰' : '';
+
+      return `${num}. ${company.name}${entityIndicator} ${fundBadge}\n       ${tags}`;
+    });
+
+    const output = this.buildBox([
+      { type: 'header', content: 'PWV PORTFOLIO' },
+      { type: 'text', content: `Found ${allPortfolio.length} portfolio companies` },
+      { type: 'text', content: '📰 = Has news/posts' },
+      { type: 'divider' },
+      { type: 'list', content: listItems },
+      { type: 'divider' },
+      { type: 'text', content: 'Type a number to view details (e.g., "1")' },
+    ]);
+
+    return { type: 'list', content: output };
+  }
+
+  /**
+   * Show portfolio company details
+   */
+  private showPortfolioCompany(company: any): CommandResult {
+    const portfolioUrl = `/portfolio/#${company.slug}`;
+
+    // Check if company has entity data (posts)
+    const entityData = this.data.entities.companies[company.name];
+    const showcaseUrl = entityData ? `/showcase/companies/${this.generateSlug(company.name)}/` : null;
+
+    const sections: BoxSection[] = [
+      { type: 'header', content: 'PORTFOLIO COMPANY' },
+      {
+        type: 'keyValue',
+        content: {
+          'NAME': company.name,
+          'FUND': company.fund,
+          'TAGS': company.tags.join(', '),
+          'WEBSITE': company.url,
+          'PORTFOLIO PAGE': portfolioUrl,
+          ...(showcaseUrl ? { 'SHOWCASE': showcaseUrl } : {}),
+          ...(company.formerly ? { 'FORMERLY': company.formerly } : {}),
+          ...(company.acquiredBy ? { 'ACQUIRED BY': company.acquiredBy } : {}),
+        }
+      },
+    ];
+
+    // If company has entity data, show posts info
+    if (entityData) {
+      sections.push({ type: 'divider' });
+      sections.push({
+        type: 'text',
+        content: `📰 This company has ${entityData.mentions} mentions in ${entityData.posts.length} posts`
+      });
+      sections.push({
+        type: 'text',
+        content: `Type: showcase company ${company.name}`
+      });
+    }
+
+    const output = this.buildBox(sections);
+
+    return { type: 'company', content: output, data: { company: company.name } };
+  }
+
+  /**
    * Select an item from the current list by number
    */
   private selectFromList(num: number): CommandResult {
@@ -441,9 +674,14 @@ Example: companies → 1 → (shows company details)
 
     const item = this.currentList[index];
 
-    // Route to appropriate discovery command
+    // Route to appropriate showcase command
     switch (item.type) {
       case 'company':
+        // Check if this is a portfolio company selection
+        if (item.data && 'fund' in item.data) {
+          return this.showPortfolioCompany(item.data);
+        }
+        // Otherwise it's an entity company
         return this.discoverCompanyWithPosts(item.id);
       case 'investor':
         return this.discoverInvestorWithPosts(item.id);
@@ -469,6 +707,18 @@ Example: companies → 1 → (shows company details)
     const totalTopics = Object.keys(this.data.entities.topics).length;
     const totalQuotes = (this.data.entities.quotes || []).length;
 
+    // Portfolio stats
+    const portfolioStats = this.data.portfolio ? {
+      representative: this.data.portfolio.representative.length,
+      fundOne: this.data.portfolio.fundOne.length,
+      rollingFund: this.data.portfolio.rollingFund.length,
+      angel: this.data.portfolio.angel.length,
+      total: this.data.portfolio.representative.length +
+             this.data.portfolio.fundOne.length +
+             this.data.portfolio.rollingFund.length +
+             this.data.portfolio.angel.length
+    } : null;
+
     // Calculate most mentioned company
     const topCompany = Object.entries(this.data.entities.companies).sort(
       ([, a], [, b]) => b.mentions - a.mentions
@@ -489,6 +739,15 @@ Example: companies → 1 → (shows company details)
       ([, a], [, b]) => b.mentions - a.mentions
     )[0];
 
+    const portfolioSection = portfolioStats ? `
+
+💼 PORTFOLIO:
+  Total Companies: ${portfolioStats.total}
+  Representative: ${portfolioStats.representative}
+  Fund I: ${portfolioStats.fundOne}
+  Rolling Fund: ${portfolioStats.rollingFund}
+  Angel: ${portfolioStats.angel}` : '';
+
     const stats = `
 >> CORPUS STATISTICS
 ─────────────────────────────────────────────────────
@@ -499,7 +758,7 @@ Example: companies → 1 → (shows company details)
   Investors Mentioned: ${totalInvestors}
   People Mentioned: ${totalPeople}
   Topics Identified: ${totalTopics}
-  Quotes Captured: ${totalQuotes}
+  Quotes Captured: ${totalQuotes}${portfolioSection}
 
 🏆 TOP MENTIONS:
   Most Mentioned Company: ${topCompany ? topCompany[0] : 'N/A'}
@@ -516,50 +775,50 @@ Example: companies → 1 → (shows company details)
   }
 
   /**
-   * Discover command handler
+   * Showcase command handler
    */
-  private discover(args: string): CommandResult {
+  private showcase(args: string): CommandResult {
     const lowerArgs = args.toLowerCase().trim();
 
-    // Random discovery
+    // Random showcase
     if (lowerArgs === 'random') {
-      return this.discoverRandom();
+      return this.showcaseRandom();
     }
 
-    // Company discovery
+    // Company showcase
     if (lowerArgs.startsWith('company ')) {
       const companyName = args.substring(8).trim();
-      return this.discoverCompany(companyName);
+      return this.showcaseCompany(companyName);
     }
 
-    // Investor discovery
+    // Investor showcase
     if (lowerArgs.startsWith('investor ')) {
       const investorName = args.substring(9).trim();
-      return this.discoverInvestor(investorName);
+      return this.showcaseInvestor(investorName);
     }
 
-    // Person discovery
+    // Person showcase
     if (lowerArgs.startsWith('person ')) {
       const personName = args.substring(7).trim();
-      return this.discoverPerson(personName);
+      return this.showcasePerson(personName);
     }
 
-    // Topic discovery
+    // Topic showcase
     if (lowerArgs.startsWith('topic ')) {
       const topicName = args.substring(6).trim();
-      return this.discoverTopic(topicName);
+      return this.showcaseTopic(topicName);
     }
 
     return {
       type: 'error',
-      content: `Invalid discover command. Try:\n- discover random\n- discover company <name>\n- discover investor <name>\n- discover person <name>\n- discover topic <topic>`,
+      content: `Invalid showcase command. Try:\n- showcase random\n- showcase company <name>\n- showcase investor <name>\n- showcase person <name>\n- showcase topic <topic>`,
     };
   }
 
   /**
-   * Discover random entity
+   * Showcase random entity
    */
-  private discoverRandom(): CommandResult {
+  private showcaseRandom(): CommandResult {
     const types = ['company', 'person', 'fact', 'figure', 'quote'];
     const randomType = types[Math.floor(Math.random() * types.length)];
 
@@ -568,12 +827,12 @@ Example: companies → 1 → (shows company details)
         const companies = Object.keys(this.data.entities.companies);
         const randomCompany =
           companies[Math.floor(Math.random() * companies.length)];
-        return this.discoverCompany(randomCompany);
+        return this.showcaseCompany(randomCompany);
       }
       case 'person': {
         const people = Object.keys(this.data.entities.people);
         const randomPerson = people[Math.floor(Math.random() * people.length)];
-        return this.discoverPerson(randomPerson);
+        return this.showcasePerson(randomPerson);
       }
       case 'fact': {
         const posts = Object.values(this.data.posts);
@@ -585,24 +844,21 @@ Example: companies → 1 → (shows company details)
           postsWithFacts[Math.floor(Math.random() * postsWithFacts.length)];
         const randomFact =
           randomPost.facts[Math.floor(Math.random() * randomPost.facts.length)];
-        
+
         const postSlug = Object.keys(this.data.posts).find(
           (key) => this.data.posts[key].title === randomPost.title
         );
-        
+
         const factDisplay = `
-╔══════════════════════════════════════════════════════════════╗
-║                       RANDOM FACT                            ║
-╠══════════════════════════════════════════════════════════════╣
-║                                                              ║
-║  "${randomFact.text}"
-║                                                              ║
-║  Category: ${randomFact.category}                                         ║
-║  Source: ${randomPost.title.substring(0, 40)}...             ║
-║                                                              ║
-║  READ MORE: /news/${postSlug}/                               ║
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝
+>> RANDOM FACT
+─────────────────────────────────────────────────────
+
+"${randomFact.text}"
+
+Category: ${randomFact.category}
+Source: ${randomPost.title}
+
+READ MORE: /news/${postSlug}/
         `;
         return { type: 'fact', content: factDisplay };
       }
@@ -620,17 +876,14 @@ Example: companies → 1 → (shows company details)
           randomPost.figures[
             Math.floor(Math.random() * randomPost.figures.length)
           ];
-        
+
         const figureDisplay = `
-╔══════════════════════════════════════════════════════════════╗
-║                      RANDOM FIGURE                           ║
-╠══════════════════════════════════════════════════════════════╣
-║                                                              ║
-║  Value: ${randomFigure.value} ${randomFigure.unit}                                      ║
-║  Context: ${randomFigure.context}                                 ║
-║  Source: ${randomPost.title.substring(0, 40)}...             ║
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝
+>> RANDOM FIGURE
+─────────────────────────────────────────────────────
+
+Value: ${randomFigure.value}${randomFigure.unit}
+Context: ${randomFigure.context}
+Source: ${randomPost.title}
         `;
         return { type: 'text', content: figureDisplay };
       }
@@ -640,21 +893,19 @@ Example: companies → 1 → (shows company details)
           return { type: 'text', content: 'No quotes found in the corpus.' };
         }
         const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-        
-        const contextLine = randomQuote.context ? `\n║  Context: ${randomQuote.context.substring(0, 50).padEnd(50)}  ║` : '';
-        const dateLine = randomQuote.pubDate ? `\n║  Date: ${randomQuote.pubDate.padEnd(53)}  ║` : '';
-        
+
+        const contextLine = randomQuote.context ? `Context: ${randomQuote.context}\n` : '';
+        const dateLine = randomQuote.pubDate ? `Date: ${randomQuote.pubDate}\n` : '';
+
         const quoteDisplay = `
-╔══════════════════════════════════════════════════════════════╗
-║                      QUOTE OF THE DAY                        ║
-╠══════════════════════════════════════════════════════════════╣
-║                                                              ║
-║  "${randomQuote.quote}"
-║                                                              ║
-║  — ${randomQuote.speaker.padEnd(57)}  ║${contextLine}${dateLine}
-║                                                              ║
-║  From: ${randomQuote.postTitle.substring(0, 50).padEnd(50)}  ║
-╚══════════════════════════════════════════════════════════════╝
+>> QUOTE OF THE DAY
+─────────────────────────────────────────────────────
+
+"${randomQuote.quote}"
+
+— ${randomQuote.speaker}
+${contextLine}${dateLine}
+From: ${randomQuote.postTitle}
         `;
         return { type: 'text', content: quoteDisplay };
       }
@@ -679,7 +930,9 @@ Example: companies → 1 → (shows company details)
     }
 
     const company = this.data.entities.companies[companyName];
-    
+    const companySlug = this.generateSlug(companyName);
+    const showcaseUrl = `/showcase/companies/${companySlug}/`;
+
     // Create selectable list of posts
     this.currentList = company.posts.map((slug) => ({
       id: slug,
@@ -697,11 +950,12 @@ Example: companies → 1 → (shows company details)
 
     const sections: BoxSection[] = [
       { type: 'header', content: 'COMPANY PROFILE' },
-      { 
-        type: 'keyValue', 
+      {
+        type: 'keyValue',
         content: {
           'NAME': companyName,
           'MENTIONS': `${company.mentions} posts`,
+          'SHOWCASE': showcaseUrl,
           ...(company.description ? { 'ABOUT': company.description } : {})
         }
       },
@@ -718,9 +972,9 @@ Example: companies → 1 → (shows company details)
   }
 
   /**
-   * Discover company (legacy - redirects to new version)
+   * Showcase company (redirects to version with posts)
    */
-  private discoverCompany(name: string): CommandResult {
+  private showcaseCompany(name: string): CommandResult {
     return this.discoverCompanyWithPosts(name);
   }
 
@@ -740,7 +994,9 @@ Example: companies → 1 → (shows company details)
     }
 
     const investor = this.data.entities.investors[investorName];
-    
+    const investorSlug = this.generateSlug(investorName);
+    const showcaseUrl = `/showcase/investors/${investorSlug}/`;
+
     // Create selectable list of posts
     this.currentList = investor.posts.map((slug) => ({
       id: slug,
@@ -758,11 +1014,12 @@ Example: companies → 1 → (shows company details)
 
     const sections: BoxSection[] = [
       { type: 'header', content: 'INVESTOR PROFILE' },
-      { 
-        type: 'keyValue', 
+      {
+        type: 'keyValue',
         content: {
           'NAME': investorName,
           'MENTIONS': `${investor.mentions} posts`,
+          'SHOWCASE': showcaseUrl,
         }
       },
       { type: 'divider' },
@@ -778,9 +1035,9 @@ Example: companies → 1 → (shows company details)
   }
 
   /**
-   * Discover investor (legacy - redirects to new version)
+   * Showcase investor (redirects to version with posts)
    */
-  private discoverInvestor(name: string): CommandResult {
+  private showcaseInvestor(name: string): CommandResult {
     return this.discoverInvestorWithPosts(name);
   }
 
@@ -800,7 +1057,9 @@ Example: companies → 1 → (shows company details)
     }
 
     const person = this.data.entities.people[personName];
-    
+    const personSlug = this.generateSlug(personName);
+    const showcaseUrl = `/showcase/people/${personSlug}/`;
+
     // Create selectable list of posts
     this.currentList = person.posts.map((slug) => ({
       id: slug,
@@ -818,12 +1077,13 @@ Example: companies → 1 → (shows company details)
 
     const output = this.buildBox([
       { type: 'header', content: 'PERSON PROFILE' },
-      { 
-        type: 'keyValue', 
+      {
+        type: 'keyValue',
         content: {
           'NAME': personName,
           'ROLE': person.role || 'Unknown',
           'MENTIONS': `${person.mentions} posts`,
+          'SHOWCASE': showcaseUrl,
         }
       },
       { type: 'divider' },
@@ -837,9 +1097,9 @@ Example: companies → 1 → (shows company details)
   }
 
   /**
-   * Discover person (legacy - redirects to new version)
+   * Showcase person (redirects to version with posts)
    */
-  private discoverPerson(name: string): CommandResult {
+  private showcasePerson(name: string): CommandResult {
     return this.discoverPersonWithPosts(name);
   }
 
@@ -859,7 +1119,9 @@ Example: companies → 1 → (shows company details)
     }
 
     const topic = this.data.entities.topics[topicName];
-    
+    const topicSlug = this.generateSlug(topicName);
+    const showcaseUrl = `/showcase/topics/${topicSlug}/`;
+
     // Create selectable list of posts
     this.currentList = topic.posts.map((slug) => ({
       id: slug,
@@ -877,11 +1139,12 @@ Example: companies → 1 → (shows company details)
 
     const output = this.buildBox([
       { type: 'header', content: 'TOPIC EXPLORER' },
-      { 
-        type: 'keyValue', 
+      {
+        type: 'keyValue',
         content: {
           'TOPIC': topicName,
           'MENTIONS': `${topic.mentions} posts`,
+          'SHOWCASE': showcaseUrl,
         }
       },
       { type: 'divider' },
@@ -895,9 +1158,9 @@ Example: companies → 1 → (shows company details)
   }
 
   /**
-   * Discover topic (legacy - redirects to new version)
+   * Showcase topic (redirects to version with posts)
    */
-  private discoverTopic(name: string): CommandResult {
+  private showcaseTopic(name: string): CommandResult {
     return this.discoverTopicWithPosts(name);
   }
 
@@ -915,11 +1178,11 @@ Example: companies → 1 → (shows company details)
 
     // Open the post in a new tab
     const url = `/news/${slug}/`;
-    
+
     const output = this.buildBox([
       { type: 'header', content: 'OPENING POST' },
-      { 
-        type: 'keyValue', 
+      {
+        type: 'keyValue',
         content: {
           'TITLE': post.title,
           'AUTHOR': post.author || 'Unknown',
@@ -933,8 +1196,8 @@ Example: companies → 1 → (shows company details)
     ]);
 
     // Return with post data so component can open it
-    return { 
-      type: 'post', 
+    return {
+      type: 'post',
       content: output,
       data: { slug, url, autoOpen: true }
     };
@@ -963,17 +1226,14 @@ Example: companies → 1 → (shows company details)
         .sort((a, b) => a.date.localeCompare(b.date));
 
       const timelineText = timeline
-        .map((entry) => `║  ${entry.date} → ${entry.title.substring(0, 35)}...\n║               /news/${entry.slug}/`)
-        .join('\n');
+        .map((entry) => `  ${entry.date} → ${entry.title}\n               /news/${entry.slug}/`)
+        .join('\n\n');
 
       const output = `
-╔══════════════════════════════════════════════════════════════╗
-║                 TIMELINE: ${companyName}                                    ║
-╠══════════════════════════════════════════════════════════════╣
-║                                                              ║
+>> TIMELINE: ${companyName}
+─────────────────────────────────────────────────────
+
 ${timelineText}
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝
       `;
 
       return { type: 'timeline', content: output };
@@ -1023,22 +1283,19 @@ ${timelineText}
     const connectionText = commonPosts
       .map((slug) => {
         const post = this.data.posts[slug];
-        return `║  • ${post.title.substring(0, 50)}...\n║    /news/${slug}/`;
+        return `  • ${post.title}\n    /news/${slug}/`;
       })
-      .join('\n');
+      .join('\n\n');
 
     const output = `
-╔══════════════════════════════════════════════════════════════╗
-║                      CONNECTIONS                             ║
-╠══════════════════════════════════════════════════════════════╣
-║                                                              ║
-║  "${entity1}" ←→ "${entity2}"                                       ║
-║                                                              ║
-║  ${commonPosts.length} common post(s) found:                                   ║
-║                                                              ║
+>> CONNECTIONS
+─────────────────────────────────────────────────────
+
+"${entity1}" ←→ "${entity2}"
+
+${commonPosts.length} common post(s) found:
+
 ${connectionText}
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝
     `;
 
     return { type: 'connection', content: output };
@@ -1094,13 +1351,13 @@ ${connectionText}
         const companies = Object.keys(this.data.entities.companies);
         const randomCompany =
           companies[Math.floor(Math.random() * companies.length)];
-        return this.discoverCompany(randomCompany);
+        return this.showcaseCompany(randomCompany);
       }
       case 'random_person_insight': {
         const people = Object.keys(this.data.entities.people);
         const randomPerson =
           people[Math.floor(Math.random() * people.length)];
-        return this.discoverPerson(randomPerson);
+        return this.showcasePerson(randomPerson);
       }
       case 'random_connection': {
         const entities = [
@@ -1108,7 +1365,7 @@ ${connectionText}
           ...Object.keys(this.data.entities.people),
         ];
         if (entities.length < 2) {
-          return this.discoverRandom();
+          return this.showcaseRandom();
         }
         const entity1 = entities[Math.floor(Math.random() * entities.length)];
         let entity2 = entities[Math.floor(Math.random() * entities.length)];
@@ -1120,7 +1377,7 @@ ${connectionText}
       case 'interesting_stat':
         return this.showStats();
       default:
-        return this.discoverRandom();
+        return this.showcaseRandom();
     }
   }
 

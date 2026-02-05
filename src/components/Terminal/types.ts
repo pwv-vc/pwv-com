@@ -53,6 +53,15 @@ export interface QuoteEntity {
   pubDate?: string | null;
 }
 
+export interface PortfolioCompany {
+  name: string;
+  url: string;
+  tags: string[];
+  slug: string;
+  formerly?: string;
+  acquiredBy?: string;
+}
+
 export interface ExtractedData {
   posts: Record<string, PostEntity>;
   entities: {
@@ -61,6 +70,12 @@ export interface ExtractedData {
     people: Record<string, PersonEntity>;
     topics: Record<string, TopicEntity>;
     quotes: QuoteEntity[];
+  };
+  portfolio?: {
+    representative: PortfolioCompany[];
+    rollingFund: PortfolioCompany[];
+    fundOne: PortfolioCompany[];
+    angel: PortfolioCompany[];
   };
   metadata: {
     extractedAt: string;

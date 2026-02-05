@@ -23,7 +23,7 @@ const siteUrl = Astro.site || 'https://pwv.com';
 const companySlug = name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
 const detailPageUrl = `/showcase/companies/${companySlug}/`;
 const shareUrl = new URL(detailPageUrl, siteUrl).toString();
-const shareText = `${name} - Featured in ${posts.length} PWV post${posts.length === 1 ? '' : 's'}`;
+const shareText = `${name} - Featured in ${posts.length} PWV ${posts.length === 1 ? 'post' : 'posts'}`;
 
 // Load post data to get titles, hero images, and dates
 const allPosts = await getCollection('posts');
