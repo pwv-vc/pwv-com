@@ -6,6 +6,7 @@ import type {
   PersonEntity,
   SelectableItem,
 } from './types';
+import * as figlet from 'figlet';
 
 interface BoxSection {
   type: 'header' | 'keyValue' | 'list' | 'text' | 'empty' | 'divider';
@@ -26,7 +27,10 @@ export class QueryEngine {
    * Generate slug from entity name
    */
   private generateSlug(name: string): string {
-    return name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+    return name
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]/g, '');
   }
 
   /**
@@ -90,7 +94,10 @@ export class QueryEngine {
           break;
 
         case 'keyValue':
-          if (typeof section.content === 'object' && !Array.isArray(section.content)) {
+          if (
+            typeof section.content === 'object' &&
+            !Array.isArray(section.content)
+          ) {
             lines.push('');
             Object.entries(section.content).forEach(([key, value]) => {
               lines.push(`  ${key}: ${value}`);
@@ -240,17 +247,80 @@ export class QueryEngine {
 
     if (command === 'cowsay') {
       // No argument - get a random fortune
-      const fortune = this.fortune();
-      return this.cowsay(fortune);
+      const { text, showcaseUrl } = this.fortune();
+      return this.cowsay(text, showcaseUrl);
+    }
+
+    if (command === 'bork' || command === 'bork bork' || command === 'bork bork bork') {
+      return this.bork();
+    }
+
+    if (command.startsWith('figlet ')) {
+      const text = input.substring(7).trim();
+      return this.figlet(text);
+    }
+
+    if (command === 'figlet') {
+      return this.figlet('PWV');
+    }
+
+    if (command === 'hello') {
+      return this.hello();
+    }
+
+    // pwvsay and aliases (tomsay, dtsay, dpsay) with custom text
+    if (
+      command.startsWith('pwvsay ') ||
+      command.startsWith('tomsay ') ||
+      command.startsWith('dtsay ') ||
+      command.startsWith('dpsay ')
+    ) {
+      const cmdLength = command.indexOf(' ') + 1;
+      const text = input.substring(cmdLength).trim();
+      return this.pwvsay(text);
+    }
+
+    // pwvsay - quotes from PWV team
+    if (command === 'pwvsay') {
+      const { text, showcaseUrl } = this.getQuoteFromSpeakers(['Tom Preston-Werner', 'David Price', 'David Thyresson', 'PWV']);
+      return this.pwvsay(text, showcaseUrl);
+    }
+
+    // tomsay - quotes from Tom Preston-Werner
+    if (command === 'tomsay') {
+      const { text, showcaseUrl } = this.getQuoteFromSpeakers(['Tom Preston-Werner', 'Tom']);
+      return this.pwvsay(text, showcaseUrl);
+    }
+
+    // dtsay - quotes from David Thyresson
+    if (command === 'dtsay') {
+      const { text, showcaseUrl } = this.getQuoteFromSpeakers(['David Thyresson', 'David T.']);
+      return this.pwvsay(text, showcaseUrl);
+    }
+
+    // dpsay - quotes from David Price
+    if (command === 'dpsay') {
+      const { text, showcaseUrl } = this.getQuoteFromSpeakers(['David Price', 'David P.']);
+      return this.pwvsay(text, showcaseUrl);
+    }
+
+    if (command === 'fortune | pwvsay') {
+      const { text, showcaseUrl } = this.getQuoteFromSpeakers(['Tom Preston-Werner', 'David Price', 'David Thyresson', 'PWV']);
+      return this.pwvsay(text, showcaseUrl);
     }
 
     if (command === 'fortune') {
-      return { type: 'text', content: this.fortune() };
+      const { text, showcaseUrl } = this.fortune();
+      let content = text;
+      if (showcaseUrl) {
+        content += `\n\n💬 View & share: ${showcaseUrl}`;
+      }
+      return { type: 'text', content };
     }
 
     if (command === 'fortune | cowsay') {
-      const fortune = this.fortune();
-      return this.cowsay(fortune);
+      const { text, showcaseUrl } = this.fortune();
+      return this.cowsay(text, showcaseUrl);
     }
 
     // Unknown command
@@ -296,10 +366,19 @@ OTHER:
   • help                   Show this help message
   • clear                  Clear the terminal
   • whoami                 Random PWV philosophy quote
-  • fortune                Get a random quote or philosophy
-  • cowsay                 Random fortune with ASCII cow
-  • cowsay <text>          ASCII art fun with custom text
-  • fortune | cowsay       Unix-style piped fortune (same as cowsay)
+  • fortune                Get any random quote from corpus
+  • hello                  Random greeting
+  • pwvsay                 PWV team quote with PWV logo
+  • pwvsay <text>          PWV logo says your text
+  • fortune | pwvsay       PWV team quote with PWV logo
+  • tomsay                 Tom Preston-Werner quote with PWV logo
+  • dtsay                  David Thyresson quote with PWV logo
+  • dpsay                  David Price quote with PWV logo
+  • cowsay                 Any random quote with ASCII cow
+  • cowsay <text>          ASCII cow says your text
+  • fortune | cowsay       Any random quote with ASCII cow
+  • figlet <text>          Generate ASCII art text
+  • bork                   Bork bork bork!
 
 ─────────────────────────────────────────────────────
 
@@ -506,7 +585,8 @@ Example: companies → 1 → (shows company details)
       const num = (index + 1).toString().padStart(3, ' ');
       const categoryBadge = `[${fact.category}]`;
       const dateStr = fact.date ? ` (${fact.date})` : '';
-      const truncatedFact = fact.text.length > 70 ? fact.text.substring(0, 70) + '...' : fact.text;
+      const truncatedFact =
+        fact.text.length > 70 ? fact.text.substring(0, 70) + '...' : fact.text;
       return `${num}. ${truncatedFact}\n       ${categoryBadge}${dateStr} - ${fact.postTitle.substring(0, 40)}...`;
     });
 
@@ -557,7 +637,10 @@ Example: companies → 1 → (shows company details)
     const listItems = figures.map((figure, index) => {
       const num = (index + 1).toString().padStart(3, ' ');
       const metric = `${figure.value}${figure.unit}`;
-      const truncatedContext = figure.context.length > 60 ? figure.context.substring(0, 60) + '...' : figure.context;
+      const truncatedContext =
+        figure.context.length > 60
+          ? figure.context.substring(0, 60) + '...'
+          : figure.context;
       return `${num}. ${metric} - ${truncatedContext}\n       From: ${figure.postTitle.substring(0, 50)}...`;
     });
 
@@ -584,10 +667,16 @@ Example: companies → 1 → (shows company details)
 
     // Combine all portfolio companies
     const allPortfolio = [
-      ...this.data.portfolio.representative.map(p => ({ ...p, fund: 'Representative' })),
-      ...this.data.portfolio.fundOne.map(p => ({ ...p, fund: 'Fund I' })),
-      ...this.data.portfolio.rollingFund.map(p => ({ ...p, fund: 'Rolling Fund' })),
-      ...this.data.portfolio.angel.map(p => ({ ...p, fund: 'Angel' })),
+      ...this.data.portfolio.representative.map((p) => ({
+        ...p,
+        fund: 'Representative',
+      })),
+      ...this.data.portfolio.fundOne.map((p) => ({ ...p, fund: 'Fund I' })),
+      ...this.data.portfolio.rollingFund.map((p) => ({
+        ...p,
+        fund: 'Rolling Fund',
+      })),
+      ...this.data.portfolio.angel.map((p) => ({ ...p, fund: 'Angel' })),
     ];
 
     // Sort alphabetically
@@ -615,7 +704,10 @@ Example: companies → 1 → (shows company details)
 
     const output = this.buildBox([
       { type: 'header', content: 'PWV PORTFOLIO' },
-      { type: 'text', content: `Found ${allPortfolio.length} portfolio companies` },
+      {
+        type: 'text',
+        content: `Found ${allPortfolio.length} portfolio companies`,
+      },
       { type: 'text', content: '📰 = Has news/posts' },
       { type: 'divider' },
       { type: 'list', content: listItems },
@@ -634,22 +726,24 @@ Example: companies → 1 → (shows company details)
 
     // Check if company has entity data (posts)
     const entityData = this.data.entities.companies[company.name];
-    const showcaseUrl = entityData ? `/showcase/companies/${this.generateSlug(company.name)}/` : null;
+    const showcaseUrl = entityData
+      ? `/showcase/companies/${this.generateSlug(company.name)}/`
+      : null;
 
     const sections: BoxSection[] = [
       { type: 'header', content: 'PORTFOLIO COMPANY' },
       {
         type: 'keyValue',
         content: {
-          'NAME': company.name,
-          'FUND': company.fund,
-          'TAGS': company.tags.join(', '),
-          'WEBSITE': company.url,
+          NAME: company.name,
+          FUND: company.fund,
+          TAGS: company.tags.join(', '),
+          WEBSITE: company.url,
           'PORTFOLIO PAGE': portfolioUrl,
-          ...(showcaseUrl ? { 'SHOWCASE': showcaseUrl } : {}),
-          ...(company.formerly ? { 'FORMERLY': company.formerly } : {}),
+          ...(showcaseUrl ? { SHOWCASE: showcaseUrl } : {}),
+          ...(company.formerly ? { FORMERLY: company.formerly } : {}),
           ...(company.acquiredBy ? { 'ACQUIRED BY': company.acquiredBy } : {}),
-        }
+        },
       },
     ];
 
@@ -658,17 +752,21 @@ Example: companies → 1 → (shows company details)
       sections.push({ type: 'divider' });
       sections.push({
         type: 'text',
-        content: `📰 This company has ${entityData.mentions} mentions in ${entityData.posts.length} posts`
+        content: `📰 This company has ${entityData.mentions} mentions in ${entityData.posts.length} posts`,
       });
       sections.push({
         type: 'text',
-        content: `Type: showcase company ${company.name}`
+        content: `Type: showcase company ${company.name}`,
       });
     }
 
     const output = this.buildBox(sections);
 
-    return { type: 'company', content: output, data: { company: company.name } };
+    return {
+      type: 'company',
+      content: output,
+      data: { company: company.name },
+    };
   }
 
   /**
@@ -678,7 +776,8 @@ Example: companies → 1 → (shows company details)
     if (this.currentList.length === 0) {
       return {
         type: 'error',
-        content: 'No active list. Try "companies", "people", or "topics" first.',
+        content:
+          'No active list. Try "companies", "people", or "topics" first.',
       };
     }
 
@@ -726,16 +825,19 @@ Example: companies → 1 → (shows company details)
     const totalQuotes = (this.data.entities.quotes || []).length;
 
     // Portfolio stats
-    const portfolioStats = this.data.portfolio ? {
-      representative: this.data.portfolio.representative.length,
-      fundOne: this.data.portfolio.fundOne.length,
-      rollingFund: this.data.portfolio.rollingFund.length,
-      angel: this.data.portfolio.angel.length,
-      total: this.data.portfolio.representative.length +
-             this.data.portfolio.fundOne.length +
-             this.data.portfolio.rollingFund.length +
-             this.data.portfolio.angel.length
-    } : null;
+    const portfolioStats = this.data.portfolio
+      ? {
+          representative: this.data.portfolio.representative.length,
+          fundOne: this.data.portfolio.fundOne.length,
+          rollingFund: this.data.portfolio.rollingFund.length,
+          angel: this.data.portfolio.angel.length,
+          total:
+            this.data.portfolio.representative.length +
+            this.data.portfolio.fundOne.length +
+            this.data.portfolio.rollingFund.length +
+            this.data.portfolio.angel.length,
+        }
+      : null;
 
     // Calculate most mentioned company
     const topCompany = Object.entries(this.data.entities.companies).sort(
@@ -757,14 +859,16 @@ Example: companies → 1 → (shows company details)
       ([, a], [, b]) => b.mentions - a.mentions
     )[0];
 
-    const portfolioSection = portfolioStats ? `
+    const portfolioSection = portfolioStats
+      ? `
 
 💼 PORTFOLIO:
   Total Companies: ${portfolioStats.total}
   Representative: ${portfolioStats.representative}
   Fund I: ${portfolioStats.fundOne}
   Rolling Fund: ${portfolioStats.rollingFund}
-  Angel: ${portfolioStats.angel}` : '';
+  Angel: ${portfolioStats.angel}`
+      : '';
 
     const stats = `
 >> CORPUS STATISTICS
@@ -854,7 +958,9 @@ Example: companies → 1 → (shows company details)
       }
       case 'fact': {
         const posts = Object.values(this.data.posts);
-        const postsWithFacts = posts.filter((p) => p.facts && p.facts.length > 0);
+        const postsWithFacts = posts.filter(
+          (p) => p.facts && p.facts.length > 0
+        );
         if (postsWithFacts.length === 0) {
           return { type: 'text', content: 'No facts found in the corpus.' };
         }
@@ -912,8 +1018,12 @@ Source: ${randomPost.title}
         }
         const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
-        const contextLine = randomQuote.context ? `Context: ${randomQuote.context}\n` : '';
-        const dateLine = randomQuote.pubDate ? `Date: ${randomQuote.pubDate}\n` : '';
+        const contextLine = randomQuote.context
+          ? `Context: ${randomQuote.context}\n`
+          : '';
+        const dateLine = randomQuote.pubDate
+          ? `Date: ${randomQuote.pubDate}\n`
+          : '';
 
         const quoteDisplay = `
 >> QUOTE OF THE DAY
@@ -971,11 +1081,11 @@ From: ${randomQuote.postTitle}
       {
         type: 'keyValue',
         content: {
-          'NAME': companyName,
-          'MENTIONS': `${company.mentions} posts`,
-          'SHOWCASE': showcaseUrl,
-          ...(company.description ? { 'ABOUT': company.description } : {})
-        }
+          NAME: companyName,
+          MENTIONS: `${company.mentions} posts`,
+          SHOWCASE: showcaseUrl,
+          ...(company.description ? { ABOUT: company.description } : {}),
+        },
       },
       { type: 'divider' },
       { type: 'text', content: 'POSTS:' },
@@ -1035,10 +1145,10 @@ From: ${randomQuote.postTitle}
       {
         type: 'keyValue',
         content: {
-          'NAME': investorName,
-          'MENTIONS': `${investor.mentions} posts`,
-          'SHOWCASE': showcaseUrl,
-        }
+          NAME: investorName,
+          MENTIONS: `${investor.mentions} posts`,
+          SHOWCASE: showcaseUrl,
+        },
       },
       { type: 'divider' },
       { type: 'text', content: 'POSTS:' },
@@ -1049,7 +1159,11 @@ From: ${randomQuote.postTitle}
 
     const output = this.buildBox(sections);
 
-    return { type: 'investor', content: output, data: { investor: investorName } };
+    return {
+      type: 'investor',
+      content: output,
+      data: { investor: investorName },
+    };
   }
 
   /**
@@ -1098,11 +1212,11 @@ From: ${randomQuote.postTitle}
       {
         type: 'keyValue',
         content: {
-          'NAME': personName,
-          'ROLE': person.role || 'Unknown',
-          'MENTIONS': `${person.mentions} posts`,
-          'SHOWCASE': showcaseUrl,
-        }
+          NAME: personName,
+          ROLE: person.role || 'Unknown',
+          MENTIONS: `${person.mentions} posts`,
+          SHOWCASE: showcaseUrl,
+        },
       },
       { type: 'divider' },
       { type: 'text', content: 'POSTS:' },
@@ -1160,10 +1274,10 @@ From: ${randomQuote.postTitle}
       {
         type: 'keyValue',
         content: {
-          'TOPIC': topicName,
-          'MENTIONS': `${topic.mentions} posts`,
-          'SHOWCASE': showcaseUrl,
-        }
+          TOPIC: topicName,
+          MENTIONS: `${topic.mentions} posts`,
+          SHOWCASE: showcaseUrl,
+        },
       },
       { type: 'divider' },
       { type: 'text', content: 'RELATED POSTS:' },
@@ -1202,22 +1316,25 @@ From: ${randomQuote.postTitle}
       {
         type: 'keyValue',
         content: {
-          'TITLE': post.title,
-          'AUTHOR': post.author || 'Unknown',
-          'DATE': post.pubDate || 'Unknown',
-        }
+          TITLE: post.title,
+          AUTHOR: post.author || 'Unknown',
+          DATE: post.pubDate || 'Unknown',
+        },
       },
       { type: 'divider' },
       { type: 'text', content: 'Opening: ' + url },
       { type: 'empty' },
-      { type: 'text', content: 'Click the link above or it will open automatically.' },
+      {
+        type: 'text',
+        content: 'Click the link above or it will open automatically.',
+      },
     ]);
 
     // Return with post data so component can open it
     return {
       type: 'post',
       content: output,
-      data: { slug, url, autoOpen: true }
+      data: { slug, url, autoOpen: true },
     };
   }
 
@@ -1244,7 +1361,10 @@ From: ${randomQuote.postTitle}
         .sort((a, b) => a.date.localeCompare(b.date));
 
       const timelineText = timeline
-        .map((entry) => `  ${entry.date} → ${entry.title}\n               /news/${entry.slug}/`)
+        .map(
+          (entry) =>
+            `  ${entry.date} → ${entry.title}\n               /news/${entry.slug}/`
+        )
         .join('\n\n');
 
       const output = `
@@ -1373,8 +1493,7 @@ ${connectionText}
       }
       case 'random_person_insight': {
         const people = Object.keys(this.data.entities.people);
-        const randomPerson =
-          people[Math.floor(Math.random() * people.length)];
+        const randomPerson = people[Math.floor(Math.random() * people.length)];
         return this.showcasePerson(randomPerson);
       }
       case 'random_connection': {
@@ -1400,78 +1519,126 @@ ${connectionText}
   }
 
   /**
-   * Whoami easter egg
+   * Whoami easter egg - shows PWV philosophy quotes
    */
   private whoami(): CommandResult {
-    const quotes = [
-      '"Ideas start with founders. Founders start with PWV."',
-      '"We succeed in our mission by helping founders succeed in theirs."',
-      '"A community can go farther than an individual."',
-      '"I invest because I want to be invested."',
-      '"Early-stage is where real-world experience can best accelerate timelines."',
-      '"The most important factor in the better future we want to build is people."',
+    const quotes = this.data.entities.quotes || [];
+
+    // Filter for PWV-related speakers (Tom, David P., David T., or general PWV)
+    const pwvSpeakers = [
+      'Tom Preston-Werner',
+      'David Price',
+      'David Thyresson',
+      'PWV',
     ];
+    const pwvQuotes = quotes.filter((q) =>
+      pwvSpeakers.some((speaker) =>
+        q.speaker.toLowerCase().includes(speaker.toLowerCase())
+      )
+    );
 
-    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    // Use PWV quotes if available, otherwise fall back to any quote
+    const quotePool = pwvQuotes.length > 0 ? pwvQuotes : quotes;
 
+    if (quotePool.length > 0) {
+      const randomQuote =
+        quotePool[Math.floor(Math.random() * quotePool.length)];
+      return {
+        type: 'text',
+        content: `\n  "${randomQuote.quote}"\n\n  — ${randomQuote.speaker}\n`,
+      };
+    }
+
+    // Fallback if no quotes available
     return {
       type: 'text',
-      content: `\n  ${randomQuote}\n\n  — PWV Philosophy\n`,
+      content: '\n  "We invest to help make the future possible."\n\n  — PWV\n',
     };
   }
 
   /**
-   * Fortune - get a random quote or philosophy
+   * Get a random quote from specific speakers
+   * Returns both text and optional showcase link
    */
-  private fortune(): string {
+  private getQuoteFromSpeakers(speakers: string[]): { text: string; showcaseUrl?: string } {
     const quotes = this.data.entities.quotes || [];
-    const philosophies = [
-      '"Ideas start with founders. Founders start with PWV."',
-      '"We succeed in our mission by helping founders succeed in theirs."',
-      '"A community can go farther than an individual."',
-      '"I invest because I want to be invested."',
-      '"Early-stage is where real-world experience can best accelerate timelines."',
-      '"The most important factor in the better future we want to build is people."',
-      '"We are three entrepreneurs and technologists committed to a vision of a future where technological progress and human flourishing go hand in hand."',
-      '"We invest to help make this future possible."',
-    ];
+    
+    // Filter quotes by speaker
+    const filteredQuotes = quotes.filter(q =>
+      speakers.some(speaker => q.speaker.toLowerCase().includes(speaker.toLowerCase()))
+    );
 
-    // 50% chance of philosophy, 50% chance of quote
-    if (Math.random() < 0.5 && philosophies.length > 0) {
-      return philosophies[Math.floor(Math.random() * philosophies.length)];
-    } else if (quotes.length > 0) {
-      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-      return `"${randomQuote.quote}"\n— ${randomQuote.speaker}`;
-    } else {
-      // Fallback to philosophy if no quotes
-      return philosophies[Math.floor(Math.random() * philosophies.length)];
+    // Use filtered quotes if available, otherwise fall back to all quotes
+    const quotePool = filteredQuotes.length > 0 ? filteredQuotes : quotes;
+    
+    if (quotePool.length === 0) {
+      // Fallback if no quotes available
+      return {
+        text: '"We invest to help make the future possible."\n— PWV',
+      };
     }
+
+    // Find the index in the original quotes array for the showcase URL
+    const randomQuote = quotePool[Math.floor(Math.random() * quotePool.length)];
+    const quoteIndex = quotes.indexOf(randomQuote);
+    const quoteId = `${randomQuote.postSlug}-${quoteIndex}`;
+    const showcaseUrl = `/showcase/quotes/${quoteId}/`;
+
+    return {
+      text: `"${randomQuote.quote}"\n— ${randomQuote.speaker}`,
+      showcaseUrl,
+    };
   }
 
   /**
-   * Cowsay easter egg
+   * Fortune - get a random quote from any speaker
+   * Returns both text and optional showcase link
    */
-  private cowsay(text: string): CommandResult {
+  private fortune(): { text: string; showcaseUrl?: string } {
+    const quotes = this.data.entities.quotes || [];
+    
+    if (quotes.length === 0) {
+      // Fallback if no quotes available
+      return {
+        text: '"We invest to help make the future possible."\n— PWV',
+      };
+    }
+
+    const quoteIndex = Math.floor(Math.random() * quotes.length);
+    const randomQuote = quotes[quoteIndex];
+    const quoteId = `${randomQuote.postSlug}-${quoteIndex}`;
+    const showcaseUrl = `/showcase/quotes/${quoteId}/`;
+
+    return {
+      text: `"${randomQuote.quote}"\n— ${randomQuote.speaker}`,
+      showcaseUrl,
+    };
+  }
+
+  /**
+   * PWVsay - like cowsay but with PWV logo
+   */
+  private pwvsay(text: string, showcaseUrl?: string): CommandResult {
     if (!text) {
-      text = 'Type something after cowsay!';
+      text = 'Type something after pwvsay!';
     }
 
     // Handle multi-line text by wrapping long lines
     const maxWidth = 50;
     const lines: string[] = [];
-    
+
     // Split by newlines first
     const paragraphs = text.split('\n');
-    
-    paragraphs.forEach(paragraph => {
+
+    paragraphs.forEach((paragraph) => {
       if (paragraph.length <= maxWidth) {
         lines.push(paragraph);
       } else {
         // Wrap long lines
         const words = paragraph.split(' ');
         let currentLine = '';
-        
-        words.forEach(word => {
+
+        words.forEach((word) => {
           if ((currentLine + ' ' + word).trim().length <= maxWidth) {
             currentLine = currentLine ? currentLine + ' ' + word : word;
           } else {
@@ -1479,20 +1646,20 @@ ${connectionText}
             currentLine = word;
           }
         });
-        
+
         if (currentLine) lines.push(currentLine);
       }
     });
 
     // Calculate max line length
-    const maxLen = Math.max(...lines.map(l => l.length), 10);
-    
+    const maxLen = Math.max(...lines.map((l) => l.length), 10);
+
     // Build the speech bubble
     const topBorder = ' ' + '_'.repeat(maxLen + 2);
     const bottomBorder = ' ' + '-'.repeat(maxLen + 2);
-    
+
     let bubble = topBorder + '\n';
-    
+
     if (lines.length === 1) {
       bubble += `< ${lines[0].padEnd(maxLen)} >\n`;
     } else {
@@ -1507,13 +1674,179 @@ ${connectionText}
         }
       });
     }
-    
+
+    bubble += bottomBorder + '\n';
+    // PWV logo: green square with filled half circle at top
+    bubble += `        \\    ┌────┐\n`;
+    bubble += `         \\   │▄██▄│\n`;
+    bubble += `             └────┘\n`;
+
+    // Add showcase link if available
+    if (showcaseUrl) {
+      bubble += `\n💬 View & share: ${showcaseUrl}\n`;
+    }
+
+    return { type: 'text', content: bubble };
+  }
+
+  /**
+   * Hello - Random greetings
+   */
+  private hello(): CommandResult {
+    const greetings = [
+      'Hello, world!',
+      'Hello, Dave.',
+      'Hello there.',
+      'hello?',
+      'Hello, friend.',
+      'Hi there! 👋',
+      'Greetings!',
+      'Hello, human.',
+    ];
+
+    const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+
+    return {
+      type: 'text',
+      content: `\n${randomGreeting}\n`,
+    };
+  }
+
+  /**
+   * Bork bork bork! - Swedish Chef easter egg
+   */
+  private bork(): CommandResult {
+    const borkVariations = [
+      `Bork bork bork!`,
+      `Bork! Bork! Bork!`,
+      `Der bork bork bork!`,
+      `Yorn desh born, der ritt de gitt der gue,
+Orn desh, dee born desh, de umn børk! børk! børk!`,
+      `Børk børk børk!
+Der Swedish Chef is in der hoose!`,
+      `Bork bork bork!
+*throws random kitchen utensils*`,
+      `Bork bork! Der terminal is yöörking!`,
+    ];
+
+    const randomBork = borkVariations[Math.floor(Math.random() * borkVariations.length)];
+
+    return {
+      type: 'text',
+      content: `
+   🧑‍🍳
+  \\|/
+   |
+  / \\
+
+${randomBork}
+
+— Der Swedish Chef
+`,
+    };
+  }
+
+  /**
+   * Figlet - ASCII art text generator
+   */
+  private figlet(text: string): CommandResult {
+    if (!text) {
+      return {
+        type: 'error',
+        content: 'Usage: figlet <text>\nExample: figlet PWV',
+      };
+    }
+
+    try {
+      const asciiArt = figlet.textSync(text, {
+        font: 'Standard',
+        horizontalLayout: 'default',
+        verticalLayout: 'default',
+      });
+
+      return {
+        type: 'text',
+        content: asciiArt,
+      };
+    } catch (error) {
+      return {
+        type: 'error',
+        content: `Error generating ASCII art: ${error}`,
+      };
+    }
+  }
+
+  /**
+   * Cowsay easter egg
+   */
+  private cowsay(text: string, showcaseUrl?: string): CommandResult {
+    if (!text) {
+      text = 'Type something after cowsay!';
+    }
+
+    // Handle multi-line text by wrapping long lines
+    const maxWidth = 50;
+    const lines: string[] = [];
+
+    // Split by newlines first
+    const paragraphs = text.split('\n');
+
+    paragraphs.forEach((paragraph) => {
+      if (paragraph.length <= maxWidth) {
+        lines.push(paragraph);
+      } else {
+        // Wrap long lines
+        const words = paragraph.split(' ');
+        let currentLine = '';
+
+        words.forEach((word) => {
+          if ((currentLine + ' ' + word).trim().length <= maxWidth) {
+            currentLine = currentLine ? currentLine + ' ' + word : word;
+          } else {
+            if (currentLine) lines.push(currentLine);
+            currentLine = word;
+          }
+        });
+
+        if (currentLine) lines.push(currentLine);
+      }
+    });
+
+    // Calculate max line length
+    const maxLen = Math.max(...lines.map((l) => l.length), 10);
+
+    // Build the speech bubble
+    const topBorder = ' ' + '_'.repeat(maxLen + 2);
+    const bottomBorder = ' ' + '-'.repeat(maxLen + 2);
+
+    let bubble = topBorder + '\n';
+
+    if (lines.length === 1) {
+      bubble += `< ${lines[0].padEnd(maxLen)} >\n`;
+    } else {
+      lines.forEach((line, i) => {
+        const paddedLine = line.padEnd(maxLen);
+        if (i === 0) {
+          bubble += `/ ${paddedLine} \\\n`;
+        } else if (i === lines.length - 1) {
+          bubble += `\\ ${paddedLine} /\n`;
+        } else {
+          bubble += `| ${paddedLine} |\n`;
+        }
+      });
+    }
+
     bubble += bottomBorder + '\n';
     bubble += `        \\   ^__^\n`;
     bubble += `         \\  (oo)\\_______\n`;
     bubble += `            (__)\\       )\\/\\\n`;
     bubble += `                ||----w |\n`;
     bubble += `                ||     ||\n`;
+
+    // Add showcase link if available
+    if (showcaseUrl) {
+      bubble += `\n💬 View & share: ${showcaseUrl}\n`;
+    }
 
     return { type: 'text', content: bubble };
   }

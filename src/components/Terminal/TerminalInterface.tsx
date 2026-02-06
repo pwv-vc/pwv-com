@@ -65,11 +65,23 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     'clear',
     'cls',
     'whoami',
+    'hello',
     'history',
     'fortune',
+    'fortune | pwvsay',
+    'pwvsay',
+    'pwvsay ',
+    'tomsay',
+    'tomsay ',
+    'dtsay',
+    'dtsay ',
+    'dpsay',
+    'dpsay ',
     'fortune | cowsay',
     'cowsay',
     'cowsay ',
+    'figlet ',
+    'bork',
   ];
 
   // Get suggestions based on current input
@@ -118,7 +130,12 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
       return topics;
     }
 
-    return filtered.slice(0, 8); // Limit to 8 suggestions
+    // Remove duplicates by using a Set with trimmed commands as keys
+    const unique = Array.from(new Set(filtered.map(cmd => cmd.trim())))
+      .map(trimmed => filtered.find(cmd => cmd.trim() === trimmed)!)
+      .slice(0, 8); // Limit to 8 suggestions
+
+    return unique;
   };
 
   // Update suggestions when input changes
@@ -341,7 +358,7 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
 
   // Popular commands for touch mode
   const popularCommands = ['portfolio', 'companies', 'people', 'topics', 'quotes', 'facts'];
-  const moreCommands = ['figures', 'investors', 'showcase random', 'stats', 'surprise me', 'fortune', 'cowsay', 'help', 'clear'];
+  const moreCommands = ['figures', 'investors', 'showcase random', 'stats', 'surprise me', 'fortune', 'pwvsay', 'cowsay', 'figlet PWV', 'bork', 'help', 'clear'];
 
   // Render output with typewriter effect for certain types
   const renderOutput = (entry: HistoryEntry, index: number) => {
