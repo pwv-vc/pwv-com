@@ -8,7 +8,20 @@ export class PwvsayCommand extends BaseCommand {
     return 'pwvsay';
   }
   get aliases() {
-    return ['pwvsay', 'tomsay', 'dtsay', 'dpsay', 'fortune | pwvsay'];
+    return [
+      'pwvsay',
+      'tomsay',
+      'dtsay',
+      'dpsay',
+      'fortune | pwvsay',
+      'fortune | tomsay',
+      'fortune | dtsay',
+      'fortune | dpsay',
+      'bork | pwvsay',
+      'bork | tomsay',
+      'bork | dtsay',
+      'bork | dpsay',
+    ];
   }
   get description() {
     return 'PWV team quote with PWV logo';
@@ -22,37 +35,72 @@ export class PwvsayCommand extends BaseCommand {
 
   execute(input: string, args: string[]): CommandResult {
     const command = input.toLowerCase().trim();
-    let text = args.join(' ').trim();
+    let text = '';
     let showcaseUrl: string | undefined;
 
     // Determine speaker filter based on command
-    if (command.startsWith('tomsay') || command === 'fortune | tomsay') {
+    if (command.startsWith('tomsay') || command.includes('| tomsay')) {
       this.speakerFilter = ['Tom Preston-Werner', 'Tom'];
-    } else if (command.startsWith('dtsay') || command === 'fortune | dtsay') {
+    } else if (command.startsWith('dtsay') || command.includes('| dtsay')) {
       this.speakerFilter = ['David Thyresson', 'David T.'];
-    } else if (command.startsWith('dpsay') || command === 'fortune | dpsay') {
+    } else if (command.startsWith('dpsay') || command.includes('| dpsay')) {
       this.speakerFilter = ['David Price', 'David P.'];
     } else {
       // Default: all PWV team
-      this.speakerFilter = ['Tom Preston-Werner', 'David Price', 'David Thyresson', 'PWV'];
+      this.speakerFilter = [
+        'Tom Preston-Werner',
+        'David Price',
+        'David Thyresson',
+        'PWV',
+      ];
     }
 
-    // If no text provided or it's the pipe command, get a fortune
-    if (!text || command.includes(' | ')) {
+    // Check for piped commands first (before using args)
+    if (command.includes('fortune |')) {
       const fortune = this.getQuoteFromSpeakers(this.speakerFilter);
       text = fortune.text;
       showcaseUrl = fortune.showcaseUrl;
+    } else if (command.includes('bork |')) {
+      text = this.getBork();
+    } else {
+      // Not a pipe command, use the args as text
+      text = args.join(' ').trim();
+      if (!text) {
+        text = 'Type something after pwvsay!';
+      }
     }
 
     return this.renderPwvsay(text, showcaseUrl);
   }
 
-  private getQuoteFromSpeakers(speakers: string[]): { text: string; showcaseUrl?: string } {
+  private getBork(): string {
+    const borkVariations = [
+      `Bork bork bork!`,
+      `Bork! Bork! Bork!`,
+      `Der bork bork bork!`,
+      `Yorn desh born, der ritt de gitt der gue,
+Orn desh, dee born desh, de umn børk! børk! børk!`,
+      `Børk børk børk!
+Der Swedish Chef is in der hoose!`,
+      `Bork bork bork!
+*throws random kitchen utensils*`,
+      `Bork bork! Der terminal is yöörking!`,
+    ];
+
+    return borkVariations[Math.floor(Math.random() * borkVariations.length)];
+  }
+
+  private getQuoteFromSpeakers(speakers: string[]): {
+    text: string;
+    showcaseUrl?: string;
+  } {
     const quotes = this.data.entities.quotes || [];
 
     // Filter quotes by speaker
     const filteredQuotes = quotes.filter((q) =>
-      speakers.some((speaker) => q.speaker.toLowerCase().includes(speaker.toLowerCase()))
+      speakers.some((speaker) =>
+        q.speaker.toLowerCase().includes(speaker.toLowerCase())
+      )
     );
 
     // Use filtered quotes if available, otherwise fall back to all quotes
@@ -114,7 +162,7 @@ export class PwvsayCommand extends BaseCommand {
     // PWV logo: green square with filled half circle at top
     bubble += `        \\    ┌────┐\n`;
     bubble += `         \\   │▄██▄│\n`;
-    bubble += `             │    │  PWV\n`;
+
     bubble += `             └────┘\n`;
 
     // Add showcase link if available

@@ -1,4 +1,5 @@
 import type { CommandResult, ExtractedData } from '../types';
+import { generateSlug, formatBoxLine } from './helpers/utils';
 
 /**
  * Base class for all terminal commands
@@ -56,20 +57,16 @@ export abstract class BaseCommand {
   }
 
   /**
-   * Helper: Generate slug from name
+   * Helper: Generate slug from name (uses shared utility)
    */
   protected generateSlug(name: string): string {
-    return name.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+    return generateSlug(name);
   }
 
   /**
-   * Helper: Format box line
+   * Helper: Format box line (uses shared utility)
    */
   protected formatBoxLine(text: string, padChar: string = ' '): string {
-    const contentWidth = this.boxWidth - 4;
-    if (text.length > contentWidth) {
-      return text.substring(0, contentWidth - 3) + '...';
-    }
-    return text.padEnd(contentWidth, padChar);
+    return formatBoxLine(text, this.boxWidth, padChar);
   }
 }

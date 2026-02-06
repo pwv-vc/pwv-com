@@ -19,6 +19,18 @@ export class BorkCommand extends BaseCommand {
   }
 
   execute(): CommandResult {
+    const borkText = this.getBorkText();
+
+    return {
+      type: 'text',
+      content: borkText + `\n\n— 🧑‍🍳`,
+    };
+  }
+
+  /**
+   * Get random bork text (can be used by other commands via piping)
+   */
+  getBorkText(): string {
     const borkVariations = [
       `Bork bork börk!`,
       `Bork! Börk! Bork!`,
@@ -32,12 +44,6 @@ Der Swedish Chef is in der hoose!`,
       `Bork bork! Der terminal is yöörking!`,
     ];
 
-    const randomBork =
-      borkVariations[Math.floor(Math.random() * borkVariations.length)];
-
-    return {
-      type: 'text',
-      content: randomBork + `\n\n— 🧑‍🍳`,
-    };
+    return borkVariations[Math.floor(Math.random() * borkVariations.length)];
   }
 }

@@ -1,3 +1,6 @@
+/**
+ * Box section interface for building structured terminal output
+ */
 export interface BoxSection {
   type: 'header' | 'keyValue' | 'list' | 'text' | 'empty' | 'divider';
   content?: string | string[] | Record<string, string>;
@@ -5,6 +8,7 @@ export interface BoxSection {
 
 /**
  * Build simple text output from sections
+ * Creates formatted terminal output without box borders
  */
 export function buildBox(sections: BoxSection[]): string {
   const lines: string[] = [''];
@@ -56,3 +60,6 @@ export function buildBox(sections: BoxSection[]): string {
   lines.push('');
   return lines.join('\n');
 }
+
+// Re-export BoxSection for convenience
+export type { BoxSection as BoxSectionType };

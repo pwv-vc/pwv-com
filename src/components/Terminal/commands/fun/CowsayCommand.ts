@@ -6,7 +6,7 @@ export class CowsayCommand extends BaseCommand {
     return 'cowsay';
   }
   get aliases() {
-    return ['cowsay', 'fortune | cowsay'];
+    return ['cowsay', 'fortune | cowsay', 'bork | cowsay'];
   }
   get description() {
     return 'Any random quote with ASCII cow';
@@ -21,12 +21,17 @@ export class CowsayCommand extends BaseCommand {
   execute(input: string, args: string[]): CommandResult {
     let text = args.join(' ').trim();
     let showcaseUrl: string | undefined;
+    const command = input.trim().toLowerCase();
 
-    // If no text provided or it's the pipe command, get a fortune
-    if (!text || input.trim().toLowerCase() === 'fortune | cowsay') {
+    // Check for piped commands
+    if (command === 'fortune | cowsay' || (!text && command === 'cowsay')) {
       const fortune = this.getFortune();
       text = fortune.text;
       showcaseUrl = fortune.showcaseUrl;
+    } else if (command === 'bork | cowsay') {
+      text = this.getBork();
+    } else if (!text) {
+      text = 'Type something after cowsay!';
     }
 
     return this.renderCowsay(text, showcaseUrl);
@@ -50,6 +55,23 @@ export class CowsayCommand extends BaseCommand {
       text: `"${randomQuote.quote}"\n— ${randomQuote.speaker}`,
       showcaseUrl,
     };
+  }
+
+  private getBork(): string {
+    const borkVariations = [
+      `Bork bork bork!`,
+      `Bork! Bork! Bork!`,
+      `Der bork bork bork!`,
+      `Yorn desh born, der ritt de gitt der gue,
+Orn desh, dee born desh, de umn børk! børk! børk!`,
+      `Børk børk børk!
+Der Swedish Chef is in der hoose!`,
+      `Bork bork bork!
+*throws random kitchen utensils*`,
+      `Bork bork! Der terminal is yöörking!`,
+    ];
+
+    return borkVariations[Math.floor(Math.random() * borkVariations.length)];
   }
 
   private renderCowsay(text: string, showcaseUrl?: string): CommandResult {
