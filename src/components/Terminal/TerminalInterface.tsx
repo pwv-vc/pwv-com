@@ -9,14 +9,16 @@ interface TerminalInterfaceProps {
 // Calculate box width based on viewport
 const getBoxWidth = (): number => {
   if (typeof window === 'undefined') return 64;
-  
+
   const width = window.innerWidth;
   if (width < 640) return 40; // Mobile: smaller boxes
   if (width < 768) return 50; // Tablet
   return 64; // Desktop
 };
 
-const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) => {
+const TerminalInterface: React.FC<TerminalInterfaceProps> = ({
+  entitiesData,
+}) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
@@ -90,9 +92,9 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
   // Get suggestions based on current input
   const getSuggestions = (inputText: string): string[] => {
     if (!inputText.trim()) return [];
-    
+
     const lowerInput = inputText.toLowerCase();
-    const filtered = baseCommands.filter(cmd => 
+    const filtered = baseCommands.filter((cmd) =>
       cmd.toLowerCase().startsWith(lowerInput)
     );
 
@@ -100,8 +102,10 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     if (lowerInput.startsWith('showcase company ')) {
       const companyPrefix = inputText.substring(17);
       const companies = Object.keys(entitiesData.entities.companies)
-        .filter(name => name.toLowerCase().startsWith(companyPrefix.toLowerCase()))
-        .map(name => `showcase company ${name}`)
+        .filter((name) =>
+          name.toLowerCase().startsWith(companyPrefix.toLowerCase())
+        )
+        .map((name) => `showcase company ${name}`)
         .slice(0, 5);
       return companies;
     }
@@ -109,8 +113,10 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     if (lowerInput.startsWith('showcase investor ')) {
       const investorPrefix = inputText.substring(18);
       const investors = Object.keys(entitiesData.entities.investors)
-        .filter(name => name.toLowerCase().startsWith(investorPrefix.toLowerCase()))
-        .map(name => `showcase investor ${name}`)
+        .filter((name) =>
+          name.toLowerCase().startsWith(investorPrefix.toLowerCase())
+        )
+        .map((name) => `showcase investor ${name}`)
         .slice(0, 5);
       return investors;
     }
@@ -118,8 +124,10 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     if (lowerInput.startsWith('showcase person ')) {
       const personPrefix = inputText.substring(16);
       const people = Object.keys(entitiesData.entities.people)
-        .filter(name => name.toLowerCase().startsWith(personPrefix.toLowerCase()))
-        .map(name => `showcase person ${name}`)
+        .filter((name) =>
+          name.toLowerCase().startsWith(personPrefix.toLowerCase())
+        )
+        .map((name) => `showcase person ${name}`)
         .slice(0, 5);
       return people;
     }
@@ -127,15 +135,17 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     if (lowerInput.startsWith('showcase topic ')) {
       const topicPrefix = inputText.substring(15);
       const topics = Object.keys(entitiesData.entities.topics)
-        .filter(name => name.toLowerCase().startsWith(topicPrefix.toLowerCase()))
-        .map(name => `showcase topic ${name}`)
+        .filter((name) =>
+          name.toLowerCase().startsWith(topicPrefix.toLowerCase())
+        )
+        .map((name) => `showcase topic ${name}`)
         .slice(0, 5);
       return topics;
     }
 
     // Remove duplicates by using a Set with trimmed commands as keys
-    const unique = Array.from(new Set(filtered.map(cmd => cmd.trim())))
-      .map(trimmed => filtered.find(cmd => cmd.trim() === trimmed)!)
+    const unique = Array.from(new Set(filtered.map((cmd) => cmd.trim())))
+      .map((trimmed) => filtered.find((cmd) => cmd.trim() === trimmed)!)
       .slice(0, 8); // Limit to 8 suggestions
 
     return unique;
@@ -182,7 +192,10 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     if (!commandText.trim()) return;
 
     // Clear command
-    if (commandText.trim().toLowerCase() === 'clear' || commandText.trim().toLowerCase() === 'cls') {
+    if (
+      commandText.trim().toLowerCase() === 'clear' ||
+      commandText.trim().toLowerCase() === 'cls'
+    ) {
       setHistory([]);
       setInput('');
       setSuggestions([]);
@@ -192,7 +205,7 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
 
     // Execute command
     const result = queryEngine.executeCommand(commandText);
-    
+
     const newEntry: HistoryEntry = {
       command: commandText,
       result,
@@ -231,20 +244,21 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     if (suggestions.length > 0) {
       if (e.key === 'ArrowDown') {
         e.preventDefault();
-        setSelectedSuggestionIndex(prev => 
+        setSelectedSuggestionIndex((prev) =>
           prev < suggestions.length - 1 ? prev + 1 : 0
         );
         return;
       } else if (e.key === 'ArrowUp') {
         e.preventDefault();
-        setSelectedSuggestionIndex(prev => 
+        setSelectedSuggestionIndex((prev) =>
           prev > 0 ? prev - 1 : suggestions.length - 1
         );
         return;
       } else if (e.key === 'Tab') {
         e.preventDefault();
         if (suggestions.length > 0) {
-          const selectedIndex = selectedSuggestionIndex >= 0 ? selectedSuggestionIndex : 0;
+          const selectedIndex =
+            selectedSuggestionIndex >= 0 ? selectedSuggestionIndex : 0;
           setInput(suggestions[selectedIndex]);
           setSuggestions([]);
           setSelectedSuggestionIndex(-1);
@@ -263,10 +277,11 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
       e.preventDefault();
       if (history.length === 0) return;
 
-      const newIndex = historyIndex === -1 
-        ? history.length - 1 
-        : Math.max(0, historyIndex - 1);
-      
+      const newIndex =
+        historyIndex === -1
+          ? history.length - 1
+          : Math.max(0, historyIndex - 1);
+
       setHistoryIndex(newIndex);
       setInput(history[newIndex].command);
     } else if (e.key === 'ArrowDown') {
@@ -274,7 +289,7 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
       if (historyIndex === -1) return;
 
       const newIndex = historyIndex + 1;
-      
+
       if (newIndex >= history.length) {
         setHistoryIndex(-1);
         setInput('');
@@ -303,25 +318,25 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
         if (match.index > lastIndex) {
           parts.push(line.substring(lastIndex, match.index));
         }
-        
+
         // Add the link with trailing slash
         const pathType = match[1]; // 'news' or 'showcase'
         const pathRest = match[2]; // rest of path
         const displayPath = match[0]; // Keep original display (might not have /)
         const linkPath = `/${pathType}/${pathRest}/`; // Always add trailing slash for href
-        
+
         parts.push(
           <a
             key={`${lineIndex}-${match.index}`}
             href={linkPath}
-            className="text-pwv-teal underline hover:text-pwv-green transition-colors"
+            className="text-pwv-teal hover:text-pwv-green underline transition-colors"
             target="_blank"
             rel="noopener noreferrer"
           >
             {displayPath}
           </a>
         );
-        
+
         lastIndex = match.index + displayPath.length;
       }
 
@@ -344,9 +359,15 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     if (history.length === 0) return [];
     const lastEntry = history[history.length - 1];
     const { result } = lastEntry;
-    
+
     // Check if last result was a list type
-    if (result.type === 'list' || result.type === 'company' || result.type === 'person' || result.type === 'topic' || result.type === 'investor') {
+    if (
+      result.type === 'list' ||
+      result.type === 'company' ||
+      result.type === 'person' ||
+      result.type === 'topic' ||
+      result.type === 'investor'
+    ) {
       // Count numbered items in the output (only if content is a string)
       const content = result.content || '';
       if (typeof content === 'string') {
@@ -360,8 +381,30 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
   };
 
   // Popular commands for touch mode
-  const popularCommands = ['portfolio', 'companies', 'people', 'topics', 'quotes', 'facts'];
-  const moreCommands = ['figures', 'investors', 'showcase random', 'stats', 'surprise me', 'fortune', 'pwvsay', 'cowsay', 'figlet PWV', 'bork', 'help', 'clear'];
+  const popularCommands = [
+    'portfolio',
+    'companies',
+    'people',
+    'topics',
+    'quotes',
+    'facts',
+    'fortune',
+    'fortune | pwvsay',
+    'fortune | cowsay',
+    'bork | cowsay',
+  ];
+  const moreCommands = [
+    'figures',
+    'investors',
+    'showcase random',
+    'stats',
+    'surprise me',
+    'cowsay',
+    'figlet PWV',
+    'bork',
+    'help',
+    'clear',
+  ];
 
   // Render output with typewriter effect for certain types
   const renderOutput = (entry: HistoryEntry, index: number) => {
@@ -375,18 +418,27 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
         <div className="text-pwv-green">
           <span className="text-pwv-teal">pwv:~ visitor$</span> {entry.command}
         </div>
-        
+
         {/* Output */}
         {result.content && (
-          <pre className={`${textColor} mt-2 whitespace-pre-wrap font-mono text-[0.65rem] sm:text-xs md:text-sm leading-relaxed break-words`}>
-            {typeof result.content === 'string' ? linkifyContent(result.content) : result.content}
+          <pre
+            className={`${textColor} mt-2 font-mono text-[0.65rem] leading-relaxed break-words whitespace-pre-wrap sm:text-xs md:text-sm`}
+          >
+            {typeof result.content === 'string'
+              ? linkifyContent(result.content)
+              : result.content}
           </pre>
         )}
 
         {/* Helper text for lists */}
-        {result.type === 'list' || result.type === 'company' || result.type === 'person' || result.type === 'topic' ? (
-          <div className="mt-2 text-xs text-pwv-teal opacity-70">
-            {isMobile ? 'Tap a number below to select' : 'Type a number to select an item from the list above'}
+        {result.type === 'list' ||
+        result.type === 'company' ||
+        result.type === 'person' ||
+        result.type === 'topic' ? (
+          <div className="text-pwv-teal mt-2 text-xs opacity-70">
+            {isMobile
+              ? 'Tap a number below to select'
+              : 'Type a number to select an item from the list above'}
           </div>
         ) : null}
       </div>
@@ -396,25 +448,28 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
   const availableNumbers = getAvailableNumbers();
 
   return (
-    <div className="terminal-interface" style={{ display: 'block', minHeight: '60px' }}>
+    <div
+      className="terminal-interface"
+      style={{ display: 'block', minHeight: '60px' }}
+    >
       {/* Output area */}
-      <div 
+      <div
         ref={outputRef}
-        className="terminal-output mb-4 max-h-[60vh] md:max-h-[70vh] overflow-y-auto overflow-x-auto pr-2 scrollbar-thin scrollbar-thumb-pwv-green/30 scrollbar-track-transparent"
+        className="terminal-output scrollbar-thin scrollbar-thumb-pwv-green/30 scrollbar-track-transparent mb-4 max-h-[60vh] overflow-x-auto overflow-y-auto pr-2 md:max-h-[70vh]"
       >
         {history.map((entry, index) => renderOutput(entry, index))}
       </div>
 
       {/* Touch mode: Number selection buttons (mobile only, when numbers available) */}
       {isMobile && availableNumbers.length > 0 && (
-        <div className="mb-4 pb-3 border-b border-pwv-green/30">
-          <div className="text-xs text-pwv-teal mb-2 font-mono">Select:</div>
+        <div className="border-pwv-green/30 mb-4 border-b pb-3">
+          <div className="text-pwv-teal mb-2 font-mono text-xs">Select:</div>
           <div className="flex flex-wrap gap-2">
             {availableNumbers.map((num) => (
               <button
                 key={num}
                 onClick={() => handleCommandClick(num.toString())}
-                className="px-3 py-1.5 bg-pwv-green/10 border border-pwv-green/40 rounded text-pwv-green font-mono text-sm hover:bg-pwv-green/20 active:bg-pwv-green/30 transition-colors"
+                className="bg-pwv-green/10 border-pwv-green/40 text-pwv-green hover:bg-pwv-green/20 active:bg-pwv-green/30 rounded border px-3 py-1.5 font-mono text-sm transition-colors"
               >
                 {num}
               </button>
@@ -425,32 +480,32 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
 
       {/* Touch mode: Command buttons (mobile only) */}
       {isMobile && (
-        <div className="mb-4 pb-3 border-b border-pwv-green/30">
-          <div className="text-xs text-pwv-teal mb-2 font-mono">Commands:</div>
+        <div className="border-pwv-green/30 mb-4 border-b pb-3">
+          <div className="text-pwv-teal mb-2 font-mono text-xs">Commands:</div>
           <div className="flex flex-wrap gap-2">
             {popularCommands.map((cmd) => (
               <button
                 key={cmd}
                 onClick={() => handleCommandClick(cmd)}
-                className="px-3 py-1.5 bg-pwv-green/10 border border-pwv-green/40 rounded text-pwv-green font-mono text-xs hover:bg-pwv-green/20 active:bg-pwv-green/30 transition-colors"
+                className="bg-pwv-green/10 border-pwv-green/40 text-pwv-green hover:bg-pwv-green/20 active:bg-pwv-green/30 rounded border px-3 py-1.5 font-mono text-xs transition-colors"
               >
                 {cmd}
               </button>
             ))}
             <button
               onClick={() => setShowMoreCommands(!showMoreCommands)}
-              className="px-3 py-1.5 bg-pwv-teal/10 border border-pwv-teal/40 rounded text-pwv-teal font-mono text-xs hover:bg-pwv-teal/20 active:bg-pwv-teal/30 transition-colors"
+              className="bg-pwv-teal/10 border-pwv-teal/40 text-pwv-teal hover:bg-pwv-teal/20 active:bg-pwv-teal/30 rounded border px-3 py-1.5 font-mono text-xs transition-colors"
             >
               {showMoreCommands ? '− Less' : '+ More'}
             </button>
           </div>
           {showMoreCommands && (
-            <div className="flex flex-wrap gap-2 mt-2">
+            <div className="mt-2 flex flex-wrap gap-2">
               {moreCommands.map((cmd) => (
                 <button
                   key={cmd}
                   onClick={() => handleCommandClick(cmd)}
-                  className="px-3 py-1.5 bg-pwv-green/10 border border-pwv-green/40 rounded text-pwv-green font-mono text-xs hover:bg-pwv-green/20 active:bg-pwv-green/30 transition-colors"
+                  className="bg-pwv-green/10 border-pwv-green/40 text-pwv-green hover:bg-pwv-green/20 active:bg-pwv-green/30 rounded border px-3 py-1.5 font-mono text-xs transition-colors"
                 >
                   {cmd}
                 </button>
@@ -462,13 +517,15 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
 
       {/* Autocomplete suggestions */}
       {suggestions.length > 0 && !isMobile && (
-        <div className="mb-2 bg-pwv-black/80 border border-pwv-green/40 rounded p-2 font-mono text-sm">
-          <div className="text-pwv-teal/70 text-xs mb-1">Suggestions (Tab to complete, ↑↓ to navigate, Esc to dismiss):</div>
+        <div className="bg-pwv-black/80 border-pwv-green/40 mb-2 rounded border p-2 font-mono text-sm">
+          <div className="text-pwv-teal/70 mb-1 text-xs">
+            Suggestions (Tab to complete, ↑↓ to navigate, Esc to dismiss):
+          </div>
           <div className="space-y-1">
             {suggestions.map((suggestion, index) => (
               <div
                 key={index}
-                className={`px-2 py-1 rounded cursor-pointer transition-colors ${
+                className={`cursor-pointer rounded px-2 py-1 transition-colors ${
                   index === selectedSuggestionIndex
                     ? 'bg-pwv-green/20 text-pwv-green'
                     : 'text-pwv-green/70 hover:bg-pwv-green/10 hover:text-pwv-green'
@@ -488,12 +545,12 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
       )}
 
       {/* Input area - Always visible */}
-      <form 
-        onSubmit={handleSubmit} 
-        className="terminal-input flex items-center gap-2 border-2 border-pwv-green rounded px-3 py-3 bg-pwv-black/50"
+      <form
+        onSubmit={handleSubmit}
+        className="terminal-input border-pwv-green bg-pwv-black/50 flex items-center gap-2 rounded border-2 px-3 py-3"
         style={{ display: 'flex' }}
       >
-        <label className="text-pwv-teal whitespace-nowrap text-base md:text-lg flex-shrink-0 font-bold">
+        <label className="text-pwv-teal flex-shrink-0 text-base font-bold whitespace-nowrap md:text-lg">
           pwv:~$
         </label>
         <input
@@ -502,19 +559,21 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="flex-1 bg-transparent text-pwv-green outline-none font-mono text-base md:text-lg caret-pwv-green min-w-0"
+          className="text-pwv-green caret-pwv-green min-w-0 flex-1 bg-transparent font-mono text-base outline-none md:text-lg"
           spellCheck={false}
           autoComplete="off"
           autoCapitalize="off"
-          placeholder={isMobile ? "Or type here..." : "Type 'help'..."}
+          placeholder={isMobile ? 'Or type here...' : "Type 'help'..."}
           style={{ fontSize: '16px' }}
         />
-        <span className="cursor-blink text-pwv-green text-base md:text-lg flex-shrink-0">█</span>
+        <span className="cursor-blink text-pwv-green flex-shrink-0 text-base md:text-lg">
+          █
+        </span>
       </form>
 
       {/* Mobile helper */}
       {isMobile && history.length === 0 && (
-        <div className="mt-3 text-xs text-pwv-green/50 space-y-1">
+        <div className="text-pwv-green/50 mt-3 space-y-1 text-xs">
           <p>💡 Tap command buttons above or type below</p>
         </div>
       )}
