@@ -238,6 +238,21 @@ export class QueryEngine {
       return this.cowsay(text);
     }
 
+    if (command === 'cowsay') {
+      // No argument - get a random fortune
+      const fortune = this.fortune();
+      return this.cowsay(fortune);
+    }
+
+    if (command === 'fortune') {
+      return { type: 'text', content: this.fortune() };
+    }
+
+    if (command === 'fortune | cowsay') {
+      const fortune = this.fortune();
+      return this.cowsay(fortune);
+    }
+
     // Unknown command
     return {
       type: 'error',
@@ -281,7 +296,10 @@ OTHER:
   • help                   Show this help message
   • clear                  Clear the terminal
   • whoami                 Random PWV philosophy quote
-  • cowsay <text>          ASCII art fun
+  • fortune                Get a random quote or philosophy
+  • cowsay                 Random fortune with ASCII cow
+  • cowsay <text>          ASCII art fun with custom text
+  • fortune | cowsay       Unix-style piped fortune (same as cowsay)
 
 ─────────────────────────────────────────────────────
 
@@ -1403,6 +1421,34 @@ ${connectionText}
   }
 
   /**
+   * Fortune - get a random quote or philosophy
+   */
+  private fortune(): string {
+    const quotes = this.data.entities.quotes || [];
+    const philosophies = [
+      '"Ideas start with founders. Founders start with PWV."',
+      '"We succeed in our mission by helping founders succeed in theirs."',
+      '"A community can go farther than an individual."',
+      '"I invest because I want to be invested."',
+      '"Early-stage is where real-world experience can best accelerate timelines."',
+      '"The most important factor in the better future we want to build is people."',
+      '"We are three entrepreneurs and technologists committed to a vision of a future where technological progress and human flourishing go hand in hand."',
+      '"We invest to help make this future possible."',
+    ];
+
+    // 50% chance of philosophy, 50% chance of quote
+    if (Math.random() < 0.5 && philosophies.length > 0) {
+      return philosophies[Math.floor(Math.random() * philosophies.length)];
+    } else if (quotes.length > 0) {
+      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+      return `"${randomQuote.quote}"\n— ${randomQuote.speaker}`;
+    } else {
+      // Fallback to philosophy if no quotes
+      return philosophies[Math.floor(Math.random() * philosophies.length)];
+    }
+  }
+
+  /**
    * Cowsay easter egg
    */
   private cowsay(text: string): CommandResult {
@@ -1410,16 +1456,64 @@ ${connectionText}
       text = 'Type something after cowsay!';
     }
 
-    const bubble = `
- ${'_'.repeat(text.length + 2)}
-< ${text} >
- ${'-'.repeat(text.length + 2)}
-        \\   ^__^
-         \\  (oo)\\_______
-            (__)\\       )\\/\\
-                ||----w |
-                ||     ||
-    `;
+    // Handle multi-line text by wrapping long lines
+    const maxWidth = 50;
+    const lines: string[] = [];
+    
+    // Split by newlines first
+    const paragraphs = text.split('\n');
+    
+    paragraphs.forEach(paragraph => {
+      if (paragraph.length <= maxWidth) {
+        lines.push(paragraph);
+      } else {
+        // Wrap long lines
+        const words = paragraph.split(' ');
+        let currentLine = '';
+        
+        words.forEach(word => {
+          if ((currentLine + ' ' + word).trim().length <= maxWidth) {
+            currentLine = currentLine ? currentLine + ' ' + word : word;
+          } else {
+            if (currentLine) lines.push(currentLine);
+            currentLine = word;
+          }
+        });
+        
+        if (currentLine) lines.push(currentLine);
+      }
+    });
+
+    // Calculate max line length
+    const maxLen = Math.max(...lines.map(l => l.length), 10);
+    
+    // Build the speech bubble
+    const topBorder = ' ' + '_'.repeat(maxLen + 2);
+    const bottomBorder = ' ' + '-'.repeat(maxLen + 2);
+    
+    let bubble = topBorder + '\n';
+    
+    if (lines.length === 1) {
+      bubble += `< ${lines[0].padEnd(maxLen)} >\n`;
+    } else {
+      lines.forEach((line, i) => {
+        const paddedLine = line.padEnd(maxLen);
+        if (i === 0) {
+          bubble += `/ ${paddedLine} \\\n`;
+        } else if (i === lines.length - 1) {
+          bubble += `\\ ${paddedLine} /\n`;
+        } else {
+          bubble += `| ${paddedLine} |\n`;
+        }
+      });
+    }
+    
+    bubble += bottomBorder + '\n';
+    bubble += `        \\   ^__^\n`;
+    bubble += `         \\  (oo)\\_______\n`;
+    bubble += `            (__)\\       )\\/\\\n`;
+    bubble += `                ||----w |\n`;
+    bubble += `                ||     ||\n`;
 
     return { type: 'text', content: bubble };
   }

@@ -28,8 +28,105 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
   const [isTyping, setIsTyping] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showMoreCommands, setShowMoreCommands] = useState(false);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLDivElement>(null);
+
+  // Available commands for autocomplete
+  const baseCommands = [
+    'help',
+    'companies',
+    'list companies',
+    'investors',
+    'list investors',
+    'people',
+    'list people',
+    'topics',
+    'list topics',
+    'quotes',
+    'list quotes',
+    'facts',
+    'list facts',
+    'figures',
+    'list figures',
+    'portfolio',
+    'list portfolio',
+    'stats',
+    'surprise me',
+    'surprise',
+    'showcase random',
+    'showcase company ',
+    'showcase investor ',
+    'showcase person ',
+    'showcase topic ',
+    'timeline ',
+    'connections ',
+    'clear',
+    'cls',
+    'whoami',
+    'history',
+    'fortune',
+    'fortune | cowsay',
+    'cowsay',
+    'cowsay ',
+  ];
+
+  // Get suggestions based on current input
+  const getSuggestions = (inputText: string): string[] => {
+    if (!inputText.trim()) return [];
+    
+    const lowerInput = inputText.toLowerCase();
+    const filtered = baseCommands.filter(cmd => 
+      cmd.toLowerCase().startsWith(lowerInput)
+    );
+
+    // Add entity-specific suggestions
+    if (lowerInput.startsWith('showcase company ')) {
+      const companyPrefix = inputText.substring(17);
+      const companies = Object.keys(entitiesData.entities.companies)
+        .filter(name => name.toLowerCase().startsWith(companyPrefix.toLowerCase()))
+        .map(name => `showcase company ${name}`)
+        .slice(0, 5);
+      return companies;
+    }
+
+    if (lowerInput.startsWith('showcase investor ')) {
+      const investorPrefix = inputText.substring(18);
+      const investors = Object.keys(entitiesData.entities.investors)
+        .filter(name => name.toLowerCase().startsWith(investorPrefix.toLowerCase()))
+        .map(name => `showcase investor ${name}`)
+        .slice(0, 5);
+      return investors;
+    }
+
+    if (lowerInput.startsWith('showcase person ')) {
+      const personPrefix = inputText.substring(16);
+      const people = Object.keys(entitiesData.entities.people)
+        .filter(name => name.toLowerCase().startsWith(personPrefix.toLowerCase()))
+        .map(name => `showcase person ${name}`)
+        .slice(0, 5);
+      return people;
+    }
+
+    if (lowerInput.startsWith('showcase topic ')) {
+      const topicPrefix = inputText.substring(15);
+      const topics = Object.keys(entitiesData.entities.topics)
+        .filter(name => name.toLowerCase().startsWith(topicPrefix.toLowerCase()))
+        .map(name => `showcase topic ${name}`)
+        .slice(0, 5);
+      return topics;
+    }
+
+    return filtered.slice(0, 8); // Limit to 8 suggestions
+  };
+
+  // Update suggestions when input changes
+  useEffect(() => {
+    const newSuggestions = getSuggestions(input);
+    setSuggestions(newSuggestions);
+    setSelectedSuggestionIndex(-1);
+  }, [input]);
 
   // Auto-focus input on mount
   useEffect(() => {
@@ -68,6 +165,8 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     if (commandText.trim().toLowerCase() === 'clear' || commandText.trim().toLowerCase() === 'cls') {
       setHistory([]);
       setInput('');
+      setSuggestions([]);
+      setSelectedSuggestionIndex(-1);
       return;
     }
 
@@ -84,6 +183,8 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     setInput('');
     setHistoryIndex(-1);
     setShowMoreCommands(false);
+    setSuggestions([]);
+    setSelectedSuggestionIndex(-1);
 
     // Auto-open post if requested
     if (result.type === 'post' && result.data?.autoOpen && result.data?.url) {
@@ -106,6 +207,38 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
 
   // Handle keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // Handle suggestions navigation
+    if (suggestions.length > 0) {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setSelectedSuggestionIndex(prev => 
+          prev < suggestions.length - 1 ? prev + 1 : 0
+        );
+        return;
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setSelectedSuggestionIndex(prev => 
+          prev > 0 ? prev - 1 : suggestions.length - 1
+        );
+        return;
+      } else if (e.key === 'Tab') {
+        e.preventDefault();
+        if (suggestions.length > 0) {
+          const selectedIndex = selectedSuggestionIndex >= 0 ? selectedSuggestionIndex : 0;
+          setInput(suggestions[selectedIndex]);
+          setSuggestions([]);
+          setSelectedSuggestionIndex(-1);
+        }
+        return;
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        setSuggestions([]);
+        setSelectedSuggestionIndex(-1);
+        return;
+      }
+    }
+
+    // Command history navigation (only when no suggestions)
     if (e.key === 'ArrowUp') {
       e.preventDefault();
       if (history.length === 0) return;
@@ -131,7 +264,7 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
       }
     } else if (e.key === 'Tab') {
       e.preventDefault();
-      // Could add autocomplete here
+      // Tab with no suggestions does nothing
     }
   };
 
@@ -141,7 +274,7 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     return lines.map((line, lineIndex) => {
       // Match /news/ and /showcase/ paths (with or without trailing slash)
       const linkRegex = /\/(news|showcase)\/([a-z0-9-]+(?:\/[a-z0-9-]+)?)\/?/g;
-      const parts: (string | JSX.Element)[] = [];
+      const parts: (string | React.ReactElement)[] = [];
       let lastIndex = 0;
       let match;
 
@@ -194,11 +327,13 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
     
     // Check if last result was a list type
     if (result.type === 'list' || result.type === 'company' || result.type === 'person' || result.type === 'topic' || result.type === 'investor') {
-      // Count numbered items in the output
+      // Count numbered items in the output (only if content is a string)
       const content = result.content || '';
-      const matches = content.match(/^\s*\d+\./gm);
-      if (matches) {
-        return Array.from({ length: matches.length }, (_, i) => i + 1);
+      if (typeof content === 'string') {
+        const matches = content.match(/^\s*\d+\./gm);
+        if (matches) {
+          return Array.from({ length: matches.length }, (_, i) => i + 1);
+        }
       }
     }
     return [];
@@ -206,7 +341,7 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
 
   // Popular commands for touch mode
   const popularCommands = ['portfolio', 'companies', 'people', 'topics', 'quotes', 'facts'];
-  const moreCommands = ['figures', 'investors', 'showcase random', 'stats', 'surprise me', 'help', 'clear'];
+  const moreCommands = ['figures', 'investors', 'showcase random', 'stats', 'surprise me', 'fortune', 'cowsay', 'help', 'clear'];
 
   // Render output with typewriter effect for certain types
   const renderOutput = (entry: HistoryEntry, index: number) => {
@@ -302,6 +437,33 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({ entitiesData }) =
               ))}
             </div>
           )}
+        </div>
+      )}
+
+      {/* Autocomplete suggestions */}
+      {suggestions.length > 0 && !isMobile && (
+        <div className="mb-2 bg-pwv-black/80 border border-pwv-green/40 rounded p-2 font-mono text-sm">
+          <div className="text-pwv-teal/70 text-xs mb-1">Suggestions (Tab to complete, ↑↓ to navigate, Esc to dismiss):</div>
+          <div className="space-y-1">
+            {suggestions.map((suggestion, index) => (
+              <div
+                key={index}
+                className={`px-2 py-1 rounded cursor-pointer transition-colors ${
+                  index === selectedSuggestionIndex
+                    ? 'bg-pwv-green/20 text-pwv-green'
+                    : 'text-pwv-green/70 hover:bg-pwv-green/10 hover:text-pwv-green'
+                }`}
+                onClick={() => {
+                  setInput(suggestion);
+                  setSuggestions([]);
+                  setSelectedSuggestionIndex(-1);
+                  inputRef.current?.focus();
+                }}
+              >
+                {suggestion}
+              </div>
+            ))}
+          </div>
         </div>
       )}
 

@@ -2,10 +2,9 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Heading1 from '../../components/Heading1.astro';
-import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
 import PersonCard from '../../components/entities/PersonCard.astro';
 import ShowcaseNav from '../../components/entities/ShowcaseNav.astro';
-import TerminalCTA from '../../components/entities/TerminalCTA.astro';
+import ShowcaseIntro from '../../components/entities/ShowcaseIntro.astro';
 
 const title = 'Showcase People';
 const description = 'Showcasing people mentioned in PWV blog posts, extracted and aggregated from our content.';
@@ -61,13 +60,10 @@ const getColor = (name: string, index: number) => {
 <Layout title={title} description={description}>
   <section class="mx-auto mb-12">
     <Heading1>{title}</Heading1>
-    <Heading2NoUnderline>
-      {people.length} people mentioned across {postEntities.length} posts
-    </Heading2NoUnderline>
+    
+    <ShowcaseIntro />
 
     <ShowcaseNav currentPath="/showcase/people/" />
-
-    <TerminalCTA />
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
       {

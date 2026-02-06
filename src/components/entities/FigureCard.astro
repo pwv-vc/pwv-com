@@ -4,6 +4,8 @@ import EntityCard from './EntityCard.astro';
 import ShareButtons from './ShareButtons.astro';
 import RelatedPosts from './RelatedPosts.astro';
 import ChartIcon from '../icons/ChartIcon.astro';
+import FundingIcon from '../icons/FundingIcon.astro';
+import TrendingIcon from '../icons/TrendingIcon.astro';
 
 interface Props {
   value: string;
@@ -17,6 +19,14 @@ interface Props {
 }
 
 const { value, context, unit, postSlug, postTitle, pubDate, borderColor, figureIndex = 0 } = Astro.props;
+
+// Determine icon based on context category
+const contextLower = context.toLowerCase();
+const isFunding = /\b(seed|series [a-z]|round|funding|raised|capital|investment)\b/i.test(contextLower);
+const isValuation = /\b(valuation|valued|worth|market cap)\b/i.test(contextLower);
+
+// Select appropriate icon component
+const IconComponent = isFunding ? FundingIcon : isValuation ? TrendingIcon : ChartIcon;
 
 // Create share URL and text - link to the figure detail page on PWV
 const siteUrl = Astro.site || 'https://pwv.com';
@@ -45,10 +55,10 @@ const postData = post ? [{
       <div class={`-m-6 mb-0 p-6 rounded-t-lg bg-${borderColor}/10 text-center`}>
         <div class="flex flex-col items-center gap-2">
           <div class="text-pwv-black">
-            <ChartIcon class="h-8 w-8" />
+            <IconComponent class="h-8 w-8" />
           </div>
           <div class="font-serif text-4xl font-bold text-pwv-black">
-            {value}<span class="text-2xl text-pwv-black/70">{unit}</span>
+            {value}<span class="text-2xl text-pwv-black/70 ml-1">{unit}</span>
           </div>
         </div>
       </div>

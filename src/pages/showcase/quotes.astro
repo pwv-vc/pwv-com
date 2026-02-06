@@ -2,10 +2,9 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Heading1 from '../../components/Heading1.astro';
-import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
 import QuoteCard from '../../components/entities/QuoteCard.astro';
 import ShowcaseNav from '../../components/entities/ShowcaseNav.astro';
-import TerminalCTA from '../../components/entities/TerminalCTA.astro';
+import ShowcaseIntro from '../../components/entities/ShowcaseIntro.astro';
 
 const title = 'Showcase Quotes';
 const description = 'Showcasing insightful quotes from PWV blog posts, extracted and curated from our content.';
@@ -64,13 +63,10 @@ const getColor = (text: string, index: number) => {
 <Layout title={title} description={description}>
   <section class="mx-auto mb-12">
     <Heading1>{title}</Heading1>
-    <Heading2NoUnderline>
-      {quotes.length} quotes collected from {postEntities.length} posts
-    </Heading2NoUnderline>
+    
+    <ShowcaseIntro />
 
     <ShowcaseNav currentPath="/showcase/quotes/" />
-
-    <TerminalCTA />
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
       {

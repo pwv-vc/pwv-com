@@ -2,10 +2,9 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Heading1 from '../../components/Heading1.astro';
-import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
 import TopicCard from '../../components/entities/TopicCard.astro';
 import ShowcaseNav from '../../components/entities/ShowcaseNav.astro';
-import TerminalCTA from '../../components/entities/TerminalCTA.astro';
+import ShowcaseIntro from '../../components/entities/ShowcaseIntro.astro';
 
 const title = 'Showcase Topics';
 const description = 'Showcasing topics mentioned in PWV blog posts, extracted and aggregated from our content.';
@@ -59,13 +58,10 @@ const getColor = (topic: string, index: number) => {
 <Layout title={title} description={description}>
   <section class="mx-auto mb-12">
     <Heading1>{title}</Heading1>
-    <Heading2NoUnderline>
-      {topicsArray.length} topics mentioned across {postEntities.length} posts
-    </Heading2NoUnderline>
+    
+    <ShowcaseIntro />
 
     <ShowcaseNav currentPath="/showcase/topics/" />
-
-    <TerminalCTA />
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
       {

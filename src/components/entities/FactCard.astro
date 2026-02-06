@@ -4,6 +4,14 @@ import EntityCard from './EntityCard.astro';
 import ShareButtons from './ShareButtons.astro';
 import RelatedPosts from './RelatedPosts.astro';
 import DocumentIcon from '../icons/DocumentIcon.astro';
+import LightbulbIcon from '../icons/LightbulbIcon.astro';
+import TrendingIcon from '../icons/TrendingIcon.astro';
+import BookIcon from '../icons/BookIcon.astro';
+import SparklesIcon from '../icons/SparklesIcon.astro';
+import FlagIcon from '../icons/FlagIcon.astro';
+import FundingIcon from '../icons/FundingIcon.astro';
+import RocketIcon from '../icons/RocketIcon.astro';
+import HandshakeIcon from '../icons/HandshakeIcon.astro';
 
 interface Props {
   fact: string;
@@ -17,6 +25,20 @@ interface Props {
 }
 
 const { fact, category, date, postSlug, postTitle, pubDate, borderColor, factIndex = 0 } = Astro.props;
+
+// Select icon based on category
+const categoryIcons: Record<string, any> = {
+  'insight': LightbulbIcon,
+  'trend': TrendingIcon,
+  'philosophy': BookIcon,
+  'announcement': SparklesIcon,
+  'milestone': FlagIcon,
+  'funding': FundingIcon,
+  'launch': RocketIcon,
+  'partnership': HandshakeIcon,
+};
+
+const CategoryIcon = categoryIcons[category] || DocumentIcon;
 
 // Create share URL and text - link to the fact detail page on PWV
 const siteUrl = Astro.site || 'https://pwv.com';
@@ -70,7 +92,7 @@ const categoryColor = categoryColors[category] || 'pwv-soft-periwinkle';
       <!-- Category and Date -->
       <div class="flex flex-wrap items-center gap-2">
         <span class={`inline-flex items-center gap-1.5 rounded-full bg-${categoryColor}/30 px-3 py-1 text-xs font-medium text-pwv-black`}>
-          <span>📌</span>
+          <CategoryIcon class="h-3.5 w-3.5" />
           <span class="capitalize">{category}</span>
         </span>
         {date && (

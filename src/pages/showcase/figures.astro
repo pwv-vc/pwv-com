@@ -2,10 +2,9 @@
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Heading1 from '../../components/Heading1.astro';
-import Heading2NoUnderline from '../../components/Heading2NoUnderline.astro';
 import FigureCard from '../../components/entities/FigureCard.astro';
 import ShowcaseNav from '../../components/entities/ShowcaseNav.astro';
-import TerminalCTA from '../../components/entities/TerminalCTA.astro';
+import ShowcaseIntro from '../../components/entities/ShowcaseIntro.astro';
 
 // Get all extracted entities
 const allEntities = await getCollection('extractedPostEntities');
@@ -51,13 +50,10 @@ const description = 'Key metrics and numbers from PWV posts';
 <Layout title={title} description={description}>
   <section class="mx-auto mb-12">
     <Heading1>{title}</Heading1>
-    <Heading2NoUnderline>
-      {figuresWithContext.length} key metrics and numbers from PWV posts
-    </Heading2NoUnderline>
+    
+    <ShowcaseIntro />
 
     <ShowcaseNav currentPath="/showcase/figures/" />
-
-    <TerminalCTA />
 
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
       {figuresWithContext.map((figure, index) => (
