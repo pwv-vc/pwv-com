@@ -6,7 +6,7 @@ import type {
   PersonEntity,
   SelectableItem,
 } from './types';
-import * as figlet from 'figlet';
+import { allCommands, BaseCommand } from './commands';
 
 interface BoxSection {
   type: 'header' | 'keyValue' | 'list' | 'text' | 'empty' | 'divider';
@@ -17,10 +17,13 @@ export class QueryEngine {
   private data: ExtractedData;
   private currentList: SelectableItem[] = [];
   private boxWidth: number = 64; // Total box width including borders
+  private commands: BaseCommand[] = [];
 
   constructor(data: ExtractedData, boxWidth: number = 64) {
     this.data = data;
     this.boxWidth = boxWidth;
+    // Initialize all command instances
+    this.commands = allCommands.map((CommandClass) => new CommandClass(data, boxWidth));
   }
 
   /**
@@ -151,26 +154,25 @@ export class QueryEngine {
       return this.selectFromList(parseInt(command));
     }
 
+    // Try new command system first
+    const matchingCommand = this.commands.find((cmd) => cmd.matches(input));
+    if (matchingCommand) {
+      const args = input.trim().split(/\s+/).slice(1);
+      const result = matchingCommand.execute(input, args);
+      
+      // Update currentList if command returns selectable items
+      if (result.data?.selectableItems) {
+        this.currentList = result.data.selectableItems;
+      }
+      
+      return result;
+    }
+
+    // Fall back to old methods for unmigrated commands
+
     // Help command
     if (command === 'help' || command === '?') {
       return this.showHelp();
-    }
-
-    // List commands
-    if (command === 'list companies' || command === 'companies') {
-      return this.listCompanies();
-    }
-
-    if (command === 'list investors' || command === 'investors') {
-      return this.listInvestors();
-    }
-
-    if (command === 'list people' || command === 'people') {
-      return this.listPeople();
-    }
-
-    if (command === 'list topics' || command === 'topics') {
-      return this.listTopics();
     }
 
     if (command === 'list quotes' || command === 'quotes') {
@@ -187,11 +189,6 @@ export class QueryEngine {
 
     if (command === 'list portfolio' || command === 'portfolio') {
       return this.listPortfolio();
-    }
-
-    // Stats command
-    if (command === 'stats') {
-      return this.showStats();
     }
 
     // Surprise me / Random commands
@@ -221,11 +218,6 @@ export class QueryEngine {
       return this.showConnections(args);
     }
 
-    // Easter eggs
-    if (command === 'whoami') {
-      return this.whoami();
-    }
-
     if (command === 'history') {
       return {
         type: 'text',
@@ -240,89 +232,6 @@ export class QueryEngine {
       };
     }
 
-    if (command.startsWith('cowsay ')) {
-      const text = input.substring(7).trim();
-      return this.cowsay(text);
-    }
-
-    if (command === 'cowsay') {
-      // No argument - get a random fortune
-      const { text, showcaseUrl } = this.fortune();
-      return this.cowsay(text, showcaseUrl);
-    }
-
-    if (command === 'bork' || command === 'bork bork' || command === 'bork bork bork') {
-      return this.bork();
-    }
-
-    if (command.startsWith('figlet ')) {
-      const text = input.substring(7).trim();
-      return this.figlet(text);
-    }
-
-    if (command === 'figlet') {
-      return this.figlet('PWV');
-    }
-
-    if (command === 'hello') {
-      return this.hello();
-    }
-
-    // pwvsay and aliases (tomsay, dtsay, dpsay) with custom text
-    if (
-      command.startsWith('pwvsay ') ||
-      command.startsWith('tomsay ') ||
-      command.startsWith('dtsay ') ||
-      command.startsWith('dpsay ')
-    ) {
-      const cmdLength = command.indexOf(' ') + 1;
-      const text = input.substring(cmdLength).trim();
-      return this.pwvsay(text);
-    }
-
-    // pwvsay - quotes from PWV team
-    if (command === 'pwvsay') {
-      const { text, showcaseUrl } = this.getQuoteFromSpeakers(['Tom Preston-Werner', 'David Price', 'David Thyresson', 'PWV']);
-      return this.pwvsay(text, showcaseUrl);
-    }
-
-    // tomsay - quotes from Tom Preston-Werner
-    if (command === 'tomsay') {
-      const { text, showcaseUrl } = this.getQuoteFromSpeakers(['Tom Preston-Werner', 'Tom']);
-      return this.pwvsay(text, showcaseUrl);
-    }
-
-    // dtsay - quotes from David Thyresson
-    if (command === 'dtsay') {
-      const { text, showcaseUrl } = this.getQuoteFromSpeakers(['David Thyresson', 'David T.']);
-      return this.pwvsay(text, showcaseUrl);
-    }
-
-    // dpsay - quotes from David Price
-    if (command === 'dpsay') {
-      const { text, showcaseUrl } = this.getQuoteFromSpeakers(['David Price', 'David P.']);
-      return this.pwvsay(text, showcaseUrl);
-    }
-
-    if (command === 'fortune | pwvsay') {
-      const { text, showcaseUrl } = this.getQuoteFromSpeakers(['Tom Preston-Werner', 'David Price', 'David Thyresson', 'PWV']);
-      return this.pwvsay(text, showcaseUrl);
-    }
-
-    if (command === 'fortune') {
-      const { text, showcaseUrl } = this.fortune();
-      let content = text;
-      if (showcaseUrl) {
-        content += `\n\n💬 View & share: ${showcaseUrl}`;
-      }
-      return { type: 'text', content };
-    }
-
-    if (command === 'fortune | cowsay') {
-      const { text, showcaseUrl } = this.fortune();
-      return this.cowsay(text, showcaseUrl);
-    }
-
     // Unknown command
     return {
       type: 'error',
@@ -334,20 +243,32 @@ export class QueryEngine {
    * Show help message
    */
   private showHelp(): CommandResult {
-    const helpText = `
+    // Group commands by category
+    const categories: Record<string, BaseCommand[]> = {
+      list: [],
+      showcase: [],
+      exploration: [],
+      other: [],
+    };
+
+    this.commands.forEach((cmd) => {
+      categories[cmd.category].push(cmd);
+    });
+
+    // Build dynamic help text
+    let helpText = `
 >> PWV TERMINAL
 ─────────────────────────────────────────────────────
 
 LIST COMMANDS:
-  • companies              List all companies
-  • investors              List all investors/VCs
-  • people                 List all people
-  • topics                 List all topics
-  • quotes                 Browse all quotes
-  • facts                  Browse all facts
-  • figures                Browse all figures/metrics
-  • portfolio              Browse PWV portfolio companies
-  • <number>               Select item from last list
+`;
+
+    categories.list.forEach((cmd) => {
+      const usage = cmd.usage.padEnd(24);
+      helpText += `  • ${usage} ${cmd.description}\n`;
+    });
+
+    helpText += `  • <number>               Select item from last list
 
 SHOWCASE COMMANDS:
   • showcase random        Random fact/figure/entity
@@ -360,26 +281,25 @@ EXPLORATION:
   • surprise me            Random combination of entities
   • timeline <company>     Chronological view of mentions
   • connections <A> <B>    How two entities relate
-  • stats                  Fun statistics about the corpus
+`;
 
+    categories.exploration.forEach((cmd) => {
+      const usage = cmd.usage.padEnd(24);
+      helpText += `  • ${usage} ${cmd.description}\n`;
+    });
+
+    helpText += `
 OTHER:
   • help                   Show this help message
   • clear                  Clear the terminal
-  • whoami                 Random PWV philosophy quote
-  • fortune                Get any random quote from corpus
-  • hello                  Random greeting
-  • pwvsay                 PWV team quote with PWV logo
-  • pwvsay <text>          PWV logo says your text
-  • fortune | pwvsay       PWV team quote with PWV logo
-  • tomsay                 Tom Preston-Werner quote with PWV logo
-  • dtsay                  David Thyresson quote with PWV logo
-  • dpsay                  David Price quote with PWV logo
-  • cowsay                 Any random quote with ASCII cow
-  • cowsay <text>          ASCII cow says your text
-  • fortune | cowsay       Any random quote with ASCII cow
-  • figlet <text>          Generate ASCII art text
-  • bork                   Bork bork bork!
+`;
 
+    categories.other.forEach((cmd) => {
+      const usage = cmd.usage.padEnd(24);
+      helpText += `  • ${usage} ${cmd.description}\n`;
+    });
+
+    helpText += `
 ─────────────────────────────────────────────────────
 
 TIP: Type 'companies' to see all companies, then type a number.
@@ -1747,33 +1667,14 @@ ${randomBork}
   }
 
   /**
-   * Figlet - ASCII art text generator
+   * Figlet - ASCII art text generator (legacy fallback - should not be called)
+   * NOTE: This is now handled by FigletCommand
    */
   private figlet(text: string): CommandResult {
-    if (!text) {
-      return {
-        type: 'error',
-        content: 'Usage: figlet <text>\nExample: figlet PWV',
-      };
-    }
-
-    try {
-      const asciiArt = figlet.textSync(text, {
-        font: 'Standard',
-        horizontalLayout: 'default',
-        verticalLayout: 'default',
-      });
-
-      return {
-        type: 'text',
-        content: asciiArt,
-      };
-    } catch (error) {
-      return {
-        type: 'error',
-        content: `Error generating ASCII art: ${error}`,
-      };
-    }
+    return {
+      type: 'error',
+      content: 'Figlet command should be handled by FigletCommand class',
+    };
   }
 
   /**
