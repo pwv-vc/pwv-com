@@ -113,6 +113,10 @@ export default defineConfig({
             // Amplify figures page - updates when new posts add figures
             item.changefreq = 'daily';
             item.priority = 0.7;
+          } else if (item.url.endsWith('/showcase/topics/')) {
+            // Topics page - updates when new posts add topics
+            item.changefreq = 'daily';
+            item.priority = 0.7;
           } else if (item.url.match(/\/$/)) {
             // Homepage
             item.changefreq = 'daily';

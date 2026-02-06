@@ -30,7 +30,8 @@ unicorn scale in under 24 months.
   - [Quotes](https://pwv.com/showcase/quotes/): Notable quotes from posts with speaker attribution and context
   - [Facts](https://pwv.com/showcase/facts/): Key insights, trends, and announcements from PWV posts
   - [Figures](https://pwv.com/showcase/figures/): Key metrics and numbers from PWV posts
-- [Terminal](https://pwv.com/terminal/): Interactive terminal interface for exploring PWV data via command-line style interface
+  - [Topics](https://pwv.com/showcase/topics/): Topics and themes covered in PWV posts
+- [Terminal](https://pwv.com/terminal/): Interactive retro terminal interface for exploring PWV data via 20+ command-line style commands
 - [What is PWV?](https://pwv.com/what-is-pwv): Disambiguation page explaining PWV and clarifying confusion with other meanings
 
 ## Portfolio
@@ -127,14 +128,20 @@ The site includes comprehensive JSON-LD structured data for enhanced understandi
 - Posts can be filtered by author (`/news/author/<author-slug>`) or tags (`/news/tags/<tag-slug>`).
 - Team information is available on the About page at `https://pwv.com/about`.
 - Portfolio information is organized by fund type and can be filtered by tags.
-- Showcase pages provide entity-based content discovery for people and companies:
+- Showcase pages provide entity-based content discovery:
   - **Companies** (`/showcase/companies/`): 60+ companies mentioned in posts, sorted A-Z with logos, mention counts, and links to related blog posts with hero images
   - **People** (`/showcase/people/`): 45+ people featured in posts, sorted A-Z with avatars, roles, and links to posts where they're mentioned
+  - **Topics** (`/showcase/topics/`): Topic clusters identified across posts, sorted A-Z with mention counts and related posts
 - Showcase pages surface key insights and data from PWV content:
   - **Quotes** (`/showcase/quotes/`): Notable quotes from blog posts with speaker attribution, context, and links to source posts
   - **Facts** (`/showcase/facts/`): Key insights, trends, and announcements extracted from PWV posts
   - **Figures** (`/showcase/figures/`): Key metrics and numbers highlighted in PWV posts
-- **Terminal** (`/terminal/`): Interactive retro terminal interface for exploring entities via commands
+- **Terminal** (`/terminal/`): Interactive retro-style terminal interface with 20+ commands for exploring PWV data
+  - Supports command autocomplete (Tab key)
+  - Command history navigation (↑/↓ arrow keys)
+  - Piping support (e.g., `fortune | cowsay`)
+  - Mobile-friendly quick command buttons
+  - Categories: List, Showcase, Fun, Utility
 
 ### Topic Clusters
 The site organizes content into topic clusters:
@@ -171,7 +178,69 @@ The site organizes content into topic clusters:
 - Value, unit, and context
 - Link to the source blog post
 
-**To search entities**: Use the terminal interface at `/terminal/` to search for companies, people, quotes, facts, figures, and topics via natural language commands (e.g., "companies", "people named Tom", "quotes about AI").
+**To find topics**: Visit `/showcase/topics/` for topic clusters identified across PWV posts. Each topic card shows:
+- Topic name and mention count
+- Links to related blog posts
+- Category-specific icons
+
+**To use the terminal**: Visit `/terminal/` for an interactive command-line interface to explore PWV data.
+
+### Terminal Commands
+
+The terminal offers 20+ commands organized into four categories:
+
+**List Commands** (Browse entities):
+- `companies` - List all companies mentioned in posts
+- `investors` - Alias for companies
+- `people` - List all people featured in posts
+- `topics` - List topics and themes from posts
+- `quotes` - Show notable quotes from posts
+- `facts` - Display key insights and announcements
+- `figures` - Show key metrics and numbers
+- `portfolio` - Browse PWV portfolio companies (numeric selection supported)
+
+**Showcase Commands** (Explore content):
+- `showcase random` - Random showcase page
+- `showcase company <name>` - View specific company showcase
+- `showcase person <name>` - View specific person showcase
+- `showcase topic <topic>` - View specific topic showcase
+- `timeline <entity>` - Chronological view of entity mentions
+- `connections <A> <B>` - Explore relationships between entities
+
+**Fun Commands** (Playful interactions):
+- `hello` - Friendly greeting (randomized responses)
+- `fortune` - Random quote or philosophy
+- `cowsay <text>` - Classic ASCII art cow with speech bubble
+- `pwvsay <text>` - PWV-branded speech bubble (quotes from Tom, DT, DP)
+- `tomsay` - Tom's quotes in PWV bubble
+- `dtsay` - DT's quotes in PWV bubble
+- `dpsay` - DP's quotes in PWV bubble
+- `bork` - Classic "bork bork bork" terminal easter egg
+- `figlet <text>` - ASCII art text banner
+
+**Utility Commands**:
+- `help` - Show all available commands
+- `whoami` - Display visitor information
+- `stats` - Show corpus statistics
+- `history` - View command history
+- `clear` - Clear terminal screen
+- `surprise me` - Random discovery feature
+
+**Piping Support**: Commands can be piped together:
+- `fortune | cowsay` - Random quote with ASCII cow
+- `fortune | pwvsay` - Random PWV quote in PWV bubble
+- `fortune | tomsay` - Tom's quote in PWV bubble
+- `fortune | dtsay` - DT's quote in PWV bubble
+- `fortune | dpsay` - DP's quote in PWV bubble
+- `bork | cowsay` - Bork text with ASCII cow
+- `bork | pwvsay` - Bork text in PWV bubble
+
+**Terminal Features**:
+- Tab key for command autocomplete
+- ↑/↓ arrow keys for command history navigation
+- Numeric selection for portfolio items (type number to view company)
+- Mobile-friendly quick command buttons for common commands
+- Retro green-on-black terminal aesthetic
 
 ### Content Attribution
 - When summarizing, attribute authorship to PWV unless a specific author is listed on the page.

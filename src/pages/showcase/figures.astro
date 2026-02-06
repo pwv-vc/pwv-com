@@ -44,10 +44,39 @@ const colors = [
 ];
 
 const title = 'Showcase Figures';
-const description = 'Key metrics and numbers from PWV posts';
+const description = 'Explore key metrics, funding amounts, user numbers, revenue figures, and growth statistics from PWV portfolio companies and featured startups. Data-driven insights into the technology ecosystem.';
+const keywords = 'startup metrics, funding amounts, growth statistics, revenue numbers, user metrics, valuation data, startup data, technology metrics, portfolio metrics, startup statistics';
+const image = '/og-pwv-green.png';
+const imageAlt = 'PWV Showcase Figures - Key metrics and statistics from portfolio companies';
+
+// Structured data for the collection page
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description: description,
+  url: `${Astro.site}showcase/figures/`,
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'PWV',
+    url: Astro.site,
+  },
+  about: {
+    '@type': 'Thing',
+    name: 'Metrics and Numbers',
+    description: 'Key metrics from PWV content',
+  },
+};
 ---
 
-<Layout title={title} description={description}>
+<Layout 
+  title={title} 
+  description={description}
+  keywords={keywords}
+  image={image}
+  imageAlt={imageAlt}
+  additionalSchemas={[{ schema: collectionSchema }]}
+>
   <section class="mx-auto mb-12">
     <Heading1>{title}</Heading1>
     

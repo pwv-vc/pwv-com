@@ -14,6 +14,47 @@ We invest to help make this future possible.
 Beyond capital, we leverage our unparalleled network and expertise to help
 startups scale and achieve product-market fit.
 
+## ✨ Key Features
+
+### 🖥️ Interactive Terminal (`/terminal/`)
+
+A retro CRT-style terminal interface for exploring PWV's portfolio and blog content with 20+ commands:
+
+- **Retro aesthetic** - Green phosphor display, scanlines, boot sequence, blinking cursor
+- **Command autocomplete** - Tab completion with smart suggestions
+- **Entity browsing** - List and explore companies, people, topics, investors
+- **Content discovery** - Browse quotes, facts, figures from blog posts
+- **Fun commands** - `cowsay`, `pwvsay`, `figlet`, `bork`, `fortune` with piping support
+- **Exploration** - Timeline views, entity connections, statistics
+- **Mobile-friendly** - Touch-optimized with quick command buttons
+
+Try commands like `portfolio`, `companies`, `fortune | cowsay`, `bork | pwvsay`, `figlet PWV`, or `surprise me`.
+
+See **[docs/TERMINAL.md](docs/TERMINAL.md)** for complete command reference.
+
+### 🎯 Showcase Pages (`/showcase/`)
+
+Shareable, SEO-optimized entity pages extracted from PWV blog posts:
+
+**Portfolio & People:**
+- `/showcase/companies/` - All companies with mention counts and timelines
+- `/showcase/people/` - Key people with roles and post relationships
+- `/showcase/topics/` - Topic clustering and related content
+
+**Content Highlights:**
+- `/showcase/quotes/` - Shareable quotes with speaker attribution and social cards
+- `/showcase/facts/` - Key insights categorized (funding, launch, partnership, etc.)
+- `/showcase/figures/` - Metrics and numbers with context (valuations, raises, growth)
+
+Each entity has:
+- Individual detail pages with full SEO metadata
+- Social sharing buttons (Twitter, LinkedIn, Facebook)
+- Open Graph and Twitter Cards for rich previews
+- JSON-LD structured data for search engines
+- Links to related blog posts and entities
+
+See **[docs/SHOWCASE-IMPLEMENTATION-SUMMARY.md](docs/SHOWCASE-IMPLEMENTATION-SUMMARY.md)** for architecture details.
+
 ## 🚀 Project Structure
 
 Inside this Astro project, the important folders/files are:
@@ -29,6 +70,12 @@ Inside this Astro project, the important folders/files are:
 │   │   ├── background.svg
 │   │   └── logo.svg
 │   ├── components/
+│   │   ├── Terminal/
+│   │   │   ├── TerminalInterface.tsx   # React terminal UI
+│   │   │   ├── QueryEngine.ts          # Command execution
+│   │   │   ├── types.ts                # TypeScript types
+│   │   │   └── commands/               # Modular command classes
+│   │   ├── entities/                   # Showcase entity cards
 │   │   ├── Hero.astro
 │   │   ├── FeaturedPosts.astro
 │   │   ├── PostsGrid.astro

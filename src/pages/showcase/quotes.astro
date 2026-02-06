@@ -7,7 +7,29 @@ import ShowcaseNav from '../../components/entities/ShowcaseNav.astro';
 import ShowcaseIntro from '../../components/entities/ShowcaseIntro.astro';
 
 const title = 'Showcase Quotes';
-const description = 'Showcasing insightful quotes from PWV blog posts, extracted and curated from our content.';
+const description = 'Explore curated quotes from founders, investors, and technology leaders featured in PWV content. Insights on startups, venture capital, AI, innovation, and building category-defining companies.';
+const keywords = 'startup quotes, founder quotes, venture capital insights, technology quotes, innovation quotes, AI quotes, business insights, startup wisdom, entrepreneurship quotes, tech industry insights';
+const image = '/og-pwv-green.png';
+const imageAlt = 'PWV Showcase Quotes - Insights from founders and technology leaders';
+
+// Structured data for the collection page
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description: description,
+  url: `${Astro.site}showcase/quotes/`,
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'PWV',
+    url: Astro.site,
+  },
+  about: {
+    '@type': 'Thing',
+    name: 'Quotes and Insights',
+    description: 'Notable quotes from PWV content',
+  },
+};
 
 // Load all individual post entity files
 const postEntities = await getCollection('extractedPostEntities');
@@ -60,7 +82,14 @@ const getColor = (text: string, index: number) => {
 };
 ---
 
-<Layout title={title} description={description}>
+<Layout 
+  title={title} 
+  description={description}
+  keywords={keywords}
+  image={image}
+  imageAlt={imageAlt}
+  additionalSchemas={[{ schema: collectionSchema }]}
+>
   <section class="mx-auto mb-12">
     <Heading1>{title}</Heading1>
     
