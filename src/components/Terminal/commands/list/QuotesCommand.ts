@@ -1,5 +1,5 @@
 import { BaseCommand } from '../BaseCommand';
-import type { CommandResult } from '../../types';
+import type { CommandResult, SelectableItem } from '../../types';
 import { buildBox } from '../helpers/boxBuilder';
 
 export class QuotesCommand extends BaseCommand {
@@ -47,8 +47,22 @@ export class QuotesCommand extends BaseCommand {
       { type: 'text', content: `Found ${quotes.length} quotes` },
       { type: 'divider' },
       { type: 'list', content: listItems },
+      { type: 'divider' },
+      { type: 'text', content: 'Type a number to view source post (e.g., "1")' },
     ]);
 
-    return { type: 'list', content: output };
+    // Store selectable items for numeric selection
+    const selectableItems: SelectableItem[] = sortedQuotes.map((quote, index) => ({
+      id: `quote-${index}`,
+      label: `${quote.speaker}: ${quote.quote.substring(0, 50)}...`,
+      type: 'quote',
+      data: quote,
+    }));
+
+    return {
+      type: 'list',
+      content: output,
+      data: { selectableItems },
+    };
   }
 }

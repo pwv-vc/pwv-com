@@ -231,7 +231,7 @@ Example: companies → 1 → (shows company details)
       return {
         type: 'error',
         content:
-          'No active list. Try "companies", "people", or "topics" first.',
+          'No active list. Try "companies", "people", "topics", "quotes", "facts", or "figures" first.',
       };
     }
 
@@ -262,6 +262,24 @@ Example: companies → 1 → (shows company details)
         return this.discoverTopicWithPosts(item.id);
       case 'post':
         return this.showPost(item.id);
+      case 'quote':
+        // Navigate to source post for the quote
+        if (item.data && 'postSlug' in item.data) {
+          return this.showPost(item.data.postSlug);
+        }
+        return { type: 'error', content: 'Quote source post not found.' };
+      case 'fact':
+        // Navigate to source post for the fact
+        if (item.data && 'postSlug' in item.data) {
+          return this.showPost(item.data.postSlug);
+        }
+        return { type: 'error', content: 'Fact source post not found.' };
+      case 'figure':
+        // Navigate to source post for the figure
+        if (item.data && 'postSlug' in item.data) {
+          return this.showPost(item.data.postSlug);
+        }
+        return { type: 'error', content: 'Figure source post not found.' };
       default:
         return { type: 'error', content: 'Unknown item type.' };
     }

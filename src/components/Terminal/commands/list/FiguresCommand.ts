@@ -1,5 +1,5 @@
 import { BaseCommand } from '../BaseCommand';
-import type { CommandResult } from '../../types';
+import type { CommandResult, SelectableItem } from '../../types';
 import { buildBox } from '../helpers/boxBuilder';
 
 export class FiguresCommand extends BaseCommand {
@@ -65,8 +65,22 @@ export class FiguresCommand extends BaseCommand {
       { type: 'text', content: `Found ${figures.length} figures` },
       { type: 'divider' },
       { type: 'list', content: listItems },
+      { type: 'divider' },
+      { type: 'text', content: 'Type a number to view source post (e.g., "1")' },
     ]);
 
-    return { type: 'list', content: output };
+    // Store selectable items for numeric selection
+    const selectableItems: SelectableItem[] = figures.map((figure, index) => ({
+      id: `figure-${index}`,
+      label: `${figure.value}${figure.unit}: ${figure.context.substring(0, 40)}...`,
+      type: 'figure',
+      data: figure,
+    }));
+
+    return {
+      type: 'list',
+      content: output,
+      data: { selectableItems },
+    };
   }
 }
