@@ -14,6 +14,47 @@ We invest to help make this future possible.
 Beyond capital, we leverage our unparalleled network and expertise to help
 startups scale and achieve product-market fit.
 
+## ✨ Key Features
+
+### 🖥️ Interactive Terminal (`/terminal/`)
+
+A retro CRT-style terminal interface for exploring PWV's portfolio and blog content with 20+ commands:
+
+- **Retro aesthetic** - Green phosphor display, scanlines, boot sequence, blinking cursor
+- **Command autocomplete** - Tab completion with smart suggestions
+- **Entity browsing** - List and explore companies, people, topics, investors
+- **Content discovery** - Browse quotes, facts, figures from blog posts
+- **Fun commands** - `cowsay`, `pwvsay`, `figlet`, `bork`, `fortune` with piping support
+- **Exploration** - Timeline views, entity connections, statistics
+- **Mobile-friendly** - Touch-optimized with quick command buttons
+
+Try commands like `portfolio`, `companies`, `fortune | cowsay`, `bork | pwvsay`, `figlet PWV`, or `surprise me`.
+
+See **[docs/TERMINAL.md](docs/TERMINAL.md)** for complete command reference.
+
+### 🎯 Showcase Pages (`/showcase/`)
+
+Shareable, SEO-optimized entity pages extracted from PWV blog posts:
+
+**Portfolio & People:**
+- `/showcase/companies/` - All companies with mention counts and timelines
+- `/showcase/people/` - Key people with roles and post relationships
+- `/showcase/topics/` - Topic clustering and related content
+
+**Content Highlights:**
+- `/showcase/quotes/` - Shareable quotes with speaker attribution and social cards
+- `/showcase/facts/` - Key insights categorized (funding, launch, partnership, etc.)
+- `/showcase/figures/` - Metrics and numbers with context (valuations, raises, growth)
+
+Each entity has:
+- Individual detail pages with full SEO metadata
+- Social sharing buttons (Twitter, LinkedIn, Facebook)
+- Open Graph and Twitter Cards for rich previews
+- JSON-LD structured data for search engines
+- Links to related blog posts and entities
+
+See **[docs/SHOWCASE-IMPLEMENTATION-SUMMARY.md](docs/SHOWCASE-IMPLEMENTATION-SUMMARY.md)** for architecture details.
+
 ## 🚀 Project Structure
 
 Inside this Astro project, the important folders/files are:
@@ -29,6 +70,12 @@ Inside this Astro project, the important folders/files are:
 │   │   ├── background.svg
 │   │   └── logo.svg
 │   ├── components/
+│   │   ├── Terminal/
+│   │   │   ├── TerminalInterface.tsx   # React terminal UI
+│   │   │   ├── QueryEngine.ts          # Command execution
+│   │   │   ├── types.ts                # TypeScript types
+│   │   │   └── commands/               # Modular command classes
+│   │   ├── entities/                   # Showcase entity cards
 │   │   ├── Hero.astro
 │   │   ├── FeaturedPosts.astro
 │   │   ├── PostsGrid.astro
@@ -102,7 +149,28 @@ This project uses Astro Content Collections to type-check and load content.
     - `aiGeneratedImage?: boolean` (default false)
     - `aiGeneratedDescription?: boolean` (default false)
 
+- Extracted Post Entities (`extractedPostEntities`)
+  - Loader: all `*.json` files in `src/content/entities/posts/**`
+  - AI-extracted entities from blog posts including companies, people, topics, quotes, facts, and figures
+  - Used by the `/showcase/` and `/showcase/` pages to showcase content discovery
+  - Schema: `{ slug, title, companies: string[], investors: string[], people: Array<{name, role?}>, facts, figures, topics, quotes: Array<{quote, speaker, context?}>, pubDate?, author?, tags?, url? }`
+
 Images for library posts live in `src/images/library/<slug>/...` and can be referenced via `heroImage` using a relative path.
+
+### Images for Showcase Pages
+
+The `/showcase/` pages display companies and people extracted from blog posts.
+
+- **People avatars**: Place in `src/images/people/`
+  - Format: `firstname-lastname.{jpeg|jpg|png}` (e.g., `tom-preston-werner.jpeg`)
+  - Auto-detected by person name, shows 👤 icon if missing
+
+- **Company logos**: Place in `src/images/logos/small/`
+  - Format: `company-slug.png` (e.g., `liquid-ai.png`)
+  - Matches portfolio slugs first, then generates from company name
+  - Shows 🏢 icon if missing
+
+See **[docs/CELEBRATE-AVATARS-LOGOS.md](docs/CELEBRATE-AVATARS-LOGOS.md)** for complete documentation on adding avatars and company logos, including naming conventions, image specifications, troubleshooting, and optimization tips.
 
 ## 🧞 Commands
 

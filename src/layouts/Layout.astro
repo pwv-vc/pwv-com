@@ -60,6 +60,10 @@ const {
   additionalSchemas = [],
 } = Astro.props;
 
+// External posts that redirect should not be indexed by search engines
+const isExternalRedirect = redirectAfter && redirectAfter > 0;
+const robotsContent = isExternalRedirect ? 'noindex,follow' : 'index,follow';
+
 export const isProduction = process.env.CONTEXT === 'production';
 export const isDeployPreview = process.env.CONTEXT === 'deploy-preview';
 // Use Netlify deploy preview URL for canonical URL when not in production
@@ -164,12 +168,12 @@ if (image) {
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Primary Meta Tags -->
-    <title>{`${SITE_NAME} | ${title}`}</title>
+    <title>{`${SITE_NAME} | ${title} | Preston-Werner Ventures`}</title>
     <meta name="title" content={`${SITE_NAME} | ${title}`} />
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
     {author && <meta name="author" content={author} />}
-    <meta name="robots" content="index,follow" />
+    <meta name="robots" content={robotsContent} />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={ogSharingURL} />
@@ -229,7 +233,6 @@ if (image) {
         <meta name="twitter:image:alt" content={imageAlt ?? title} />
       )
     }
-
     {
       isProduction && (
         <script

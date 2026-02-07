@@ -1,0 +1,31 @@
+{
+  "slug": "external-voidzero-dev-announcing-vite",
+  "title": "Announcing Vite+",
+  "companies": [
+    "VoidZero"
+  ],
+  "investors": [],
+  "people": [
+    {
+      "name": "Evan You",
+      "role": "Author"
+    }
+  ],
+  "facts": [
+    {
+      "text": "Introducing Vite+, a unified toolchain for JavaScript",
+      "category": "announcement",
+      "date": "2025-10-21"
+    }
+  ],
+  "figures": [],
+  "topics": [
+    "javascript",
+    "toolchain"
+  ],
+  "quotes": [],
+  "pubDate": "2025-10-21",
+  "author": "Evan You",
+  "tags": [],
+  "url": "https://voidzero.dev/posts/announcing-vite-plus?ref=pwv.com"
+}

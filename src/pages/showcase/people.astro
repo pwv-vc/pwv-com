@@ -1,0 +1,117 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Heading1 from '../../components/Heading1.astro';
+import PersonCard from '../../components/entities/PersonCard.astro';
+import ShowcaseNav from '../../components/entities/ShowcaseNav.astro';
+import ShowcaseIntro from '../../components/entities/ShowcaseIntro.astro';
+
+const title = 'Showcase People';
+const description = 'Meet 45+ founders, entrepreneurs, and technology leaders featured in PWV content. Discover the people shaping the future of technology, from AI pioneers to startup founders and industry innovators.';
+const keywords = 'technology founders, startup founders, entrepreneurs, tech leaders, AI pioneers, innovators, startup ecosystem, venture capital network, founder directory, technology innovators';
+const image = '/og-pwv-green.png';
+const imageAlt = 'PWV Showcase People - Founders and technology leaders in our ecosystem';
+
+// Structured data for the collection page
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description: description,
+  url: `${Astro.site}showcase/people/`,
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'PWV',
+    url: Astro.site,
+  },
+  about: {
+    '@type': 'Thing',
+    name: 'Founders and Technology Leaders',
+    description: 'People featured in PWV content',
+  },
+};
+
+// Load all individual post entity files
+const postEntities = await getCollection('extractedPostEntities');
+
+// Dynamically aggregate people from individual post files
+const peopleMap = new Map<string, { posts: string[], mentions: number, role?: string }>();
+
+// Aggregate data from all posts
+for (const post of postEntities) {
+  const { slug, people } = post.data;
+
+  people.forEach(person => {
+    const personName = typeof person === 'string' ? person : person.name;
+    const personRole = typeof person === 'object' ? person.role : undefined;
+    
+    if (!peopleMap.has(personName)) {
+      peopleMap.set(personName, { posts: [], mentions: 0, role: personRole });
+    }
+    const personData = peopleMap.get(personName)!;
+    personData.posts.push(slug);
+    personData.mentions += 1;
+    // Update role if this entry has one and we didn't have one before
+    if (personRole && !personData.role) {
+      personData.role = personRole;
+    }
+  });
+}
+
+// Convert to array and sort alphabetically (A-Z)
+const people = Array.from(peopleMap.entries())
+  .map(([name, data]) => ({ name, ...data }))
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+// Color assignment function
+const colors = [
+  'pwv-soft-green',
+  'pwv-soft-teal',
+  'pwv-soft-yellow',
+  'pwv-soft-coral',
+  'pwv-soft-lavender',
+  'pwv-soft-periwinkle',
+];
+
+const getColor = (name: string, index: number) => {
+  const charCode = name.charCodeAt(0) || 0;
+  return colors[(charCode + index) % colors.length];
+};
+---
+
+<Layout 
+  title={title} 
+  description={description}
+  keywords={keywords}
+  image={image}
+  imageAlt={imageAlt}
+  additionalSchemas={[{ schema: collectionSchema }]}
+>
+  <section class="mx-auto mb-12">
+    <Heading1>{title}</Heading1>
+    
+    <ShowcaseIntro />
+
+    <ShowcaseNav currentPath="/showcase/people/" />
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {
+        people.map((person, index) => (
+          <PersonCard
+            name={person.name}
+            role={person.role}
+            mentions={person.mentions}
+            posts={person.posts}
+            borderColor={getColor(person.name, index)}
+          />
+        ))
+      }
+    </div>
+
+    {people.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-lg text-pwv-black/60">No people found yet.</p>
+      </div>
+    )}
+  </section>
+</Layout>

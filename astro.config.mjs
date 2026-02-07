@@ -28,6 +28,7 @@ const getTeamCache = async () => {
 export default defineConfig({
   output: 'static',
   site: process.env.URL || process.env.DEPLOY_URL || 'http://localhost:4321',
+  trailingSlash: 'always', // Ensure all URLs have trailing slashes to match Netlify behavior
   integrations: [
     mdx(),
     react(),
@@ -91,6 +92,34 @@ export default defineConfig({
           } else if (item.url.endsWith('/apply/')) {
             item.changefreq = 'monthly';
             item.priority = 0.6;
+          } else if (item.url.endsWith('/terminal/')) {
+            // Terminal interface page
+            item.changefreq = 'weekly';
+            item.priority = 0.7;
+          } else if (item.url.endsWith('/showcase/companies/')) {
+            // Celebrate companies page - updates when new posts mention companies
+            item.changefreq = 'daily';
+            item.priority = 0.7;
+          } else if (item.url.endsWith('/showcase/people/')) {
+            // Celebrate people page - updates when new posts mention people
+            item.changefreq = 'daily';
+            item.priority = 0.7;
+          } else if (item.url.endsWith('/showcase/quotes/')) {
+            // Amplify quotes page - updates when new posts add quotes
+            item.changefreq = 'daily';
+            item.priority = 0.7;
+          } else if (item.url.endsWith('/showcase/facts/')) {
+            // Amplify facts page - updates when new posts add facts
+            item.changefreq = 'daily';
+            item.priority = 0.7;
+          } else if (item.url.endsWith('/showcase/figures/')) {
+            // Amplify figures page - updates when new posts add figures
+            item.changefreq = 'daily';
+            item.priority = 0.7;
+          } else if (item.url.endsWith('/showcase/topics/')) {
+            // Topics page - updates when new posts add topics
+            item.changefreq = 'daily';
+            item.priority = 0.7;
           } else if (item.url.match(/\/$/)) {
             // Homepage
             item.changefreq = 'daily';

@@ -1,0 +1,41 @@
+{
+  "slug": "post-pwv-inngest-queue-the-job",
+  "title": "Queue the Job",
+  "companies": [
+    "Inngest"
+  ],
+  "investors": [],
+  "people": [
+    {
+      "name": "David Thyresson",
+      "role": "Author"
+    }
+  ],
+  "facts": [
+    {
+      "text": "Inngest announces their Series A fundraise",
+      "category": "funding",
+      "date": "2025-09-17"
+    }
+  ],
+  "figures": [],
+  "topics": [
+    "Developer Tools"
+  ],
+  "quotes": [
+    {
+      "quote": "So, queue the job.",
+      "speaker": "David Thyresson",
+      "context": "On the philosophy of work and trust in systems"
+    },
+    {
+      "quote": "Great DX feels like this: Clarity, Focus, Leverage.",
+      "speaker": "David Thyresson",
+      "context": "On developer experience"
+    }
+  ],
+  "pubDate": "2025-09-17",
+  "author": "David Thyresson",
+  "tags": [],
+  "url": ""
+}

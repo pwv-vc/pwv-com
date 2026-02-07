@@ -1,0 +1,31 @@
+{
+  "slug": "external-liquid-ai-introducing-liquid-nanos-frontiergrade-performance-on-everyday-devices",
+  "title": "Introducing Liquid Nanos — frontier‑grade performance on everyday devices",
+  "companies": [
+    "Liquid AI"
+  ],
+  "investors": [],
+  "people": [],
+  "facts": [
+    {
+      "text": "We’re launching Liquid Nanos — a family of 350M–2.6B parameter foundation models that deliver frontier‑model quality on specialized, agentic tasks while running directly on phones, laptops, and embedded devices.",
+      "category": "launch",
+      "date": "2025-09-25"
+    }
+  ],
+  "figures": [
+    {
+      "value": "350M–2.6B",
+      "context": "parameter foundation models",
+      "unit": "parameters"
+    }
+  ],
+  "topics": [
+    "AI"
+  ],
+  "quotes": [],
+  "pubDate": "2025-09-25",
+  "author": "Liquid AI",
+  "tags": [],
+  "url": "https://www.liquid.ai/blog/introducing-liquid-nanos-frontier-grade-performance-on-everyday-devices?ref=pwv.com"
+}

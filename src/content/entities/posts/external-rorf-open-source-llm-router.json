@@ -1,0 +1,34 @@
+{
+  "slug": "external-rorf-open-source-llm-router",
+  "title": "RoRF – Open Source LLM Router",
+  "companies": [
+    "GPT-4o",
+    "Claude 3.5 Sonnet",
+    "Llama 3.1"
+  ],
+  "investors": [],
+  "people": [
+    {
+      "name": "Devansh Jain",
+      "role": "Author"
+    },
+    {
+      "name": "Tze-Yang Tung",
+      "role": "Author"
+    },
+    {
+      "name": "Tomás Hernando Kofman",
+      "role": "Author"
+    }
+  ],
+  "facts": [],
+  "figures": [],
+  "topics": [
+    "AI"
+  ],
+  "quotes": [],
+  "pubDate": "September 24,  2024",
+  "author": "Devansh Jain, Tze-Yang Tung, and Tomás Hernando Kofman",
+  "tags": [],
+  "url": "https://www.notdiamond.ai/blog/rorf?ref=pwv.com"
+}

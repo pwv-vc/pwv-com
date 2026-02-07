@@ -1,0 +1,46 @@
+{
+  "slug": "external-blog-elicit-com-elicit-raises-9-million-and-becomes-a-public-benefit-corporation",
+  "title": "Elicit raises $9 million and becomes a public benefit corporation",
+  "companies": [
+    "Elicit"
+  ],
+  "investors": [],
+  "people": [
+    {
+      "name": "Andreas Stuhlmueller",
+      "role": "Author"
+    },
+    {
+      "name": "Jungwon Byun",
+      "role": "Author"
+    }
+  ],
+  "facts": [
+    {
+      "text": "Elicit raised $9 million in seed funding",
+      "category": "funding",
+      "date": "2023-09-25"
+    },
+    {
+      "text": "Elicit became an independent public benefit corporation",
+      "category": "announcement",
+      "date": "2023-09-25"
+    }
+  ],
+  "figures": [
+    {
+      "value": "9 million",
+      "context": "seed funding",
+      "unit": "USD"
+    }
+  ],
+  "topics": [
+    "Funding",
+    "AI"
+  ],
+  "quotes": [],
+  "pubDate": "2023-09-25",
+  "author": "Andreas Stuhlmueller, Jungwon Byun",
+  "tags": [],
+  "url": "https://blog.elicit.com/elicit-raises-9-million-and-becomes-a-public-benefit-corporation/?ref=pwv.com"
+}

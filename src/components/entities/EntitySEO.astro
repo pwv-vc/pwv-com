@@ -1,0 +1,56 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  type: 'quote' | 'person' | 'company';
+  entityName: string;
+  url: string;
+  imageUrl?: string;
+}
+
+const { title, description, type, entityName, url, imageUrl } = Astro.props;
+
+const siteUrl = Astro.site || 'https://pwv.com';
+const fullUrl = new URL(url, siteUrl).toString();
+const defaultOgImage = new URL('/og-pwv-green.png', siteUrl).toString();
+const ogImage = imageUrl || defaultOgImage;
+
+// Twitter card type based on entity type
+const twitterCard = imageUrl ? 'summary_large_image' : 'summary';
+---
+
+<!-- Primary Meta Tags -->
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={fullUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content="PWV" />
+
+<!-- Twitter -->
+<meta property="twitter:card" content={twitterCard} />
+<meta property="twitter:url" content={fullUrl} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={ogImage} />
+<meta property="twitter:site" content="@pwventures" />
+<meta property="twitter:creator" content="@pwventures" />
+
+<!-- Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": type === 'person' ? "Person" : type === 'company' ? "Organization" : "CreativeWork",
+  "name": entityName,
+  "description": description,
+  "url": fullUrl,
+  ...(imageUrl && { "image": ogImage }),
+  "publisher": {
+    "@type": "Organization",
+    "name": "PWV",
+    "url": siteUrl
+  }
+})} />

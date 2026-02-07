@@ -1,0 +1,40 @@
+{
+  "slug": "external-tldraw-raised-another-2m-tldraw-blog",
+  "title": "tldraw raised another $2M • tldraw Blog",
+  "companies": [
+    "tldraw"
+  ],
+  "investors": [
+    "Amplify",
+    "Lux",
+    "Tom Preston-Werner"
+  ],
+  "people": [
+    {
+      "name": "Steve Ruiz",
+      "role": "Author"
+    }
+  ],
+  "facts": [
+    {
+      "text": "tldraw announced the close of an insiders' extension round",
+      "category": "funding",
+      "date": "2023-11-22"
+    }
+  ],
+  "figures": [
+    {
+      "value": "2M",
+      "context": "insiders' extension round",
+      "unit": "USD"
+    }
+  ],
+  "topics": [
+    "Funding"
+  ],
+  "quotes": [],
+  "pubDate": "November 22, 2023",
+  "author": "Steve Ruiz",
+  "tags": [],
+  "url": "https://tldraw.dev/blog/announcements/tldraw-raised-another-2m?ref=pwv.com"
+}

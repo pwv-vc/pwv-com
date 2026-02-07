@@ -1,0 +1,52 @@
+{
+  "slug": "external-blog-elicit-com-elicit-raises-22m-to-build-the-most-trusted-ai-platform-for-evidence",
+  "title": "Elicit Raises $22M to Build the Most Trusted AI Platform for Evidence",
+  "companies": [
+    "Elicit"
+  ],
+  "investors": [
+    "Spark Capital",
+    "Footwork",
+    "Fifty Years",
+    "Basis Set",
+    "Mythos"
+  ],
+  "people": [
+    {
+      "name": "Andreas Stuhlmueller",
+      "role": "Author"
+    },
+    {
+      "name": "Jungwon Byun",
+      "role": "Author"
+    }
+  ],
+  "facts": [
+    {
+      "text": "Elicit raised $22M in Series A funding at a $100M valuation",
+      "category": "funding",
+      "date": "2025-02-26"
+    }
+  ],
+  "figures": [
+    {
+      "value": "22M",
+      "context": "Series A funding",
+      "unit": "USD"
+    },
+    {
+      "value": "100M",
+      "context": "valuation",
+      "unit": "USD"
+    }
+  ],
+  "topics": [
+    "AI",
+    "Funding"
+  ],
+  "quotes": [],
+  "pubDate": "2025-02-26",
+  "author": "Andreas Stuhlmueller, Jungwon Byun",
+  "tags": [],
+  "url": "https://blog.elicit.com/series-a/?ref=pwv.com"
+}

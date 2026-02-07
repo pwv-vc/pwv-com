@@ -1,0 +1,32 @@
+{
+  "slug": "external-cursor-com-series-c-and-scale",
+  "title": "Series C and Scale",
+  "companies": [
+    "Cursor"
+  ],
+  "investors": [],
+  "people": [],
+  "facts": [
+    {
+      "text": "We've raised $900m to push the frontier of AI coding research",
+      "category": "funding",
+      "date": "2025-06-06"
+    }
+  ],
+  "figures": [
+    {
+      "value": "900M",
+      "context": "Funding raised",
+      "unit": "USD"
+    }
+  ],
+  "topics": [
+    "AI",
+    "Funding"
+  ],
+  "quotes": [],
+  "pubDate": "2025-06-06",
+  "author": "Anysphere Teams",
+  "tags": [],
+  "url": "https://cursor.com/en/blog/series-c?ref=pwv.com"
+}

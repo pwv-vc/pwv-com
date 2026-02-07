@@ -1,0 +1,41 @@
+{
+  "slug": "external-cursor-com-past-present-and-future-cursor",
+  "title": "Past, Present, and Future · Cursor",
+  "companies": [
+    "Cursor"
+  ],
+  "investors": [],
+  "people": [],
+  "facts": [
+    {
+      "text": "We raised our Series D of $2.3B",
+      "category": "funding",
+      "date": "2025-11-13"
+    },
+    {
+      "text": "We have passed $1B in annualized revenue",
+      "category": "milestone",
+      "date": "2025-11-13"
+    }
+  ],
+  "figures": [
+    {
+      "value": "2.3B",
+      "context": "Series D funding",
+      "unit": "USD"
+    },
+    {
+      "value": "1B",
+      "context": "annualized revenue",
+      "unit": "USD"
+    }
+  ],
+  "topics": [
+    "Funding"
+  ],
+  "quotes": [],
+  "pubDate": "2025-11-13",
+  "author": "Cursor Team",
+  "tags": [],
+  "url": "https://cursor.com/blog/series-d?ref=pwv.com"
+}

@@ -1,0 +1,31 @@
+{
+  "slug": "external-turso-tech-reviewing-the-turso-beta-week",
+  "title": "Reviewing the Turso Beta week",
+  "companies": [
+    "Turso"
+  ],
+  "investors": [],
+  "people": [
+    {
+      "name": "Glauber Costa",
+      "role": "Author"
+    }
+  ],
+  "facts": [
+    {
+      "text": "Turso is now in beta",
+      "category": "launch",
+      "date": "2025-10-16"
+    }
+  ],
+  "figures": [],
+  "topics": [
+    "agents",
+    "sqlite"
+  ],
+  "quotes": [],
+  "pubDate": "2025-10-16",
+  "author": "Glauber Costa",
+  "tags": [],
+  "url": "https://turso.tech/blog/turso-beta-week-why-we-did-it?ref=pwv.com"
+}

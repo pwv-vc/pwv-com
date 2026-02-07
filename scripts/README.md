@@ -1,88 +1,177 @@
-# Scripts
+# Scripts Documentation
 
-This directory contains utility scripts for the PWV website.
+## extract-entities.js
 
-## fetch-external-content.js
+Extracts structured entity data (companies, people, topics, facts, figures) from blog posts using AI via LM Studio's local server.
 
-A script to fetch content from external URLs and create library posts with proper metadata and images.
+### Prerequisites
 
-### Usage
-
-```bash
-# Using npm script
-pnpm run fetch-external "https://example.com/article"
-
-# Or directly with node
-node scripts/fetch-external-content.js "https://example.com/article"
-```
-
-### What it does
-
-1. **Fetches HTML content** from the provided URL
-2. **Extracts metadata** including:
-   - Title (cleaned up, removes site names and separators)
-   - Description (cleaned up, removes "Read more" text)
-   - Author (from meta tags or content)
-   - Publication date (formatted as YYYY-MM-DD)
-   - Open Graph image URL
-3. **Downloads and saves images** locally in `src/images/library/external-{slug}/`
-4. **Generates a markdown file** in `src/content/library/` with:
-   - Proper frontmatter matching the content collection schema
-   - External URL with `?ref=pwv.com` parameter
-   - Tags including the site name and "external"
-   - Filename prefixed with "external-"
-
-### Example
-
-```bash
-pnpm run fetch-external "https://www.aalo.com/post/aalo-closes-100m-series-b"
-```
-
-This creates:
-
-- `src/content/library/external-aalo-closes-100m-series-b.md`
-- `src/images/library/external-aalo-closes-100m-series-b/banner_16_9-1.png` (if OG image exists)
-
-### Requirements
-
-- Node.js with ES modules support
-- `jsdom` package (installed as dev dependency)
-
-### Features
-
-- **Smart metadata extraction**: Tries multiple methods to find title, description, author, and date
-- **Image handling**: Downloads Open Graph images and saves them locally with proper naming
-- **Clean formatting**: Removes unnecessary text from titles and descriptions
-- **Error handling**: Graceful fallbacks for missing metadata
-- **URL tracking**: Adds `?ref=pwv.com` to track external links
-
-- **Favicon download**: Downloads favicons for the portfolio companies
+1. **Install LM Studio**: Download from [lmstudio.ai](https://lmstudio.ai)
+2. **Start the server**: 
+   ```bash
+   lms server start --port 1234
+   ```
+3. **Load a model**: Download and load `liquid/lfm2.5-1.2b` (or another model) in LM Studio
 
 ### Usage
 
-Favicons are fetched for portfolio companies defined in `src/content/portfolio/*.json`.
-
 ```bash
-# Using npm script
-pnpm run download-favicons representative.json
+# Process all posts (default)
+node scripts/extract-entities.js
 
-# Or directly with node (choose one of the files or 'all')
-node scripts/download-favicons.js representative.json
-node scripts/download-favicons.js rolling-fund.json
-node scripts/download-favicons.js angel.json
-node scripts/download-favicons.js all
+# Process only first 5 posts (for quick testing)
+node scripts/extract-entities.js --limit 5
 
-# Force re-download even if files already exist
-node scripts/download-favicons.js all --force
-node scripts/download-favicons.js representative.json -f
+# Process just 1 post (fastest test)
+node scripts/extract-entities.js --limit 1
+
+# Show help
+node scripts/extract-entities.js --help
+
+# Custom configuration with environment variables
+export LM_STUDIO_URL=http://localhost:1234
+export LM_STUDIO_MODEL=liquid/lfm2.5-1.2b
+export LM_API_TOKEN=your_token_here  # Optional, if auth enabled
+node scripts/extract-entities.js --limit 10
 ```
 
-By default, existing files in `src/images/logos/small/<slug>.png` are skipped. Use `--force` (or `-f`) to always re-download.
+### How It Works
 
----
+1. **Tests LM Studio connection** and checks if model is loaded
+2. **Reads all posts** from `src/content/posts/`
+3. **Generates slugs** from filenames (without extension)
+   - Example: `external-liquid-ai-introducing-liquid-nanos-frontiergrade-performance-on-everyday-devices.md`
+   - Becomes: `external-liquid-ai-introducing-liquid-nanos-frontiergrade-performance-on-everyday-devices`
+4. **Extracts entities** using local LM Studio model (default: liquid/lfm2.5-1.2b)
+5. **Validates** all post references to ensure they exist
+6. **Saves results** to `src/data/extracted-entities.json`
 
-If need to download and convert svg favicons to png, use the following command:
+### Important Notes
 
-```bash
-curl -L https://www.commutatorstudios.com/favicon.svg -o /tmp/commutator-studios.svg && convert -background none -resize 64x64 /tmp/commutator-studios.svg src/images/logos/small/commutator-studios.png
+- **Full slugs**: The script uses the complete filename as the slug (minus extension)
+- **Trailing slashes**: Astro's `trailingSlash: 'always'` config automatically adds `/` to URLs
+- **Post URLs**: 
+  - Slug: `post-example`
+  - URL: `/news/post-example/` (with trailing slash)
+- **Validation**: The script now validates all post references to catch mismatches
+
+### Output Format
+
+The script generates data that matches the Astro content collection schema in `src/content.config.ts`:
+
+```json
+{
+  "posts": {
+    "full-post-slug": {
+      "title": "Post Title",
+      "companies": ["Company Name"],
+      "people": [
+        {
+          "name": "Person Name",
+          "role": "Their Title/Role"
+        }
+      ],
+      "facts": [
+        {
+          "text": "Key insight or fact",
+          "category": "insight|trend|philosophy|announcement|milestone"
+        }
+      ],
+      "figures": [
+        {
+          "value": "100M",
+          "context": "Series B funding",
+          "unit": "USD"
+        }
+      ],
+      "topics": ["AI", "Developer Tools"]
+    }
+  },
+  "entities": {
+    "companies": {
+      "Company Name": {
+        "posts": ["full-post-slug"],
+        "mentions": 1,
+        "description": "Auto-generated description"
+      }
+    },
+    "people": {
+      "Person Name": {
+        "posts": ["full-post-slug"],
+        "mentions": 1,
+        "role": "Their Title/Role"
+      }
+    },
+    "topics": {
+      "Topic Name": {
+        "posts": ["full-post-slug"],
+        "mentions": 1
+      }
+    }
+  }
+}
 ```
+
+### Schema Validation
+
+The script automatically validates and normalizes extracted data:
+- **fact.category** must be one of: `insight`, `trend`, `philosophy`, `announcement`, `milestone`
+- **people** must have both `name` and `role` (defaults to "Unknown" if missing)
+- All arrays are validated and empty values are filtered out
+- Invalid data types are coerced to match schema requirements
+
+### Troubleshooting
+
+**Cannot connect to LM Studio:**
+```bash
+# Make sure LM Studio server is running
+lms server start --port 1234
+
+# Or start from LM Studio GUI: Developer tab → Start Server
+```
+
+**Model not loaded:**
+- Open LM Studio
+- Go to "Search" and download `liquid/lfm2.5-1.2b`
+- Load the model before running the script
+- Or use a different model: `export LM_STUDIO_MODEL=your-model-name`
+
+**Invalid post references warning:**
+- Check that the slug in entities data matches the actual filename
+- Ensure no slugs are truncated or shortened
+- Run the script again to regenerate with validation
+
+**Slow extraction:**
+- The script includes a 1-second delay between posts
+- First run with a small model like `liquid/lfm2.5-1.2b` (fast)
+- For better quality, use larger models like `mistral-nemo` or `llama-3`
+
+**Connection refused:**
+- Check the port: LM Studio default is `1234`
+- Verify URL: `export LM_STUDIO_URL=http://localhost:1234`
+- Check firewall settings
+
+**Model copying example/placeholder data:**
+
+If your output contains placeholder values like:
+```json
+{
+  "companies": ["Cursor", "FAL", "Railway"],
+  "people": [{"name": "Full Name", "role": "Title/Role"}]
+}
+```
+
+The model is copying examples from the prompt instead of extracting real data.
+
+Solutions:
+1. **Use a larger model** (recommended):
+   ```bash
+   export LM_STUDIO_MODEL=mistralai/mistral-nemo-12b
+   node scripts/extract-entities.js --limit 5
+   ```
+   Larger models better distinguish instructions from examples.
+
+2. **The prompt has been updated** (v0.1.4+) to explicitly prevent this
+3. **Automatic filtering** removes obvious placeholders like "Full Name", "Company Name"
+
+See `PROMPT-FIX.md` for detailed explanation and more solutions.
