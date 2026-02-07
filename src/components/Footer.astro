@@ -10,11 +10,34 @@ const currentYear = new Date().getFullYear();
     <div
       class="flex flex-col items-center space-y-4 md:flex-row md:justify-center md:space-y-0 md:space-x-8"
     >
-      <a href="/" class="pwv-link">Home</a>
-      <a href="/about/" class="pwv-link">About</a>
-      <a href="/portfolio/" class="pwv-link">Portfolio</a>
-      <a href="/news/" class="pwv-link">News</a>
-      <a href="/apply/" class="pwv-link">Apply</a>
+      <a href="/" aria-label="PWV" class="pwv-link">PWV</a>
+      <a href="/about/" aria-label="About PWV team and mission" class="pwv-link"
+        >About</a
+      >
+      <a
+        href="/portfolio/"
+        aria-label="PWV portfolio companies"
+        class="pwv-link">Portfolio</a
+      >
+      <a href="/news/" aria-label="PWV news and updates" class="pwv-link"
+        >News</a
+      >
+      <a
+        href="/showcase/companies/"
+        aria-label="Showcase PWV companies, people, quotes, facts, and figures"
+        class="pwv-link">Showcase</a
+      >
+      <a href="/apply/" aria-label="Apply for PWV funding" class="pwv-link"
+        >Apply</a
+      >
+      <a
+        href="/terminal/"
+        aria-label="PWV Terminal interface"
+        class="pwv-link inline-flex items-center gap-1"
+      >
+        <span>💻</span>
+        <span>Terminal</span>
+      </a>
     </div>
 
     <!-- Copyright and Social Links -->

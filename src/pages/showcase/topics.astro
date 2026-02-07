@@ -1,0 +1,113 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Heading1 from '../../components/Heading1.astro';
+import TopicCard from '../../components/entities/TopicCard.astro';
+import ShowcaseNav from '../../components/entities/ShowcaseNav.astro';
+import ShowcaseIntro from '../../components/entities/ShowcaseIntro.astro';
+
+const title = 'Showcase Topics';
+const description = 'Browse technology topics and themes covered in PWV content. From AI and machine learning to hardware, clean energy, developer tools, and emerging technologies shaping the future.';
+const keywords = 'technology topics, AI topics, machine learning, developer tools, hardware technology, clean energy, startup themes, technology trends, innovation topics, emerging technology';
+const image = '/og-pwv-green.png';
+const imageAlt = 'PWV Showcase Topics - Technology themes and innovation areas';
+
+// Structured data for the collection page
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description: description,
+  url: `${Astro.site}showcase/topics/`,
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'PWV',
+    url: Astro.site,
+  },
+  about: {
+    '@type': 'Thing',
+    name: 'Technology Topics',
+    description: 'Topics covered in PWV content',
+  },
+};
+
+// Load all individual post entity files
+const postEntities = await getCollection('extractedPostEntities');
+
+// Aggregate all topics with post context
+interface TopicWithContext {
+  topic: string;
+  postSlugs: string[];
+}
+
+const topicsMap = new Map<string, string[]>();
+
+for (const post of postEntities) {
+  const topics = post.data.topics || [];
+  
+  topics.forEach(topic => {
+    if (!topicsMap.has(topic)) {
+      topicsMap.set(topic, []);
+    }
+    const postList = topicsMap.get(topic)!;
+    if (!postList.includes(post.id)) {
+      postList.push(post.id);
+    }
+  });
+}
+
+// Convert to array and sort alphabetically
+const topicsArray: TopicWithContext[] = Array.from(topicsMap.entries())
+  .map(([topic, postSlugs]) => ({ topic, postSlugs }))
+  .sort((a, b) => a.topic.localeCompare(b.topic));
+
+// Define color palette
+const colors = [
+  'pwv-soft-periwinkle',
+  'pwv-soft-lavender',
+  'pwv-soft-teal',
+  'pwv-soft-yellow',
+  'pwv-soft-green',
+  'pwv-soft-coral',
+];
+
+const getColor = (topic: string, index: number) => {
+  const charCode = topic.charCodeAt(0) || 0;
+  return colors[(charCode + index) % colors.length];
+};
+---
+
+<Layout 
+  title={title} 
+  description={description}
+  keywords={keywords}
+  image={image}
+  imageAlt={imageAlt}
+  additionalSchemas={[{ schema: collectionSchema }]}
+>
+  <section class="mx-auto mb-12">
+    <Heading1>{title}</Heading1>
+    
+    <ShowcaseIntro />
+
+    <ShowcaseNav currentPath="/showcase/topics/" />
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {
+        topicsArray.map((item, index) => (
+          <TopicCard
+            topic={item.topic}
+            postSlugs={item.postSlugs}
+            borderColor={getColor(item.topic, index)}
+          />
+        ))
+      }
+    </div>
+
+    {topicsArray.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-lg text-pwv-black/60">No topics found yet.</p>
+      </div>
+    )}
+  </section>
+</Layout>

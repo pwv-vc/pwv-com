@@ -1,0 +1,108 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Heading1 from '../../components/Heading1.astro';
+import FactCard from '../../components/entities/FactCard.astro';
+import ShowcaseNav from '../../components/entities/ShowcaseNav.astro';
+import ShowcaseIntro from '../../components/entities/ShowcaseIntro.astro';
+
+// Get all extracted entities
+const allEntities = await getCollection('extractedPostEntities');
+
+// Aggregate all facts with post context
+interface FactWithContext {
+  text: string;
+  category: string;
+  date?: string;
+  postSlug: string;
+  postTitle: string;
+  pubDate?: string;
+}
+
+const factsWithContext: FactWithContext[] = [];
+
+for (const entity of allEntities) {
+  const facts = entity.data.facts || [];
+  for (const fact of facts) {
+    factsWithContext.push({
+      ...fact,
+      postSlug: entity.id,
+      postTitle: entity.data.title,
+      pubDate: entity.data.pubDate,
+    });
+  }
+}
+
+// Define color palette for facts
+const colors = [
+  'pwv-soft-periwinkle',
+  'pwv-soft-lavender',
+  'pwv-soft-teal',
+  'pwv-soft-yellow',
+  'pwv-soft-green',
+  'pwv-soft-coral',
+];
+
+const title = 'Showcase Facts';
+const description = 'Discover key insights, industry trends, funding announcements, product launches, and milestone achievements from PWV portfolio companies and the broader technology ecosystem.';
+const keywords = 'startup news, funding announcements, product launches, technology trends, industry insights, startup milestones, venture capital news, tech announcements, portfolio updates, startup facts';
+const image = '/og-pwv-green.png';
+const imageAlt = 'PWV Showcase Facts - Key insights and announcements from the tech ecosystem';
+
+// Structured data for the collection page
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description: description,
+  url: `${Astro.site}showcase/facts/`,
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'PWV',
+    url: Astro.site,
+  },
+  about: {
+    '@type': 'Thing',
+    name: 'Facts and Announcements',
+    description: 'Key insights and announcements from PWV content',
+  },
+};
+---
+
+<Layout 
+  title={title} 
+  description={description}
+  keywords={keywords}
+  image={image}
+  imageAlt={imageAlt}
+  additionalSchemas={[{ schema: collectionSchema }]}
+>
+  <section class="mx-auto mb-12">
+    <Heading1>{title}</Heading1>
+    
+    <ShowcaseIntro />
+
+    <ShowcaseNav currentPath="/showcase/facts/" />
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {factsWithContext.map((fact, index) => (
+        <FactCard
+          fact={fact.text}
+          category={fact.category}
+          date={fact.date}
+          postSlug={fact.postSlug}
+          postTitle={fact.postTitle}
+          pubDate={fact.pubDate}
+          borderColor={colors[index % colors.length]}
+          factIndex={index}
+        />
+      ))}
+    </div>
+
+    {factsWithContext.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-lg text-pwv-black/60">No facts found yet.</p>
+      </div>
+    )}
+  </section>
+</Layout>

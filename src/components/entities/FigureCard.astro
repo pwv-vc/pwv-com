@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import EntityCard from './EntityCard.astro';
+import ShareButtons from './ShareButtons.astro';
+import RelatedPosts from './RelatedPosts.astro';
+import ChartIcon from '../icons/ChartIcon.astro';
+import FundingIcon from '../icons/FundingIcon.astro';
+import TrendingIcon from '../icons/TrendingIcon.astro';
+
+interface Props {
+  value: string;
+  context: string;
+  unit: string;
+  postSlug: string;
+  postTitle: string;
+  pubDate?: string;
+  borderColor: string;
+  figureIndex?: number;
+}
+
+const { value, context, unit, postSlug, postTitle, pubDate, borderColor, figureIndex = 0 } = Astro.props;
+
+// Determine icon based on context category
+const contextLower = context.toLowerCase();
+const isFunding = /\b(seed|series [a-z]|round|funding|raised|capital|investment)\b/i.test(contextLower);
+const isValuation = /\b(valuation|valued|worth|market cap)\b/i.test(contextLower);
+
+// Select appropriate icon component
+const IconComponent = isFunding ? FundingIcon : isValuation ? TrendingIcon : ChartIcon;
+
+// Create share URL and text - link to the figure detail page on PWV
+const siteUrl = Astro.site || 'https://pwv.com';
+const figureId = `${postSlug}-${figureIndex}`;
+const detailPageUrl = `/showcase/figures/${figureId}/`;
+const shareUrl = new URL(detailPageUrl, siteUrl).toString();
+const shareText = `${value}${unit} - ${context}`;
+
+// Load post data to get hero image and date
+const allPosts = await getCollection('posts');
+const post = allPosts.find(p => p.id === postSlug);
+
+// Format as array for RelatedPosts component
+const postData = post ? [{
+  slug: postSlug,
+  title: post.data.title,
+  heroImage: post.data.heroImage,
+  pubDate: post.data.pubDate,
+}] : [];
+---
+
+<EntityCard borderColor={borderColor}>
+  <div class="flex flex-col gap-4 h-full">
+    <div class="flex-1 flex flex-col gap-4">
+      <!-- Figure Display -->
+      <div class={`-m-6 mb-0 p-6 rounded-t-lg bg-${borderColor}/10 text-center`}>
+        <div class="flex flex-col items-center gap-2">
+          <div class="text-pwv-black">
+            <IconComponent class="h-8 w-8" />
+          </div>
+          <div class="font-serif text-4xl font-bold text-pwv-black">
+            {value}<span class="text-2xl text-pwv-black/70 ml-1">{unit}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Context -->
+      <div class={`px-4 py-3 rounded-lg bg-${borderColor}/15`}>
+        <p class="text-pwv-black text-center">{context}</p>
+      </div>
+
+      <!-- Source Post -->
+      <RelatedPosts posts={postData} borderColor={borderColor} maxDisplay={1} />
+    </div>
+
+    <!-- Share Buttons (always at bottom) -->
+    <ShareButtons 
+      shareUrl={shareUrl}
+      shareText={shareText}
+      shareType="quote"
+      detailPageUrl={detailPageUrl}
+    />
+  </div>
+</EntityCard>

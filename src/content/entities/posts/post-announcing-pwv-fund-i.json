@@ -1,0 +1,56 @@
+{
+  "slug": "post-announcing-pwv-fund-i",
+  "title": "Announcing PWV Fund I: Built by Founders. Backing What’s Next.",
+  "companies": [
+    "Stripe",
+    "Cursor",
+    "Netlify",
+    "Snyk",
+    "Supabase",
+    "PlanetScale",
+    "Retool"
+  ],
+  "investors": [],
+  "people": [
+    {
+      "name": "Tom Preston-Werner",
+      "role": "Author"
+    }
+  ],
+  "facts": [
+    {
+      "text": "PWV is raising a venture fund to invest in today's most exciting early-stage software- and AI-driven companies.",
+      "category": "announcement",
+      "date": "2025-10-22"
+    }
+  ],
+  "figures": [],
+  "topics": [
+    "PWV",
+    "Fund I",
+    "Venture Capital",
+    "Fundraising",
+    "Investing"
+  ],
+  "quotes": [
+    {
+      "quote": "We succeed in our mission by helping founders succeed in theirs.",
+      "speaker": "Tom Preston-Werner",
+      "context": "On founder support"
+    },
+    {
+      "quote": "Our goal is to be the smartest money a founder ever takes.",
+      "speaker": "Tom Preston-Werner",
+      "context": "On investment philosophy"
+    },
+    {
+      "quote": "Ideas start with founders. Founders start with PWV.",
+      "speaker": "Tom Preston-Werner",
+      "context": "On the importance of founders"
+    }
+  ],
+  "pubDate": "2025-10-22",
+  "author": "Tom Preston-Werner",
+  "tags": [],
+  "url": ""
+}

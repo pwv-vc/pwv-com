@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import FigureCard from '../../../components/entities/FigureCard.astro';
+import EntitySEO from '../../../components/entities/EntitySEO.astro';
+
+export async function getStaticPaths() {
+  const allEntities = await getCollection('extractedPostEntities');
+  const paths: any[] = [];
+
+  for (const entity of allEntities) {
+    const figures = entity.data.figures || [];
+    figures.forEach((figure, index) => {
+      const figureId = `${entity.id}-${index}`;
+      paths.push({
+        params: { slug: figureId },
+        props: {
+          value: figure.value,
+          context: figure.context,
+          unit: figure.unit,
+          postSlug: entity.id,
+          postTitle: entity.data.title,
+          pubDate: entity.data.pubDate,
+          heroImage: entity.data.heroImage,
+          figureIndex: index,
+        },
+      });
+    });
+  }
+
+  return paths;
+}
+
+const { value, context, unit, postSlug, postTitle, pubDate, heroImage, figureIndex } = Astro.props;
+
+const siteUrl = Astro.site || 'https://pwv.com';
+const figureId = `${postSlug}-${figureIndex}`;
+const pageUrl = new URL(`/showcase/figures/${figureId}/`, siteUrl).toString();
+
+const title = `${value}${unit} - ${context}`;
+const description = `Key figure from PWV: ${value}${unit} - ${context}`;
+
+// Define color palette
+const colors = [
+  'pwv-soft-periwinkle',
+  'pwv-soft-lavender',
+  'pwv-soft-teal',
+  'pwv-soft-yellow',
+  'pwv-soft-green',
+  'pwv-soft-coral',
+];
+
+const borderColor = colors[figureIndex % colors.length];
+---
+
+<Layout title={title} description={description}>
+  <EntitySEO
+    title={title}
+    description={description}
+    url={pageUrl}
+    type="article"
+    image={heroImage}
+    entityType="figure"
+  />
+
+  <main class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="mb-8">
+      <a
+        href="/showcase/figures/"
+        class="inline-flex items-center gap-2 text-sm text-pwv-black/70 hover:text-pwv-green transition-colors mb-4"
+      >
+        <span>←</span>
+        <span>Back to all figures</span>
+      </a>
+      <h1 class="font-serif text-3xl font-bold text-pwv-black md:text-4xl">
+        Figure: {value}{unit}
+      </h1>
+    </div>
+
+    <div class="max-w-2xl mx-auto">
+      <FigureCard
+        value={value}
+        context={context}
+        unit={unit}
+        postSlug={postSlug}
+        postTitle={postTitle}
+        pubDate={pubDate}
+        borderColor={borderColor}
+        figureIndex={figureIndex}
+      />
+    </div>
+
+    <div class="mt-12 text-center">
+      <a
+        href="/showcase/figures/"
+        class="inline-flex items-center gap-2 rounded-full border-2 border-pwv-gray bg-white px-6 py-3 text-sm font-medium text-pwv-black transition-all hover:border-pwv-green hover:bg-pwv-gray/20"
+      >
+        <span>View all figures</span>
+        <span>→</span>
+      </a>
+    </div>
+  </main>
+</Layout>

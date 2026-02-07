@@ -1,0 +1,110 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import Heading1 from '../../../components/Heading1.astro';
+import EntitySEO from '../../../components/entities/EntitySEO.astro';
+
+export async function getStaticPaths() {
+  const postEntities = await getCollection('extractedPostEntities');
+  
+  const quotes: Array<{
+    id: string;
+    quote: string;
+    speaker: string;
+    context?: string;
+    postSlug: string;
+    postTitle: string;
+    pubDate?: Date;
+  }> = [];
+  
+  for (const post of postEntities) {
+    const { slug, title, pubDate, quotes: postQuotes } = post.data;
+    postQuotes.forEach((quote, index) => {
+      quotes.push({
+        id: `${slug}-${index}`,
+        quote: quote.quote,
+        speaker: quote.speaker,
+        context: quote.context,
+        postSlug: slug,
+        postTitle: title,
+        pubDate: pubDate,
+      });
+    });
+  }
+  
+  return quotes.map(quote => ({
+    params: { slug: quote.id },
+    props: { quote },
+  }));
+}
+
+const { quote } = Astro.props;
+
+const title = `"${quote.quote.substring(0, 60)}${quote.quote.length > 60 ? '...' : ''}" — ${quote.speaker}`;
+const description = `${quote.quote} — ${quote.speaker}${quote.context ? ` (${quote.context})` : ''}`;
+const pageUrl = `/showcase/quotes/${quote.id}/`;
+
+// Get hero image from the source post
+const allPosts = await getCollection('posts');
+const sourcePost = allPosts.find(p => p.id === quote.postSlug);
+const heroImageUrl = sourcePost?.data.heroImage;
+
+const formattedDate = quote.pubDate ? new Date(quote.pubDate).toLocaleDateString('en-US', { 
+  year: 'numeric', 
+  month: 'long', 
+  day: 'numeric' 
+}) : null;
+---
+
+<EntitySEO 
+  title={title}
+  description={description}
+  type="quote"
+  entityName={quote.speaker}
+  url={pageUrl}
+  imageUrl={heroImageUrl}
+/>
+
+<Layout title={title} description={description}>
+  <section class="mx-auto mb-12 max-w-3xl">
+    <div class="mb-8">
+      <a href="/showcase/quotes/" class="text-sm text-pwv-black/60 hover:text-pwv-green transition-colors">
+        ← Back to all quotes
+      </a>
+    </div>
+
+    <blockquote class="mb-8 rounded-lg border-3 border-pwv-soft-periwinkle bg-white p-8">
+      <p class="font-serif text-2xl leading-relaxed italic text-pwv-black mb-6">
+        "{quote.quote}"
+      </p>
+      <footer class="border-t border-pwv-black/10 pt-4">
+        <p class="font-bold text-lg text-pwv-black">— {quote.speaker}</p>
+        {quote.context && (
+          <p class="text-pwv-black/70 mt-2">{quote.context}</p>
+        )}
+      </footer>
+    </blockquote>
+
+    <div class="rounded-lg border-2 border-pwv-gray bg-pwv-gray/20 p-6">
+      <h2 class="font-serif text-xl font-medium mb-4">From the PWV archives</h2>
+      <a 
+        href={`/news/${quote.postSlug}/`}
+        class="inline-block text-pwv-green hover:underline font-medium"
+      >
+        {quote.postTitle}
+      </a>
+      {formattedDate && (
+        <p class="text-sm text-pwv-black/60 mt-2">{formattedDate}</p>
+      )}
+      
+      <div class="mt-6 pt-6 border-t border-pwv-black/10">
+      <a 
+        href="/showcase/quotes/"
+          class="inline-block rounded-full border-2 border-pwv-black bg-pwv-black px-6 py-2 text-white hover:bg-pwv-green hover:border-pwv-green transition-colors"
+        >
+          Explore more quotes
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

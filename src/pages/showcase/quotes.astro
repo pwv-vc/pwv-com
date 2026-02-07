@@ -1,0 +1,123 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Heading1 from '../../components/Heading1.astro';
+import QuoteCard from '../../components/entities/QuoteCard.astro';
+import ShowcaseNav from '../../components/entities/ShowcaseNav.astro';
+import ShowcaseIntro from '../../components/entities/ShowcaseIntro.astro';
+
+const title = 'Showcase Quotes';
+const description = 'Explore curated quotes from founders, investors, and technology leaders featured in PWV content. Insights on startups, venture capital, AI, innovation, and building category-defining companies.';
+const keywords = 'startup quotes, founder quotes, venture capital insights, technology quotes, innovation quotes, AI quotes, business insights, startup wisdom, entrepreneurship quotes, tech industry insights';
+const image = '/og-pwv-green.png';
+const imageAlt = 'PWV Showcase Quotes - Insights from founders and technology leaders';
+
+// Structured data for the collection page
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description: description,
+  url: `${Astro.site}showcase/quotes/`,
+  isPartOf: {
+    '@type': 'WebSite',
+    name: 'PWV',
+    url: Astro.site,
+  },
+  about: {
+    '@type': 'Thing',
+    name: 'Quotes and Insights',
+    description: 'Notable quotes from PWV content',
+  },
+};
+
+// Load all individual post entity files
+const postEntities = await getCollection('extractedPostEntities');
+
+// Aggregate quotes from all posts
+const quotesArray: Array<{
+  quote: string;
+  speaker: string;
+  context?: string;
+  postSlug: string;
+  postTitle: string;
+  pubDate?: string;
+}> = [];
+
+for (const post of postEntities) {
+  const { slug, title: postTitle, quotes, pubDate } = post.data;
+
+  quotes.forEach((quote, quoteIndex) => {
+    quotesArray.push({
+      ...quote,
+      postSlug: slug,
+      postTitle: postTitle,
+      pubDate: pubDate || undefined,
+      quoteIndex,
+    });
+  });
+}
+
+// Sort by date (newest first) if dates available, otherwise keep insertion order
+const quotes = quotesArray.sort((a, b) => {
+  if (a.pubDate && b.pubDate) {
+    return new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime();
+  }
+  return 0;
+});
+
+// Color assignment function
+const colors = [
+  'pwv-soft-green',
+  'pwv-soft-teal',
+  'pwv-soft-yellow',
+  'pwv-soft-coral',
+  'pwv-soft-lavender',
+  'pwv-soft-periwinkle',
+];
+
+const getColor = (text: string, index: number) => {
+  const charCode = text.charCodeAt(0) || 0;
+  return colors[(charCode + index) % colors.length];
+};
+---
+
+<Layout 
+  title={title} 
+  description={description}
+  keywords={keywords}
+  image={image}
+  imageAlt={imageAlt}
+  additionalSchemas={[{ schema: collectionSchema }]}
+>
+  <section class="mx-auto mb-12">
+    <Heading1>{title}</Heading1>
+    
+    <ShowcaseIntro />
+
+    <ShowcaseNav currentPath="/showcase/quotes/" />
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {
+        quotes.map((quote, index) => (
+          <QuoteCard
+            quote={quote.quote}
+            speaker={quote.speaker}
+            context={quote.context}
+            postSlug={quote.postSlug}
+            postTitle={quote.postTitle}
+            pubDate={quote.pubDate}
+            quoteIndex={quote.quoteIndex}
+            borderColor={getColor(quote.quote, index)}
+          />
+        ))
+      }
+    </div>
+
+    {quotes.length === 0 && (
+      <div class="text-center py-12">
+        <p class="text-lg text-pwv-black/60">No quotes found yet.</p>
+      </div>
+    )}
+  </section>
+</Layout>

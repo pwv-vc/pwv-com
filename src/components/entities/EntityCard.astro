@@ -1,0 +1,37 @@
+---
+interface Props {
+  borderColor?: string;
+  class?: string;
+}
+
+const { borderColor = 'pwv-soft-periwinkle', class: className = '' } = Astro.props;
+
+// Map color names to actual color values
+const colorValues: Record<string, string> = {
+  'pwv-soft-green': '#85ffa0',
+  'pwv-soft-teal': '#88fff8',
+  'pwv-soft-yellow': '#ffef9e',
+  'pwv-soft-coral': '#ffc4c4',
+  'pwv-soft-lavender': '#e3c6ff',
+  'pwv-soft-periwinkle': '#bdd4ff',
+};
+
+const cardColor = colorValues[borderColor] || colorValues['pwv-soft-periwinkle'];
+---
+
+<div
+  class={`entity-card bg-white rounded-lg p-6 border-3 hover:border-4 hover:shadow-xl transition-all h-full ${className}`}
+  style={`--card-color: ${cardColor};`}
+>
+  <slot />
+</div>
+
+<style>
+  .entity-card {
+    border-color: color-mix(in srgb, var(--card-color) 50%, transparent);
+  }
+  
+  .entity-card:hover {
+    border-color: var(--card-color);
+  }
+</style>

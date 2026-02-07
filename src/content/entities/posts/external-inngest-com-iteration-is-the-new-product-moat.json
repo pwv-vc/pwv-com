@@ -1,0 +1,43 @@
+{
+  "slug": "external-inngest-com-iteration-is-the-new-product-moat",
+  "title": "Iteration is the new product moat",
+  "companies": [
+    "Inngest"
+  ],
+  "investors": [],
+  "people": [
+    {
+      "name": "Tony Holdstock-Brown",
+      "role": "Author"
+    }
+  ],
+  "facts": [
+    {
+      "text": "We raised a $21M Series A to help companies ship and iterate faster",
+      "category": "funding",
+      "date": "2025-09-16"
+    }
+  ],
+  "figures": [
+    {
+      "value": "21M",
+      "context": "Series A funding",
+      "unit": "USD"
+    }
+  ],
+  "topics": [
+    "Funding",
+    "Developer Tools"
+  ],
+  "quotes": [
+    {
+      "quote": "Iteration is the new product moat",
+      "speaker": "Tony Holdstock-Brown",
+      "context": "On product development"
+    }
+  ],
+  "pubDate": "2025-09-16",
+  "author": "Tony Holdstock-Brown",
+  "tags": [],
+  "url": "https://www.inngest.com/blog/announcing-inngest-series-a?ref=pwv.com"
+}

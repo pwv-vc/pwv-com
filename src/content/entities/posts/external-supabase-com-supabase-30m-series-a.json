@@ -1,0 +1,36 @@
+{
+  "slug": "external-supabase-com-supabase-30m-series-a",
+  "title": "Supabase $30m Series A",
+  "companies": [
+    "Supabase"
+  ],
+  "investors": [],
+  "people": [
+    {
+      "name": "Paul Copplestone",
+      "role": "Author"
+    }
+  ],
+  "facts": [
+    {
+      "text": "Supabase just raised $30M, bringing our total funding to $36M.",
+      "category": "funding",
+      "date": "2021-10-28"
+    }
+  ],
+  "figures": [
+    {
+      "value": "30M",
+      "context": "Series A funding",
+      "unit": "USD"
+    }
+  ],
+  "topics": [
+    "Funding"
+  ],
+  "quotes": [],
+  "pubDate": "2021-10-28",
+  "author": "Paul Copplestone",
+  "tags": [],
+  "url": "https://supabase.com/blog/supabase-series-a?ref=pwv.com"
+}
