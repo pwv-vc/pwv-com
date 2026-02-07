@@ -4,7 +4,7 @@ import TerminalIcon from '../icons/TerminalIcon.astro';
 ---
 
 <div
-  class="border-pwv-green/40 bg-pwv-black text-pwv-green my-4 rounded-lg border-2 p-6"
+  class="terminal-cta-container bg-pwv-black text-pwv-green my-4 p-6"
 >
   <div class="flex flex-col gap-6">
     <!-- Header -->
@@ -50,6 +50,23 @@ import TerminalIcon from '../icons/TerminalIcon.astro';
 </div>
 
 <style>
+  /* CRT monitor style */
+  .terminal-cta-container {
+    border-radius: 16px;
+    border: 8px solid #1a1a1a;
+    box-shadow: 
+      0 0 0 2px #333,
+      0 0 40px rgba(0, 210, 46, 0.15),
+      inset 0 0 60px rgba(0, 0, 0, 0.8);
+  }
+
+  @media (max-width: 640px) {
+    .terminal-cta-container {
+      border-radius: 12px;
+      border-width: 6px;
+    }
+  }
+
   @keyframes blink {
     0%,
     49% {

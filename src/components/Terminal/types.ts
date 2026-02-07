@@ -62,6 +62,19 @@ export interface PortfolioCompany {
   acquiredBy?: string;
 }
 
+export interface TeamMember {
+  name: string;
+  title: string;
+  bio: string;
+  slug: string;
+  linkedin?: string;
+  twitter?: string;
+  github?: string;
+  bluesky?: string;
+  website?: string;
+  isGeneralPartner?: boolean;
+}
+
 export interface ExtractedData {
   posts: Record<string, PostEntity>;
   entities: {
@@ -77,6 +90,7 @@ export interface ExtractedData {
     fundOne: PortfolioCompany[];
     angel: PortfolioCompany[];
   };
+  team?: TeamMember[];
   metadata: {
     extractedAt: string;
     totalPosts: number;
@@ -89,7 +103,7 @@ export interface ExtractedData {
 }
 
 export interface CommandResult {
-  type: 'text' | 'company' | 'investor' | 'person' | 'topic' | 'fact' | 'connection' | 'timeline' | 'stats' | 'error' | 'list' | 'post';
+  type: 'text' | 'company' | 'investor' | 'person' | 'topic' | 'fact' | 'connection' | 'timeline' | 'stats' | 'error' | 'list' | 'post' | 'newsletter';
   content: string | React.ReactNode;
   data?: any;
 }
