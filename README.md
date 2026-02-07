@@ -28,7 +28,7 @@ A retro CRT-style terminal interface for exploring PWV's portfolio and blog cont
 - **Exploration** - Timeline views, entity connections, statistics
 - **Mobile-friendly** - Touch-optimized with quick command buttons
 
-Try commands like `portfolio`, `companies`, `fortune | cowsay`, `bork | pwvsay`, `figlet PWV`, or `surprise me`.
+Try commands like `cat pwv.toml`, `portfolio`, `companies`, `fortune | cowsay`, `bork | pwvsay`, `figlet PWV`, or `surprise me`.
 
 See **[docs/TERMINAL.md](docs/TERMINAL.md)** for complete command reference.
 
@@ -37,16 +37,19 @@ See **[docs/TERMINAL.md](docs/TERMINAL.md)** for complete command reference.
 Shareable, SEO-optimized entity pages extracted from PWV blog posts:
 
 **Portfolio & People:**
+
 - `/showcase/companies/` - All companies with mention counts and timelines
 - `/showcase/people/` - Key people with roles and post relationships
 - `/showcase/topics/` - Topic clustering and related content
 
 **Content Highlights:**
+
 - `/showcase/quotes/` - Shareable quotes with speaker attribution and social cards
 - `/showcase/facts/` - Key insights categorized (funding, launch, partnership, etc.)
 - `/showcase/figures/` - Metrics and numbers with context (valuations, raises, growth)
 
 Each entity has:
+
 - Individual detail pages with full SEO metadata
 - Social sharing buttons (Twitter, LinkedIn, Facebook)
 - Open Graph and Twitter Cards for rich previews
@@ -135,6 +138,7 @@ This project uses Astro Content Collections to type-check and load content.
   - Schema: `{ name, title, company, quote, url?, tags: string[], slug, company-slug }`
 
 - Library (`library`)
+
   - Loader: all `*.md`/`*.mdx` files under `src/content/library/**`
   - Schema frontmatter:
     - `title: string`
@@ -162,6 +166,7 @@ Images for library posts live in `src/images/library/<slug>/...` and can be refe
 The `/showcase/` pages display companies and people extracted from blog posts.
 
 - **People avatars**: Place in `src/images/people/`
+
   - Format: `firstname-lastname.{jpeg|jpg|png}` (e.g., `tom-preston-werner.jpeg`)
   - Auto-detected by person name, shows 👤 icon if missing
 

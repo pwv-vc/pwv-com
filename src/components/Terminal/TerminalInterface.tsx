@@ -87,6 +87,45 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({
     'cowsay ',
     'figlet ',
     'bork',
+    'newsletter',
+    'signup',
+    'subscribe',
+    'apply',
+    'www tom',
+    'www dt',
+    'linkedin pwv',
+    'linkedin tom',
+    'linkedin dp',
+    'linkedin dt',
+    'twitter tom',
+    'twitter dp',
+    'twitter dt',
+    'x tom',
+    'x dp',
+    'x dt',
+    'github tom',
+    'github dp',
+    'github dt',
+    'gh tom',
+    'gh dp',
+    'gh dt',
+    'bluesky tom',
+    'bluesky dp',
+    'bluesky dt',
+    'bsky tom',
+    'bsky dp',
+    'bsky dt',
+    'socials tom',
+    'socials dp',
+    'socials dt',
+    'ls',
+    'll',
+    'pwd',
+    'echo ',
+    'date',
+    'cat README.md',
+    'cat pwv.toml',
+    'uptime',
   ];
 
   // Get suggestions based on current input
@@ -219,8 +258,8 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({
     setSuggestions([]);
     setSelectedSuggestionIndex(-1);
 
-    // Auto-open post if requested
-    if (result.type === 'post' && result.data?.autoOpen && result.data?.url) {
+    // Auto-open links if requested (post, newsletter, or text with autoOpen)
+    if (result.data?.autoOpen && result.data?.url) {
       setTimeout(() => {
         window.open(result.data.url, '_blank');
       }, 500);
@@ -303,27 +342,39 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({
     }
   };
 
-  // Convert /news/ and /showcase/ paths to clickable links with trailing slashes
+  // Convert paths and URLs to clickable links
   const linkifyContent = (text: string) => {
     const lines = text.split('\n');
     return lines.map((line, lineIndex) => {
-      // Match /news/ and /showcase/ paths (with or without trailing slash)
-      const linkRegex = /\/(news|showcase)\/([a-z0-9-]+(?:\/[a-z0-9-]+)?)\/?/g;
       const parts: (string | React.ReactElement)[] = [];
       let lastIndex = 0;
+      
+      // Match various URL patterns
+      // 1. Full URLs (http:// or https://)
+      // 2. Site paths like /news/, /showcase/, /newsletter/, /portfolio/, etc.
+      const urlRegex = /(https?:\/\/[^\s]+)|\/(news|showcase|newsletter|portfolio|team|apply|about)\/([a-z0-9-]*)\/?/g;
       let match;
 
-      while ((match = linkRegex.exec(line)) !== null) {
+      while ((match = urlRegex.exec(line)) !== null) {
         // Add text before the link
         if (match.index > lastIndex) {
           parts.push(line.substring(lastIndex, match.index));
         }
 
-        // Add the link with trailing slash
-        const pathType = match[1]; // 'news' or 'showcase'
-        const pathRest = match[2]; // rest of path
-        const displayPath = match[0]; // Keep original display (might not have /)
-        const linkPath = `/${pathType}/${pathRest}/`; // Always add trailing slash for href
+        let linkPath: string;
+        let displayPath: string;
+
+        if (match[1]) {
+          // Full URL (http:// or https://)
+          linkPath = match[1];
+          displayPath = match[1];
+        } else {
+          // Site path
+          const pathType = match[2]; // 'news', 'showcase', 'newsletter', etc.
+          const pathRest = match[3] || ''; // rest of path (might be empty)
+          displayPath = match[0]; // Keep original display
+          linkPath = pathRest ? `/${pathType}/${pathRest}/` : `/${pathType}/`;
+        }
 
         parts.push(
           <a
