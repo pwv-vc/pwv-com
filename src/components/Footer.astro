@@ -1,5 +1,5 @@
 ---
-
+const currentYear = new Date().getFullYear();
 ---
 
 <footer
@@ -10,11 +10,11 @@
     <div
       class="flex flex-col items-center space-y-4 md:flex-row md:justify-center md:space-y-0 md:space-x-8"
     >
-      <a href="/" class="pwv-link">PWV</a>
-      <a href="/about" class="pwv-link">About</a>
-      <a href="/portfolio" class="pwv-link">Portfolio</a>
-      <a href="/news" class="pwv-link">News</a>
-      <a href="/apply" class="pwv-link">Apply</a>
+      <a href="/" class="pwv-link">Home</a>
+      <a href="/about/" class="pwv-link">About</a>
+      <a href="/portfolio/" class="pwv-link">Portfolio</a>
+      <a href="/news/" class="pwv-link">News</a>
+      <a href="/apply/" class="pwv-link">Apply</a>
     </div>
 
     <!-- Copyright and Social Links -->
@@ -22,12 +22,14 @@
       class="flex flex-col items-center space-y-4 pt-6 md:flex-row md:justify-between md:space-y-0"
     >
       <div class="flex items-center space-x-2 text-center md:text-left">
-        <p class="text-pwv-black">© 2025 PWV Capital Management LLC</p>
+        <p class="text-pwv-black">
+          © {currentYear} PWV Capital Management LLC
+        </p>
         <p class="text-pwv-green font-bold">&CenterDot;</p>
         <a
           href="https://tom.preston-werner.com/2022/05/23/major-version-numbers-are-not-sacred.html"
           class="pwv-link"
-          target="_blank">0.1.4</a
+          target="_blank">0.1.6</a
         >
       </div>
 
