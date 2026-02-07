@@ -29,6 +29,7 @@ export { HistoryCommand } from './utility/HistoryCommand';
 export { ClearCommand } from './utility/ClearCommand';
 export { SurpriseCommand } from './utility/SurpriseCommand';
 export { NewsletterCommand } from './utility/NewsletterCommand';
+export { ApplyCommand } from './utility/ApplyCommand';
 export { WwwCommand } from './utility/WwwCommand';
 export { LinkedinCommand } from './utility/LinkedinCommand';
 export { TwitterCommand } from './utility/TwitterCommand';
@@ -66,6 +67,7 @@ import { HistoryCommand } from './utility/HistoryCommand';
 import { ClearCommand } from './utility/ClearCommand';
 import { SurpriseCommand } from './utility/SurpriseCommand';
 import { NewsletterCommand } from './utility/NewsletterCommand';
+import { ApplyCommand } from './utility/ApplyCommand';
 import { WwwCommand } from './utility/WwwCommand';
 import { LinkedinCommand } from './utility/LinkedinCommand';
 import { TwitterCommand } from './utility/TwitterCommand';
@@ -103,6 +105,7 @@ export const allCommands = [
   ClearCommand,
   SurpriseCommand,
   NewsletterCommand,
+  ApplyCommand,
   WwwCommand,
   LinkedinCommand,
   TwitterCommand,

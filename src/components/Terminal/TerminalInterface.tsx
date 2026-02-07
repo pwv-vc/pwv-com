@@ -90,6 +90,7 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({
     'newsletter',
     'signup',
     'subscribe',
+    'apply',
     'www tom',
     'www dt',
     'linkedin pwv',
