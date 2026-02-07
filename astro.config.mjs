@@ -86,6 +86,9 @@ export default defineConfig({
           } else if (item.url.endsWith('/about/')) {
             item.changefreq = 'weekly';
             item.priority = 0.7;
+          } else if (item.url.endsWith('/newsletter/')) {
+            item.changefreq = 'monthly';
+            item.priority = 0.7;
           } else if (item.url.endsWith('/apply/')) {
             item.changefreq = 'monthly';
             item.priority = 0.6;

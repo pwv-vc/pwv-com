@@ -23,10 +23,10 @@ unicorn scale in under 24 months.
 - [About](https://pwv.com/about): About PWV, how we invest, and our team
 - [Portfolio](https://pwv.com/portfolio): Our investment portfolio
 - [News](https://pwv.com/news): Posts, insights, and announcements from PWV and our community
-- [Showcase](https://pwv.com/showcase/companies/): Entity pages celebrating companies and people featured in PWV content
+- [Newsletter](https://pwv.com/newsletter): Subscribe to the PWV newsletter for updates, insights, and portfolio news
+- Showcase
   - [Companies](https://pwv.com/showcase/companies/): Companies mentioned across blog posts with logos and related content
   - [People](https://pwv.com/showcase/people/): People featured in posts with avatars, roles, and contributions
-- [Showcase](https://pwv.com/showcase/quotes/): Showcase insights, quotes, facts, and figures from PWV content
   - [Quotes](https://pwv.com/showcase/quotes/): Notable quotes from posts with speaker attribution and context
   - [Facts](https://pwv.com/showcase/facts/): Key insights, trends, and announcements from PWV posts
   - [Figures](https://pwv.com/showcase/figures/): Key metrics and numbers from PWV posts
@@ -71,8 +71,20 @@ PWV invests across multiple technology sectors. Filter portfolio by these tags:
 - [David Thyresson (DT)](https://pwv.com/about#david-thyresson): Team profile on About page
   - [News by David Thyresson](https://pwv.com/news/author/david-thyresson): All posts by DT
 
-## Feeds
+## Newsletter & Feeds
 
+### Newsletter
+- [Newsletter Signup](https://pwv.com/newsletter): Subscribe to the PWV newsletter
+- **What subscribers receive**:
+  - Latest news and announcements from PWV
+  - Founder insights from Tom Preston-Werner, David Price, and David Thyresson
+  - Portfolio updates and milestones
+  - Community highlights and curated content
+- **Frequency**: Thoughtfully curated, sent when there's meaningful content to share
+- **Privacy**: Unsubscribe anytime, email addresses never shared with third parties
+- Newsletter signup also available in the footer on most pages
+
+### RSS Feed
 - [RSS](https://pwv.com/rss.xml): Recent announcements, thoughts, and insights from PWV and our founder community
 
 ## Media & Branding
