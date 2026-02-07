@@ -1,5 +1,6 @@
 ---
 // Terminal-themed CTA with instructions
+import TerminalIcon from '../icons/TerminalIcon.astro';
 ---
 
 <div
@@ -8,26 +9,25 @@
   <div class="flex flex-col gap-6">
     <!-- Header -->
     <div class="flex items-center gap-3">
-      <span class="text-3xl">💻</span>
+      <TerminalIcon />
       <h1 class="font-mono text-2xl font-bold">Terminal</h1>
     </div>
 
     <!-- How to use section -->
     <div class="space-y-4">
-      <h2 class="text-pwv-green/90 font-mono text-lg font-semibold">
-        How to use
-      </h2>
       <ul class="text-pwv-green/80 space-y-3 font-mono text-sm">
         <li class="flex items-start gap-2">
           <span class="text-pwv-green">▸</span>
           <span
-            >Use our portfolio terminal to find industry highlights, raises,
-            feature announcements and more</span
+            >Use the PWV Terminal to find industry highlights, raises, feature
+            announcements and more</span
           >
         </li>
         <li class="flex items-start gap-2">
           <span class="text-pwv-green">▸</span>
-          <span>View aggregate news and insights from the PWV ecosystem</span>
+          <span
+            >View aggregate news and insights from our founder ecosystem</span
+          >
         </li>
         <li class="flex items-start gap-2">
           <span class="text-pwv-green">▸</span>
@@ -43,8 +43,25 @@
         class="border-pwv-green text-pwv-green hover:bg-pwv-green hover:text-pwv-black inline-flex items-center gap-2 rounded-full border-2 bg-transparent px-8 py-3 font-mono text-sm font-medium transition-all"
       >
         <span>Launch Terminal</span>
-        <span>→</span>
+        <span class="terminal-cursor">→</span>
       </a>
     </div>
   </div>
 </div>
+
+<style>
+  @keyframes blink {
+    0%,
+    49% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .terminal-cursor {
+    animation: blink 1s step-end infinite;
+  }
+</style>
