@@ -27,17 +27,17 @@
 
 PWV manages four distinct portfolios:
 
-### Fund I
+### Fund I (May 2025 - Present)
 **Status**: Primary institutional fund
 **Structure**: Not specified in source
 **Investment stage**: Pre-seed through Series A
 
-### Rolling Fund
+### Rolling Fund (2023-2025)
 **Status**: Active fund
 **Structure**: Not specified in source
 **Investment stage**: Pre-seed through Series A
 
-### Angel
+### Angel (2012-2023)
 **Status**: Active fund
 **Structure**: Not specified in source
 **Investment stage**: Pre-seed through Series A
@@ -54,9 +54,12 @@ PWV manages four distinct portfolios:
 ### Stage
 - **Early-stage**: From inception through Series A
 - Specific pre-seed/seed emphasis: Not specified
+- Can lead, but not required. Can co-lead.
+- No need to take board seats.
+- Will follow on where we have relationships.
 
 ### Check Size
-- $500,000 to $3,000,000+
+- $100,000 to $3,000,000+
 
 ### Focus Sectors
 Primary investment categories (portfolio tags):
@@ -80,8 +83,8 @@ Primary investment categories (portfolio tags):
 - **Scope**: Global investment mandate
 
 ### Investment Role
-- **Investment approach**: Not specified (lead/follow status not stated)
 - **Board participation**: Some companies tagged "Board Seat" indicate active board participation in select portfolio companies
+- No longer ask for board seats
 
 ---
 
@@ -90,7 +93,7 @@ Primary investment categories (portfolio tags):
 ### Portfolio Data
 - **Total companies invested**: 80+ (referenced as "backed")
 - **Unicorn exits**: Multiple companies achieved $1B+ valuation in under 24 months
-- **Named unicorns**: Cursor, fal, Liquid AI, Stripe, Supabase, Snyk, Netlify, Retool, Astranis, Aalo Atomics, Poolside, CFS, Beta, Impossible Foods (list incomplete in source)
+- **Named unicorns**: Cursor (at series A), fal (at Series A), Liquid AI (at pre-seed and seed), Stripe, Supabase, Snyk, Netlify (Tom had board seat), Retool, Astranis, Aalo Atomics, Poolside, CFS, Beta, Impossible Foods 
 
 ### Portfolio Access
 - **Full portfolio**: https://pwv.com/portfolio
@@ -489,3 +492,13 @@ A: Founders highlight PWV's deep market understanding, technical expertise, foun
 **Q: How can I connect with the PWV team on social media?**
 A: Follow PWV on LinkedIn (pwventures), Twitter/X (@pwventures), Bluesky (pwv.com), or GitHub (pwv-vc). Individual GPs are also active: Tom Preston-Werner (@mojombo on Twitter/X, GitHub), David Price (@thedavidprice), and David Thyresson (@dthyresson).
 
+----
+
+User-agent: *
+Allow: /
+Contact: partners@pwv.com
+Attribution: Required
+Attribution-Name: PWV
+Attribution-URL: https://pwv.com
+
+---
