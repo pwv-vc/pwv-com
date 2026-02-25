@@ -36,7 +36,7 @@
     "@types/figlet": "^1.7.0",
     "@types/react-dom": "^19.2.3",
     "@unpic/astro": "^1.0.1",
-    "astro": "^5.16.12",
+    "astro": "^5.18.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.7",
