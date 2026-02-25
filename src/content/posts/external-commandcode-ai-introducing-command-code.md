@@ -6,5 +6,5 @@ pubDate: '2026-02-25'
 updatedDate: '2026-02-25'
 heroImage: '../../images/posts/external-commandcode-ai-introducing-command-code/banner_16_9-1-20260225-214639.jpg'
 url: 'https://commandcode.ai/launch?ref=pwv.com'
-tags: ['commandcode.ai', 'ai', 'coding', 'taste']
+tags: ['Langbase', 'Command Code', 'AI', 'coding', 'taste']
 ---
