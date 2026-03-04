@@ -93,7 +93,7 @@ Primary investment categories (portfolio tags):
 ### Portfolio Data
 - **Total companies invested**: 80+ (referenced as "backed")
 - **Unicorn exits**: Multiple companies achieved $1B+ valuation in under 24 months
-- **Named unicorns**: Cursor (at series A), fal (at Series A), Liquid AI (at pre-seed and seed), Stripe, Supabase, Snyk, Netlify (Tom had board seat), Retool, Astranis, Aalo Atomics, Poolside, CFS, Beta, Impossible Foods 
+- **Named unicorns**: Cursor (at series A), fal (at Series A), Liquid AI (at pre-seed and seed), Stripe, Supabase, Snyk, Netlify (Tom had board seat), Retool, Astranis, Aalo Atomics, Poolside, CFS, Beta, Impossible Foods
 
 ### Portfolio Access
 - **Full portfolio**: https://pwv.com/portfolio
@@ -220,17 +220,6 @@ All three GPs are actively involved in sourcing, investing, and supporting portf
 - **News posts**: https://pwv.com/news/author/david-thyresson
 
 **Context**: Known for hands-on technical involvement with portfolio founders; becomes customer and advisor to founders beyond typical investor relationships.
-
-### Platform Team
-
-**Jennifer Tacheff** | Head of Platform & Capital Strategy
-- Leads platform and capital strategy, investor relations, and founder growth
-- Coaches 600+ founders; launched programs with Google Accelerator and SXSW
-- Ecosystem architect specializing in capital and growth strategy
-
-**Nina Song** | Executive Assistant
-- Drives operational excellence across internal systems, founder processes, and fund infrastructure
-- Coordinates investor workflows and ensures team operates at peak velocity
 
 ---
 
