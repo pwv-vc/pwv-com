@@ -279,5 +279,12 @@
     "slug": "limitless",
     "formerly": "Rewind AI",
     "acquiredBy": "Meta"
+  },
+  {
+    "name": "Fueled",
+    "url": "https://www.fueled.com/",
+    "tags": [ "acquired"],
+    "slug": "fueled",
+    "acquiredBy": "Opensend"
   }
 ]
