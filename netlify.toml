@@ -108,6 +108,13 @@
   query = {tags = ":tag"}
   force = false
 
+# Redirect old Marly tag to Inference Capital
+[[redirects]]
+  from = "/portfolio/tags/marly"
+  to = "/portfolio/tags/inference-capital"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/"
   to = "/"

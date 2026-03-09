@@ -231,10 +231,11 @@
     "slug": "purplefish"
   },
   {
-    "name": "Marly",
-    "url": "https://www.marly.ai",
+    "name": "Inference Capital",
+    "url": "https://inferencecapital.ai",
     "tags": ["ai", "saas"],
-    "slug": "marly"
+    "slug": "inference-capital",
+    "formerly": "Marly"
   },
   {
     "name": "Retrace",
