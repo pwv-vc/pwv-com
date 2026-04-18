@@ -1,6 +1,6 @@
 ---
 import { Image as UnpicImage } from '@unpic/astro';
-import { resolveImageSrc } from '../../lib/images';
+import { resolveImageSrc, resolvePortfolioLogoSrc } from '../../lib/images';
 import type { TimelineEvent } from './types';
 import { getEventEmoji } from './categoryEmojis';
 import { categoryStyles } from './categoryStyles';
@@ -150,7 +150,7 @@ const getSpotifyEmbedUrl = (url: string): string | null => {
           hasLogo ? (
             event.logo ? (
               <UnpicImage
-                src={resolveImageSrc(event.logo)}
+                src={resolvePortfolioLogoSrc(event.logo)}
                 alt={`${event.title} logo`}
                 width={32}
                 height={32}
@@ -158,7 +158,7 @@ const getSpotifyEmbedUrl = (url: string): string | null => {
               />
             ) : event.company ? (
               <UnpicImage
-                src={resolveImageSrc(`logos/small/${event.company}.png`)}
+                src={resolvePortfolioLogoSrc(`logos/small/${event.company}.png`)}
                 alt={`${event.company} logo`}
                 width={32}
                 height={32}
@@ -318,7 +318,7 @@ const getSpotifyEmbedUrl = (url: string): string | null => {
                 >
                   {hasLogo && (
                     <UnpicImage
-                      src={resolveImageSrc(`logos/small/${slug}.png`)}
+                      src={resolvePortfolioLogoSrc(`logos/small/${slug}.png`)}
                       alt={`${company} logo`}
                       width={24}
                       height={24}

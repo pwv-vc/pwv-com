@@ -1,7 +1,7 @@
 ---
 import { Image as UnpicImage } from '@unpic/astro';
 import { getCollection } from 'astro:content';
-import { resolveImageSrc } from '../../lib/images';
+import { resolvePortfolioLogoSrc } from '../../lib/images';
 import EntityCard from './EntityCard.astro';
 import ShareButtons from './ShareButtons.astro';
 import RelatedPosts from './RelatedPosts.astro';
@@ -53,7 +53,7 @@ const slug = portfolioSlug || getCompanySlug(name);
 let logoSrc: string | null = null;
 
 try {
-  logoSrc = resolveImageSrc(`logos/small/${slug}.png`);
+  logoSrc = resolvePortfolioLogoSrc(`logos/small/${slug}.png`);
 } catch (e) {
   // No logo available, will show fallback
 }
