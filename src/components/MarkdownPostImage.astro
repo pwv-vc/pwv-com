@@ -62,9 +62,6 @@ if (!resolvedSrc || typeof resolvedSrc !== 'string') {
   return null;
 }
 
-const isNetlifyDeploy =
-  process.env.CONTEXT === 'production' ||
-  process.env.CONTEXT === 'deploy-preview';
 ---
 
 <div class="mx-auto w-full md:w-full lg:w-2/3">

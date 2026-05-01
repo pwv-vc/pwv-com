@@ -2,7 +2,7 @@
 interface Props {
   title: string;
   description: string;
-  type: 'quote' | 'person' | 'company';
+  type: 'quote' | 'person' | 'company' | 'article';
   entityName: string;
   url: string;
   imageUrl?: string;
@@ -15,8 +15,16 @@ const fullUrl = new URL(url, siteUrl).toString();
 const defaultOgImage = new URL('/og-pwv-green.png', siteUrl).toString();
 const ogImage = imageUrl || defaultOgImage;
 
-// Twitter card type based on entity type
 const twitterCard = imageUrl ? 'summary_large_image' : 'summary';
+
+const schemaType =
+  type === 'person'
+    ? 'Person'
+    : type === 'company'
+      ? 'Organization'
+      : type === 'article'
+        ? 'Article'
+        : 'CreativeWork';
 ---
 
 <!-- Primary Meta Tags -->
@@ -41,16 +49,20 @@ const twitterCard = imageUrl ? 'summary_large_image' : 'summary';
 <meta property="twitter:creator" content="@pwventures" />
 
 <!-- Structured Data -->
-<script type="application/ld+json" set:html={JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": type === 'person' ? "Person" : type === 'company' ? "Organization" : "CreativeWork",
-  "name": entityName,
-  "description": description,
-  "url": fullUrl,
-  ...(imageUrl && { "image": ogImage }),
-  "publisher": {
-    "@type": "Organization",
-    "name": "PWV",
-    "url": siteUrl
-  }
-})} />
+<script
+  is:inline
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': schemaType,
+    name: entityName,
+    description: description,
+    url: fullUrl,
+    ...(imageUrl && { image: ogImage }),
+    publisher: {
+      '@type': 'Organization',
+      name: 'PWV',
+      url: siteUrl,
+    },
+  })}
+/>

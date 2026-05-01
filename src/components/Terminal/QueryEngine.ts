@@ -1,11 +1,4 @@
-import type {
-  ExtractedData,
-  CommandResult,
-  PostEntity,
-  CompanyEntity,
-  PersonEntity,
-  SelectableItem,
-} from './types';
+import type { ExtractedData, CommandResult, SelectableItem } from './types';
 import { allCommands, BaseCommand } from './commands';
 import { buildBox, type BoxSection } from './commands/helpers/boxBuilder';
 import { generateSlug } from './commands/helpers/utils';

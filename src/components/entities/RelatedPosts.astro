@@ -1,12 +1,16 @@
 ---
+import type { ImageMetadata } from 'astro';
 import { Image as UnpicImage } from '@unpic/astro';
 
 interface PostData {
   slug: string;
   title: string;
-  heroImage?: string;
+  heroImage?: string | ImageMetadata;
   pubDate?: Date;
 }
+
+const heroSrc = (img: string | ImageMetadata | undefined) =>
+  img == null ? undefined : typeof img === 'string' ? img : img.src;
 
 interface Props {
   posts: PostData[];
@@ -47,21 +51,23 @@ const colorValues: Record<string, string> = {
 const postColor = colorValues[borderColor] || colorValues['pwv-soft-periwinkle'];
 
 // Generate a unique ID for this component instance
-const componentId = `posts-${Math.random().toString(36).substr(2, 9)}`;
+const componentId = `posts-${Math.random().toString(36).slice(2, 11)}`;
 ---
 
 {displayPosts.length > 0 && (
   <div class="border-t border-pwv-black/10 pt-3">
     <div class={`flex flex-col gap-2 ${needsScroll ? 'max-h-[280px] overflow-y-auto pr-2' : ''}`}>
-      {displayPosts.map((post) => (
+      {displayPosts.map((post) => {
+        const thumb = heroSrc(post.heroImage);
+        return (
         <a
           href={`/news/${post.slug}/`}
           class={`post-link post-link-${componentId} flex items-center gap-3 rounded-lg bg-white px-3 py-2 text-sm hover:underline transition-colors border`}
           style={`--post-color: ${postColor};`}
         >
-          {post.heroImage ? (
+          {thumb ? (
             <UnpicImage
-              src={post.heroImage}
+              src={thumb}
               alt={post.title}
               width={48}
               height={48}
@@ -79,7 +85,8 @@ const componentId = `posts-${Math.random().toString(36).substr(2, 9)}`;
             )}
           </div>
         </a>
-      ))}
+        );
+      })}
     </div>
   </div>
 )}

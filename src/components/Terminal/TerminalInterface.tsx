@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { QueryEngine } from './QueryEngine';
-import type { CommandResult, HistoryEntry, ExtractedData } from './types';
+import type { HistoryEntry, ExtractedData } from './types';
 
 interface TerminalInterfaceProps {
   entitiesData: ExtractedData;
@@ -22,12 +22,10 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
-  const [boxWidth, setBoxWidth] = useState(64);
   const [queryEngine] = useState(() => {
     const width = typeof window !== 'undefined' ? getBoxWidth() : 64;
     return new QueryEngine(entitiesData as ExtractedData, width);
   });
-  const [isTyping, setIsTyping] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [showMoreCommands, setShowMoreCommands] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -206,7 +204,6 @@ const TerminalInterface: React.FC<TerminalInterfaceProps> = ({
   useEffect(() => {
     const handleResize = () => {
       const newWidth = getBoxWidth();
-      setBoxWidth(newWidth);
       queryEngine.setBoxWidth(newWidth);
       setIsMobile(window.innerWidth < 768);
     };

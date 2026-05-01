@@ -1,7 +1,7 @@
 ---
 import { generateOrganizationSchema } from '../../lib/schema';
 import { getCollection } from 'astro:content';
-import { SITE_NAME, SITE_DESCRIPTION } from '../../consts';
+import { SITE_NAME } from '../../consts';
 
 interface Props {
   baseURL?: string | URL;
@@ -131,6 +131,7 @@ const organizationSchema = generateOrganizationSchema({
 ---
 
 <script
+  is:inline
   type="application/ld+json"
   set:html={JSON.stringify(organizationSchema)}
 />

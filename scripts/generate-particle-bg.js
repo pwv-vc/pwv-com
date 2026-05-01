@@ -35,8 +35,8 @@ function generateParticleBackground() {
     } else if (x >= MEDIUM_ZONE.start) {
       // Medium zone - medium opacity
       opacity = 0.7;
-    } else {
-      // Sparse zone - low opacity
+    } else if (x >= SPARSE_ZONE.start && x < SPARSE_ZONE.end) {
+      // Sparse zone (left) - low opacity
       opacity = 0.4;
     }
 

@@ -2,18 +2,10 @@
 import Layout from '../layouts/Layout.astro';
 import Heading1 from '../components/Heading1.astro';
 import { generateFAQSchema } from '../lib/schema';
-import { SITE_NAME } from '../consts';
 
 const title = 'What is PWV?';
 const description =
   'PWV (Preston-Werner Ventures) is a Silicon Valley venture capital firm investing in early-stage technology companies. Learn about our mission and how we differ from other entities with similar names.';
-
-// Get base URL for schema generation
-export const isProduction = process.env.CONTEXT === 'production';
-export const isDeployPreview = process.env.CONTEXT === 'deploy-preview';
-const baseURL = isDeployPreview
-  ? process.env.DEPLOY_PRIME_URL || Astro.site
-  : Astro.site;
 
 // Generate FAQ schema for disambiguation
 const faqSchema = generateFAQSchema({

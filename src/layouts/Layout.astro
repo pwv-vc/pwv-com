@@ -236,6 +236,7 @@ if (image) {
     {
       isProduction && (
         <script
+          is:inline
           defer
           data-domain="pwv.com"
           src="https://plausible.io/js/script.js"
@@ -246,7 +247,7 @@ if (image) {
     <!-- Additional JSON-LD Schemas -->
     {
       additionalSchemas.map(({ schema }) => (
-        <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
       ))
     }
   </head>

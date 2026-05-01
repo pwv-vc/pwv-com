@@ -155,4 +155,4 @@ if (member.data.homeLocation) {
 const personSchema = generatePersonSchema(schemaOptions);
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
