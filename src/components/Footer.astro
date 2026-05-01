@@ -1,5 +1,8 @@
 ---
+import pkg from '../../package.json';
+
 const currentYear = new Date().getFullYear();
+const siteVersion = pkg.version;
 ---
 
 <footer
@@ -7,20 +10,16 @@ const currentYear = new Date().getFullYear();
 >
   <!-- Nav + Subscribe/Apply: 2 cols on small, 3 cols on md+ -->
   <div
-    class="grid grid-cols-2 gap-x-6 gap-y-3 place-items-center sm:grid-cols-2 md:grid-cols-3"
+    class="grid grid-cols-2 place-items-center gap-x-6 gap-y-3 sm:grid-cols-2 md:grid-cols-3"
   >
     <a href="/" aria-label="PWV" class="pwv-link">PWV</a>
     <a href="/about/" aria-label="About PWV team and mission" class="pwv-link"
       >About</a
     >
-    <a
-      href="/portfolio/"
-      aria-label="PWV portfolio companies"
-      class="pwv-link">Portfolio</a
+    <a href="/portfolio/" aria-label="PWV portfolio companies" class="pwv-link"
+      >Portfolio</a
     >
-    <a href="/news/" aria-label="PWV news and updates" class="pwv-link"
-      >News</a
-    >
+    <a href="/news/" aria-label="PWV news and updates" class="pwv-link">News</a>
     <a
       href="/showcase/companies/"
       aria-label="Showcase PWV companies, people, quotes, facts, and figures"
@@ -51,7 +50,7 @@ const currentYear = new Date().getFullYear();
       <a
         href="https://tom.preston-werner.com/2022/05/23/major-version-numbers-are-not-sacred.html"
         class="pwv-link"
-        target="_blank">0.1.6</a
+        target="_blank">{siteVersion}</a
       >
     </div>
 
