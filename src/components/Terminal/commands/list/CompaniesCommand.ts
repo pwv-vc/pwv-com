@@ -1,6 +1,6 @@
 import { BaseCommand } from '../BaseCommand';
 import type { CommandResult, SelectableItem } from '../../types';
-import { buildBox, type BoxSection } from '../helpers/boxBuilder';
+import { buildBox } from '../helpers/boxBuilder';
 
 export class CompaniesCommand extends BaseCommand {
   get name() {

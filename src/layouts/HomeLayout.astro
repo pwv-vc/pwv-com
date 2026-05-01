@@ -18,7 +18,7 @@ const canonicalURL = new URL(Astro.url.pathname, baseURL);
 
 // Generate homepage schemas (Organization + WebSite + WebPage)
 const [organizationSchema, websiteSchema, webpageSchema] =
-  await getHomepageSchemas(baseURL, canonicalURL);
+  await getHomepageSchemas(baseURL ?? canonicalURL, canonicalURL);
 
 // Combine with any existing additionalSchemas
 const allSchemas = [

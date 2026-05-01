@@ -342,7 +342,7 @@ const KNOWN_INVESTORS = new Set([
 /**
  * Extract entities from a single post using AI
  */
-async function extractEntitiesFromPost(slug, title, content, frontmatter = {}, portfolioCompanies = []) {
+async function extractEntitiesFromPost(_slug, title, content, frontmatter = {}, portfolioCompanies = []) {
   try {
     console.log(`📄 Processing: ${title}`);
 

@@ -18,7 +18,7 @@ export class FigletCommand extends BaseCommand {
     return 'other' as const;
   }
 
-  execute(input: string, args: string[]): CommandResult {
+  execute(_input: string, args: string[]): CommandResult {
     const text = args.join(' ').trim() || 'PWV';
 
     // Simple ASCII art generator without external dependencies

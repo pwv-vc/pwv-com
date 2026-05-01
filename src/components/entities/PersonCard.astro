@@ -1,4 +1,5 @@
 ---
+import type { ImageMetadata } from 'astro';
 import { Image as UnpicImage } from '@unpic/astro';
 import { getCollection } from 'astro:content';
 import { resolveImageSrc } from '../../lib/images';
@@ -15,7 +16,7 @@ interface Props {
   borderColor: string;
 }
 
-const { name, role, mentions, posts, borderColor } = Astro.props;
+const { name, role, mentions: _mentions, posts, borderColor } = Astro.props;
 
 // Create share URL and text - link to person detail page on PWV
 const siteUrl = Astro.site || 'https://pwv.com';
@@ -26,15 +27,25 @@ const shareText = `${name}${role ? ` (${role})` : ''} - Featured in ${posts.leng
 
 // Load post data to get titles, hero images, and dates
 const allPosts = await getCollection('posts');
-const postData = posts.map(postSlug => {
-  const post = allPosts.find(p => p.id === postSlug);
-  return post ? {
-    slug: postSlug,
-    title: post.data.title,
-    heroImage: post.data.heroImage,
-    pubDate: post.data.pubDate,
-  } : null;
-}).filter(Boolean);
+type RelatedPostRow = {
+  slug: string;
+  title: string;
+  heroImage?: string | ImageMetadata;
+  pubDate: Date;
+};
+
+const postData: RelatedPostRow[] = posts
+  .map((postSlug): RelatedPostRow | null => {
+    const post = allPosts.find((p) => p.id === postSlug);
+    if (!post) return null;
+    return {
+      slug: postSlug,
+      title: post.data.title,
+      heroImage: post.data.heroImage as RelatedPostRow['heroImage'],
+      pubDate: post.data.pubDate,
+    };
+  })
+  .filter((p): p is RelatedPostRow => p !== null);
 
 // Sort by publication date (newest first)
 postData.sort((a, b) => {

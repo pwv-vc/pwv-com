@@ -3,25 +3,35 @@ import { getCollection } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import TopicCard from '../../../components/entities/TopicCard.astro';
 import EntitySEO from '../../../components/entities/EntitySEO.astro';
+import { heroImageSrc } from '../../../lib/hero_image_src';
 
 export async function getStaticPaths() {
-  const postEntities = await getCollection('extractedPostEntities');
-  const topicsMap = new Map<string, { postSlugs: string[], heroImage?: string }>();
+  const [postEntities, allPosts] = await Promise.all([
+    getCollection('extractedPostEntities'),
+    getCollection('posts'),
+  ]);
+  const topicsMap = new Map<string, { postSlugs: string[]; heroImage?: string }>();
+
+  const heroForSlug = (slug: string) =>
+    heroImageSrc(allPosts.find((p) => p.id === slug)?.data.heroImage);
 
   for (const post of postEntities) {
     const topics = post.data.topics || [];
-    
-    topics.forEach(topic => {
+
+    topics.forEach((topic) => {
       if (!topicsMap.has(topic)) {
-        topicsMap.set(topic, { postSlugs: [], heroImage: post.data.heroImage });
+        topicsMap.set(topic, {
+          postSlugs: [],
+          heroImage: heroForSlug(post.id),
+        });
       }
       const topicData = topicsMap.get(topic)!;
       if (!topicData.postSlugs.includes(post.id)) {
         topicData.postSlugs.push(post.id);
       }
-      // Use first post's hero image if available
-      if (!topicData.heroImage && post.data.heroImage) {
-        topicData.heroImage = post.data.heroImage;
+      if (!topicData.heroImage) {
+        const src = heroForSlug(post.id);
+        if (src) topicData.heroImage = src;
       }
     });
   }
@@ -68,8 +78,8 @@ const borderColor = colors[topic.charCodeAt(0) % colors.length];
     description={description}
     url={pageUrl}
     type="article"
-    image={heroImage}
-    entityType="topic"
+    entityName={topic}
+    imageUrl={heroImage}
   />
 
   <main class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">

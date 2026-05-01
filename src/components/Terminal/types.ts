@@ -117,6 +117,6 @@ export interface HistoryEntry {
 export interface SelectableItem {
   id: string;
   label: string;
-  type: 'company' | 'investor' | 'person' | 'topic' | 'post';
+  type: 'company' | 'investor' | 'person' | 'topic' | 'post' | 'quote' | 'fact' | 'figure';
   data?: any;
 }

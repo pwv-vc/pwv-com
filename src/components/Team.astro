@@ -1,6 +1,5 @@
 ---
 import Heading2 from './Heading2.astro';
-import Heading3NoUnderline from './Heading3NoUnderline.astro';
 import TeamMember from './TeamMember.astro';
 import { getCollection } from 'astro:content';
 
@@ -23,6 +22,8 @@ interface TeamMemberData {
   includePosts?: boolean;
   authorName?: string;
   hasPage?: boolean;
+  givenName?: string;
+  nickname?: string;
 }
 
 // Group team members by section

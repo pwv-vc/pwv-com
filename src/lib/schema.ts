@@ -341,16 +341,16 @@ export interface ArticleSchemaOptions {
   url: string;
   image?: string | string[];
   author?: {
-    name: string;
+    name?: string;
     url?: string;
     sameAs?: string[];
-    id?: string; // @id reference to Person entity
+    id?: string; // @id reference to Person entity (name optional when id-only)
   };
   publisher?: {
-    name: string;
+    name?: string;
     logo?: string;
     url?: string;
-    id?: string; // @id reference to Organization entity
+    id?: string; // @id reference to Organization entity (name optional when id-only)
   };
   datePublished: string; // ISO 8601 date
   dateModified?: string; // ISO 8601 date

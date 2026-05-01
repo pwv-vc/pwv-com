@@ -6,7 +6,7 @@ export interface Props {
   filter?: string;
 }
 
-const { currentPage, totalPages, baseUrl, filter } = Astro.props;
+const { currentPage, totalPages, baseUrl: _baseUrl, filter } = Astro.props;
 
 // Generate page numbers to show
 const getPageNumbers = () => {

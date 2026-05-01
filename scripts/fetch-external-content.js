@@ -537,33 +537,6 @@ function generateSlug(title) {
 }
 
 /**
- * Generate a file-safe filename with timestamp for uniqueness
- */
-function generateUniqueFilename(title, slug) {
-  // Create a timestamp in YYYYMMDD-HHMMSS format
-  const now = new Date();
-  const timestamp = now
-    .toISOString()
-    .replace(/[-:]/g, '')
-    .replace(/\.\d{3}Z$/, '')
-    .replace('T', '-');
-
-  // Create a file-safe name from the title/slug
-  const fileSafeName = slug
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '') // Remove special characters except spaces and hyphens
-    .replace(/\s+/g, '-') // Replace spaces with hyphens
-    .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
-    .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
-    .substring(0, 50); // Limit length to 50 characters
-
-  // If the file-safe name is empty or too short, use a fallback
-  const finalName = fileSafeName.length > 3 ? fileSafeName : 'external-post';
-
-  return `external-${finalName}-${timestamp}`;
-}
-
-/**
  * Get file extension from URL
  */
 function getFileExtension(url) {

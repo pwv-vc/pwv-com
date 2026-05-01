@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { heroImageSrc } from '../../../lib/hero_image_src';
 import Layout from '../../../layouts/Layout.astro';
 import Heading1 from '../../../components/Heading1.astro';
 import PersonCard from '../../../components/entities/PersonCard.astro';
@@ -51,7 +52,7 @@ const pageUrl = `/showcase/people/${personSlug}/`;
 // Get hero image from first post if available
 const allPosts = await getCollection('posts');
 const firstPost = posts[0] ? allPosts.find(p => p.id === posts[0]) : null;
-const heroImageUrl = firstPost?.data.heroImage;
+const heroImageUrl = heroImageSrc(firstPost?.data.heroImage);
 ---
 
 <EntitySEO 

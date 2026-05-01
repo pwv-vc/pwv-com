@@ -1,6 +1,6 @@
 ---
 import { Image as UnpicImage } from '@unpic/astro';
-import { resolveImageSrc, resolvePortfolioLogoSrc } from '../../lib/images';
+import { resolvePortfolioLogoSrc } from '../../lib/images';
 import type { TimelineEvent } from './types';
 import { getEventEmoji } from './categoryEmojis';
 import { categoryStyles } from './categoryStyles';
@@ -11,7 +11,6 @@ interface Props {
   event: TimelineEvent;
   showTime?: boolean;
   showLocation?: boolean;
-  showCategory?: boolean;
   showEmoji?: boolean;
 }
 
@@ -19,7 +18,6 @@ const {
   event,
   showTime = false,
   showLocation = true,
-  showCategory = true,
   showEmoji = false,
 }: Props = Astro.props;
 
@@ -265,7 +263,7 @@ const getSpotifyEmbedUrl = (url: string): string | null => {
                         src={getSpotifyEmbedUrl(item.src)}
                         width="100%"
                         height="352"
-                        frameborder="0"
+                        class="border-0"
                         allowfullscreen
                         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                         loading="lazy"

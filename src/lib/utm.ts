@@ -104,7 +104,6 @@ export function generateSocialSharingURLs(
   reddit: string;
   hackernews: string;
 } {
-  const encodedURL = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
   const encodedDescription = description ? encodeURIComponent(description) : '';
 
@@ -143,7 +142,7 @@ export function generateSocialSharingURLs(
  * Generate UTM parameters for specific content types
  */
 export function generateContentUTM(
-  contentType: 'post' | 'portfolio' | 'about' | 'apply',
+  contentType: 'post' | 'portfolio' | 'about' | 'apply' | 'team',
   contentSlug?: string
 ): UTMParams {
   const baseParams: UTMParams = {
@@ -175,6 +174,12 @@ export function generateContentUTM(
         ...baseParams,
         utm_campaign: 'content_apply',
         utm_content: 'apply_page',
+      };
+    case 'team':
+      return {
+        ...baseParams,
+        utm_campaign: 'content_team',
+        utm_content: contentSlug || 'team_page',
       };
     default:
       return {

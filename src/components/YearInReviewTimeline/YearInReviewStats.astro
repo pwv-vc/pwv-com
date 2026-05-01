@@ -1,12 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 
-interface Props {
-  slug: string;
-}
-
-const { slug } = Astro.props;
-
 // Get all stats from the collection
 const allStats = await getCollection('yearInReviewStats');
 const stats = allStats
