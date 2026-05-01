@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
 
+@import '@c15t/react/styles.css';
+
 html {
   scroll-behavior: smooth;
 }
