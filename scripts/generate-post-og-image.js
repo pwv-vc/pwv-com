@@ -59,7 +59,7 @@ function createReadlineInterface() {
 async function selectFile(files) {
   const rl = createReadlineInterface();
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
       console.log('\n📚 Available post files:\n');
 
     files.forEach((file, index) => {
@@ -117,7 +117,7 @@ async function selectFile(files) {
  * Downloads an image from a URL to a local path
  */
 async function downloadImage(imageUrl, localPath) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const protocol = imageUrl.startsWith('https:') ? https : http;
 
     protocol
@@ -307,7 +307,7 @@ async function generatePostOGImage(markdownFilePath) {
     const content = await fs.readFile(markdownFilePath, 'utf-8');
 
     // Parse frontmatter
-    const { frontmatter, markdownContent } = parseFrontmatter(content);
+    const { frontmatter } = parseFrontmatter(content);
 
     // Extract title and description
     const title = frontmatter.title;

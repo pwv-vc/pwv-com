@@ -24,7 +24,16 @@ interface Props {
   factIndex?: number;
 }
 
-const { fact, category, date, postSlug, postTitle, pubDate, borderColor, factIndex = 0 } = Astro.props;
+const {
+  fact,
+  category,
+  date,
+  postSlug,
+  postTitle: _postTitle,
+  pubDate: _pubDate,
+  borderColor,
+  factIndex = 0,
+} = Astro.props;
 
 // Select icon based on category
 const categoryIcons: Record<string, any> = {

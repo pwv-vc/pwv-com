@@ -1,5 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const eventsDir = path.join(__dirname, '../src/content/events');
 const items = fs.readdirSync(eventsDir, { withFileTypes: true });
@@ -10,9 +14,10 @@ for (const item of items) {
     if (fs.existsSync(indexPath)) {
       const indexContent = JSON.parse(fs.readFileSync(indexPath, 'utf-8'));
       const eventsDirPath = path.join(eventsDir, item.name, 'events');
-      
+
       if (fs.existsSync(eventsDirPath)) {
-        const eventFiles = fs.readdirSync(eventsDirPath)
+        const eventFiles = fs
+          .readdirSync(eventsDirPath)
           .filter((f) => f.endsWith('.json'))
           .map((f) => {
             const eventPath = path.join(eventsDirPath, f);
@@ -24,7 +29,6 @@ for (const item of items) {
           events: eventFiles,
         };
 
-        // Write combined file
         const outputPath = path.join(eventsDir, `${item.name}.json`);
         fs.writeFileSync(outputPath, JSON.stringify(combined, null, 2));
         console.log(`Built ${outputPath} with ${eventFiles.length} events`);

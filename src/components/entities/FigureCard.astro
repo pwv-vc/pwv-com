@@ -18,7 +18,16 @@ interface Props {
   figureIndex?: number;
 }
 
-const { value, context, unit, postSlug, postTitle, pubDate, borderColor, figureIndex = 0 } = Astro.props;
+const {
+  value,
+  context,
+  unit,
+  postSlug,
+  postTitle: _postTitle,
+  pubDate: _pubDate,
+  borderColor,
+  figureIndex = 0,
+} = Astro.props;
 
 // Determine icon based on context category
 const contextLower = context.toLowerCase();

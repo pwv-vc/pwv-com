@@ -7,7 +7,7 @@ interface Props {
   previousPost?: CollectionEntry<'posts'>;
 }
 
-const { currentPost, nextPost, previousPost } = Astro.props;
+const { currentPost: _currentPost, nextPost, previousPost } = Astro.props;
 ---
 
 <div class="border-default mx-auto mt-12 max-w-screen-xl border-t pt-8">

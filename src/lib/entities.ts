@@ -1,45 +1,45 @@
 import type { ExtractedData } from '../components/Terminal/types';
+import { buildExtractedDataFromCollections } from './aggregate_extracted_maps';
 
 /**
- * Load entity data
+ * Load entity data (aggregated from per-post extracted JSON, same source as the terminal).
  */
-export async function loadEntities(): Promise<ExtractedData> {
-  const data = await import('../content/entities/aggregated.json');
-  return data.default as ExtractedData;
-}
+export const loadEntities = async (): Promise<ExtractedData> => {
+  return buildExtractedDataFromCollections();
+};
 
 /**
  * Get all companies
  */
-export function getAllCompanies(data: ExtractedData): string[] {
+export const getAllCompanies = (data: ExtractedData): string[] => {
   return Object.keys(data.entities.companies).sort();
-}
+};
 
 /**
  * Get all investors
  */
-export function getAllInvestors(data: ExtractedData): string[] {
+export const getAllInvestors = (data: ExtractedData): string[] => {
   return Object.keys(data.entities.investors).sort();
-}
+};
 
 /**
  * Get all people
  */
-export function getAllPeople(data: ExtractedData): string[] {
+export const getAllPeople = (data: ExtractedData): string[] => {
   return Object.keys(data.entities.people).sort();
-}
+};
 
 /**
  * Get all topics
  */
-export function getAllTopics(data: ExtractedData): string[] {
+export const getAllTopics = (data: ExtractedData): string[] => {
   return Object.keys(data.entities.topics).sort();
-}
+};
 
 /**
  * Search entities by query
  */
-export function searchEntities(
+export const searchEntities = (
   data: ExtractedData,
   query: string
 ): {
@@ -47,7 +47,7 @@ export function searchEntities(
   investors: string[];
   people: string[];
   topics: string[];
-} {
+} => {
   const lowerQuery = query.toLowerCase();
 
   return {
@@ -64,4 +64,4 @@ export function searchEntities(
       t.toLowerCase().includes(lowerQuery)
     ),
   };
-}
+};

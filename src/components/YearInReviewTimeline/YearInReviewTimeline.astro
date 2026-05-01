@@ -25,15 +25,6 @@ const { year, description, title } = metaEntry.data;
 const allEvents = await getCollection('events');
 const yearEvents = allEvents;
 
-// Get all portfolio companies to check which logos exist
-const allPortfolio = [
-  ...(await getCollection('representativePortfolio')),
-  ...(await getCollection('rollingFundPortfolio')),
-  ...(await getCollection('fundOnePortfolio')),
-  ...(await getCollection('angelPortfolio')),
-];
-const portfolioSlugs = new Set(allPortfolio.map((p) => p.data.slug));
-
 // Sort events by date
 const sortedEvents = yearEvents
   .map((entry) => entry.data)
@@ -58,117 +49,6 @@ const months = Object.keys(groupedByMonth).map((monthYear) => {
   return monthYear.split(' ')[0];
 });
 
-// Get unique categories for jump links
-const allCategories = new Set<string>();
-sortedEvents.forEach((event) => {
-  if (event.category) {
-    if (Array.isArray(event.category)) {
-      event.category.forEach((cat) => allCategories.add(cat));
-    } else {
-      allCategories.add(event.category);
-    }
-  }
-});
-const categories = Array.from(allCategories).sort();
-
-// Get unique companies for jump links
-const allCompanies = new Set<string>();
-sortedEvents.forEach((event) => {
-  if (event.company) {
-    allCompanies.add(event.company);
-  }
-  if (event.companies && Array.isArray(event.companies)) {
-    event.companies.forEach((company) => {
-      const slug = company
-        .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9-]/g, '')
-        .replace(/-+/g, '-'); // Replace multiple dashes with single dash
-      allCompanies.add(slug);
-    });
-  }
-});
-const companies = Array.from(allCompanies).sort();
-
-// Get unique locations for jump links
-const allLocations = new Set<string>();
-sortedEvents.forEach((event) => {
-  if (event.location) {
-    allLocations.add(event.location);
-  }
-});
-const locations = Array.from(allLocations).sort();
-
-// Helper function to format company name from slug
-const formatCompanyName = (slug: string) => {
-  const specialCases: Record<string, string> = {
-    fal: 'fal',
-    resim: 'ReSim',
-    tldraw: 'tldraw',
-    voidzero: 'VoidZero',
-    stackone: 'StackOne',
-    langbase: 'Langbase',
-    'aalo-atomics': 'Aalo Atomics',
-    'power-planet': 'Power Planet',
-    'commutator-studios': 'Commutator Studios',
-    'poke-wiggle': 'Poke & Wiggle',
-    pokewiggle: 'Poke & Wiggle',
-  };
-
-  if (specialCases[slug]) {
-    return specialCases[slug];
-  }
-
-  return slug
-    .split('-')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
-};
-
-// Helper function to format category name
-const formatCategoryName = (category: string) => {
-  const specialCases: Record<string, string> = {
-    demo_day: 'Demo Day',
-    'demo-day': 'Demo Day',
-  };
-
-  if (specialCases[category]) {
-    return specialCases[category];
-  }
-
-  return category
-    .replace(/-/g, ' ')
-    .replace(/_/g, ' ')
-    .replace(/\b\w/g, (l) => l.toUpperCase());
-};
-
-// Category colors for pills - matches categoryStyles.ts
-const categoryColors: Record<string, string> = {
-  announcement: 'bg-pwv-light-green hover:bg-pwv-green',
-  community: 'bg-pwv-light-teal hover:bg-pwv-soft-teal',
-  event: 'bg-pwv-light-yellow hover:bg-pwv-soft-yellow',
-  fundraise: 'bg-pwv-soft-green hover:bg-pwv-green',
-  meetup: 'bg-pwv-light-periwinkle hover:bg-pwv-soft-periwinkle',
-  product_launch: 'bg-pwv-soft-teal hover:bg-pwv-light-teal',
-  travel: 'bg-pwv-light-coral hover:bg-pwv-soft-coral',
-  other: 'bg-pwv-light-lavender hover:bg-pwv-soft-lavender',
-  raise: 'bg-pwv-soft-green hover:bg-pwv-green',
-  seed: 'bg-pwv-light-green hover:bg-pwv-green',
-  'series-a': 'bg-pwv-light-teal hover:bg-pwv-soft-teal',
-  'series-b': 'bg-pwv-soft-teal hover:bg-pwv-light-teal',
-  'series-c': 'bg-pwv-light-periwinkle hover:bg-pwv-soft-periwinkle',
-  'series-d': 'bg-pwv-light-lavender hover:bg-pwv-soft-lavender',
-  media: 'bg-pwv-light-coral hover:bg-pwv-soft-coral',
-  team: 'bg-pwv-light-periwinkle hover:bg-pwv-soft-periwinkle',
-  demo_day: 'bg-pwv-soft-green hover:bg-pwv-green',
-  'demo-day': 'bg-pwv-soft-green hover:bg-pwv-green',
-  intro: 'bg-pwv-light-yellow hover:bg-pwv-soft-yellow',
-};
-
-const getCategoryColor = (category: string) => {
-  return categoryColors[category] || 'bg-pwv-light-green hover:bg-pwv-green';
-};
-
 // Month colors - rotate through PWV color palette
 const monthColors = [
   'bg-pwv-light-green hover:bg-pwv-green',
@@ -184,63 +64,6 @@ const monthColors = [
 const getMonthColor = (index: number) => {
   return monthColors[index % monthColors.length];
 };
-
-// Location colors - rotate through PWV color palette
-const locationColors = [
-  'bg-pwv-soft-green hover:bg-pwv-green',
-  'bg-pwv-light-periwinkle hover:bg-pwv-soft-periwinkle',
-  'bg-pwv-light-coral hover:bg-pwv-soft-coral',
-  'bg-pwv-soft-teal hover:bg-pwv-light-teal',
-  'bg-pwv-light-lavender hover:bg-pwv-soft-lavender',
-  'bg-pwv-light-yellow hover:bg-pwv-soft-yellow',
-];
-
-const getLocationColor = (index: number) => {
-  return locationColors[index % locationColors.length];
-};
-
-// Find first event for each category
-const firstEventByCategory = new Map<string, string>();
-sortedEvents.forEach((event) => {
-  const cats = Array.isArray(event.category)
-    ? event.category
-    : event.category
-      ? [event.category]
-      : [];
-  cats.forEach((cat) => {
-    if (!firstEventByCategory.has(cat)) {
-      firstEventByCategory.set(cat, event.id);
-    }
-  });
-});
-
-// Find first event for each company
-const firstEventByCompany = new Map<string, string>();
-sortedEvents.forEach((event) => {
-  if (event.company && !firstEventByCompany.has(event.company)) {
-    firstEventByCompany.set(event.company, event.id);
-  }
-  if (event.companies && Array.isArray(event.companies)) {
-    event.companies.forEach((company) => {
-      const slug = company
-        .toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9-]/g, '')
-        .replace(/-+/g, '-'); // Replace multiple dashes with single dash
-      if (!firstEventByCompany.has(slug)) {
-        firstEventByCompany.set(slug, event.id);
-      }
-    });
-  }
-});
-
-// Find first event for each location
-const firstEventByLocation = new Map<string, string>();
-sortedEvents.forEach((event) => {
-  if (event.location && !firstEventByLocation.has(event.location)) {
-    firstEventByLocation.set(event.location, event.id);
-  }
-});
 ---
 
 <TimelineShell>

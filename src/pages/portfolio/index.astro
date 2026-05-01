@@ -37,8 +37,6 @@ const orderedTags = allTags.includes('🦄')
   : allTags;
 
 // Default: no tags selected (show all companies)
-const selectedTags: string[] = [];
-const hasSelected = selectedTags.length > 0;
 const filteredCompanies = companies;
 
 // Helpers to build URLs with single tag
@@ -49,7 +47,7 @@ const buildUrlWithTag = (tag: string | null) => {
   // encodeURIComponent properly encodes spaces as %20 and other special characters
   return `/portfolio/tags/${encodeURIComponent(tag)}`;
 };
-const isSelected = (tag: string) => false; // No tags selected on index page
+const isSelected = (_tag: string) => false; // No tags selected on index page
 const toggleTagHref = (tag: string) => {
   // Always go to the tag page when clicking a tag from index
   return buildUrlWithTag(tag.toLowerCase());

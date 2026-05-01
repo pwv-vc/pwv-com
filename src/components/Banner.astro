@@ -11,7 +11,9 @@ const { message, href, storageKey = 'banner-dismissed' } = Astro.props;
 <script is:inline define:vars={{ storageKey }}>
   // Check localStorage immediately to prevent flash
   if (localStorage.getItem(storageKey) === 'true') {
-    document.write('<style>#banner{display:none!important}</style>');
+    const style = document.createElement('style');
+    style.textContent = '#banner{display:none!important}';
+    document.head.appendChild(style);
   }
 </script>
 

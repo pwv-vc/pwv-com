@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '../../../layouts/Layout.astro';
 import FigureCard from '../../../components/entities/FigureCard.astro';
 import EntitySEO from '../../../components/entities/EntitySEO.astro';
+import { heroImageSrc } from '../../../lib/hero_image_src';
 
 export async function getStaticPaths() {
   const allEntities = await getCollection('extractedPostEntities');
@@ -21,7 +22,6 @@ export async function getStaticPaths() {
           postSlug: entity.id,
           postTitle: entity.data.title,
           pubDate: entity.data.pubDate,
-          heroImage: entity.data.heroImage,
           figureIndex: index,
         },
       });
@@ -31,9 +31,11 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { value, context, unit, postSlug, postTitle, pubDate, heroImage, figureIndex } = Astro.props;
+const { value, context, unit, postSlug, postTitle, pubDate, figureIndex } = Astro.props;
 
 const siteUrl = Astro.site || 'https://pwv.com';
+const allPosts = await getCollection('posts');
+const seoImageUrl = heroImageSrc(allPosts.find((p) => p.id === postSlug)?.data.heroImage);
 const figureId = `${postSlug}-${figureIndex}`;
 const pageUrl = new URL(`/showcase/figures/${figureId}/`, siteUrl).toString();
 
@@ -59,8 +61,8 @@ const borderColor = colors[figureIndex % colors.length];
     description={description}
     url={pageUrl}
     type="article"
-    image={heroImage}
-    entityType="figure"
+    entityName={title}
+    imageUrl={seoImageUrl}
   />
 
   <main class="mx-auto max-w-4xl px-4 py-12 sm:px-6 lg:px-8">
