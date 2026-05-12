@@ -2,11 +2,11 @@
   command = "pnpm run build"
   publish = "dist"
 
-# pnpm 11 (see package.json packageManager) requires Node.js 22+.
+# pnpm 11 (package.json packageManager) requires Node.js >=22.13.
 # Netlify defaults to Node 18, which breaks Corepack/pnpm with:
 # TypeError: Invalid host defined options
 [build.environment]
-  NODE_VERSION = "22"
+  NODE_VERSION = "22.13"
 
 # Trailing slash handling - Netlify automatically adds trailing slashes
 # This matches Astro's trailingSlash: 'always' configuration
@@ -77,7 +77,6 @@
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=3600, s-maxage=3600"
-    Content-Encoding = "gzip, br"
 
 # Cache static HTML pages for longer (static generation)
 [[headers]]
@@ -163,7 +162,7 @@
   to = "/rss.xml"
   status = 301
   force = true
-  
+
 [[redirects]]
   from = "/zoo-spv"
   to = "https://pwv.docsend.com/view/s/6ccvzkbdkexbu6kb"
@@ -174,4 +173,5 @@
   from = "/zoospv"
   to = "https://pwv.docsend.com/view/s/6ccvzkbdkexbu6kb"
   status = 301
-  force = true  
+  force = true
+

@@ -2,6 +2,9 @@
   "name": "pwv-com",
   "type": "module",
   "version": "0.1.7",
+  "engines": {
+    "node": ">=22.13"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
