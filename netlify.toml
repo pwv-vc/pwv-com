@@ -2,6 +2,12 @@
   command = "pnpm run build"
   publish = "dist"
 
+# pnpm 11 (see package.json packageManager) requires Node.js 22+.
+# Netlify defaults to Node 18, which breaks Corepack/pnpm with:
+# TypeError: Invalid host defined options
+[build.environment]
+  NODE_VERSION = "22"
+
 # Trailing slash handling - Netlify automatically adds trailing slashes
 # This matches Astro's trailingSlash: 'always' configuration
 [build.processing]
