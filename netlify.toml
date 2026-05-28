@@ -3,10 +3,12 @@
   publish = "dist"
 
 # pnpm 11 (package.json packageManager) requires Node.js >=22.13.
+# Node 22.14+ ships Corepack >=0.31.0, which can verify pnpm releases signed
+# with npm's rotated registry keys (older Corepack fails with "Cannot find matching keyid").
 # Netlify defaults to Node 18, which breaks Corepack/pnpm with:
 # TypeError: Invalid host defined options
 [build.environment]
-  NODE_VERSION = "22.13"
+  NODE_VERSION = "22.14"
 
 # Trailing slash handling - Netlify automatically adds trailing slashes
 # This matches Astro's trailingSlash: 'always' configuration

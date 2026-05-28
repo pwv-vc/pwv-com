@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.1.8",
   "engines": {
-    "node": ">=22.13"
+    "node": ">=22.14"
   },
   "scripts": {
     "dev": "astro dev",
