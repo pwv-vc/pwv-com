@@ -24,6 +24,18 @@
     "slug": "stripe"
   },
   {
+    "name": "Carta",
+    "url": "https://carta.com",
+    "tags": ["🦄", "saas"],
+    "slug": "carta"
+  },
+  {
+    "name": "Tailscale",
+    "url": "https://tailscale.com",
+    "tags": ["🦄", "dev tools"],
+    "slug": "tailscale"
+  },
+  {
     "name": "Supabase",
     "url": "https://supabase.com/",
     "tags": ["🦄", "dev tools"],
@@ -70,5 +82,11 @@
     "url": "https://stackblitz.com/",
     "tags": ["dev tools", "ai"],
     "slug": "stackblitz"
+  },
+  {
+    "name": "VoidZero",
+    "slug": "voidzero",
+    "url": "https://voidzero.dev/",
+    "tags": ["dev tools"]
   }
 ]
