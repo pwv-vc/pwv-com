@@ -24,6 +24,18 @@
     "slug": "stripe"
   },
   {
+    "name": "Carta",
+    "url": "https://carta.com",
+    "tags": ["🦄", "saas"],
+    "slug": "carta"
+  },
+  {
+    "name": "Tailscale",
+    "url": "https://tailscale.com",
+    "tags": ["🦄", "dev tools"],
+    "slug": "tailscale"
+  },
+  {
     "name": "Supabase",
     "url": "https://supabase.com/",
     "tags": ["🦄", "dev tools"],
