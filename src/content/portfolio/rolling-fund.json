@@ -120,7 +120,8 @@
     "name": "VoidZero",
     "slug": "voidzero",
     "url": "https://voidzero.dev/",
-    "tags": ["dev tools"]
+    "tags": ["dev tools", "acquired"],
+    "acquiredBy": "Cloudflare"
   },
   {
     "name": "ReSim",
