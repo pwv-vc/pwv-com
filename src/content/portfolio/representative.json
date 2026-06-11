@@ -1,15 +1,33 @@
 [
   {
+    "name": "Astranis",
+    "slug": "astranis",
+    "url": "https://www.astranis.com/",
+    "tags": ["🦄", "hardware", "aerospace"]
+  },
+  {
     "name": "Cursor",
     "slug": "cursor",
     "url": "https://www.cursor.com/",
     "tags": ["🦄", "ai", "dev tools"]
   },
   {
+    "name": "CommandCode",
+    "slug": "commandcode",
+    "url": "https://commandcode.ai",
+    "tags": ["ai", "dev tools", "coding"]
+  },
+  {
     "name": "fal",
     "slug": "fal",
     "url": "https://www.fal.ai/",
     "tags": ["🦄", "ai", "dev tools"]
+  },
+  {
+    "name": "Ona",
+    "slug": "ona",
+    "url": "https://www.ona.com/",
+    "tags": ["dev tools", "board seat", "acquired"]
   },
   {
     "name": "Liquid AI",

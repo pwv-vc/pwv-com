@@ -33,8 +33,9 @@
     "name": "Ona",
     "slug": "ona",
     "url": "https://www.ona.com/",
-    "tags": ["dev tools", "board seat"],
-    "formerly": "Gitpod"
+    "tags": ["dev tools", "board seat", "acquired"],
+    "formerly": "Gitpod",
+    "acquiredBy": "OpenAI"
   },
   {
     "name": "Aerodome",
@@ -68,10 +69,11 @@
     "tags": ["dev tools"]
   },
   {
-    "name": "Langbase",
-    "slug": "langbase",
-    "url": "https://www.langbase.com/",
-    "tags": ["ai", "dev tools"]
+    "name": "CommandCode",
+    "slug": "commandcode",
+    "url": "https://commandcode.ai",
+    "formerly": "Langbase",
+    "tags": ["ai", "dev tools", "coding"]
   },
   {
     "name": "Inngest",
@@ -286,7 +288,7 @@
   {
     "name": "Fueled",
     "url": "https://www.opensend.com/",
-    "tags": [ "acquired"],
+    "tags": ["acquired"],
     "slug": "fueled",
     "acquiredBy": "Opensend"
   }
