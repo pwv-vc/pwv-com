@@ -12,9 +12,10 @@
     "tags": ["energy"]
   },
   {
-    "name": "Langbase",
-    "slug": "langbase",
-    "url": "https://www.langbase.com/",
-    "tags": ["ai", "dev tools"]
+    "name": "CommandCode",
+    "slug": "commandcode",
+    "url": "https://commandcode.ai",
+    "formerly": "Langbase",
+    "tags": ["ai", "dev tools", "coding"]
   }
 ]
