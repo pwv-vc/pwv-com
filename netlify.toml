@@ -178,3 +178,9 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/agentcribs"
+  to = "https://agentcribs.pwv.com/"
+  status = 301
+  force = true
+
