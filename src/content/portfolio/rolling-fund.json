@@ -9,7 +9,8 @@
     "name": "Cursor",
     "slug": "cursor",
     "url": "https://www.cursor.com/",
-    "tags": ["🦄", "ai", "dev tools"]
+    "tags": ["🦄", "ai", "dev tools"],
+    "acquiredBy": "SpaceX"
   },
   {
     "name": "Atuin",
